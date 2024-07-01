@@ -1,0 +1,3408 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>Chapter 7 Additional Topics | Linear Algebra for Data Science</title>
+  <meta name="description" content="<p>This is a minimal example of using the bookdown package to write a book.
+The HTML output format for this example is bookdown::gitbook,
+set in the _output.yml file.</p>" />
+  <meta name="generator" content="bookdown 0.39 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="Chapter 7 Additional Topics | Linear Algebra for Data Science" />
+  <meta property="og:type" content="book" />
+  <meta property="og:image" content="/images/mfdscover.png" />
+  <meta property="og:description" content="<p>This is a minimal example of using the bookdown package to write a book.
+The HTML output format for this example is bookdown::gitbook,
+set in the _output.yml file.</p>" />
+  
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Chapter 7 Additional Topics | Linear Algebra for Data Science" />
+  
+  <meta name="twitter:description" content="<p>This is a minimal example of using the bookdown package to write a book.
+The HTML output format for this example is bookdown::gitbook,
+set in the _output.yml file.</p>" />
+  <meta name="twitter:image" content="/images/mfdscover.png" />
+
+<meta name="author" content="Tom Tegtmeyer" />
+
+
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="svd-and-pca.html"/>
+<link rel="next" href="MVCA.html"/>
+<script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+<link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
+<link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
+<script src="libs/kePrint-0.0.1/kePrint.js"></script>
+<link href="libs/lightable-0.0.1/lightable.css" rel="stylesheet" />
+
+
+<style type="text/css">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { color: #008000; } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { color: #008000; font-weight: bold; } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+<style type="text/css">
+  
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+</style>
+<style type="text/css">
+/* Used with Pandoc 2.11+ new --citeproc when CSL is used */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+  margin-bottom: 0em;
+}
+.hanging div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}
+</style>
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">Linear Algebra for Data Science</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Preface</a></li>
+<li class="chapter" data-level="1" data-path="matrices-and-systems-of-equations.html"><a href="matrices-and-systems-of-equations.html"><i class="fa fa-check"></i><b>1</b> Matrices and Systems of Equations</a>
+<ul>
+<li class="chapter" data-level="1.1" data-path="matrices-and-systems-of-equations.html"><a href="matrices-and-systems-of-equations.html#systems-of-equations"><i class="fa fa-check"></i><b>1.1</b> Systems of Equations</a>
+<ul>
+<li class="chapter" data-level="" data-path="matrices-and-systems-of-equations.html"><a href="matrices-and-systems-of-equations.html#the-geometry"><i class="fa fa-check"></i>The geometry</a></li>
+<li class="chapter" data-level="" data-path="matrices-and-systems-of-equations.html"><a href="matrices-and-systems-of-equations.html#the-three-cases"><i class="fa fa-check"></i>The three cases</a></li>
+</ul></li>
+<li class="chapter" data-level="1.2" data-path="matrices-and-systems-of-equations.html"><a href="matrices-and-systems-of-equations.html#GE"><i class="fa fa-check"></i><b>1.2</b> Method of Solution: Gaussian Elimination</a>
+<ul>
+<li class="chapter" data-level="" data-path="matrices-and-systems-of-equations.html"><a href="matrices-and-systems-of-equations.html#parameters"><i class="fa fa-check"></i>Parameters</a></li>
+<li class="chapter" data-level="" data-path="matrices-and-systems-of-equations.html"><a href="matrices-and-systems-of-equations.html#more-equations-more-variables"><i class="fa fa-check"></i>More equations, more variables</a></li>
+<li class="chapter" data-level="" data-path="matrices-and-systems-of-equations.html"><a href="matrices-and-systems-of-equations.html#overdetermined-and-underdetermined-systems"><i class="fa fa-check"></i>Overdetermined and underdetermined systems</a></li>
+</ul></li>
+<li class="chapter" data-level="1.3" data-path="matrices-and-systems-of-equations.html"><a href="matrices-and-systems-of-equations.html#matrices"><i class="fa fa-check"></i><b>1.3</b> Matrices</a>
+<ul>
+<li class="chapter" data-level="" data-path="matrices-and-systems-of-equations.html"><a href="matrices-and-systems-of-equations.html#elementary-row-operations"><i class="fa fa-check"></i>Elementary row operations</a></li>
+<li class="chapter" data-level="" data-path="matrices-and-systems-of-equations.html"><a href="matrices-and-systems-of-equations.html#row-echelon-form"><i class="fa fa-check"></i>Row echelon form</a></li>
+<li class="chapter" data-level="" data-path="matrices-and-systems-of-equations.html"><a href="matrices-and-systems-of-equations.html#reduced-row-echelon-form"><i class="fa fa-check"></i>Reduced row echelon form</a></li>
+<li class="chapter" data-level="" data-path="matrices-and-systems-of-equations.html"><a href="matrices-and-systems-of-equations.html#TM"><i class="fa fa-check"></i>Matrices with Technology</a></li>
+</ul></li>
+<li class="chapter" data-level="1.4" data-path="matrices-and-systems-of-equations.html"><a href="matrices-and-systems-of-equations.html#BMO"><i class="fa fa-check"></i><b>1.4</b> Basic Matrix Operations</a>
+<ul>
+<li class="chapter" data-level="" data-path="matrices-and-systems-of-equations.html"><a href="matrices-and-systems-of-equations.html#row-and-column-vectors"><i class="fa fa-check"></i>Row and column vectors</a></li>
+<li class="chapter" data-level="" data-path="matrices-and-systems-of-equations.html"><a href="matrices-and-systems-of-equations.html#matrix-addition"><i class="fa fa-check"></i>Matrix addition</a></li>
+<li class="chapter" data-level="" data-path="matrices-and-systems-of-equations.html"><a href="matrices-and-systems-of-equations.html#scalar-multiplication"><i class="fa fa-check"></i>Scalar Multiplication</a></li>
+<li class="chapter" data-level="" data-path="matrices-and-systems-of-equations.html"><a href="matrices-and-systems-of-equations.html#matrix-multiplication"><i class="fa fa-check"></i>Matrix multiplication</a></li>
+<li class="chapter" data-level="" data-path="matrices-and-systems-of-equations.html"><a href="matrices-and-systems-of-equations.html#multiplying-two-matrices"><i class="fa fa-check"></i>Multiplying two matrices</a></li>
+<li class="chapter" data-level="" data-path="matrices-and-systems-of-equations.html"><a href="matrices-and-systems-of-equations.html#identity-matrices"><i class="fa fa-check"></i>Identity Matrices</a></li>
+<li class="chapter" data-level="" data-path="matrices-and-systems-of-equations.html"><a href="matrices-and-systems-of-equations.html#technology"><i class="fa fa-check"></i>Technology</a></li>
+<li class="chapter" data-level="" data-path="matrices-and-systems-of-equations.html"><a href="matrices-and-systems-of-equations.html#the-transpose-of-a-matrix"><i class="fa fa-check"></i>The transpose of a matrix</a></li>
+</ul></li>
+<li class="chapter" data-level="1.5" data-path="matrices-and-systems-of-equations.html"><a href="matrices-and-systems-of-equations.html#Inverses"><i class="fa fa-check"></i><b>1.5</b> Matrix Inverses</a>
+<ul>
+<li class="chapter" data-level="" data-path="matrices-and-systems-of-equations.html"><a href="matrices-and-systems-of-equations.html#finding-inverses"><i class="fa fa-check"></i>Finding inverses</a></li>
+<li class="chapter" data-level="" data-path="matrices-and-systems-of-equations.html"><a href="matrices-and-systems-of-equations.html#a-formula-for-2-x-2-matrices"><i class="fa fa-check"></i>A formula for 2 x 2 matrices</a></li>
+</ul></li>
+<li class="chapter" data-level="1.6" data-path="matrices-and-systems-of-equations.html"><a href="matrices-and-systems-of-equations.html#dets"><i class="fa fa-check"></i><b>1.6</b> Determinants</a>
+<ul>
+<li class="chapter" data-level="" data-path="matrices-and-systems-of-equations.html"><a href="matrices-and-systems-of-equations.html#triangular-and-diagonal-matrices"><i class="fa fa-check"></i>Triangular and diagonal matrices</a></li>
+<li class="chapter" data-level="" data-path="matrices-and-systems-of-equations.html"><a href="matrices-and-systems-of-equations.html#upper-and-lower-triangular-matrices"><i class="fa fa-check"></i>Upper and lower triangular matrices</a></li>
+</ul></li>
+<li class="chapter" data-level="1.7" data-path="matrices-and-systems-of-equations.html"><a href="matrices-and-systems-of-equations.html#systems-of-linear-equations-as-matrix-equations"><i class="fa fa-check"></i><b>1.7</b> Systems of Linear Equations as Matrix Equations</a>
+<ul>
+<li class="chapter" data-level="" data-path="matrices-and-systems-of-equations.html"><a href="matrices-and-systems-of-equations.html#how-does-row-reduction-work"><i class="fa fa-check"></i>How does row reduction work?</a></li>
+</ul></li>
+<li class="chapter" data-level="1.8" data-path="matrices-and-systems-of-equations.html"><a href="matrices-and-systems-of-equations.html#Colley"><i class="fa fa-check"></i><b>1.8</b> Application: The Colley Matrix Method</a>
+<ul>
+<li class="chapter" data-level="" data-path="matrices-and-systems-of-equations.html"><a href="matrices-and-systems-of-equations.html#ratings-and-rankings"><i class="fa fa-check"></i>Ratings and Rankings</a></li>
+<li class="chapter" data-level="" data-path="matrices-and-systems-of-equations.html"><a href="matrices-and-systems-of-equations.html#the-bcs-and-wes-colley"><i class="fa fa-check"></i>The BCS and Wes Colley</a></li>
+<li class="chapter" data-level="" data-path="matrices-and-systems-of-equations.html"><a href="matrices-and-systems-of-equations.html#the-colley-matrix"><i class="fa fa-check"></i>The Colley Matrix</a></li>
+</ul></li>
+<li class="chapter" data-level="1.9" data-path="matrices-and-systems-of-equations.html"><a href="matrices-and-systems-of-equations.html#exercises"><i class="fa fa-check"></i><b>1.9</b> Exercises</a></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="vector-spaces.html"><a href="vector-spaces.html"><i class="fa fa-check"></i><b>2</b> Vector Spaces</a>
+<ul>
+<li class="chapter" data-level="2.1" data-path="vector-spaces.html"><a href="vector-spaces.html#artoo"><i class="fa fa-check"></i><b>2.1</b> The Vector Space <span class="math inline">\(\mathbb{R}^n\)</span></a>
+<ul>
+<li class="chapter" data-level="" data-path="vector-spaces.html"><a href="vector-spaces.html#vector-addition-and-scalar-multiplication"><i class="fa fa-check"></i>Vector addition and scalar multiplication</a></li>
+<li class="chapter" data-level="" data-path="vector-spaces.html"><a href="vector-spaces.html#linear-dependence-and-independence"><i class="fa fa-check"></i>Linear dependence and independence</a></li>
+<li class="chapter" data-level="" data-path="vector-spaces.html"><a href="vector-spaces.html#linear-combinations"><i class="fa fa-check"></i>Linear Combinations</a></li>
+<li class="chapter" data-level="" data-path="vector-spaces.html"><a href="vector-spaces.html#mathbbr3-and-mathbbrn"><i class="fa fa-check"></i><span class="math inline">\(\mathbb{R}^3\)</span> and <span class="math inline">\(\mathbb{R}^n\)</span></a></li>
+</ul></li>
+<li class="chapter" data-level="2.2" data-path="vector-spaces.html"><a href="vector-spaces.html#subspaces"><i class="fa fa-check"></i><b>2.2</b> Subspaces</a></li>
+<li class="chapter" data-level="2.3" data-path="vector-spaces.html"><a href="vector-spaces.html#linear-dependence-and-independence-1"><i class="fa fa-check"></i><b>2.3</b> Linear Dependence and Independence</a>
+<ul>
+<li class="chapter" data-level="" data-path="vector-spaces.html"><a href="vector-spaces.html#linear-dependence-revisited"><i class="fa fa-check"></i>Linear dependence revisited</a></li>
+</ul></li>
+<li class="chapter" data-level="2.4" data-path="vector-spaces.html"><a href="vector-spaces.html#basis-and-dimension"><i class="fa fa-check"></i><b>2.4</b> Basis and Dimension</a>
+<ul>
+<li class="chapter" data-level="" data-path="vector-spaces.html"><a href="vector-spaces.html#the-standard-basis-for-mathbbrn"><i class="fa fa-check"></i>The standard basis for <span class="math inline">\(\mathbb{R}^n\)</span></a></li>
+<li class="chapter" data-level="" data-path="vector-spaces.html"><a href="vector-spaces.html#the-dimension-of-a-subspace"><i class="fa fa-check"></i>The dimension of a subspace</a></li>
+<li class="chapter" data-level="" data-path="vector-spaces.html"><a href="vector-spaces.html#the-dimension-of-the-nullspace"><i class="fa fa-check"></i>The dimension of the Nullspace</a></li>
+<li class="chapter" data-level="" data-path="vector-spaces.html"><a href="vector-spaces.html#the-column-space-of-a-matrix"><i class="fa fa-check"></i>The column space of a matrix</a></li>
+<li class="chapter" data-level="" data-path="vector-spaces.html"><a href="vector-spaces.html#the-row-space"><i class="fa fa-check"></i>The row space</a></li>
+</ul></li>
+<li class="chapter" data-level="2.5" data-path="vector-spaces.html"><a href="vector-spaces.html#exercises-1"><i class="fa fa-check"></i><b>2.5</b> Exercises</a></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="eigenvalues-and-eigenvectors.html"><a href="eigenvalues-and-eigenvectors.html"><i class="fa fa-check"></i><b>3</b> Eigenvalues and Eigenvectors</a>
+<ul>
+<li class="chapter" data-level="3.1" data-path="eigenvalues-and-eigenvectors.html"><a href="eigenvalues-and-eigenvectors.html#eigenvalues-and-eigenvectors-1"><i class="fa fa-check"></i><b>3.1</b> Eigenvalues and Eigenvectors</a>
+<ul>
+<li class="chapter" data-level="" data-path="eigenvalues-and-eigenvectors.html"><a href="eigenvalues-and-eigenvectors.html#eigenvalues-and-eigenvectors-in-r"><i class="fa fa-check"></i>Eigenvalues and Eigenvectors in R</a></li>
+<li class="chapter" data-level="" data-path="eigenvalues-and-eigenvectors.html"><a href="eigenvalues-and-eigenvectors.html#higher-dimensional-matrices"><i class="fa fa-check"></i>Higher dimensional matrices</a></li>
+</ul></li>
+<li class="chapter" data-level="3.2" data-path="eigenvalues-and-eigenvectors.html"><a href="eigenvalues-and-eigenvectors.html#special-cases-and-complications"><i class="fa fa-check"></i><b>3.2</b> Special Cases and Complications</a>
+<ul>
+<li class="chapter" data-level="" data-path="eigenvalues-and-eigenvectors.html"><a href="eigenvalues-and-eigenvectors.html#diagonal-and-triangular-matrices"><i class="fa fa-check"></i>Diagonal and triangular matrices</a></li>
+<li class="chapter" data-level="" data-path="eigenvalues-and-eigenvectors.html"><a href="eigenvalues-and-eigenvectors.html#the-trace"><i class="fa fa-check"></i>The trace</a></li>
+<li class="chapter" data-level="" data-path="eigenvalues-and-eigenvectors.html"><a href="eigenvalues-and-eigenvectors.html#complications"><i class="fa fa-check"></i>Complications</a></li>
+<li class="chapter" data-level="" data-path="eigenvalues-and-eigenvectors.html"><a href="eigenvalues-and-eigenvectors.html#eigenvalues-of-a-transpose"><i class="fa fa-check"></i>Eigenvalues of a transpose</a></li>
+<li class="chapter" data-level="" data-path="eigenvalues-and-eigenvectors.html"><a href="eigenvalues-and-eigenvectors.html#matrix-powers"><i class="fa fa-check"></i>Matrix powers</a></li>
+</ul></li>
+<li class="chapter" data-level="3.3" data-path="eigenvalues-and-eigenvectors.html"><a href="eigenvalues-and-eigenvectors.html#application-the-leslie-matrix"><i class="fa fa-check"></i><b>3.3</b> Application: The Leslie Matrix</a></li>
+<li class="chapter" data-level="3.4" data-path="eigenvalues-and-eigenvectors.html"><a href="eigenvalues-and-eigenvectors.html#graphs-and-adjacency-matrices"><i class="fa fa-check"></i><b>3.4</b> Graphs and Adjacency Matrices</a>
+<ul>
+<li class="chapter" data-level="" data-path="eigenvalues-and-eigenvectors.html"><a href="eigenvalues-and-eigenvectors.html#adjacency-matrices"><i class="fa fa-check"></i>Adjacency matrices</a></li>
+<li class="chapter" data-level="" data-path="eigenvalues-and-eigenvectors.html"><a href="eigenvalues-and-eigenvectors.html#directed-adjacency-matrices"><i class="fa fa-check"></i>Directed adjacency matrices</a></li>
+<li class="chapter" data-level="" data-path="eigenvalues-and-eigenvectors.html"><a href="eigenvalues-and-eigenvectors.html#the-directed-graph-of-a-tournament"><i class="fa fa-check"></i>The directed graph of a tournament</a></li>
+</ul></li>
+<li class="chapter" data-level="3.5" data-path="eigenvalues-and-eigenvectors.html"><a href="eigenvalues-and-eigenvectors.html#random-surfers-and-stochastic-matrices"><i class="fa fa-check"></i><b>3.5</b> Random surfers and Stochastic Matrices</a>
+<ul>
+<li class="chapter" data-level="" data-path="eigenvalues-and-eigenvectors.html"><a href="eigenvalues-and-eigenvectors.html#stochastic-matrices"><i class="fa fa-check"></i>Stochastic matrices</a></li>
+<li class="chapter" data-level="" data-path="eigenvalues-and-eigenvectors.html"><a href="eigenvalues-and-eigenvectors.html#markov-chains"><i class="fa fa-check"></i>Markov Chains</a></li>
+<li class="chapter" data-level="" data-path="eigenvalues-and-eigenvectors.html"><a href="eigenvalues-and-eigenvectors.html#why-is-1-always-an-eigenvalue"><i class="fa fa-check"></i>Why is 1 always an eigenvalue?</a></li>
+</ul></li>
+<li class="chapter" data-level="3.6" data-path="eigenvalues-and-eigenvectors.html"><a href="eigenvalues-and-eigenvectors.html#the-markov-and-oracle-ranking-methods"><i class="fa fa-check"></i><b>3.6</b> The Markov and Oracle Ranking Methods</a>
+<ul>
+<li class="chapter" data-level="" data-path="eigenvalues-and-eigenvectors.html"><a href="eigenvalues-and-eigenvectors.html#the-markov-method"><i class="fa fa-check"></i>The Markov method</a></li>
+<li class="chapter" data-level="" data-path="eigenvalues-and-eigenvectors.html"><a href="eigenvalues-and-eigenvectors.html#the-oracle-method"><i class="fa fa-check"></i>The Oracle method</a></li>
+<li class="chapter" data-level="" data-path="eigenvalues-and-eigenvectors.html"><a href="eigenvalues-and-eigenvectors.html#modifications"><i class="fa fa-check"></i>Modifications</a></li>
+</ul></li>
+<li class="chapter" data-level="3.7" data-path="eigenvalues-and-eigenvectors.html"><a href="eigenvalues-and-eigenvectors.html#exercises-2"><i class="fa fa-check"></i><b>3.7</b> Exercises</a></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="orthogonality.html"><a href="orthogonality.html"><i class="fa fa-check"></i><b>4</b> Orthogonality</a>
+<ul>
+<li class="chapter" data-level="4.1" data-path="orthogonality.html"><a href="orthogonality.html#ILO"><i class="fa fa-check"></i><b>4.1</b> Inner Product, Length, and Orthogonality</a>
+<ul>
+<li class="chapter" data-level="" data-path="orthogonality.html"><a href="orthogonality.html#distance-in-mathbbrn"><i class="fa fa-check"></i>Distance in <span class="math inline">\(\mathbb{R}^n\)</span></a></li>
+</ul></li>
+<li class="chapter" data-level="4.2" data-path="orthogonality.html"><a href="orthogonality.html#orthogonal-subspaces"><i class="fa fa-check"></i><b>4.2</b> Orthogonal Subspaces</a>
+<ul>
+<li class="chapter" data-level="" data-path="orthogonality.html"><a href="orthogonality.html#the-row-space-and-nullspace-of-a-matrix"><i class="fa fa-check"></i>The row space and nullspace of a matrix</a></li>
+</ul></li>
+<li class="chapter" data-level="4.3" data-path="orthogonality.html"><a href="orthogonality.html#orthogonal-and-orthonormal-sets"><i class="fa fa-check"></i><b>4.3</b> Orthogonal and Orthonormal Sets</a>
+<ul>
+<li class="chapter" data-level="" data-path="orthogonality.html"><a href="orthogonality.html#orthogonal-projections"><i class="fa fa-check"></i>Orthogonal projections</a></li>
+<li class="chapter" data-level="" data-path="orthogonality.html"><a href="orthogonality.html#orthogonal-matrices"><i class="fa fa-check"></i>Orthogonal matrices</a></li>
+</ul></li>
+<li class="chapter" data-level="4.4" data-path="orthogonality.html"><a href="orthogonality.html#OProj"><i class="fa fa-check"></i><b>4.4</b> Orthogonal Projections</a></li>
+<li class="chapter" data-level="4.5" data-path="orthogonality.html"><a href="orthogonality.html#orthogonalization"><i class="fa fa-check"></i><b>4.5</b> Orthogonalization</a>
+<ul>
+<li class="chapter" data-level="" data-path="orthogonality.html"><a href="orthogonality.html#qr-factorization"><i class="fa fa-check"></i>QR-factorization</a></li>
+</ul></li>
+<li class="chapter" data-level="4.6" data-path="orthogonality.html"><a href="orthogonality.html#exercises-3"><i class="fa fa-check"></i><b>4.6</b> Exercises</a></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="regression.html"><a href="regression.html"><i class="fa fa-check"></i><b>5</b> Regression</a>
+<ul>
+<li class="chapter" data-level="5.1" data-path="regression.html"><a href="regression.html#LSQP"><i class="fa fa-check"></i><b>5.1</b> Least Squares Problems</a>
+<ul>
+<li class="chapter" data-level="" data-path="regression.html"><a href="regression.html#least-squares-error"><i class="fa fa-check"></i>Least squares error</a></li>
+<li class="chapter" data-level="" data-path="regression.html"><a href="regression.html#least-squares-and-the-qr-factorization"><i class="fa fa-check"></i>Least squares and the QR-factorization</a></li>
+</ul></li>
+<li class="chapter" data-level="5.2" data-path="regression.html"><a href="regression.html#application-the-massey-method"><i class="fa fa-check"></i><b>5.2</b> Application: The Massey Method</a>
+<ul>
+<li class="chapter" data-level="" data-path="regression.html"><a href="regression.html#adjustments"><i class="fa fa-check"></i>Adjustments</a></li>
+<li class="chapter" data-level="" data-path="regression.html"><a href="regression.html#offensive-and-defensive-ratings"><i class="fa fa-check"></i>Offensive and defensive ratings</a></li>
+</ul></li>
+<li class="chapter" data-level="5.3" data-path="regression.html"><a href="regression.html#LSRSec"><i class="fa fa-check"></i><b>5.3</b> Least Squares Regression</a>
+<ul>
+<li class="chapter" data-level="" data-path="regression.html"><a href="regression.html#multilinear-regression"><i class="fa fa-check"></i>Multilinear regression</a></li>
+</ul></li>
+<li class="chapter" data-level="5.4" data-path="regression.html"><a href="regression.html#CorSec"><i class="fa fa-check"></i><b>5.4</b> Correlation</a>
+<ul>
+<li class="chapter" data-level="" data-path="regression.html"><a href="regression.html#some-notation-and-a-formula"><i class="fa fa-check"></i>Some notation and a formula</a></li>
+<li class="chapter" data-level="" data-path="regression.html"><a href="regression.html#correlation-in-r"><i class="fa fa-check"></i>Correlation in R</a></li>
+</ul></li>
+<li class="chapter" data-level="5.5" data-path="regression.html"><a href="regression.html#formulas-for-least-squares-regression"><i class="fa fa-check"></i><b>5.5</b> Formulas for Least Squares Regression</a>
+<ul>
+<li class="chapter" data-level="" data-path="regression.html"><a href="regression.html#the-coefficient-of-determination"><i class="fa fa-check"></i>The coefficient of determination</a></li>
+</ul></li>
+<li class="chapter" data-level="5.6" data-path="regression.html"><a href="regression.html#uncertainty-in-least-squares"><i class="fa fa-check"></i><b>5.6</b> Uncertainty in Least Squares</a>
+<ul>
+<li class="chapter" data-level="" data-path="regression.html"><a href="regression.html#confidence-and-prediction-intervals-for-responses"><i class="fa fa-check"></i>Confidence and prediction intervals for responses</a></li>
+<li class="chapter" data-level="" data-path="regression.html"><a href="regression.html#checking-assumptions"><i class="fa fa-check"></i>Checking assumptions</a></li>
+</ul></li>
+<li class="chapter" data-level="5.7" data-path="regression.html"><a href="regression.html#multilinear-regression-1"><i class="fa fa-check"></i><b>5.7</b> Multilinear Regression</a>
+<ul>
+<li class="chapter" data-level="" data-path="regression.html"><a href="regression.html#r-and-multilinear-regression"><i class="fa fa-check"></i>R and multilinear regression</a></li>
+<li class="chapter" data-level="" data-path="regression.html"><a href="regression.html#indicator-variables"><i class="fa fa-check"></i>Indicator variables</a></li>
+<li class="chapter" data-level="" data-path="regression.html"><a href="regression.html#fitting-polynomials"><i class="fa fa-check"></i>Fitting polynomials</a></li>
+<li class="chapter" data-level="" data-path="regression.html"><a href="regression.html#interactions"><i class="fa fa-check"></i>Interactions</a></li>
+</ul></li>
+<li class="chapter" data-level="5.8" data-path="regression.html"><a href="regression.html#model-selection"><i class="fa fa-check"></i><b>5.8</b> Model Selection</a>
+<ul>
+<li class="chapter" data-level="" data-path="regression.html"><a href="regression.html#best-subsets-regression"><i class="fa fa-check"></i>Best subsets regression</a></li>
+<li class="chapter" data-level="" data-path="regression.html"><a href="regression.html#stepwise-regression"><i class="fa fa-check"></i>Stepwise regression</a></li>
+<li class="chapter" data-level="" data-path="regression.html"><a href="regression.html#some-warnings"><i class="fa fa-check"></i>Some warnings</a></li>
+</ul></li>
+<li class="chapter" data-level="5.9" data-path="regression.html"><a href="regression.html#Logistic"><i class="fa fa-check"></i><b>5.9</b> Logistic Regression</a>
+<ul>
+<li class="chapter" data-level="" data-path="regression.html"><a href="regression.html#logistic-regression-with-multiple-independent-variables"><i class="fa fa-check"></i>Logistic regression with multiple independent variables</a></li>
+<li class="chapter" data-level="" data-path="regression.html"><a href="regression.html#likelihood-and-deviance"><i class="fa fa-check"></i>Likelihood and deviance</a></li>
+</ul></li>
+<li class="chapter" data-level="5.10" data-path="regression.html"><a href="regression.html#GDA"><i class="fa fa-check"></i><b>5.10</b> Gradient Descent</a>
+<ul>
+<li class="chapter" data-level="" data-path="regression.html"><a href="regression.html#functions-of-several-variables"><i class="fa fa-check"></i>Functions of several variables</a></li>
+<li class="chapter" data-level="" data-path="regression.html"><a href="regression.html#optimizing-parameters"><i class="fa fa-check"></i>Optimizing parameters</a></li>
+</ul></li>
+<li class="chapter" data-level="5.11" data-path="regression.html"><a href="regression.html#exercises-4"><i class="fa fa-check"></i><b>5.11</b> Exercises</a></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="svd-and-pca.html"><a href="svd-and-pca.html"><i class="fa fa-check"></i><b>6</b> SVD and PCA</a>
+<ul>
+<li class="chapter" data-level="6.1" data-path="svd-and-pca.html"><a href="svd-and-pca.html#DSM"><i class="fa fa-check"></i><b>6.1</b> Diagonalizable and Symmetric Matrices</a>
+<ul>
+<li class="chapter" data-level="" data-path="svd-and-pca.html"><a href="svd-and-pca.html#diagonalizable-matrices"><i class="fa fa-check"></i>Diagonalizable matrices</a></li>
+<li class="chapter" data-level="" data-path="svd-and-pca.html"><a href="svd-and-pca.html#symmetric-matrices"><i class="fa fa-check"></i>Symmetric matrices</a></li>
+<li class="chapter" data-level="" data-path="svd-and-pca.html"><a href="svd-and-pca.html#eigenvalues-and-eigenvectors-of-symmetric-matrices"><i class="fa fa-check"></i>Eigenvalues and eigenvectors of symmetric matrices</a></li>
+<li class="chapter" data-level="" data-path="svd-and-pca.html"><a href="svd-and-pca.html#orthogonal-diagonalization"><i class="fa fa-check"></i>Orthogonal diagonalization</a></li>
+</ul></li>
+<li class="chapter" data-level="6.2" data-path="svd-and-pca.html"><a href="svd-and-pca.html#quadratic-forms-and-constrained-optimization"><i class="fa fa-check"></i><b>6.2</b> Quadratic Forms and Constrained Optimization</a>
+<ul>
+<li class="chapter" data-level="" data-path="svd-and-pca.html"><a href="svd-and-pca.html#change-of-variables"><i class="fa fa-check"></i>Change of variables</a></li>
+<li class="chapter" data-level="" data-path="svd-and-pca.html"><a href="svd-and-pca.html#classifying-quadratic-forms"><i class="fa fa-check"></i>Classifying quadratic forms</a></li>
+<li class="chapter" data-level="" data-path="svd-and-pca.html"><a href="svd-and-pca.html#constrained-optimization"><i class="fa fa-check"></i>Constrained optimization</a></li>
+</ul></li>
+<li class="chapter" data-level="6.3" data-path="svd-and-pca.html"><a href="svd-and-pca.html#SVD"><i class="fa fa-check"></i><b>6.3</b> The Singular Value Decomposition</a>
+<ul>
+<li class="chapter" data-level="" data-path="svd-and-pca.html"><a href="svd-and-pca.html#singular-values"><i class="fa fa-check"></i>Singular values</a></li>
+<li class="chapter" data-level="" data-path="svd-and-pca.html"><a href="svd-and-pca.html#svd-with-r"><i class="fa fa-check"></i>SVD with R</a></li>
+</ul></li>
+<li class="chapter" data-level="6.4" data-path="svd-and-pca.html"><a href="svd-and-pca.html#applications-of-the-svd"><i class="fa fa-check"></i><b>6.4</b> Applications of the SVD</a>
+<ul>
+<li class="chapter" data-level="" data-path="svd-and-pca.html"><a href="svd-and-pca.html#movie-reviews-and-latent-factors"><i class="fa fa-check"></i>Movie reviews and latent factors</a></li>
+</ul></li>
+<li class="chapter" data-level="6.5" data-path="svd-and-pca.html"><a href="svd-and-pca.html#principal-component-analysis"><i class="fa fa-check"></i><b>6.5</b> Principal Component Analysis</a>
+<ul>
+<li class="chapter" data-level="" data-path="svd-and-pca.html"><a href="svd-and-pca.html#pca-in-r"><i class="fa fa-check"></i>PCA in R</a></li>
+<li class="chapter" data-level="" data-path="svd-and-pca.html"><a href="svd-and-pca.html#biplots"><i class="fa fa-check"></i>Biplots</a></li>
+<li class="chapter" data-level="" data-path="svd-and-pca.html"><a href="svd-and-pca.html#scaling"><i class="fa fa-check"></i>Scaling</a></li>
+</ul></li>
+<li class="chapter" data-level="6.6" data-path="svd-and-pca.html"><a href="svd-and-pca.html#exercises-5"><i class="fa fa-check"></i><b>6.6</b> Exercises</a></li>
+</ul></li>
+<li class="chapter" data-level="7" data-path="additional-topics.html"><a href="additional-topics.html"><i class="fa fa-check"></i><b>7</b> Additional Topics</a>
+<ul>
+<li class="chapter" data-level="7.1" data-path="additional-topics.html"><a href="additional-topics.html#k-means-clustering"><i class="fa fa-check"></i><b>7.1</b> <span class="math inline">\(k\)</span>-means Clustering</a>
+<ul>
+<li class="chapter" data-level="" data-path="additional-topics.html"><a href="additional-topics.html#k-means-clustering-1"><i class="fa fa-check"></i><span class="math inline">\(k\)</span>-means clustering</a></li>
+<li class="chapter" data-level="" data-path="additional-topics.html"><a href="additional-topics.html#cluster-optimization"><i class="fa fa-check"></i>Cluster optimization</a></li>
+<li class="chapter" data-level="" data-path="additional-topics.html"><a href="additional-topics.html#clustering-for-classification"><i class="fa fa-check"></i>Clustering for classification</a></li>
+</ul></li>
+<li class="chapter" data-level="7.2" data-path="additional-topics.html"><a href="additional-topics.html#collaborative-filtering"><i class="fa fa-check"></i><b>7.2</b> Collaborative Filtering</a>
+<ul>
+<li class="chapter" data-level="" data-path="additional-topics.html"><a href="additional-topics.html#similarity-measures"><i class="fa fa-check"></i>Similarity measures</a></li>
+<li class="chapter" data-level="" data-path="additional-topics.html"><a href="additional-topics.html#collaborative-filtering-with-recommenderlab"><i class="fa fa-check"></i>Collaborative filtering with recommenderlab</a></li>
+</ul></li>
+<li class="chapter" data-level="7.3" data-path="additional-topics.html"><a href="additional-topics.html#decision-tree-classification"><i class="fa fa-check"></i><b>7.3</b> Decision Tree Classification</a>
+<ul>
+<li class="chapter" data-level="" data-path="additional-topics.html"><a href="additional-topics.html#decision-trees-with-r"><i class="fa fa-check"></i>Decision trees with R</a></li>
+<li class="chapter" data-level="" data-path="additional-topics.html"><a href="additional-topics.html#random-forests"><i class="fa fa-check"></i>Random Forests</a></li>
+</ul></li>
+<li class="chapter" data-level="7.4" data-path="additional-topics.html"><a href="additional-topics.html#support-vector-machines"><i class="fa fa-check"></i><b>7.4</b> Support Vector Machines</a>
+<ul>
+<li class="chapter" data-level="" data-path="additional-topics.html"><a href="additional-topics.html#support-vector-machines-in-r"><i class="fa fa-check"></i>Support vector machines in R</a></li>
+</ul></li>
+<li class="chapter" data-level="7.5" data-path="additional-topics.html"><a href="additional-topics.html#exercises-6"><i class="fa fa-check"></i><b>7.5</b> Exercises</a></li>
+</ul></li>
+<li class="appendix"><span><b>Appendices</b></span></li>
+<li class="chapter" data-level="A" data-path="MVCA.html"><a href="MVCA.html"><i class="fa fa-check"></i><b>A</b> An Introduction to Multivariable Calculus</a>
+<ul>
+<li class="chapter" data-level="A.1" data-path="MVCA.html"><a href="MVCA.html#functions-of-several-variables-1"><i class="fa fa-check"></i><b>A.1</b> Functions of several variables</a>
+<ul>
+<li class="chapter" data-level="" data-path="MVCA.html"><a href="MVCA.html#minima-and-maxima"><i class="fa fa-check"></i>Minima and maxima</a></li>
+<li class="chapter" data-level="" data-path="MVCA.html"><a href="MVCA.html#limits-and-continuity"><i class="fa fa-check"></i>Limits and continuity</a></li>
+</ul></li>
+<li class="chapter" data-level="A.2" data-path="MVCA.html"><a href="MVCA.html#partial-derivatives"><i class="fa fa-check"></i><b>A.2</b> Partial Derivatives</a>
+<ul>
+<li class="chapter" data-level="" data-path="MVCA.html"><a href="MVCA.html#higher-order-partial-derivatives"><i class="fa fa-check"></i>Higher order partial derivatives</a></li>
+</ul></li>
+<li class="chapter" data-level="A.3" data-path="MVCA.html"><a href="MVCA.html#directional-derivatives"><i class="fa fa-check"></i><b>A.3</b> Directional Derivatives</a>
+<ul>
+<li class="chapter" data-level="" data-path="MVCA.html"><a href="MVCA.html#the-gradient-vector"><i class="fa fa-check"></i>The gradient vector</a></li>
+</ul></li>
+<li class="chapter" data-level="A.4" data-path="MVCA.html"><a href="MVCA.html#optimization"><i class="fa fa-check"></i><b>A.4</b> Optimization</a>
+<ul>
+<li class="chapter" data-level="" data-path="MVCA.html"><a href="MVCA.html#classifying-critical-points"><i class="fa fa-check"></i>Classifying critical points</a></li>
+</ul></li>
+<li class="chapter" data-level="A.5" data-path="MVCA.html"><a href="MVCA.html#exercises-7"><i class="fa fa-check"></i><b>A.5</b> Exercises</a></li>
+</ul></li>
+<li class="chapter" data-level="B" data-path="the-igraph-and-ggally-packages.html"><a href="the-igraph-and-ggally-packages.html"><i class="fa fa-check"></i><b>B</b> The iGraph and GGally Packages</a>
+<ul>
+<li class="chapter" data-level="" data-path="the-igraph-and-ggally-packages.html"><a href="the-igraph-and-ggally-packages.html#ggally"><i class="fa fa-check"></i>GGally</a></li>
+</ul></li>
+<li class="chapter" data-level="C" data-path="packages.html"><a href="packages.html"><i class="fa fa-check"></i><b>C</b> Packages</a></li>
+<li class="chapter" data-level="" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i>References</a></li>
+<li class="divider"></li>
+<li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Linear Algebra for Data Science</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="additional-topics" class="section level1 hasAnchor" number="7">
+<h1><span class="header-section-number">Chapter 7</span> Additional Topics<a href="additional-topics.html#additional-topics" class="anchor-section" aria-label="Anchor link to header"></a></h1>
+<p>This chapter contains some additional topics that don’t quite fit in one of the earlier chapters.</p>
+<div id="k-means-clustering" class="section level2 hasAnchor" number="7.1">
+<h2><span class="header-section-number">7.1</span> <span class="math inline">\(k\)</span>-means Clustering<a href="additional-topics.html#k-means-clustering" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Clustering is a machine learning method of grouping objects for classification purposes. The scatterplot in Figure <a href="additional-topics.html#fig:iriscluster">7.1</a> shows the petal lengths and widths of 150 irises, collected into three groups based on those measurements, by a method called <em>k-means clustering</em>.</p>
+<div class="figure" style="text-align: center"><span style="display:block;" id="fig:iriscluster"></span>
+<img src="_main_files/figure-html/iriscluster-1.png" alt="Iris flowers clustering based on two measurements" width="75%" />
+<p class="caption">
+Figure 7.1: Iris flowers clustering based on two measurements
+</p>
+</div>
+<p>As an example, here are eight Sandra Bullock movies from the 1990s and early 2000s, with their IMDB.com<span class="citation">[<a href="#ref-IMDB">23</a>]</span> ratings and domestic box office receipts in millions.</p>
+<table>
+<thead>
+<tr class="header">
+<th align="left">Movie</th>
+<th align="right">Rating</th>
+<th align="right">Box Office</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">28 Days</td>
+<td align="right">6.1</td>
+<td align="right">37.2</td>
+</tr>
+<tr class="even">
+<td align="left">A Time to Kill</td>
+<td align="right">7.5</td>
+<td align="right">108.8</td>
+</tr>
+<tr class="odd">
+<td align="left">Miss Congeniality</td>
+<td align="right">6.3</td>
+<td align="right">106.8</td>
+</tr>
+<tr class="even">
+<td align="left">The Net</td>
+<td align="right">6.0</td>
+<td align="right">50.7</td>
+</tr>
+<tr class="odd">
+<td align="left">Practical Magic</td>
+<td align="right">6.3</td>
+<td align="right">46.7</td>
+</tr>
+<tr class="even">
+<td align="left">Speed</td>
+<td align="right">7.3</td>
+<td align="right">121.2</td>
+</tr>
+<tr class="odd">
+<td align="left">Speed 2</td>
+<td align="right">3.9</td>
+<td align="right">48.6</td>
+</tr>
+<tr class="even">
+<td align="left">While You Were Sleeping</td>
+<td align="right">6.8</td>
+<td align="right">81.1</td>
+</tr>
+</tbody>
+</table>
+<p>We are going to try to group these movies based upon these two attributes. Figure <a href="additional-topics.html#fig:sandy1">7.2</a> is a scatterplot of the data. It appears that SPEED and SPEED 2 are not going to end up in the same cluster.</p>
+<div class="figure" style="text-align: center"><span style="display:block;" id="fig:sandy1"></span>
+<img src="_main_files/figure-html/sandy1-1.png" alt="IMDB ratings and box office Receipts for eight Sandra Bullock films" width="75%" />
+<p class="caption">
+Figure 7.2: IMDB ratings and box office Receipts for eight Sandra Bullock films
+</p>
+</div>
+<div id="k-means-clustering-1" class="section level3 unnumbered hasAnchor">
+<h3><span class="math inline">\(k\)</span>-means clustering<a href="additional-topics.html#k-means-clustering-1" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>The <span class="math inline">\(k\)</span>-means clustering process can work with any number of variables on a set of individuals. Each one of <span class="math inline">\(m\)</span> individuals consists of an <span class="math inline">\(n\)</span>-dimensional vector</p>
+<p><span class="math display">\[(x_{i1},x_{i2},\dots,x_{in}),i=1\dots m.\]</span></p>
+<p>The Bullock data has <span class="math inline">\(m=8\)</span> individuals (the movies) and <span class="math inline">\(n=2\)</span> variables.</p>
+<p>Our procedure will involve finding the center or mean of a collection of vectors. The mean of a set of vectors is simply another vector whose components are the individual component (variable) means. For example, if we have the vectors</p>
+<p><span class="math display">\[\mathbf{X}_1=(1,2,-2),\mathbf{X}_2=(3,1,5),\text{ and } \mathbf{X}_3=(2,-1,4),\]</span></p>
+<p>then</p>
+<p><span class="math display">\[\bar{\mathbf{X}}=\left(\frac{1+3+2}{3},\frac{2+1+-1}{3},\frac{-2+5+4}{3}\right)=\left(2,\frac{2}{3},\frac{7}{3}\right).\]</span></p>
+<p>Here’s the process.</p>
+<div class="propbox">
+<p><strong><span class="math inline">\(k\)</span>-means clustering</strong></p>
+<ol style="list-style-type: decimal">
+<li><p>Randomly assign the individuals to one of <span class="math inline">\(k\)</span> clusters.</p></li>
+<li><p>Calculate the center of each cluster. It will be the mean of all the individuals in that cluster. (The original centers can also be pre-defined, skipping Step 1.)</p></li>
+<li><p>Find the distance from each individual to every one of the <span class="math inline">\(k\)</span> centers.</p></li>
+<li><p>Reassign each individual to the cluster with the nearest center.</p></li>
+<li><p>If the cluster assignments have not changed, the process ends. Otherwise, return to Step 2.</p></li>
+</ol>
+</div>
+<p>Here is the process with the Sandra Bullock data. First, we “randomly” assign the initial clusters:</p>
+<table class="table" style="margin-left: auto; margin-right: auto;">
+<thead>
+<tr>
+<th style="text-align:left;">
+Movie
+</th>
+<th style="text-align:right;">
+IMDB Rating
+</th>
+<th style="text-align:right;">
+Box Office
+</th>
+<th style="text-align:right;">
+Cluster
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+28 Days
+</td>
+<td style="text-align:right;">
+6.1
+</td>
+<td style="text-align:right;">
+37.2
+</td>
+<td style="text-align:right;">
+3
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+A Time to Kill
+</td>
+<td style="text-align:right;">
+7.5
+</td>
+<td style="text-align:right;">
+108.8
+</td>
+<td style="text-align:right;">
+1
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Miss Congeniality
+</td>
+<td style="text-align:right;">
+6.3
+</td>
+<td style="text-align:right;">
+106.8
+</td>
+<td style="text-align:right;">
+1
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+The Net
+</td>
+<td style="text-align:right;">
+6.0
+</td>
+<td style="text-align:right;">
+50.7
+</td>
+<td style="text-align:right;">
+2
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Practical Magic
+</td>
+<td style="text-align:right;">
+6.3
+</td>
+<td style="text-align:right;">
+46.7
+</td>
+<td style="text-align:right;">
+2
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Speed
+</td>
+<td style="text-align:right;">
+7.3
+</td>
+<td style="text-align:right;">
+121.2
+</td>
+<td style="text-align:right;">
+1
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Speed 2
+</td>
+<td style="text-align:right;">
+3.9
+</td>
+<td style="text-align:right;">
+48.6
+</td>
+<td style="text-align:right;">
+3
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+While You Were Sleeping
+</td>
+<td style="text-align:right;">
+6.8
+</td>
+<td style="text-align:right;">
+81.1
+</td>
+<td style="text-align:right;">
+2
+</td>
+</tr>
+</tbody>
+</table>
+<p>The mean rating for Cluster 1 is <span class="math inline">\((7.5+6.3+7.3)/3=7.033.\)</span> Similarly, the mean box office total for Cluster 1 is <span class="math inline">\((108.8+106.8+121.2)/3=112.267.\)</span> The means for both variables for all clusters are as follows.</p>
+<table class="table" style="margin-left: auto; margin-right: auto;">
+<thead>
+<tr>
+<th style="text-align:left;">
+Cluster
+</th>
+<th style="text-align:right;">
+Rating Mean
+</th>
+<th style="text-align:right;">
+Box Office Mean
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+1
+</td>
+<td style="text-align:right;">
+7.033
+</td>
+<td style="text-align:right;">
+112.267
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+2
+</td>
+<td style="text-align:right;">
+6.367
+</td>
+<td style="text-align:right;">
+59.500
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+3
+</td>
+<td style="text-align:right;">
+5.000
+</td>
+<td style="text-align:right;">
+42.900
+</td>
+</tr>
+</tbody>
+</table>
+<p>When we show the cluster centers on the scatterplot, it looks like Figure <a href="additional-topics.html#fig:sandy2">7.3</a>.</p>
+<div class="figure" style="text-align: center"><span style="display:block;" id="fig:sandy2"></span>
+<img src="_main_files/figure-html/sandy2-1.png" alt="Cluster centers (squares)" width="75%" />
+<p class="caption">
+Figure 7.3: Cluster centers (squares)
+</p>
+</div>
+<p>To find the distance from an individual to a center, we use the distance formula. The distance from 28 DAYS (Rating, Box Office) <span class="math inline">\(=(6.1,37.2)\)</span> to Center 1 <span class="math inline">\((7.033,112.267)\)</span> is</p>
+<p><span class="math display">\[\sqrt{(6.1-7.033)^2+(37.2-112.267)^2}\approx 75.073.\]</span></p>
+<p>We do this for all 8 movies and all 3 centers and get the following results.</p>
+<table class="table" style="margin-left: auto; margin-right: auto;">
+<thead>
+<tr>
+<th style="text-align:left;">
+Movie
+</th>
+<th style="text-align:right;">
+Rating
+</th>
+<th style="text-align:right;">
+Box Office
+</th>
+<th style="text-align:right;">
+Old Cluster
+</th>
+<th style="text-align:right;">
+D1
+</th>
+<th style="text-align:right;">
+D2
+</th>
+<th style="text-align:right;">
+D3
+</th>
+<th style="text-align:right;">
+New Cluster
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+28 Days
+</td>
+<td style="text-align:right;">
+6.1
+</td>
+<td style="text-align:right;">
+37.2
+</td>
+<td style="text-align:right;">
+3
+</td>
+<td style="text-align:right;">
+75.07
+</td>
+<td style="text-align:right;">
+22.30
+</td>
+<td style="text-align:right;">
+5.81
+</td>
+<td style="text-align:right;">
+3
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+A Time to Kill
+</td>
+<td style="text-align:right;">
+7.5
+</td>
+<td style="text-align:right;">
+108.8
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+3.50
+</td>
+<td style="text-align:right;">
+49.31
+</td>
+<td style="text-align:right;">
+65.95
+</td>
+<td style="text-align:right;">
+1
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Miss Congeniality
+</td>
+<td style="text-align:right;">
+6.3
+</td>
+<td style="text-align:right;">
+106.8
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+5.52
+</td>
+<td style="text-align:right;">
+47.30
+</td>
+<td style="text-align:right;">
+63.91
+</td>
+<td style="text-align:right;">
+1
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+The Net
+</td>
+<td style="text-align:right;">
+6.0
+</td>
+<td style="text-align:right;">
+50.7
+</td>
+<td style="text-align:right;">
+2
+</td>
+<td style="text-align:right;">
+61.58
+</td>
+<td style="text-align:right;">
+8.81
+</td>
+<td style="text-align:right;">
+7.86
+</td>
+<td style="text-align:right;">
+3
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Practical Magic
+</td>
+<td style="text-align:right;">
+6.3
+</td>
+<td style="text-align:right;">
+46.7
+</td>
+<td style="text-align:right;">
+2
+</td>
+<td style="text-align:right;">
+65.57
+</td>
+<td style="text-align:right;">
+12.80
+</td>
+<td style="text-align:right;">
+4.02
+</td>
+<td style="text-align:right;">
+3
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Speed
+</td>
+<td style="text-align:right;">
+7.3
+</td>
+<td style="text-align:right;">
+121.2
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+8.94
+</td>
+<td style="text-align:right;">
+61.71
+</td>
+<td style="text-align:right;">
+78.33
+</td>
+<td style="text-align:right;">
+1
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Speed 2
+</td>
+<td style="text-align:right;">
+3.9
+</td>
+<td style="text-align:right;">
+48.6
+</td>
+<td style="text-align:right;">
+3
+</td>
+<td style="text-align:right;">
+63.74
+</td>
+<td style="text-align:right;">
+11.18
+</td>
+<td style="text-align:right;">
+5.81
+</td>
+<td style="text-align:right;">
+3
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+While You Were Sleeping
+</td>
+<td style="text-align:right;">
+6.8
+</td>
+<td style="text-align:right;">
+81.1
+</td>
+<td style="text-align:right;">
+2
+</td>
+<td style="text-align:right;">
+31.17
+</td>
+<td style="text-align:right;">
+21.60
+</td>
+<td style="text-align:right;">
+38.24
+</td>
+<td style="text-align:right;">
+2
+</td>
+</tr>
+</tbody>
+</table>
+<p>With the new assignments, we calculate the new cluster centers.</p>
+<table class="table" style="margin-left: auto; margin-right: auto;">
+<thead>
+<tr>
+<th style="text-align:left;">
+Cluster
+</th>
+<th style="text-align:right;">
+Rating Mean
+</th>
+<th style="text-align:right;">
+Box Office Mean
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+1
+</td>
+<td style="text-align:right;">
+7.033
+</td>
+<td style="text-align:right;">
+112.267
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+2
+</td>
+<td style="text-align:right;">
+6.800
+</td>
+<td style="text-align:right;">
+81.100
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+3
+</td>
+<td style="text-align:right;">
+5.575
+</td>
+<td style="text-align:right;">
+45.800
+</td>
+</tr>
+</tbody>
+</table>
+<p>The new centers appear in Figure <a href="additional-topics.html#fig:sandy3">7.4</a>.</p>
+<div class="figure" style="text-align: center"><span style="display:block;" id="fig:sandy3"></span>
+<img src="_main_files/figure-html/sandy3-1.png" alt="New cluster centers (squares)" width="75%" />
+<p class="caption">
+Figure 7.4: New cluster centers (squares)
+</p>
+</div>
+<p>Next we calculate the new distances and make any necessary reassignments.</p>
+<table class="table" style="margin-left: auto; margin-right: auto;">
+<thead>
+<tr>
+<th style="text-align:left;">
+Movie
+</th>
+<th style="text-align:right;">
+Rating
+</th>
+<th style="text-align:right;">
+Box Office
+</th>
+<th style="text-align:right;">
+Old Cluster
+</th>
+<th style="text-align:right;">
+D1
+</th>
+<th style="text-align:right;">
+D2
+</th>
+<th style="text-align:right;">
+D3
+</th>
+<th style="text-align:right;">
+New Cluster
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+28 Days
+</td>
+<td style="text-align:right;">
+6.1
+</td>
+<td style="text-align:right;">
+37.2
+</td>
+<td style="text-align:right;">
+3
+</td>
+<td style="text-align:right;">
+75.07
+</td>
+<td style="text-align:right;">
+43.91
+</td>
+<td style="text-align:right;">
+8.62
+</td>
+<td style="text-align:right;">
+3
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+A Time to Kill
+</td>
+<td style="text-align:right;">
+7.5
+</td>
+<td style="text-align:right;">
+108.8
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+3.50
+</td>
+<td style="text-align:right;">
+27.71
+</td>
+<td style="text-align:right;">
+63.03
+</td>
+<td style="text-align:right;">
+1
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Miss Congeniality
+</td>
+<td style="text-align:right;">
+6.3
+</td>
+<td style="text-align:right;">
+106.8
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+5.52
+</td>
+<td style="text-align:right;">
+25.70
+</td>
+<td style="text-align:right;">
+61.00
+</td>
+<td style="text-align:right;">
+1
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+The Net
+</td>
+<td style="text-align:right;">
+6.0
+</td>
+<td style="text-align:right;">
+50.7
+</td>
+<td style="text-align:right;">
+3
+</td>
+<td style="text-align:right;">
+61.58
+</td>
+<td style="text-align:right;">
+30.41
+</td>
+<td style="text-align:right;">
+4.92
+</td>
+<td style="text-align:right;">
+3
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Practical Magic
+</td>
+<td style="text-align:right;">
+6.3
+</td>
+<td style="text-align:right;">
+46.7
+</td>
+<td style="text-align:right;">
+3
+</td>
+<td style="text-align:right;">
+65.57
+</td>
+<td style="text-align:right;">
+34.40
+</td>
+<td style="text-align:right;">
+1.16
+</td>
+<td style="text-align:right;">
+3
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Speed
+</td>
+<td style="text-align:right;">
+7.3
+</td>
+<td style="text-align:right;">
+121.2
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+8.94
+</td>
+<td style="text-align:right;">
+40.10
+</td>
+<td style="text-align:right;">
+75.42
+</td>
+<td style="text-align:right;">
+1
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Speed 2
+</td>
+<td style="text-align:right;">
+3.9
+</td>
+<td style="text-align:right;">
+48.6
+</td>
+<td style="text-align:right;">
+3
+</td>
+<td style="text-align:right;">
+63.74
+</td>
+<td style="text-align:right;">
+32.63
+</td>
+<td style="text-align:right;">
+3.26
+</td>
+<td style="text-align:right;">
+3
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+While You Were Sleeping
+</td>
+<td style="text-align:right;">
+6.8
+</td>
+<td style="text-align:right;">
+81.1
+</td>
+<td style="text-align:right;">
+2
+</td>
+<td style="text-align:right;">
+31.17
+</td>
+<td style="text-align:right;">
+0.00
+</td>
+<td style="text-align:right;">
+35.32
+</td>
+<td style="text-align:right;">
+2
+</td>
+</tr>
+</tbody>
+</table>
+<p>As the cluster assignments have not changed, we are done.</p>
+<p>Some notes:</p>
+<ol style="list-style-type: decimal">
+<li><p>With a finite number of individuals, there will be an optimal clustering, though not necessarily unique, and the k-means algorithm might not find it.</p></li>
+<li><p>As said before, different starting assignments could lead to different results. Remember to set the seed if starting with random centers in order to get reproducible results.</p></li>
+<li><p>The magnitude of the variables will affect the clustering.</p></li>
+</ol>
+<p>In the movie data, the box office numbers are much larger than the ratings numbers. A small relative difference in box office numbers leads to a greater difference in distances. Figure <a href="additional-topics.html#fig:sandy4">7.5</a> shows the results when we use the <code>kmeans</code> function on scaled data.</p>
+<div class="figure" style="text-align: center"><span style="display:block;" id="fig:sandy4"></span>
+<img src="_main_files/figure-html/sandy4-1.png" alt="Reults from running the kmeans function on the scaled movie data" width="75%" />
+<p class="caption">
+Figure 7.5: Reults from running the kmeans function on the scaled movie data
+</p>
+</div>
+<p>The number of clusters obviously affects the results. Figure <a href="additional-topics.html#fig:sandy5">7.6</a> shows the clustering when we use four centers instead of three.</p>
+<div class="figure" style="text-align: center"><span style="display:block;" id="fig:sandy5"></span>
+<img src="_main_files/figure-html/sandy5-1.png" alt="$k$-means clustering with four centers" width="75%" />
+<p class="caption">
+Figure 7.6: <span class="math inline">\(k\)</span>-means clustering with four centers
+</p>
+</div>
+</div>
+<div id="cluster-optimization" class="section level3 unnumbered hasAnchor">
+<h3>Cluster optimization<a href="additional-topics.html#cluster-optimization" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>When you don’t know the “right” number of clusters, there are several techniques for finding the optimal number, including</p>
+<ul>
+<li><p>The elbow method</p></li>
+<li><p>The gap statistic</p></li>
+<li><p>The average silhouette method.</p></li>
+</ul>
+<p>The <code>factoextra</code> package can do all three of these calculations.</p>
+<p>The <em>elbow method</em> involves looking at a plot of the total within-cluster variance (or sum of squares). This number will naturally decrease as the number of clusters increases. When the plot of the variance has an <em>elbow</em>, that means the addition of a cluster doesn’t reduce the variance by much. Setting <code>method = "wss"</code> produces the elbow plot.</p>
+<div class="sourceCode" id="cb199"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb199-1"><a href="additional-topics.html#cb199-1" tabindex="-1"></a><span class="fu">library</span>(factoextra)</span>
+<span id="cb199-2"><a href="additional-topics.html#cb199-2" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">1234</span>)</span>
+<span id="cb199-3"><a href="additional-topics.html#cb199-3" tabindex="-1"></a><span class="fu">fviz_nbclust</span>(<span class="fu">scale</span>(MovieDF[, <span class="dv">2</span><span class="sc">:</span><span class="dv">3</span>]), kmeans, <span class="at">k.max =</span> <span class="dv">7</span>,  </span>
+<span id="cb199-4"><a href="additional-topics.html#cb199-4" tabindex="-1"></a>                <span class="at">method =</span> <span class="st">&quot;wss&quot;</span>)</span></code></pre></div>
+<div class="figure" style="text-align: center"><span style="display:block;" id="fig:elbow"></span>
+<img src="_main_files/figure-html/elbow-1.png" alt="The elbow method on the movie data" width="75%" />
+<p class="caption">
+Figure 7.7: The elbow method on the movie data
+</p>
+</div>
+<p>The graph in Figure <a href="additional-topics.html#fig:elbow">7.7</a> seems to have two prominent elbows: one at <span class="math inline">\(k=2\)</span> and another at <span class="math inline">\(k=5.\)</span> The ambiguity in the elbow method can make it difficult to decide on the optimal number of clusters.</p>
+<p>The <em>gap statistic</em> was introduced by Tibshirani, Walther, and Hastie in a paper published in 2002<span class="citation">[<a href="#ref-gap">24</a>]</span>. The gap statistic basically compares the within-cluster variance for the data with <span class="math inline">\(k\)</span> clusters to that for a “null-reference distribution”—basically a distribution with no natural clustering. The gap statistic method tries to maximize the gap statistic while trying to keep the number of clusters low. The algorithm in this case (Figure <a href="additional-topics.html#fig:gap">7.8</a> selects <span class="math inline">\(k=3\)</span> to be the optimal number.</p>
+<div class="sourceCode" id="cb200"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb200-1"><a href="additional-topics.html#cb200-1" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">1234</span>)</span>
+<span id="cb200-2"><a href="additional-topics.html#cb200-2" tabindex="-1"></a><span class="fu">fviz_nbclust</span>(<span class="fu">scale</span>(MovieDF[, <span class="dv">2</span><span class="sc">:</span><span class="dv">3</span>]), kmeans, <span class="at">k.max =</span> <span class="dv">7</span>,  </span>
+<span id="cb200-3"><a href="additional-topics.html#cb200-3" tabindex="-1"></a>                <span class="at">method =</span> <span class="st">&quot;gap&quot;</span>)</span></code></pre></div>
+<div class="figure" style="text-align: center"><span style="display:block;" id="fig:gap"></span>
+<img src="_main_files/figure-html/gap-1.png" alt="The elbow method on the movie data" width="75%" />
+<p class="caption">
+Figure 7.8: The elbow method on the movie data
+</p>
+</div>
+<p>The <em>silhouette</em> of an observation compares how close it is to the other observations in its cluster to how close it is to the observations in the nearest neighboring cluster. It’s a number in the interval <span class="math inline">\([-1,1]\)</span>. If the value is close to 1, it’s well inside its cluster. If it’s close to 0, it’s near the decision boundary. If it’s negative, it might be in the wrong cluster.
+Generally speaking, the better the clustering, the higher the average silhouette. The <em>average silhouette method</em> selects the value of <span class="math inline">\(k\)</span> that yields the maximum average silhouette. With our data, this method selects <span class="math inline">\(k=3\)</span> (Fig. <a href="additional-topics.html#fig:asm">7.9</a>).</p>
+<div class="sourceCode" id="cb201"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb201-1"><a href="additional-topics.html#cb201-1" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">1234</span>)</span>
+<span id="cb201-2"><a href="additional-topics.html#cb201-2" tabindex="-1"></a><span class="fu">fviz_nbclust</span>(<span class="fu">scale</span>(MovieDF[, <span class="dv">2</span><span class="sc">:</span><span class="dv">3</span>]), kmeans, <span class="at">k.max =</span> <span class="dv">7</span>,  </span>
+<span id="cb201-3"><a href="additional-topics.html#cb201-3" tabindex="-1"></a>                <span class="at">method =</span> <span class="st">&quot;silhouette&quot;</span>)</span></code></pre></div>
+<div class="figure" style="text-align: center"><span style="display:block;" id="fig:asm"></span>
+<img src="_main_files/figure-html/asm-1.png" alt="The elbow method on the movie data" width="75%" />
+<p class="caption">
+Figure 7.9: The elbow method on the movie data
+</p>
+</div>
+<p>To summarize, different methods can lead to different answers. We need to ask ourselves what we are trying to do with our clustering, because the answer might affect the choices we make.</p>
+</div>
+<div id="clustering-for-classification" class="section level3 unnumbered hasAnchor">
+<h3>Clustering for classification<a href="additional-topics.html#clustering-for-classification" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>We opened this section with the <code>iris</code> data frame. In that case, there are three natural clusters: the three species included in the data set. How well does clustering identify the three species involved?</p>
+<div class="sourceCode" id="cb202"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb202-1"><a href="additional-topics.html#cb202-1" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">1234</span>)</span>
+<span id="cb202-2"><a href="additional-topics.html#cb202-2" tabindex="-1"></a>iris.kmeans<span class="ot">&lt;-</span><span class="fu">kmeans</span>(iris[, <span class="dv">1</span><span class="sc">:</span><span class="dv">4</span>], <span class="at">centers =</span> <span class="dv">3</span>)</span>
+<span id="cb202-3"><a href="additional-topics.html#cb202-3" tabindex="-1"></a>iris<span class="sc">$</span>Cluster<span class="ot">&lt;-</span>iris.kmeans<span class="sc">$</span>cluster</span>
+<span id="cb202-4"><a href="additional-topics.html#cb202-4" tabindex="-1"></a>kmt<span class="ot">&lt;-</span><span class="fu">with</span>(iris, <span class="fu">table</span>(Species, Cluster))</span></code></pre></div>
+<table class="table" style="margin-left: auto; margin-right: auto;">
+<thead>
+<tr>
+<th style="text-align:left;">
+</th>
+<th style="text-align:right;">
+1
+</th>
+<th style="text-align:right;">
+2
+</th>
+<th style="text-align:right;">
+3
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+setosa
+</td>
+<td style="text-align:right;">
+50
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+0
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+versicolor
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+48
+</td>
+<td style="text-align:right;">
+2
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+virginica
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+14
+</td>
+<td style="text-align:right;">
+36
+</td>
+</tr>
+</tbody>
+</table>
+<p>When we create three clusters with the full <code>iris</code> data, we see that Cluster 1 aligns perfectly with the setosa species. Clusters 2 and 3 are dominated by the versicolor and virginica species, respectively, but three are two versicolors in Cluster 3 and 14 virginicas in Cluster 2.</p>
+</div>
+</div>
+<div id="collaborative-filtering" class="section level2 hasAnchor" number="7.2">
+<h2><span class="header-section-number">7.2</span> Collaborative Filtering<a href="additional-topics.html#collaborative-filtering" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>In 2006, the (then) video delivery service Netflix released a collection of movie ratings data for a contest<span class="citation">[<a href="#ref-Netflix">25</a>]</span>. The goal of the contest was to create an algorithm that would predict user movie ratings based on previous customer ratings. Using old ratings to predict new ratings is an example of <em>collaborative filtering</em>. Here is a very small scale example.</p>
+<p>We asked six students to rate a collection of movies on a scale from 1 to 10. Here is a collection of the results from six users and nine movies. There are some missing values that represent movies that were not seen. We’d like to fill in the NA values.</p>
+<table class="table" style="margin-left: auto; margin-right: auto;">
+<thead>
+<tr>
+<th style="text-align:left;">
+</th>
+<th style="text-align:right;">
+User1
+</th>
+<th style="text-align:right;">
+User2
+</th>
+<th style="text-align:right;">
+User3
+</th>
+<th style="text-align:right;">
+User4
+</th>
+<th style="text-align:right;">
+User5
+</th>
+<th style="text-align:right;">
+User6
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+Avengers: Endgame
+</td>
+<td style="text-align:right;">
+9
+</td>
+<td style="text-align:right;">
+9
+</td>
+<td style="text-align:right;">
+9
+</td>
+<td style="text-align:right;">
+10
+</td>
+<td style="text-align:right;">
+9
+</td>
+<td style="text-align:right;">
+10
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Captain Marvel
+</td>
+<td style="text-align:right;">
+8
+</td>
+<td style="text-align:right;">
+3
+</td>
+<td style="text-align:right;">
+8
+</td>
+<td style="text-align:right;">
+7
+</td>
+<td style="text-align:right;">
+7
+</td>
+<td style="text-align:right;">
+6
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Frozen II
+</td>
+<td style="text-align:right;">
+NA
+</td>
+<td style="text-align:right;">
+5
+</td>
+<td style="text-align:right;">
+7
+</td>
+<td style="text-align:right;">
+7
+</td>
+<td style="text-align:right;">
+7
+</td>
+<td style="text-align:right;">
+6
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Joker
+</td>
+<td style="text-align:right;">
+6
+</td>
+<td style="text-align:right;">
+9
+</td>
+<td style="text-align:right;">
+7
+</td>
+<td style="text-align:right;">
+6
+</td>
+<td style="text-align:right;">
+10
+</td>
+<td style="text-align:right;">
+10
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+The Lion King
+</td>
+<td style="text-align:right;">
+NA
+</td>
+<td style="text-align:right;">
+3
+</td>
+<td style="text-align:right;">
+9
+</td>
+<td style="text-align:right;">
+NA
+</td>
+<td style="text-align:right;">
+7
+</td>
+<td style="text-align:right;">
+10
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Parasite
+</td>
+<td style="text-align:right;">
+10
+</td>
+<td style="text-align:right;">
+6
+</td>
+<td style="text-align:right;">
+10
+</td>
+<td style="text-align:right;">
+NA
+</td>
+<td style="text-align:right;">
+8
+</td>
+<td style="text-align:right;">
+10
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Spider-Man: Far From Home
+</td>
+<td style="text-align:right;">
+6
+</td>
+<td style="text-align:right;">
+7
+</td>
+<td style="text-align:right;">
+9
+</td>
+<td style="text-align:right;">
+8
+</td>
+<td style="text-align:right;">
+8
+</td>
+<td style="text-align:right;">
+10
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Star Wars IX: The Rise of Skywalker
+</td>
+<td style="text-align:right;">
+7
+</td>
+<td style="text-align:right;">
+6
+</td>
+<td style="text-align:right;">
+6
+</td>
+<td style="text-align:right;">
+7
+</td>
+<td style="text-align:right;">
+8
+</td>
+<td style="text-align:right;">
+9
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Toy Story 4
+</td>
+<td style="text-align:right;">
+7
+</td>
+<td style="text-align:right;">
+3
+</td>
+<td style="text-align:right;">
+5
+</td>
+<td style="text-align:right;">
+9
+</td>
+<td style="text-align:right;">
+NA
+</td>
+<td style="text-align:right;">
+10
+</td>
+</tr>
+</tbody>
+</table>
+<p>For instance, what kind of review might User 1 give to FROZEN II, which they hadn’t seen yet?</p>
+<p>There are some averages that we could use.</p>
+<ul>
+<li><p>The <em>grand average</em> of all ratings for all movies seen is 7.61.</p></li>
+<li><p>The <em>user average</em> is the average of each user’s ratings.</p></li>
+</ul>
+<table class="table" style="margin-left: auto; margin-right: auto;">
+<thead>
+<tr>
+<th style="text-align:left;">
+User
+</th>
+<th style="text-align:right;">
+Mean
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+User1
+</td>
+<td style="text-align:right;">
+7.57
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+User2
+</td>
+<td style="text-align:right;">
+5.67
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+User3
+</td>
+<td style="text-align:right;">
+7.78
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+User4
+</td>
+<td style="text-align:right;">
+7.71
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+User5
+</td>
+<td style="text-align:right;">
+8.00
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+User6
+</td>
+<td style="text-align:right;">
+9.00
+</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li>The <em>item average</em> (movie average) is the average of each movie’s ratings.</li>
+</ul>
+<table class="table" style="margin-left: auto; margin-right: auto;">
+<thead>
+<tr>
+<th style="text-align:left;">
+Movie
+</th>
+<th style="text-align:right;">
+Mean
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+Avengers: Endgame
+</td>
+<td style="text-align:right;">
+9.33
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Captain Marvel
+</td>
+<td style="text-align:right;">
+6.50
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Frozen II
+</td>
+<td style="text-align:right;">
+6.40
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Joker
+</td>
+<td style="text-align:right;">
+8.00
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+The Lion King
+</td>
+<td style="text-align:right;">
+7.25
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Parasite
+</td>
+<td style="text-align:right;">
+8.80
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Spider-Man: Far From Home
+</td>
+<td style="text-align:right;">
+8.00
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Star Wars IX: The Rise of Skywalker
+</td>
+<td style="text-align:right;">
+7.17
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Toy Story 4
+</td>
+<td style="text-align:right;">
+6.80
+</td>
+</tr>
+</tbody>
+</table>
+<p>One estimate could take all of these into account: the fact that a movie’s ratings are below or above the average ratings (<em>item bias</em>), and how a user’s ratings compare to the average rating (<em>user bias</em>). The FROZEN II average rating is 6.40, which is below the overall average rating of 7.61. User 1’s average rating is 7.57, which is 0.04 below the overall average. We could simply take the movie average of 6.40 and adjust it downward by 0.04 to get a predicted rating of 6.36. Note that we could also start at 7.57 for the User’s average rating and adjust it by the FROZEN II bias of <span class="math inline">\(6.40-7.61=-1.21\)</span> to get the predicted rating: <span class="math inline">\(7.57+-1.21=6.36.\)</span></p>
+<p><em>Collaborative filtering</em> finds similar users or similar movies, and uses their ratings to fill in the blanks.</p>
+<ul>
+<li><p><em>User-User</em> methods find the users who are most similar to the user in question, and use their ratings to estimate the missing movie rating.</p></li>
+<li><p><em>Item-Item</em> methods find the items (movies) that are most similar to the movie in question, and use the user’s ratings on those movies to fill in the blank.</p></li>
+</ul>
+<div id="similarity-measures" class="section level3 unnumbered hasAnchor">
+<h3>Similarity measures<a href="additional-topics.html#similarity-measures" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Before we can find the similar movies or users, we need a way to measure similarity. There are a couple of measures that are commonly used. The first is <em>cosine similarity</em>:</p>
+<div class="defbox">
+<div class="definition">
+<p><span id="def:unlabeled-div-130" class="definition"><strong>Definition 7.1  </strong></span>Let <span class="math inline">\(\mathbf{x}\)</span> and <span class="math inline">\(\mathbf{y}\)</span> be the vectors of user (or movie) ratings, ignoring the missing values. Then the <strong>cosine similarity</strong> between <span class="math inline">\(\mathbf{x}\)</span> and <span class="math inline">\(\mathbf{y}\)</span> is</p>
+<p><span class="math display">\[\text{CosSim}(\mathbf{x},\mathbf{y})=\frac{\mathbf{x}\cdot \mathbf{y}}{|\mathbf{x}||\mathbf{y}|}.\]</span></p>
+</div>
+</div>
+<p>We’ve seen this before. It’s the cosine of the angle between the vectors <span class="math inline">\(\mathbf{x}\)</span> and <span class="math inline">\(\mathbf{y}\)</span>. Since the ratings are all positive, it will be a number between 0 and 1. The closer to 1, the more similar the users (or movies). The closer to 0, the less similar.</p>
+<p>For example, we could use cosine similarity to compare Users 1 and 2:</p>
+<table class="table" style="margin-left: auto; margin-right: auto;">
+<thead>
+<tr>
+<th style="text-align:left;">
+</th>
+<th style="text-align:right;">
+User1
+</th>
+<th style="text-align:right;">
+User2
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+Avengers: Endgame
+</td>
+<td style="text-align:right;">
+9
+</td>
+<td style="text-align:right;">
+9
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Captain Marvel
+</td>
+<td style="text-align:right;">
+8
+</td>
+<td style="text-align:right;">
+3
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Frozen II
+</td>
+<td style="text-align:right;">
+NA
+</td>
+<td style="text-align:right;">
+5
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Joker
+</td>
+<td style="text-align:right;">
+6
+</td>
+<td style="text-align:right;">
+9
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+The Lion King
+</td>
+<td style="text-align:right;">
+NA
+</td>
+<td style="text-align:right;">
+3
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Parasite
+</td>
+<td style="text-align:right;">
+10
+</td>
+<td style="text-align:right;">
+6
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Spider-Man: Far From Home
+</td>
+<td style="text-align:right;">
+6
+</td>
+<td style="text-align:right;">
+7
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Star Wars IX: The Rise of Skywalker
+</td>
+<td style="text-align:right;">
+7
+</td>
+<td style="text-align:right;">
+6
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Toy Story 4
+</td>
+<td style="text-align:right;">
+7
+</td>
+<td style="text-align:right;">
+3
+</td>
+</tr>
+</tbody>
+</table>
+<p>Users 1 and 2 have 7 movies in common. The vectors are
+<span class="math inline">\(\mathbf{x}=(9,8,6,10,6,7,7)\)</span> and <span class="math inline">\(\mathbf{y}=(9,3,9,6,7,6,3).\)</span> Their cosine similarity is</p>
+<p><span class="math display">\[\text{CosSim}(\mathbf{x},\mathbf{y})=\frac{324}{\sqrt{415}\sqrt{301}}=0.9167.\]</span></p>
+<p>We can make a table of all the cosine similarities.</p>
+<table class="table" style="margin-left: auto; margin-right: auto;">
+<thead>
+<tr>
+<th style="text-align:left;">
+</th>
+<th style="text-align:right;">
+User1
+</th>
+<th style="text-align:right;">
+User2
+</th>
+<th style="text-align:right;">
+User3
+</th>
+<th style="text-align:right;">
+User4
+</th>
+<th style="text-align:right;">
+User5
+</th>
+<th style="text-align:right;">
+User6
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+User1
+</td>
+<td style="text-align:right;">
+1.0000
+</td>
+<td style="text-align:right;">
+0.9167
+</td>
+<td style="text-align:right;">
+0.9827
+</td>
+<td style="text-align:right;">
+0.9898
+</td>
+<td style="text-align:right;">
+0.9695
+</td>
+<td style="text-align:right;">
+0.9703
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+User2
+</td>
+<td style="text-align:right;">
+0.9167
+</td>
+<td style="text-align:right;">
+1.0000
+</td>
+<td style="text-align:right;">
+0.9278
+</td>
+<td style="text-align:right;">
+0.9225
+</td>
+<td style="text-align:right;">
+0.9715
+</td>
+<td style="text-align:right;">
+0.9398
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+User3
+</td>
+<td style="text-align:right;">
+0.9827
+</td>
+<td style="text-align:right;">
+0.9278
+</td>
+<td style="text-align:right;">
+1.0000
+</td>
+<td style="text-align:right;">
+0.9755
+</td>
+<td style="text-align:right;">
+0.9785
+</td>
+<td style="text-align:right;">
+0.9711
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+User4
+</td>
+<td style="text-align:right;">
+0.9898
+</td>
+<td style="text-align:right;">
+0.9225
+</td>
+<td style="text-align:right;">
+0.9755
+</td>
+<td style="text-align:right;">
+1.0000
+</td>
+<td style="text-align:right;">
+0.9792
+</td>
+<td style="text-align:right;">
+0.9805
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+User5
+</td>
+<td style="text-align:right;">
+0.9695
+</td>
+<td style="text-align:right;">
+0.9715
+</td>
+<td style="text-align:right;">
+0.9785
+</td>
+<td style="text-align:right;">
+0.9792
+</td>
+<td style="text-align:right;">
+1.0000
+</td>
+<td style="text-align:right;">
+0.9885
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+User6
+</td>
+<td style="text-align:right;">
+0.9703
+</td>
+<td style="text-align:right;">
+0.9398
+</td>
+<td style="text-align:right;">
+0.9711
+</td>
+<td style="text-align:right;">
+0.9805
+</td>
+<td style="text-align:right;">
+0.9885
+</td>
+<td style="text-align:right;">
+1.0000
+</td>
+</tr>
+</tbody>
+</table>
+<p>Collaborative filters often use a certain number, say <span class="math inline">\(N\)</span>, of the users that have the highest similarity measure with the one in question. If we use the three nearest neighbors to User 1, they are User 4, User 3, and User 6, in descending order.</p>
+<p>We can average the FROZEN II ratings for Users 4, 3, and and 6 to predict User 1’s rating, but we should <em>weight</em> them by similarity. The weighted average rating is</p>
+<p><span class="math display">\[\text{Rating}=\frac{7\cdot 0.9827+7\cdot 0.9898+6\cdot 0.9703}{0.9827+0.9898+0.9703}=6.6703.\]</span></p>
+<p>In general, if we have <span class="math inline">\(N\)</span> nearest neighbors with similarity scores of <span class="math inline">\(s_1,\dots,s_N\)</span> and ratings <span class="math inline">\(r_1,\dots,r_N\)</span>, the weighted average rating is</p>
+<p><span class="math display">\[\text{Rating}=\frac{\sum_{i=1}^N r_i s_i}{\sum_{i=1}^N s_i}.\]</span></p>
+<p>Another popular measure of similarity is the Pearson correlation coefficient. The Pearson correlation coefficient is actually the cosine similarity after the vectors have been centered at their means. (As a consequence, the Pearson correlation coefficient is not defined if one of the vectors is constant.)</p>
+<p>Here are the Pearson correlations between FROZEN II and all of the other movies.</p>
+<table class="table" style="margin-left: auto; margin-right: auto;">
+<thead>
+<tr>
+<th style="text-align:left;">
+Movie
+</th>
+<th style="text-align:right;">
+r
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+Avengers: Endgame
+</td>
+<td style="text-align:right;">
+0.102
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Captain Marvel
+</td>
+<td style="text-align:right;">
+0.959
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Frozen II
+</td>
+<td style="text-align:right;">
+1.000
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Joker
+</td>
+<td style="text-align:right;">
+-0.431
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+The Lion King
+</td>
+<td style="text-align:right;">
+0.647
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Parasite
+</td>
+<td style="text-align:right;">
+0.636
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Spider-Man: Far From Home
+</td>
+<td style="text-align:right;">
+0.294
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Star Wars IX: The Rise of Skywalker
+</td>
+<td style="text-align:right;">
+0.129
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Toy Story 4
+</td>
+<td style="text-align:right;">
+0.448
+</td>
+</tr>
+</tbody>
+</table>
+<p>The three movies most positively correlated with FROZEN II are CAPTAIN MARVEL (<span class="math inline">\(r=0.959\)</span>), THE LION KING (<span class="math inline">\(r=0.647\)</span>), and PARASITE (<span class="math inline">\(r=0.636\)</span>.)</p>
+<p>We can use User 1’s ratings on CAPTAIN MARVEL, THE LION KING, and PARASITE to estimate their rating for FROZEN II. The problem is that User 1 didn’t see THE LION KING. In this case, we can use the item average of 7.25.</p>
+<p>With the Pearson correlations as weights, we estimate User 1’s rating of FROZEN II to be</p>
+<p><span class="math display">\[\text{Rating}=\frac{8\cdot 0.959+7.25\cdot 0.647+10\cdot 0.636}{0.959+0.647+0.636}=8.3509.\]</span></p>
+</div>
+<div id="collaborative-filtering-with-recommenderlab" class="section level3 unnumbered hasAnchor">
+<h3>Collaborative filtering with recommenderlab<a href="additional-topics.html#collaborative-filtering-with-recommenderlab" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>We can use the <code>recommenderlab</code> package to perform more complicated collaborative filtering operations. Figure <a href="additional-topics.html#fig:rrm">7.10</a> displays the ratings on a grayscale. Missing ratings are white.</p>
+<div class="sourceCode" id="cb203"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb203-1"><a href="additional-topics.html#cb203-1" tabindex="-1"></a><span class="fu">library</span>(recommenderlab)</span>
+<span id="cb203-2"><a href="additional-topics.html#cb203-2" tabindex="-1"></a><span class="co"># To use our data, we need the movies as the variables</span></span>
+<span id="cb203-3"><a href="additional-topics.html#cb203-3" tabindex="-1"></a><span class="co"># and we need it in matrix form, which we then convert</span></span>
+<span id="cb203-4"><a href="additional-topics.html#cb203-4" tabindex="-1"></a><span class="co"># to a realRatingMatrix. (The movie ratings are currently</span></span>
+<span id="cb203-5"><a href="additional-topics.html#cb203-5" tabindex="-1"></a><span class="co"># in a data frame called &quot;moviesdf&quot;.)</span></span>
+<span id="cb203-6"><a href="additional-topics.html#cb203-6" tabindex="-1"></a></span>
+<span id="cb203-7"><a href="additional-topics.html#cb203-7" tabindex="-1"></a>moviest <span class="ot">&lt;-</span> <span class="fu">t</span>(<span class="fu">as.matrix</span>(moviesdf))</span>
+<span id="cb203-8"><a href="additional-topics.html#cb203-8" tabindex="-1"></a>movies.RRM <span class="ot">&lt;-</span> <span class="fu">as</span>(moviest, <span class="st">&quot;realRatingMatrix&quot;</span>)</span>
+<span id="cb203-9"><a href="additional-topics.html#cb203-9" tabindex="-1"></a></span>
+<span id="cb203-10"><a href="additional-topics.html#cb203-10" tabindex="-1"></a><span class="fu">image</span>(movies.RRM)</span></code></pre></div>
+<div class="figure" style="text-align: center"><span style="display:block;" id="fig:rrm"></span>
+<img src="_main_files/figure-html/rrm-1.png" alt="A ratings matrix plot" width="75%" />
+<p class="caption">
+Figure 7.10: A ratings matrix plot
+</p>
+</div>
+<p>Here, we fill in the blanks using cosine similarity and user-based collaborative filtering (UCBF).</p>
+<div class="sourceCode" id="cb204"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb204-1"><a href="additional-topics.html#cb204-1" tabindex="-1"></a>model_params <span class="ot">&lt;-</span> <span class="fu">list</span>(<span class="at">method =</span> <span class="st">&quot;cosine&quot;</span>, </span>
+<span id="cb204-2"><a href="additional-topics.html#cb204-2" tabindex="-1"></a>                     <span class="at">nn =</span> <span class="dv">3</span>,</span>
+<span id="cb204-3"><a href="additional-topics.html#cb204-3" tabindex="-1"></a>                     <span class="at">normalize =</span> <span class="st">&quot;center&quot;</span>)</span>
+<span id="cb204-4"><a href="additional-topics.html#cb204-4" tabindex="-1"></a>reco<span class="ot">&lt;-</span><span class="fu">Recommender</span>(movies.RRM, <span class="at">method =</span> <span class="st">&quot;UBCF&quot;</span>,</span>
+<span id="cb204-5"><a href="additional-topics.html#cb204-5" tabindex="-1"></a>                  <span class="at">parameter =</span> model_params)</span>
+<span id="cb204-6"><a href="additional-topics.html#cb204-6" tabindex="-1"></a>predictions<span class="ot">&lt;-</span><span class="fu">predict</span>(reco, movies.RRM, <span class="at">type =</span> <span class="st">&quot;ratings&quot;</span>)</span>
+<span id="cb204-7"><a href="additional-topics.html#cb204-7" tabindex="-1"></a>preds<span class="ot">&lt;-</span><span class="fu">as</span>(predictions, <span class="st">&quot;matrix&quot;</span>)</span></code></pre></div>
+<p>When we print the predictions, only the missing values appear.</p>
+<table class="table" style="margin-left: auto; margin-right: auto;">
+<thead>
+<tr>
+<th style="text-align:left;">
+</th>
+<th style="text-align:right;">
+User1
+</th>
+<th style="text-align:right;">
+User2
+</th>
+<th style="text-align:right;">
+User3
+</th>
+<th style="text-align:right;">
+User4
+</th>
+<th style="text-align:right;">
+User5
+</th>
+<th style="text-align:right;">
+User6
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+Avengers: Endgame
+</td>
+<td style="text-align:right;">
+NA
+</td>
+<td style="text-align:right;">
+NA
+</td>
+<td style="text-align:right;">
+NA
+</td>
+<td style="text-align:right;">
+NA
+</td>
+<td style="text-align:right;">
+NA
+</td>
+<td style="text-align:right;">
+NA
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Captain Marvel
+</td>
+<td style="text-align:right;">
+NA
+</td>
+<td style="text-align:right;">
+NA
+</td>
+<td style="text-align:right;">
+NA
+</td>
+<td style="text-align:right;">
+NA
+</td>
+<td style="text-align:right;">
+NA
+</td>
+<td style="text-align:right;">
+NA
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Frozen II
+</td>
+<td style="text-align:right;">
+6.8
+</td>
+<td style="text-align:right;">
+NA
+</td>
+<td style="text-align:right;">
+NA
+</td>
+<td style="text-align:right;">
+NA
+</td>
+<td style="text-align:right;">
+NA
+</td>
+<td style="text-align:right;">
+NA
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Joker
+</td>
+<td style="text-align:right;">
+NA
+</td>
+<td style="text-align:right;">
+NA
+</td>
+<td style="text-align:right;">
+NA
+</td>
+<td style="text-align:right;">
+NA
+</td>
+<td style="text-align:right;">
+NA
+</td>
+<td style="text-align:right;">
+NA
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+The Lion King
+</td>
+<td style="text-align:right;">
+8.8
+</td>
+<td style="text-align:right;">
+NA
+</td>
+<td style="text-align:right;">
+NA
+</td>
+<td style="text-align:right;">
+8.7
+</td>
+<td style="text-align:right;">
+NA
+</td>
+<td style="text-align:right;">
+NA
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Parasite
+</td>
+<td style="text-align:right;">
+NA
+</td>
+<td style="text-align:right;">
+NA
+</td>
+<td style="text-align:right;">
+NA
+</td>
+<td style="text-align:right;">
+9.5
+</td>
+<td style="text-align:right;">
+NA
+</td>
+<td style="text-align:right;">
+NA
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Spider-Man: Far From Home
+</td>
+<td style="text-align:right;">
+NA
+</td>
+<td style="text-align:right;">
+NA
+</td>
+<td style="text-align:right;">
+NA
+</td>
+<td style="text-align:right;">
+NA
+</td>
+<td style="text-align:right;">
+NA
+</td>
+<td style="text-align:right;">
+NA
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Star Wars IX: The Rise of Skywalker
+</td>
+<td style="text-align:right;">
+NA
+</td>
+<td style="text-align:right;">
+NA
+</td>
+<td style="text-align:right;">
+NA
+</td>
+<td style="text-align:right;">
+NA
+</td>
+<td style="text-align:right;">
+NA
+</td>
+<td style="text-align:right;">
+NA
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Toy Story 4
+</td>
+<td style="text-align:right;">
+NA
+</td>
+<td style="text-align:right;">
+NA
+</td>
+<td style="text-align:right;">
+NA
+</td>
+<td style="text-align:right;">
+NA
+</td>
+<td style="text-align:right;">
+7
+</td>
+<td style="text-align:right;">
+NA
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div id="decision-tree-classification" class="section level2 hasAnchor" number="7.3">
+<h2><span class="header-section-number">7.3</span> Decision Tree Classification<a href="additional-topics.html#decision-tree-classification" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Decision trees can classify objects using both numerical and categorical criteria. Here is an example. Can a Titanic passenger’s cabin class (<code>Pclass</code>), sex, and embarkation location be used to predict whether or not they survived? Figure <a href="additional-topics.html#fig:tree1">7.11</a> contains a decision tree created using data from a training set.</p>
+<div style="page-break-after: always;"></div>
+<div class="figure" style="text-align: center"><span style="display:block;" id="fig:tree1"></span>
+<img src="_main_files/figure-html/tree1-1.png" alt="A decision tree for Titanic survival data" width="672" />
+<p class="caption">
+Figure 7.11: A decision tree for Titanic survival data
+</p>
+</div>
+<p>The first node shows that 62% of the passengers perished (“No” being the predominant result). If the passenger’s sex is male, we follow the tree to the left. If that is the case, we come to an end. Eighty-one percent of the male passengers in the training set died. If the passenger sex is female, we go to the right. At that point, we have 26% of the female passengers dying and 74% surviving. We can ask another question that will better separate things. If the passenger was in Third Class, we go to the left, and if not (meaning they were in First or Second Class), we go to the right, and 95% of those survived. For Third Class passengers, we see an even split. Among those who departed from Southampton (<code>Embarked=S</code>), 62% died. If they left from some other port, they were more likely to survive.</p>
+<p>To see how decision trees are created, we will look at a smaller example. The data set comes from <span class="citation">[<a href="#ref-gini">26</a>]</span>. Suppose you’re trying to decide whether options on a particular commodity are going to go up or down, based upon recent trends, open interest level, and trading volume. The table below shows ten different cases.</p>
+<table>
+<thead>
+<tr class="header">
+<th></th>
+<th>Past Trend</th>
+<th>Open Interest</th>
+<th>Trading Volume</th>
+<th>Return</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>1</td>
+<td>Positive</td>
+<td>Low</td>
+<td>High</td>
+<td>Up</td>
+</tr>
+<tr class="even">
+<td>2</td>
+<td>Negative</td>
+<td>High</td>
+<td>Low</td>
+<td>Down</td>
+</tr>
+<tr class="odd">
+<td>3</td>
+<td>Positive</td>
+<td>Low</td>
+<td>High</td>
+<td>Up</td>
+</tr>
+<tr class="even">
+<td>4</td>
+<td>Positive</td>
+<td>High</td>
+<td>High</td>
+<td>Up</td>
+</tr>
+<tr class="odd">
+<td>5</td>
+<td>Negative</td>
+<td>Low</td>
+<td>High</td>
+<td>Down</td>
+</tr>
+<tr class="even">
+<td>6</td>
+<td>Positive</td>
+<td>Low</td>
+<td>Low</td>
+<td>Down</td>
+</tr>
+<tr class="odd">
+<td>7</td>
+<td>Negative</td>
+<td>High</td>
+<td>High</td>
+<td>Down</td>
+</tr>
+<tr class="even">
+<td>8</td>
+<td>Negative</td>
+<td>Low</td>
+<td>High</td>
+<td>Down</td>
+</tr>
+<tr class="odd">
+<td>9</td>
+<td>Positive</td>
+<td>Low</td>
+<td>Low</td>
+<td>Down</td>
+</tr>
+<tr class="even">
+<td>10</td>
+<td>Positive</td>
+<td>High</td>
+<td>High</td>
+<td>Up</td>
+</tr>
+</tbody>
+</table>
+<p>We’d like to come up with a decision tree to help us determine whether an option’s return will go up or down.</p>
+<p>To start, we find the one feature (Past Trend, Open Interest, or Trading Volume) that gives us the “best” split. If we choose Past Trend, the split looks like this.</p>
+<table>
+<thead>
+<tr class="header">
+<th></th>
+<th></th>
+<th><strong>Past Trend</strong></th>
+<th></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td></td>
+<td></td>
+<td>Positive</td>
+<td>Negative</td>
+</tr>
+<tr class="even">
+<td><strong>Return</strong></td>
+<td>Up</td>
+<td>4 (4/6)</td>
+<td>0 (0/4)</td>
+</tr>
+<tr class="odd">
+<td></td>
+<td>Down</td>
+<td>2 (2/6)</td>
+<td>4 (4/4)</td>
+</tr>
+</tbody>
+</table>
+<p>Among those with a positive trend, 4 of 6 went up, while two went down. Among those with a negative trend, all four went down.</p>
+<p>The <em>Gini impurity index</em> measures how “pure” each group is. If <span class="math inline">\(p_1\)</span> and <span class="math inline">\(p_2\)</span> are respectively the proportion of “Ups” and “Downs” in a group, the Gini index is <span class="math inline">\(\text{Ginx}=2p_1p_2\)</span>. If a group contains only one type, its index will be 0. If it is evenly split, its index will be 1/2.</p>
+<p>For those with a positive trend, the Gini index is <span class="math inline">\(2\cdot\frac{4}{6}\cdot\frac{2}{6}=\frac{4}{9}\)</span>, while for those with a negative trend, it is <span class="math inline">\(2\cdot\frac{0}{4}\cdot\frac{4}{4}=0\)</span>. We then <em>weight</em> these by group size to get the weighted Gini index:</p>
+<p><span class="math display">\[\text{WeightedGinx}=\frac{6}{10}\cdot\frac{4}{9}+\frac{4}{10}\cdot0=\frac{4}{15}\approx 0.27.\]</span></p>
+<p>If we split by trading volume, we get the following.</p>
+<table>
+<thead>
+<tr class="header">
+<th></th>
+<th></th>
+<th><strong>Volume</strong></th>
+<th></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td></td>
+<td></td>
+<td>Low</td>
+<td>High</td>
+</tr>
+<tr class="even">
+<td><strong>Return</strong></td>
+<td>Up</td>
+<td>0 (0/3)</td>
+<td>4 (4/7)</td>
+</tr>
+<tr class="odd">
+<td></td>
+<td>Down</td>
+<td>3 (3/3)</td>
+<td>3 (3/7)</td>
+</tr>
+</tbody>
+</table>
+<p>The weighted Gini index when we split by trading volume is</p>
+<p><span class="math display">\[\text{WeightedGinx}=\frac{3}{10}\cdot 2\cdot 0\cdot 1+\frac{7}{10}\cdot 2\cdot \frac{4}{7}\cdot\frac{3}{7}=\frac{12}{35}\approx 0.34.\]</span></p>
+<p>Similarly, the index when we split by open interest is 0.47. A lower index means a purer split, so our first split is by Past Trend. All of the cases with a negative past trend are associated with returns being down. The trending up group still can be split. It turns out that splitting by Trading Volume at the next level creates a pure split, and we’re done. Our tree is in Figure <a href="additional-topics.html#fig:tree2">7.12</a>.</p>
+<div class="figure" style="text-align: center"><span style="display:block;" id="fig:tree2"></span>
+<img src="images/tree2.png" alt="A decision tree on the trading data" width="70%" />
+<p class="caption">
+Figure 7.12: A decision tree on the trading data
+</p>
+</div>
+<p>In reality, such perfect splits don’t occur so quickly, and most algorithms have a maximum number of splits or minimum group size.</p>
+<p>When you split on numerical data, you order the values and make the midpoints the possible splits. For example, with this mpg/transmission type data,</p>
+<table>
+<thead>
+<tr class="header">
+<th align="left">mpg</th>
+<th align="left">transmission</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">14.7</td>
+<td align="left">automatic</td>
+</tr>
+<tr class="even">
+<td align="left">15.2</td>
+<td align="left">automatic</td>
+</tr>
+<tr class="odd">
+<td align="left">19.2</td>
+<td align="left">manual</td>
+</tr>
+<tr class="even">
+<td align="left">26.0</td>
+<td align="left">automatic</td>
+</tr>
+<tr class="odd">
+<td align="left">30.4</td>
+<td align="left">manual</td>
+</tr>
+</tbody>
+</table>
+<p>the possible splits for mpg would be at <span class="math inline">\((14.7+15.2)/2=14.95,(15.2+19.2)/2=17.2\)</span> and so on.</p>
+<div id="decision-trees-with-r" class="section level3 unnumbered hasAnchor">
+<h3>Decision trees with R<a href="additional-topics.html#decision-trees-with-r" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>There are a few R packages that will create classification trees. One is <code>rpart</code>. In this example, we create a decision tree for the species in a training sample from the <code>iris</code> data set using the <code>rpart</code> function.</p>
+<div class="sourceCode" id="cb205"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb205-1"><a href="additional-topics.html#cb205-1" tabindex="-1"></a><span class="fu">library</span>(rpart)</span>
+<span id="cb205-2"><a href="additional-topics.html#cb205-2" tabindex="-1"></a><span class="fu">data</span>(iris)</span>
+<span id="cb205-3"><a href="additional-topics.html#cb205-3" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">1234</span>)</span>
+<span id="cb205-4"><a href="additional-topics.html#cb205-4" tabindex="-1"></a>inTrain <span class="ot">&lt;-</span> <span class="fu">sample</span>(<span class="fu">nrow</span>(iris), <span class="at">size =</span> <span class="fl">0.75</span><span class="sc">*</span><span class="fu">nrow</span>(iris))</span>
+<span id="cb205-5"><a href="additional-topics.html#cb205-5" tabindex="-1"></a>iris.train <span class="ot">&lt;-</span> iris[inTrain,]</span>
+<span id="cb205-6"><a href="additional-topics.html#cb205-6" tabindex="-1"></a>iris.test <span class="ot">&lt;-</span> iris[<span class="sc">-</span>inTrain,]</span>
+<span id="cb205-7"><a href="additional-topics.html#cb205-7" tabindex="-1"></a>iris.tree <span class="ot">&lt;-</span> <span class="fu">rpart</span>(Species<span class="sc">~</span>.,<span class="at">data =</span> iris.train)</span>
+<span id="cb205-8"><a href="additional-topics.html#cb205-8" tabindex="-1"></a>iris.tree</span></code></pre></div>
+<pre><code>## n= 112 
+## 
+## node), split, n, loss, yval, (yprob)
+##       * denotes terminal node
+## 
+## 1) root 112 73 virginica (0.31250000 0.33928571 0.34821429)  
+##   2) Petal.Length&lt; 2.6 35  0 setosa (1.00000000 0.00000000 0.00000000) *
+##   3) Petal.Length&gt;=2.6 77 38 virginica (0.00000000 0.49350649 0.50649351)  
+##     6) Petal.Length&lt; 5 40  3 versicolor (0.00000000 0.92500000 0.07500000) *
+##     7) Petal.Length&gt;=5 37  1 virginica (0.00000000 0.02702703 0.97297297) *</code></pre>
+<p>This output can be hard to follow. There are a couple of functions that will produce nice decision trees. The <code>rpart.plot</code> package has its namesake function. The <code>rattle</code> package has <code>fancyRpartPlot</code>, which can be fickle, but produces nice plots. Figure <a href="additional-topics.html#fig:tree3">7.13</a> shows the results for the iris training data. Note that it creates a pretty good, but not perfect, split.</p>
+<div class="sourceCode" id="cb207"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb207-1"><a href="additional-topics.html#cb207-1" tabindex="-1"></a><span class="fu">library</span>(rattle)</span>
+<span id="cb207-2"><a href="additional-topics.html#cb207-2" tabindex="-1"></a><span class="fu">fancyRpartPlot</span>(iris.tree, <span class="at">sub =</span> <span class="cn">NULL</span>) <span class="co">#print w/o stamp</span></span></code></pre></div>
+<div class="figure" style="text-align: center"><span style="display:block;" id="fig:tree3"></span>
+<img src="_main_files/figure-html/tree3-1.png" alt="A decision tree for the iris data" width="75%" />
+<p class="caption">
+Figure 7.13: A decision tree for the iris data
+</p>
+</div>
+<p>We can now use the decision tree to make predictions on the testing set. The function <code>confusionMatrix</code> comes from the <code>caret</code> package.</p>
+<div class="sourceCode" id="cb208"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb208-1"><a href="additional-topics.html#cb208-1" tabindex="-1"></a><span class="fu">library</span>(caret)</span>
+<span id="cb208-2"><a href="additional-topics.html#cb208-2" tabindex="-1"></a>preds <span class="ot">&lt;-</span> <span class="fu">predict</span>(iris.tree, <span class="at">newdata =</span> iris.test,</span>
+<span id="cb208-3"><a href="additional-topics.html#cb208-3" tabindex="-1"></a>                <span class="at">type =</span> <span class="st">&quot;class&quot;</span>)</span>
+<span id="cb208-4"><a href="additional-topics.html#cb208-4" tabindex="-1"></a><span class="fu">confusionMatrix</span>(preds, iris.test<span class="sc">$</span>Species)<span class="sc">$</span>table</span></code></pre></div>
+<pre><code>##             Reference
+## Prediction   setosa versicolor virginica
+##   setosa         15          0         0
+##   versicolor      0         11         3
+##   virginica       0          1         8</code></pre>
+<p>Overall, it does a pretty good job, though, as we’ve seen before, there is some confusion between versicolor and virginica.</p>
+</div>
+<div id="random-forests" class="section level3 unnumbered hasAnchor">
+<h3>Random Forests<a href="additional-topics.html#random-forests" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p><em>Random forest</em> models create multiple classification trees and make classifications based on consensus picks. There are actually two random elements:</p>
+<ol style="list-style-type: decimal">
+<li><p>Each tree in a random forest uses a random subset of the training data.</p></li>
+<li><p>Each tree in a random forest can use a random subset of the available features (variables). The number of features used can be chosen, or a package might experiment to find the best number.</p></li>
+</ol>
+<p>Here is some sample output. Note that because of the randomness involved, the seed should be set for reproducibility.</p>
+<div class="sourceCode" id="cb210"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb210-1"><a href="additional-topics.html#cb210-1" tabindex="-1"></a><span class="fu">library</span>(randomForest)</span>
+<span id="cb210-2"><a href="additional-topics.html#cb210-2" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">1234</span>)</span>
+<span id="cb210-3"><a href="additional-topics.html#cb210-3" tabindex="-1"></a>iris.rf <span class="ot">&lt;-</span> <span class="fu">randomForest</span>(Species<span class="sc">~</span>., <span class="at">data =</span> iris.train)</span>
+<span id="cb210-4"><a href="additional-topics.html#cb210-4" tabindex="-1"></a>iris.rf</span></code></pre></div>
+<pre><code>## 
+## Call:
+##  randomForest(formula = Species ~ ., data = iris.train) 
+##                Type of random forest: classification
+##                      Number of trees: 500
+## No. of variables tried at each split: 2
+## 
+##         OOB estimate of  error rate: 5.36%
+## Confusion matrix:
+##            setosa versicolor virginica class.error
+## setosa         35          0         0  0.00000000
+## versicolor      0         36         2  0.05263158
+## virginica       0          4        35  0.10256410</code></pre>
+<p>The random forest model itself is too messy to display here. When we apply it to the testing set, we get better results than the decision tree.</p>
+<div class="sourceCode" id="cb212"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb212-1"><a href="additional-topics.html#cb212-1" tabindex="-1"></a>preds.rf<span class="ot">&lt;-</span><span class="fu">predict</span>(iris.rf, <span class="at">newdata =</span> iris.test)</span>
+<span id="cb212-2"><a href="additional-topics.html#cb212-2" tabindex="-1"></a><span class="fu">confusionMatrix</span>(preds.rf, iris.test<span class="sc">$</span>Species)<span class="sc">$</span>table</span></code></pre></div>
+<pre><code>##             Reference
+## Prediction   setosa versicolor virginica
+##   setosa         15          0         0
+##   versicolor      0         11         1
+##   virginica       0          1        10</code></pre>
+<p>Here are some advantages and disadvantages of the random forest approach.</p>
+<p>Advantages:</p>
+<ul>
+<li><p>Reduces overfitting by decision trees.</p></li>
+<li><p>Works well on nonlinear data.</p></li>
+<li><p>Generally don’t need to pre-process data.</p></li>
+</ul>
+<p>Disadvantages:</p>
+<ul>
+<li><p>It can be slow and take a lot of computational power.</p></li>
+<li><p>It can’t be interpreted.</p></li>
+</ul>
+</div>
+</div>
+<div id="support-vector-machines" class="section level2 hasAnchor" number="7.4">
+<h2><span class="header-section-number">7.4</span> Support Vector Machines<a href="additional-topics.html#support-vector-machines" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Support vector machines are common methods for classifying objects. Figure <a href="additional-topics.html#fig:svm1">7.14</a> shows a simple case. The training data consist of two types: A and B. The two groups are well separated.</p>
+<div class="figure" style="text-align: center"><span style="display:block;" id="fig:svm1"></span>
+<img src="images/svm0.png" alt="Nicely separated 1-dimensional data" width="70%" />
+<p class="caption">
+Figure 7.14: Nicely separated 1-dimensional data
+</p>
+</div>
+<p>To classify new data, we pick a <em>threshold</em> value. When we put it at the midpoint between the two closest observations from the two groups, the <em>margin</em> is maximized, giving us a <em>maximal margin classifier</em> (Fig. <a href="additional-topics.html#fig:svm1a">7.15</a>). New values to the left of the threshold will be classified as type A, and those to the right will be classified as type B.</p>
+<div class="figure" style="text-align: center"><span style="display:block;" id="fig:svm1a"></span>
+<img src="images/svm1a.png" alt="A maximal margin classifier" width="70%" />
+<p class="caption">
+Figure 7.15: A maximal margin classifier
+</p>
+</div>
+<p>If our data have two variables, the threshold will be a line (Fig. <a href="additional-topics.html#fig:svm23">7.16</a>).</p>
+<div class="figure" style="text-align: center"><span style="display:block;" id="fig:svm23"></span>
+<img src="images/svd21.png" alt="Two dimensional data" width="40%" /><img src="images/svd3.png" alt="Two dimensional data" width="40%" />
+<p class="caption">
+Figure 7.16: Two dimensional data
+</p>
+</div>
+<p>In 3 dimensions, it will be a plane. In higher dimensions, it is called a “hyperplane (of codimension 1).”</p>
+<p>The optimal line is calculated using a formula involving the dot products of all the points when considered as vectors. The points on the margin are called <em>support vectors</em> (Fig. <a href="additional-topics.html#fig:svm3a">7.17</a>).</p>
+<div class="figure" style="text-align: center"><span style="display:block;" id="fig:svm3a"></span>
+<img src="images/svd3a.png" alt="Support vectors" width="70%" />
+<p class="caption">
+Figure 7.17: Support vectors
+</p>
+</div>
+<p>Data can’t always be perfectly separated this way. In Figure <a href="additional-topics.html#fig:svdb1">7.18</a> on the left, we have an outlier in the B data that is very close to the A values. Putting the threshold between these values would almost certainly lead to misclassification of future type A observations. An even more likely issue is that it could be impossible to separate the two groups by a single number or line or plane. We have to allow for possible misclassification in the training set if we want to create any type of threshold.</p>
+<div class="figure" style="text-align: center"><span style="display:block;" id="fig:svdb1"></span>
+<img src="images/svdb1.png" alt="Some issues" width="40%" /><img src="images/svdb2.png" alt="Some issues" width="40%" />
+<p class="caption">
+Figure 7.18: Some issues
+</p>
+</div>
+<p>When we allow for misclassifications, we include a <em>cost function</em> in our optimization problem. Some observations will be on or inside what is now a <em>soft margin</em>. These are all support vectors, and the resulting classifier is a <em>soft margin</em> or <em>support vector</em> classifier (Fig. <a href="additional-topics.html#fig:svd56">7.19</a>).</p>
+<div class="figure" style="text-align: center"><span style="display:block;" id="fig:svd56"></span>
+<img src="images/svd5.png" alt="Soft margins" width="40%" /><img src="images/svd6.png" alt="Soft margins" width="40%" />
+<p class="caption">
+Figure 7.19: Soft margins
+</p>
+</div>
+<p>What if the data look like Figure <a href="additional-topics.html#fig:svm8">7.20</a>? Type A is concentrated in the center, while type B is on the extremes. Our support vector classifier won’t do a great job on this one.</p>
+<div class="figure" style="text-align: center"><span style="display:block;" id="fig:svm8"></span>
+<img src="images/svm8.png" alt="One type surrounded by another" width="70%" />
+<p class="caption">
+Figure 7.20: One type surrounded by another
+</p>
+</div>
+<p><em>Support vector machines</em> take lower-dimensional data and transform them into higher dimensions, where they can be separated. For example, if we add a new variable to our old data by just squaring the <span class="math inline">\(x\)</span> values, it will look like Figure <a href="additional-topics.html#fig:svm9">7.21</a>. (Note: the line and margins were drawn in by hand, so they probably are not horizontal in reality.)</p>
+<div class="figure" style="text-align: center"><span style="display:block;" id="fig:svm9"></span>
+<img src="images/svm9.png" alt="Transforming into a higher dimension" width="70%" />
+<p class="caption">
+Figure 7.21: Transforming into a higher dimension
+</p>
+</div>
+<p>As mentioned before, finding the optimal threshold involves finding the dot products between all of the observations. It can be computationally expensive to transform the data and then find all of the dot products. Fortunately, for many types of transformations, we can calculate the dot products without actually having to compute the transformations. This involves <em>kernels</em>.</p>
+<p>If <span class="math inline">\(\varphi\)</span> is the transformation, then the corresponding kernel function <span class="math inline">\(K\)</span> satisfies</p>
+<p><span class="math display">\[K(\mathbf{u},\mathbf{v})=\varphi(\mathbf{u})\cdot \varphi(\mathbf{v}),\]</span></p>
+<p>where <span class="math inline">\(\mathbf{u}\)</span> and <span class="math inline">\(\mathbf{v}\)</span> are two untransformed observations.</p>
+<p>The <em>polynomial kernel</em> can be used for polynomial transformations. The kernel is</p>
+<p><span class="math display">\[K(\textbf{u},\textbf{v})=(\textbf{u}\cdot\textbf{v}+c)^d,\]</span></p>
+<p>where <span class="math inline">\(d\)</span> is the degree of the transformation and <span class="math inline">\(c\)</span> is a parameter that can be adjusted. Both <span class="math inline">\(c\)</span> and <span class="math inline">\(d\)</span> can be optimized using cross-validation and other techniques. For the transformation in Figure <a href="additional-topics.html#fig:svm9">7.21</a>, <span class="math inline">\(\varphi(x)=(x,x^2)\)</span>, the values <span class="math inline">\(c=1/2\)</span> and <span class="math inline">\(d=2\)</span> give the proper kernel.</p>
+<p>Here is how it works. Suppose we have <span class="math inline">\(x_1\)</span> and <span class="math inline">\(x_2\)</span>. Then applying the transformation gives us <span class="math inline">\((x_1,x_1^2)\)</span> and <span class="math inline">\((x_2,x_2^2)\)</span>. We actually add a third component equal to 1/2 to make the constant work out. This is because</p>
+<p><span class="math display">\[(x_1,x_1^2,1/2)\cdot(x_2,x_2^2,1/2)=x_1x_2+x_1^2x_2^2+1/4,\]</span></p>
+<p>while</p>
+<p><span class="math display">\[(x_1\cdot x_2+1/2)^2=(x_1x_2)^2+2\cdot\frac{1}{2}x_1x_2+(\frac{1}{2})^2=x_1^2x_2^2+x_1x_2+1/4.\]</span></p>
+<p>Note that with one-dimensional data, the dot product is the regular product.</p>
+<div id="support-vector-machines-in-r" class="section level3 unnumbered hasAnchor">
+<h3>Support vector machines in R<a href="additional-topics.html#support-vector-machines-in-r" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>There are a couple of ways to perform classification using support vector machines in R. The <code>e1071</code> package has an <code>svm</code> function. You need to set the type of kernel used. (See <code>?svm</code> for available kernels.) In this example, we again work with the iris data frame, but remove the setosa species, and use just the petal length and sepal width.</p>
+<div class="sourceCode" id="cb214"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb214-1"><a href="additional-topics.html#cb214-1" tabindex="-1"></a><span class="fu">library</span>(e1071)</span>
+<span id="cb214-2"><a href="additional-topics.html#cb214-2" tabindex="-1"></a><span class="fu">library</span>(caret)</span>
+<span id="cb214-3"><a href="additional-topics.html#cb214-3" tabindex="-1"></a>iris2 <span class="ot">&lt;-</span> <span class="fu">subset</span>(iris, Species <span class="sc">!=</span> <span class="st">&quot;setosa&quot;</span>)</span>
+<span id="cb214-4"><a href="additional-topics.html#cb214-4" tabindex="-1"></a>iris3 <span class="ot">&lt;-</span> iris2[, <span class="fu">c</span>(<span class="dv">2</span>, <span class="dv">3</span>, <span class="dv">5</span>)] </span>
+<span id="cb214-5"><a href="additional-topics.html#cb214-5" tabindex="-1"></a>iris3<span class="sc">$</span>Species <span class="ot">&lt;-</span> <span class="fu">droplevels</span>(iris3<span class="sc">$</span>Species) </span>
+<span id="cb214-6"><a href="additional-topics.html#cb214-6" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">123</span>)</span>
+<span id="cb214-7"><a href="additional-topics.html#cb214-7" tabindex="-1"></a>inTrain <span class="ot">&lt;-</span> <span class="fu">createDataPartition</span>(iris3<span class="sc">$</span>Species, <span class="at">p =</span> <span class="fl">0.75</span>,</span>
+<span id="cb214-8"><a href="additional-topics.html#cb214-8" tabindex="-1"></a>                                <span class="at">list =</span> F)</span>
+<span id="cb214-9"><a href="additional-topics.html#cb214-9" tabindex="-1"></a>training <span class="ot">&lt;-</span> iris3[inTrain,]</span>
+<span id="cb214-10"><a href="additional-topics.html#cb214-10" tabindex="-1"></a>testing <span class="ot">&lt;-</span> iris3[<span class="sc">-</span>inTrain,]</span>
+<span id="cb214-11"><a href="additional-topics.html#cb214-11" tabindex="-1"></a>iris.svm <span class="ot">&lt;-</span> <span class="fu">svm</span>(Species <span class="sc">~</span>., <span class="at">data =</span> training, <span class="at">kernel =</span> <span class="st">&quot;linear&quot;</span>)</span>
+<span id="cb214-12"><a href="additional-topics.html#cb214-12" tabindex="-1"></a>iris.svm</span></code></pre></div>
+<pre><code>## 
+## Call:
+## svm(formula = Species ~ ., data = training, kernel = &quot;linear&quot;)
+## 
+## 
+## Parameters:
+##    SVM-Type:  C-classification 
+##  SVM-Kernel:  linear 
+##        cost:  1 
+## 
+## Number of Support Vectors:  22</code></pre>
+<p>When we apply the <code>plot</code> function to the output, we get Figure <a href="additional-topics.html#fig:svmout">7.22</a>. The support vectors are marked by an <code>x</code>, while the remaining points are marked by an <code>o</code>. The color of the symbol shows the species.</p>
+<div class="sourceCode" id="cb216"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb216-1"><a href="additional-topics.html#cb216-1" tabindex="-1"></a><span class="fu">plot</span>(iris.svm, <span class="at">data=</span>training, <span class="at">grid =</span> <span class="dv">100</span>)</span></code></pre></div>
+<div class="figure" style="text-align: center"><span style="display:block;" id="fig:svmout"></span>
+<img src="_main_files/figure-html/svmout-1.png" alt="A plot of an SVM applied to a training set" width="75%" />
+<p class="caption">
+Figure 7.22: A plot of an SVM applied to a training set
+</p>
+</div>
+<p>How well does it predict on the testing set?</p>
+<div class="sourceCode" id="cb217"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb217-1"><a href="additional-topics.html#cb217-1" tabindex="-1"></a>preds <span class="ot">&lt;-</span> <span class="fu">predict</span>(iris.svm, <span class="at">newdata =</span> testing)</span>
+<span id="cb217-2"><a href="additional-topics.html#cb217-2" tabindex="-1"></a><span class="fu">confusionMatrix</span>(preds, testing<span class="sc">$</span>Species)<span class="sc">$</span>table</span></code></pre></div>
+<pre><code>##             Reference
+## Prediction   versicolor virginica
+##   versicolor         10         0
+##   virginica           2        12</code></pre>
+<p>Can we do better with a different type of kernel? The radial kernel is the default kernel for the <code>svm</code> function. We get a nonlinear threshold (Fig. <a href="additional-topics.html#fig:radialk">7.23</a>).</p>
+<div class="sourceCode" id="cb219"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb219-1"><a href="additional-topics.html#cb219-1" tabindex="-1"></a>iris.svmr <span class="ot">&lt;-</span> <span class="fu">svm</span>(Species <span class="sc">~</span>., <span class="at">data =</span> training, <span class="at">kernel =</span> <span class="st">&quot;radial&quot;</span>)</span>
+<span id="cb219-2"><a href="additional-topics.html#cb219-2" tabindex="-1"></a><span class="fu">plot</span>(iris.svmr, <span class="at">data =</span> training, <span class="at">grid =</span> <span class="dv">100</span>)</span></code></pre></div>
+<div class="figure" style="text-align: center"><span style="display:block;" id="fig:radialk"></span>
+<img src="_main_files/figure-html/radialk-1.png" alt="The radial kernel" width="75%" />
+<p class="caption">
+Figure 7.23: The radial kernel
+</p>
+</div>
+<p>Are the predictions better? Not for this data.</p>
+<div class="sourceCode" id="cb220"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb220-1"><a href="additional-topics.html#cb220-1" tabindex="-1"></a>predsr <span class="ot">&lt;-</span> <span class="fu">predict</span>(iris.svmr, <span class="at">newdata =</span> testing)</span>
+<span id="cb220-2"><a href="additional-topics.html#cb220-2" tabindex="-1"></a><span class="fu">confusionMatrix</span>(predsr, testing<span class="sc">$</span>Species)<span class="sc">$</span>table</span></code></pre></div>
+<pre><code>##             Reference
+## Prediction   versicolor virginica
+##   versicolor         10         0
+##   virginica           2        12</code></pre>
+<p>You can also use support vector machines as methods in <code>caret</code>’s <code>train</code> function. See the associated help page for kernel-specific methods.</p>
+</div>
+</div>
+<div id="exercises-6" class="section level2 hasAnchor" number="7.5">
+<h2><span class="header-section-number">7.5</span> Exercises<a href="additional-topics.html#exercises-6" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<ol style="list-style-type: decimal">
+<li>The chart below shows eight <span class="math inline">\((x,y)\)</span>-pairs and an initial clustering.
+<ol style="list-style-type: lower-alpha">
+<li>Find the two centers based on the initial clustering.</li>
+<li>Find the distance from each <span class="math inline">\((x,y)\)</span>-pair to each center.</li>
+<li>Find the new cluster assignments based on these distances.</li>
+</ol></li>
+</ol>
+<table>
+<thead>
+<tr class="header">
+<th align="left"><span class="math inline">\(x\)</span></th>
+<th align="left"><span class="math inline">\(y\)</span></th>
+<th align="left">Initial Cluster</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">1</td>
+<td align="left">4</td>
+<td align="left">1</td>
+</tr>
+<tr class="even">
+<td align="left">4</td>
+<td align="left">5</td>
+<td align="left">1</td>
+</tr>
+<tr class="odd">
+<td align="left">9</td>
+<td align="left">9</td>
+<td align="left">1</td>
+</tr>
+<tr class="even">
+<td align="left">6</td>
+<td align="left">6</td>
+<td align="left">1</td>
+</tr>
+<tr class="odd">
+<td align="left">1</td>
+<td align="left">3</td>
+<td align="left">2</td>
+</tr>
+<tr class="even">
+<td align="left">4</td>
+<td align="left">6</td>
+<td align="left">2</td>
+</tr>
+<tr class="odd">
+<td align="left">7</td>
+<td align="left">5</td>
+<td align="left">2</td>
+</tr>
+<tr class="even">
+<td align="left">4</td>
+<td align="left">2</td>
+<td align="left">2</td>
+</tr>
+</tbody>
+</table>
+<ol start="2" style="list-style-type: decimal">
+<li>The chart below shows eight <span class="math inline">\((x,y)\)</span>-pairs and an initial clustering.
+<ol style="list-style-type: lower-alpha">
+<li>Find the two centers based on the initial clustering.</li>
+<li>Find the distance from each <span class="math inline">\((x,y)\)</span>-pair to each center.</li>
+<li>Find the new cluster assignments based on these distances.</li>
+</ol></li>
+</ol>
+<table>
+<thead>
+<tr class="header">
+<th align="left"><span class="math inline">\(x\)</span></th>
+<th align="left"><span class="math inline">\(y\)</span></th>
+<th align="left">Initial Cluster</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">2</td>
+<td align="left">3</td>
+<td align="left">1</td>
+</tr>
+<tr class="even">
+<td align="left">6</td>
+<td align="left">2</td>
+<td align="left">1</td>
+</tr>
+<tr class="odd">
+<td align="left">8</td>
+<td align="left">1</td>
+<td align="left">1</td>
+</tr>
+<tr class="even">
+<td align="left">4</td>
+<td align="left">6</td>
+<td align="left">1</td>
+</tr>
+<tr class="odd">
+<td align="left">1</td>
+<td align="left">3</td>
+<td align="left">2</td>
+</tr>
+<tr class="even">
+<td align="left">6</td>
+<td align="left">6</td>
+<td align="left">2</td>
+</tr>
+<tr class="odd">
+<td align="left">3</td>
+<td align="left">5</td>
+<td align="left">2</td>
+</tr>
+<tr class="even">
+<td align="left">4</td>
+<td align="left">2</td>
+<td align="left">2</td>
+</tr>
+</tbody>
+</table>
+<ol start="3" style="list-style-type: decimal">
+<li>The <code>faithful</code> data set from base R has information on waiting time between eruptions and eruption duration.
+<ol style="list-style-type: lower-alpha">
+<li>Set the seed to be 123 and then find the optimal number of clusters using the gap statistic. Make sure you scale the data.</li>
+<li>With that optimal number of clusters, use the <code>kmeans</code> function to create the clustering. Set the seed again to 123 before running the function.</li>
+<li>Create a scatterplot of the data, with <code>waiting</code> as a function of <code>eruption</code>. Use the cluster to color the scatterplot.</li>
+<li>Use the <code>$centers</code> portion of the kmeans output to describe the different clusters.</li>
+</ol></li>
+<li>The <code>state.x77</code> data set has state-by-state information taken from a 1977 U.S. Census Bureau report. Turn it into a data frame by executing <code>states &lt;- data.frame(state.x77)</code>.
+<ol style="list-style-type: lower-alpha">
+<li>Set the seed to be 1729 and then find the optimal number of clusters using the gap statistic. Make sure you scale the data.</li>
+<li>With that optimal number of clusters, use the <code>kmeans</code> function to create the clustering. Set the seed again to 1729 before running the function.</li>
+<li>Create a scatterplot of the data, with <code>Area</code> on the horizonal axis and <code>Population</code> on the vertical axis. Use the cluster to color the scatterplot.</li>
+<li>Use the <code>$centers</code> portion of the kmeans output to describe the different clusters.</li>
+</ol></li>
+<li>The table below has movie review data that we saw in the Chapter 6 Exercises. This time, some of the ratings are missing.
+<ol style="list-style-type: lower-alpha">
+<li>Find the cosine similarity between Users 4 and 5 by hand.</li>
+<li>The <code>coop</code> package has a <code>cosine</code> function that calculates cosine similarities between vectors or between columns of matrices. Use the argument <code>use = "complete.obs"</code> so that it will ignore missing values. Use this function on the <em>transpose</em> of the ratings matrix to find all cosine similarities involving User 4.</li>
+<li>Create a weighted average of the two nearest neighbors to User 4 to estimate their rating for <em>American Beauty</em>.</li>
+</ol></li>
+</ol>
+<table>
+<colgroup>
+<col width="6%" />
+<col width="26%" />
+<col width="19%" />
+<col width="23%" />
+<col width="24%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th align="left">User</th>
+<th align="left">American Beauty</th>
+<th align="left">Apollo 13</th>
+<th align="left">Forrest Gump</th>
+<th align="left">Jurassic Park</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left"><strong>1</strong></td>
+<td align="left">4.00</td>
+<td align="left">3.50</td>
+<td align="left">5.00</td>
+<td align="left">4.50</td>
+</tr>
+<tr class="even">
+<td align="left"><strong>2</strong></td>
+<td align="left">5.00</td>
+<td align="left">3.00</td>
+<td align="left">NA</td>
+<td align="left">3.50</td>
+</tr>
+<tr class="odd">
+<td align="left"><strong>3</strong></td>
+<td align="left">4.00</td>
+<td align="left">5.00</td>
+<td align="left">4.00</td>
+<td align="left">4.00</td>
+</tr>
+<tr class="even">
+<td align="left"><strong>4</strong></td>
+<td align="left">NA</td>
+<td align="left">4.00</td>
+<td align="left">5.00</td>
+<td align="left">3.50</td>
+</tr>
+<tr class="odd">
+<td align="left"><strong>5</strong></td>
+<td align="left">5.00</td>
+<td align="left">2.50</td>
+<td align="left">5.00</td>
+<td align="left">3.50</td>
+</tr>
+<tr class="even">
+<td align="left"><strong>6</strong></td>
+<td align="left">4.00</td>
+<td align="left">3.00</td>
+<td align="left">5.00</td>
+<td align="left">4.50</td>
+</tr>
+</tbody>
+</table>
+<ol start="6" style="list-style-type: decimal">
+<li>Again, we will use the partial ratings data from Problem 5. This time we will try to fill in User 2’s rating for <em>Forrest Gump</em>.
+<ol style="list-style-type: lower-alpha">
+<li>Calculate the cosine similarity between <em>Forrest Gump</em> and <em>Jurassic Park</em>.</li>
+<li>Calculate the all cosine similarities between movies. See Problem 5 for instructions. This time, we don’t need to transpose the matrix.</li>
+<li>Create a weighted average of User 2’s ratings of the two nearest neighbors to <em>Forrest Gump</em> to estimate their rating for it.</li>
+</ol></li>
+<li>Below is a small set of information on nine Titanic passengers. We want to create a decision tree to predict whether a passenger survived or perished.
+<ol style="list-style-type: lower-alpha">
+<li>Two passenger classes appear in the data. Compute the weighted Gini index if the split is based on class.</li>
+<li>Compute the weighted Gini index if the split is based on Sex.</li>
+<li>What should the first split be?</li>
+</ol></li>
+</ol>
+<table>
+<thead>
+<tr class="header">
+<th align="left">Survived</th>
+<th align="left">Pclass</th>
+<th align="left">Sex</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">N</td>
+<td align="left">3</td>
+<td align="left">male</td>
+</tr>
+<tr class="even">
+<td align="left">Y</td>
+<td align="left">1</td>
+<td align="left">female</td>
+</tr>
+<tr class="odd">
+<td align="left">Y</td>
+<td align="left">3</td>
+<td align="left">female</td>
+</tr>
+<tr class="even">
+<td align="left">N</td>
+<td align="left">1</td>
+<td align="left">female</td>
+</tr>
+<tr class="odd">
+<td align="left">N</td>
+<td align="left">3</td>
+<td align="left">male</td>
+</tr>
+<tr class="even">
+<td align="left">N</td>
+<td align="left">3</td>
+<td align="left">male</td>
+</tr>
+<tr class="odd">
+<td align="left">Y</td>
+<td align="left">1</td>
+<td align="left">male</td>
+</tr>
+<tr class="even">
+<td align="left">N</td>
+<td align="left">3</td>
+<td align="left">male</td>
+</tr>
+<tr class="odd">
+<td align="left">Y</td>
+<td align="left">3</td>
+<td align="left">female</td>
+</tr>
+</tbody>
+</table>
+<ol start="8" style="list-style-type: decimal">
+<li>Here is a different set of ten Titanic passengers.
+<ol style="list-style-type: lower-alpha">
+<li>Two passenger classes appear in the data. Compute the weighted Gini index if the split is based on class.</li>
+<li>Compute the weighted Gini index if the split is based on Sex.</li>
+<li>What should the first split be?</li>
+</ol></li>
+</ol>
+<table>
+<thead>
+<tr class="header">
+<th align="left">Survived</th>
+<th align="left">Pclass</th>
+<th align="left">Sex</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">N</td>
+<td align="left">1</td>
+<td align="left">male</td>
+</tr>
+<tr class="even">
+<td align="left">Y</td>
+<td align="left">1</td>
+<td align="left">female</td>
+</tr>
+<tr class="odd">
+<td align="left">Y</td>
+<td align="left">3</td>
+<td align="left">female</td>
+</tr>
+<tr class="even">
+<td align="left">N</td>
+<td align="left">1</td>
+<td align="left">male</td>
+</tr>
+<tr class="odd">
+<td align="left">N</td>
+<td align="left">1</td>
+<td align="left">male</td>
+</tr>
+<tr class="even">
+<td align="left">N</td>
+<td align="left">1</td>
+<td align="left">male</td>
+</tr>
+<tr class="odd">
+<td align="left">Y</td>
+<td align="left">3</td>
+<td align="left">male</td>
+</tr>
+<tr class="even">
+<td align="left">N</td>
+<td align="left">3</td>
+<td align="left">male</td>
+</tr>
+<tr class="odd">
+<td align="left">N</td>
+<td align="left">3</td>
+<td align="left">female</td>
+</tr>
+<tr class="even">
+<td align="left">Y</td>
+<td align="left">3</td>
+<td align="left">female</td>
+</tr>
+</tbody>
+</table>
+<ol start="9" style="list-style-type: decimal">
+<li><p>The <code>Pima.tr</code> data frame in the <code>MASS</code> package contains information related to diabetes in Native American women.</p>
+<ol style="list-style-type: lower-alpha">
+<li>Create and plot a decision tree with <code>type</code> as the dependent variable.</li>
+<li>Use the decision tree to predict whether or not the person with the following values has diabetes. (Not all values will be used.)
+<ul>
+<li>glu = 150</li>
+<li>age = 30</li>
+<li>bmi = 40</li>
+<li>bp = 90</li>
+<li>ped = 0.5</li>
+</ul></li>
+<li>The <code>Pima.te</code> data frame is a testing set. Use your decision tree to make predictions on the testing set. Create a confusion matrix to determine the overall accuracy of the predictions.</li>
+</ol></li>
+<li><p>The <code>Pima.tr2</code> data frame is similar to the <code>Pima.tr</code> data frame, but has some missing values.</p>
+<ol style="list-style-type: lower-alpha">
+<li>Create and plot a decision tree with <code>type</code> as the dependent variable using the <code>Pima.tr2</code> data frame.</li>
+<li>Use the decision tree to predict whether or not the person with the following values has diabetes. (Not all values will be used.)
+<ul>
+<li>glu = 120</li>
+<li>age = 25</li>
+<li>bmi = 25</li>
+<li>bp = 65</li>
+<li>ped = 0.2</li>
+</ul></li>
+<li>Use your decision tree to make predictions on the <code>Pima.te</code> testing set. Create a confusion matrix to determine the overall accuracy of the predictions.</li>
+</ol></li>
+<li><p>This time we will create a random forest using the <code>Pima.tr</code> data.</p>
+<ol style="list-style-type: lower-alpha">
+<li>Set the seed to 1234 and create the random forest, with <code>type</code> as the dependent variable.</li>
+<li>Use the random forest to predict the type using the <code>Pima.te</code> testing data. Create a confusion matrix to determine the overall accuracy of the predictions.</li>
+</ol></li>
+<li><p>The <code>randomForest</code> function doesn’t work with missing data, but there is an <code>rfImpute</code> function that will impute missing values.</p>
+<ol style="list-style-type: lower-alpha">
+<li>Set the seed to 1234 and define <code>Pima.imputed &lt;-rfImpute(type~., data = Pima.tr2)</code></li>
+<li>Set the seed to 1234 and create the random forest on the <code>Pima.imputed</code> data.</li>
+<li>Use the random forest to predict the type using the <code>Pima.te</code> testing data. Create a confusion matrix to determine the overall accuracy of the predictions.</li>
+</ol></li>
+<li><p>Create a support vector machine to predict transmission type <code>am</code> based on all of the other variables. Because the <code>am</code> variable is seen as numerical, you will have to use <code>as.factor(am)</code> in the function call. Set the kernel to <code>linear</code>. Use the predict function on the original data. Create a confusion matrix to determine the accuracy of the predictions. (You will have to again convert <code>am</code> to a factor variable.)</p></li>
+<li><p>Repeat Problem 13, but with a radial kernel.</p></li>
+<li><p>We can use support vector machines when there are more than two levels. Create a support vector machine with a linear kernel to predict the <code>Species</code> with the full <code>iris</code> data frame. Use <code>Petal.Length</code> and <code>Petal.Width</code> as the independent variables.</p>
+<ol style="list-style-type: lower-alpha">
+<li>Apply the <code>plot</code> function to the output. You will need to set <code>data=iris[,3:5]</code>, so as not to confuse the function.</li>
+<li>USe the <code>predict</code> function on the original data. Create a confusion matrix to determine the accuracy of the predictions.</li>
+</ol></li>
+<li><p>Repeat Problem 15, but with a radial kernel.</p></li>
+<li><p>Repeat Problem 15, but with <code>kernel = "polynomial"</code> and the degree set to:</p>
+<ol style="list-style-type: lower-alpha">
+<li>The default, which is 3.</li>
+<li>Two (<code>degree = 2</code>).</li>
+</ol></li>
+</ol>
+
+</div>
+</div>
+
+
+
+</div>
+<h3>References<a href="references.html#references" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<div id="refs" class="references csl-bib-body" entry-spacing="0">
+<div id="ref-IMDB" class="csl-entry">
+<div class="csl-left-margin">23. </div><div class="csl-right-inline"><a href="http://imdb.com">The internet movie database</a>.</div>
+</div>
+<div id="ref-gap" class="csl-entry">
+<div class="csl-left-margin">24. </div><div class="csl-right-inline">Tibshirani R, Walther G, Hastie T (2002) <span class="nocase">Estimating the Number of Clusters in a Data Set Via the Gap Statistic</span>. <em>Journal of the Royal Statistical Society Series B: Statistical Methodology</em> 63: 411–423.</div>
+</div>
+<div id="ref-Netflix" class="csl-entry">
+<div class="csl-left-margin">25. </div><div class="csl-right-inline">Bell RM, Koren Y (2007) Lessons from the netflix prize challenge. <em>Acm Sigkdd Explorations Newsletter</em> 9: 75–79.</div>
+</div>
+<div id="ref-gini" class="csl-entry">
+<div class="csl-left-margin">26. </div><div class="csl-right-inline">Thakar C, Tahsildar S (2022) <a href="https://blog.quantinsti.com/gini-index/">Gini index: Decision tree, formula, calculator, gini coefficient in machine learning</a>.</div>
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="svd-and-pca.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="MVCA.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"whatsapp": false,
+"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": "https://github.com/USERNAME/REPO/edit/BRANCH/07-Additional.Rmd",
+"text": "Edit"
+},
+"history": {
+"link": null,
+"text": null
+},
+"view": {
+"link": null,
+"text": null
+},
+"download": ["_main.pdf", "_main.epub"],
+"search": {
+"engine": "fuse",
+"options": null
+},
+"toc": {
+"collapse": "subsection"
+},
+"split_bib": false
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.9/latest.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>

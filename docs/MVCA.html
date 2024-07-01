@@ -1,0 +1,955 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>A An Introduction to Multivariable Calculus | Linear Algebra for Data Science</title>
+  <meta name="description" content="<p>This is a minimal example of using the bookdown package to write a book.
+The HTML output format for this example is bookdown::gitbook,
+set in the _output.yml file.</p>" />
+  <meta name="generator" content="bookdown 0.39 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="A An Introduction to Multivariable Calculus | Linear Algebra for Data Science" />
+  <meta property="og:type" content="book" />
+  <meta property="og:image" content="/images/mfdscover.png" />
+  <meta property="og:description" content="<p>This is a minimal example of using the bookdown package to write a book.
+The HTML output format for this example is bookdown::gitbook,
+set in the _output.yml file.</p>" />
+  
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="A An Introduction to Multivariable Calculus | Linear Algebra for Data Science" />
+  
+  <meta name="twitter:description" content="<p>This is a minimal example of using the bookdown package to write a book.
+The HTML output format for this example is bookdown::gitbook,
+set in the _output.yml file.</p>" />
+  <meta name="twitter:image" content="/images/mfdscover.png" />
+
+<meta name="author" content="Tom Tegtmeyer" />
+
+
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="additional-topics.html"/>
+<link rel="next" href="the-igraph-and-ggally-packages.html"/>
+<script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+<link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
+<link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
+<script src="libs/kePrint-0.0.1/kePrint.js"></script>
+<link href="libs/lightable-0.0.1/lightable.css" rel="stylesheet" />
+
+
+<style type="text/css">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { color: #008000; } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { color: #008000; font-weight: bold; } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+<style type="text/css">
+  
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+</style>
+<style type="text/css">
+/* Used with Pandoc 2.11+ new --citeproc when CSL is used */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+  margin-bottom: 0em;
+}
+.hanging div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}
+</style>
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">Linear Algebra for Data Science</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Preface</a></li>
+<li class="chapter" data-level="1" data-path="matrices-and-systems-of-equations.html"><a href="matrices-and-systems-of-equations.html"><i class="fa fa-check"></i><b>1</b> Matrices and Systems of Equations</a>
+<ul>
+<li class="chapter" data-level="1.1" data-path="matrices-and-systems-of-equations.html"><a href="matrices-and-systems-of-equations.html#systems-of-equations"><i class="fa fa-check"></i><b>1.1</b> Systems of Equations</a>
+<ul>
+<li class="chapter" data-level="" data-path="matrices-and-systems-of-equations.html"><a href="matrices-and-systems-of-equations.html#the-geometry"><i class="fa fa-check"></i>The geometry</a></li>
+<li class="chapter" data-level="" data-path="matrices-and-systems-of-equations.html"><a href="matrices-and-systems-of-equations.html#the-three-cases"><i class="fa fa-check"></i>The three cases</a></li>
+</ul></li>
+<li class="chapter" data-level="1.2" data-path="matrices-and-systems-of-equations.html"><a href="matrices-and-systems-of-equations.html#GE"><i class="fa fa-check"></i><b>1.2</b> Method of Solution: Gaussian Elimination</a>
+<ul>
+<li class="chapter" data-level="" data-path="matrices-and-systems-of-equations.html"><a href="matrices-and-systems-of-equations.html#parameters"><i class="fa fa-check"></i>Parameters</a></li>
+<li class="chapter" data-level="" data-path="matrices-and-systems-of-equations.html"><a href="matrices-and-systems-of-equations.html#more-equations-more-variables"><i class="fa fa-check"></i>More equations, more variables</a></li>
+<li class="chapter" data-level="" data-path="matrices-and-systems-of-equations.html"><a href="matrices-and-systems-of-equations.html#overdetermined-and-underdetermined-systems"><i class="fa fa-check"></i>Overdetermined and underdetermined systems</a></li>
+</ul></li>
+<li class="chapter" data-level="1.3" data-path="matrices-and-systems-of-equations.html"><a href="matrices-and-systems-of-equations.html#matrices"><i class="fa fa-check"></i><b>1.3</b> Matrices</a>
+<ul>
+<li class="chapter" data-level="" data-path="matrices-and-systems-of-equations.html"><a href="matrices-and-systems-of-equations.html#elementary-row-operations"><i class="fa fa-check"></i>Elementary row operations</a></li>
+<li class="chapter" data-level="" data-path="matrices-and-systems-of-equations.html"><a href="matrices-and-systems-of-equations.html#row-echelon-form"><i class="fa fa-check"></i>Row echelon form</a></li>
+<li class="chapter" data-level="" data-path="matrices-and-systems-of-equations.html"><a href="matrices-and-systems-of-equations.html#reduced-row-echelon-form"><i class="fa fa-check"></i>Reduced row echelon form</a></li>
+<li class="chapter" data-level="" data-path="matrices-and-systems-of-equations.html"><a href="matrices-and-systems-of-equations.html#TM"><i class="fa fa-check"></i>Matrices with Technology</a></li>
+</ul></li>
+<li class="chapter" data-level="1.4" data-path="matrices-and-systems-of-equations.html"><a href="matrices-and-systems-of-equations.html#BMO"><i class="fa fa-check"></i><b>1.4</b> Basic Matrix Operations</a>
+<ul>
+<li class="chapter" data-level="" data-path="matrices-and-systems-of-equations.html"><a href="matrices-and-systems-of-equations.html#row-and-column-vectors"><i class="fa fa-check"></i>Row and column vectors</a></li>
+<li class="chapter" data-level="" data-path="matrices-and-systems-of-equations.html"><a href="matrices-and-systems-of-equations.html#matrix-addition"><i class="fa fa-check"></i>Matrix addition</a></li>
+<li class="chapter" data-level="" data-path="matrices-and-systems-of-equations.html"><a href="matrices-and-systems-of-equations.html#scalar-multiplication"><i class="fa fa-check"></i>Scalar Multiplication</a></li>
+<li class="chapter" data-level="" data-path="matrices-and-systems-of-equations.html"><a href="matrices-and-systems-of-equations.html#matrix-multiplication"><i class="fa fa-check"></i>Matrix multiplication</a></li>
+<li class="chapter" data-level="" data-path="matrices-and-systems-of-equations.html"><a href="matrices-and-systems-of-equations.html#multiplying-two-matrices"><i class="fa fa-check"></i>Multiplying two matrices</a></li>
+<li class="chapter" data-level="" data-path="matrices-and-systems-of-equations.html"><a href="matrices-and-systems-of-equations.html#identity-matrices"><i class="fa fa-check"></i>Identity Matrices</a></li>
+<li class="chapter" data-level="" data-path="matrices-and-systems-of-equations.html"><a href="matrices-and-systems-of-equations.html#technology"><i class="fa fa-check"></i>Technology</a></li>
+<li class="chapter" data-level="" data-path="matrices-and-systems-of-equations.html"><a href="matrices-and-systems-of-equations.html#the-transpose-of-a-matrix"><i class="fa fa-check"></i>The transpose of a matrix</a></li>
+</ul></li>
+<li class="chapter" data-level="1.5" data-path="matrices-and-systems-of-equations.html"><a href="matrices-and-systems-of-equations.html#Inverses"><i class="fa fa-check"></i><b>1.5</b> Matrix Inverses</a>
+<ul>
+<li class="chapter" data-level="" data-path="matrices-and-systems-of-equations.html"><a href="matrices-and-systems-of-equations.html#finding-inverses"><i class="fa fa-check"></i>Finding inverses</a></li>
+<li class="chapter" data-level="" data-path="matrices-and-systems-of-equations.html"><a href="matrices-and-systems-of-equations.html#a-formula-for-2-x-2-matrices"><i class="fa fa-check"></i>A formula for 2 x 2 matrices</a></li>
+</ul></li>
+<li class="chapter" data-level="1.6" data-path="matrices-and-systems-of-equations.html"><a href="matrices-and-systems-of-equations.html#dets"><i class="fa fa-check"></i><b>1.6</b> Determinants</a>
+<ul>
+<li class="chapter" data-level="" data-path="matrices-and-systems-of-equations.html"><a href="matrices-and-systems-of-equations.html#triangular-and-diagonal-matrices"><i class="fa fa-check"></i>Triangular and diagonal matrices</a></li>
+<li class="chapter" data-level="" data-path="matrices-and-systems-of-equations.html"><a href="matrices-and-systems-of-equations.html#upper-and-lower-triangular-matrices"><i class="fa fa-check"></i>Upper and lower triangular matrices</a></li>
+</ul></li>
+<li class="chapter" data-level="1.7" data-path="matrices-and-systems-of-equations.html"><a href="matrices-and-systems-of-equations.html#systems-of-linear-equations-as-matrix-equations"><i class="fa fa-check"></i><b>1.7</b> Systems of Linear Equations as Matrix Equations</a>
+<ul>
+<li class="chapter" data-level="" data-path="matrices-and-systems-of-equations.html"><a href="matrices-and-systems-of-equations.html#how-does-row-reduction-work"><i class="fa fa-check"></i>How does row reduction work?</a></li>
+</ul></li>
+<li class="chapter" data-level="1.8" data-path="matrices-and-systems-of-equations.html"><a href="matrices-and-systems-of-equations.html#Colley"><i class="fa fa-check"></i><b>1.8</b> Application: The Colley Matrix Method</a>
+<ul>
+<li class="chapter" data-level="" data-path="matrices-and-systems-of-equations.html"><a href="matrices-and-systems-of-equations.html#ratings-and-rankings"><i class="fa fa-check"></i>Ratings and Rankings</a></li>
+<li class="chapter" data-level="" data-path="matrices-and-systems-of-equations.html"><a href="matrices-and-systems-of-equations.html#the-bcs-and-wes-colley"><i class="fa fa-check"></i>The BCS and Wes Colley</a></li>
+<li class="chapter" data-level="" data-path="matrices-and-systems-of-equations.html"><a href="matrices-and-systems-of-equations.html#the-colley-matrix"><i class="fa fa-check"></i>The Colley Matrix</a></li>
+</ul></li>
+<li class="chapter" data-level="1.9" data-path="matrices-and-systems-of-equations.html"><a href="matrices-and-systems-of-equations.html#exercises"><i class="fa fa-check"></i><b>1.9</b> Exercises</a></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="vector-spaces.html"><a href="vector-spaces.html"><i class="fa fa-check"></i><b>2</b> Vector Spaces</a>
+<ul>
+<li class="chapter" data-level="2.1" data-path="vector-spaces.html"><a href="vector-spaces.html#artoo"><i class="fa fa-check"></i><b>2.1</b> The Vector Space <span class="math inline">\(\mathbb{R}^n\)</span></a>
+<ul>
+<li class="chapter" data-level="" data-path="vector-spaces.html"><a href="vector-spaces.html#vector-addition-and-scalar-multiplication"><i class="fa fa-check"></i>Vector addition and scalar multiplication</a></li>
+<li class="chapter" data-level="" data-path="vector-spaces.html"><a href="vector-spaces.html#linear-dependence-and-independence"><i class="fa fa-check"></i>Linear dependence and independence</a></li>
+<li class="chapter" data-level="" data-path="vector-spaces.html"><a href="vector-spaces.html#linear-combinations"><i class="fa fa-check"></i>Linear Combinations</a></li>
+<li class="chapter" data-level="" data-path="vector-spaces.html"><a href="vector-spaces.html#mathbbr3-and-mathbbrn"><i class="fa fa-check"></i><span class="math inline">\(\mathbb{R}^3\)</span> and <span class="math inline">\(\mathbb{R}^n\)</span></a></li>
+</ul></li>
+<li class="chapter" data-level="2.2" data-path="vector-spaces.html"><a href="vector-spaces.html#subspaces"><i class="fa fa-check"></i><b>2.2</b> Subspaces</a></li>
+<li class="chapter" data-level="2.3" data-path="vector-spaces.html"><a href="vector-spaces.html#linear-dependence-and-independence-1"><i class="fa fa-check"></i><b>2.3</b> Linear Dependence and Independence</a>
+<ul>
+<li class="chapter" data-level="" data-path="vector-spaces.html"><a href="vector-spaces.html#linear-dependence-revisited"><i class="fa fa-check"></i>Linear dependence revisited</a></li>
+</ul></li>
+<li class="chapter" data-level="2.4" data-path="vector-spaces.html"><a href="vector-spaces.html#basis-and-dimension"><i class="fa fa-check"></i><b>2.4</b> Basis and Dimension</a>
+<ul>
+<li class="chapter" data-level="" data-path="vector-spaces.html"><a href="vector-spaces.html#the-standard-basis-for-mathbbrn"><i class="fa fa-check"></i>The standard basis for <span class="math inline">\(\mathbb{R}^n\)</span></a></li>
+<li class="chapter" data-level="" data-path="vector-spaces.html"><a href="vector-spaces.html#the-dimension-of-a-subspace"><i class="fa fa-check"></i>The dimension of a subspace</a></li>
+<li class="chapter" data-level="" data-path="vector-spaces.html"><a href="vector-spaces.html#the-dimension-of-the-nullspace"><i class="fa fa-check"></i>The dimension of the Nullspace</a></li>
+<li class="chapter" data-level="" data-path="vector-spaces.html"><a href="vector-spaces.html#the-column-space-of-a-matrix"><i class="fa fa-check"></i>The column space of a matrix</a></li>
+<li class="chapter" data-level="" data-path="vector-spaces.html"><a href="vector-spaces.html#the-row-space"><i class="fa fa-check"></i>The row space</a></li>
+</ul></li>
+<li class="chapter" data-level="2.5" data-path="vector-spaces.html"><a href="vector-spaces.html#exercises-1"><i class="fa fa-check"></i><b>2.5</b> Exercises</a></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="eigenvalues-and-eigenvectors.html"><a href="eigenvalues-and-eigenvectors.html"><i class="fa fa-check"></i><b>3</b> Eigenvalues and Eigenvectors</a>
+<ul>
+<li class="chapter" data-level="3.1" data-path="eigenvalues-and-eigenvectors.html"><a href="eigenvalues-and-eigenvectors.html#eigenvalues-and-eigenvectors-1"><i class="fa fa-check"></i><b>3.1</b> Eigenvalues and Eigenvectors</a>
+<ul>
+<li class="chapter" data-level="" data-path="eigenvalues-and-eigenvectors.html"><a href="eigenvalues-and-eigenvectors.html#eigenvalues-and-eigenvectors-in-r"><i class="fa fa-check"></i>Eigenvalues and Eigenvectors in R</a></li>
+<li class="chapter" data-level="" data-path="eigenvalues-and-eigenvectors.html"><a href="eigenvalues-and-eigenvectors.html#higher-dimensional-matrices"><i class="fa fa-check"></i>Higher dimensional matrices</a></li>
+</ul></li>
+<li class="chapter" data-level="3.2" data-path="eigenvalues-and-eigenvectors.html"><a href="eigenvalues-and-eigenvectors.html#special-cases-and-complications"><i class="fa fa-check"></i><b>3.2</b> Special Cases and Complications</a>
+<ul>
+<li class="chapter" data-level="" data-path="eigenvalues-and-eigenvectors.html"><a href="eigenvalues-and-eigenvectors.html#diagonal-and-triangular-matrices"><i class="fa fa-check"></i>Diagonal and triangular matrices</a></li>
+<li class="chapter" data-level="" data-path="eigenvalues-and-eigenvectors.html"><a href="eigenvalues-and-eigenvectors.html#the-trace"><i class="fa fa-check"></i>The trace</a></li>
+<li class="chapter" data-level="" data-path="eigenvalues-and-eigenvectors.html"><a href="eigenvalues-and-eigenvectors.html#complications"><i class="fa fa-check"></i>Complications</a></li>
+<li class="chapter" data-level="" data-path="eigenvalues-and-eigenvectors.html"><a href="eigenvalues-and-eigenvectors.html#eigenvalues-of-a-transpose"><i class="fa fa-check"></i>Eigenvalues of a transpose</a></li>
+<li class="chapter" data-level="" data-path="eigenvalues-and-eigenvectors.html"><a href="eigenvalues-and-eigenvectors.html#matrix-powers"><i class="fa fa-check"></i>Matrix powers</a></li>
+</ul></li>
+<li class="chapter" data-level="3.3" data-path="eigenvalues-and-eigenvectors.html"><a href="eigenvalues-and-eigenvectors.html#application-the-leslie-matrix"><i class="fa fa-check"></i><b>3.3</b> Application: The Leslie Matrix</a></li>
+<li class="chapter" data-level="3.4" data-path="eigenvalues-and-eigenvectors.html"><a href="eigenvalues-and-eigenvectors.html#graphs-and-adjacency-matrices"><i class="fa fa-check"></i><b>3.4</b> Graphs and Adjacency Matrices</a>
+<ul>
+<li class="chapter" data-level="" data-path="eigenvalues-and-eigenvectors.html"><a href="eigenvalues-and-eigenvectors.html#adjacency-matrices"><i class="fa fa-check"></i>Adjacency matrices</a></li>
+<li class="chapter" data-level="" data-path="eigenvalues-and-eigenvectors.html"><a href="eigenvalues-and-eigenvectors.html#directed-adjacency-matrices"><i class="fa fa-check"></i>Directed adjacency matrices</a></li>
+<li class="chapter" data-level="" data-path="eigenvalues-and-eigenvectors.html"><a href="eigenvalues-and-eigenvectors.html#the-directed-graph-of-a-tournament"><i class="fa fa-check"></i>The directed graph of a tournament</a></li>
+</ul></li>
+<li class="chapter" data-level="3.5" data-path="eigenvalues-and-eigenvectors.html"><a href="eigenvalues-and-eigenvectors.html#random-surfers-and-stochastic-matrices"><i class="fa fa-check"></i><b>3.5</b> Random surfers and Stochastic Matrices</a>
+<ul>
+<li class="chapter" data-level="" data-path="eigenvalues-and-eigenvectors.html"><a href="eigenvalues-and-eigenvectors.html#stochastic-matrices"><i class="fa fa-check"></i>Stochastic matrices</a></li>
+<li class="chapter" data-level="" data-path="eigenvalues-and-eigenvectors.html"><a href="eigenvalues-and-eigenvectors.html#markov-chains"><i class="fa fa-check"></i>Markov Chains</a></li>
+<li class="chapter" data-level="" data-path="eigenvalues-and-eigenvectors.html"><a href="eigenvalues-and-eigenvectors.html#why-is-1-always-an-eigenvalue"><i class="fa fa-check"></i>Why is 1 always an eigenvalue?</a></li>
+</ul></li>
+<li class="chapter" data-level="3.6" data-path="eigenvalues-and-eigenvectors.html"><a href="eigenvalues-and-eigenvectors.html#the-markov-and-oracle-ranking-methods"><i class="fa fa-check"></i><b>3.6</b> The Markov and Oracle Ranking Methods</a>
+<ul>
+<li class="chapter" data-level="" data-path="eigenvalues-and-eigenvectors.html"><a href="eigenvalues-and-eigenvectors.html#the-markov-method"><i class="fa fa-check"></i>The Markov method</a></li>
+<li class="chapter" data-level="" data-path="eigenvalues-and-eigenvectors.html"><a href="eigenvalues-and-eigenvectors.html#the-oracle-method"><i class="fa fa-check"></i>The Oracle method</a></li>
+<li class="chapter" data-level="" data-path="eigenvalues-and-eigenvectors.html"><a href="eigenvalues-and-eigenvectors.html#modifications"><i class="fa fa-check"></i>Modifications</a></li>
+</ul></li>
+<li class="chapter" data-level="3.7" data-path="eigenvalues-and-eigenvectors.html"><a href="eigenvalues-and-eigenvectors.html#exercises-2"><i class="fa fa-check"></i><b>3.7</b> Exercises</a></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="orthogonality.html"><a href="orthogonality.html"><i class="fa fa-check"></i><b>4</b> Orthogonality</a>
+<ul>
+<li class="chapter" data-level="4.1" data-path="orthogonality.html"><a href="orthogonality.html#ILO"><i class="fa fa-check"></i><b>4.1</b> Inner Product, Length, and Orthogonality</a>
+<ul>
+<li class="chapter" data-level="" data-path="orthogonality.html"><a href="orthogonality.html#distance-in-mathbbrn"><i class="fa fa-check"></i>Distance in <span class="math inline">\(\mathbb{R}^n\)</span></a></li>
+</ul></li>
+<li class="chapter" data-level="4.2" data-path="orthogonality.html"><a href="orthogonality.html#orthogonal-subspaces"><i class="fa fa-check"></i><b>4.2</b> Orthogonal Subspaces</a>
+<ul>
+<li class="chapter" data-level="" data-path="orthogonality.html"><a href="orthogonality.html#the-row-space-and-nullspace-of-a-matrix"><i class="fa fa-check"></i>The row space and nullspace of a matrix</a></li>
+</ul></li>
+<li class="chapter" data-level="4.3" data-path="orthogonality.html"><a href="orthogonality.html#orthogonal-and-orthonormal-sets"><i class="fa fa-check"></i><b>4.3</b> Orthogonal and Orthonormal Sets</a>
+<ul>
+<li class="chapter" data-level="" data-path="orthogonality.html"><a href="orthogonality.html#orthogonal-projections"><i class="fa fa-check"></i>Orthogonal projections</a></li>
+<li class="chapter" data-level="" data-path="orthogonality.html"><a href="orthogonality.html#orthogonal-matrices"><i class="fa fa-check"></i>Orthogonal matrices</a></li>
+</ul></li>
+<li class="chapter" data-level="4.4" data-path="orthogonality.html"><a href="orthogonality.html#OProj"><i class="fa fa-check"></i><b>4.4</b> Orthogonal Projections</a></li>
+<li class="chapter" data-level="4.5" data-path="orthogonality.html"><a href="orthogonality.html#orthogonalization"><i class="fa fa-check"></i><b>4.5</b> Orthogonalization</a>
+<ul>
+<li class="chapter" data-level="" data-path="orthogonality.html"><a href="orthogonality.html#qr-factorization"><i class="fa fa-check"></i>QR-factorization</a></li>
+</ul></li>
+<li class="chapter" data-level="4.6" data-path="orthogonality.html"><a href="orthogonality.html#exercises-3"><i class="fa fa-check"></i><b>4.6</b> Exercises</a></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="regression.html"><a href="regression.html"><i class="fa fa-check"></i><b>5</b> Regression</a>
+<ul>
+<li class="chapter" data-level="5.1" data-path="regression.html"><a href="regression.html#LSQP"><i class="fa fa-check"></i><b>5.1</b> Least Squares Problems</a>
+<ul>
+<li class="chapter" data-level="" data-path="regression.html"><a href="regression.html#least-squares-error"><i class="fa fa-check"></i>Least squares error</a></li>
+<li class="chapter" data-level="" data-path="regression.html"><a href="regression.html#least-squares-and-the-qr-factorization"><i class="fa fa-check"></i>Least squares and the QR-factorization</a></li>
+</ul></li>
+<li class="chapter" data-level="5.2" data-path="regression.html"><a href="regression.html#application-the-massey-method"><i class="fa fa-check"></i><b>5.2</b> Application: The Massey Method</a>
+<ul>
+<li class="chapter" data-level="" data-path="regression.html"><a href="regression.html#adjustments"><i class="fa fa-check"></i>Adjustments</a></li>
+<li class="chapter" data-level="" data-path="regression.html"><a href="regression.html#offensive-and-defensive-ratings"><i class="fa fa-check"></i>Offensive and defensive ratings</a></li>
+</ul></li>
+<li class="chapter" data-level="5.3" data-path="regression.html"><a href="regression.html#LSRSec"><i class="fa fa-check"></i><b>5.3</b> Least Squares Regression</a>
+<ul>
+<li class="chapter" data-level="" data-path="regression.html"><a href="regression.html#multilinear-regression"><i class="fa fa-check"></i>Multilinear regression</a></li>
+</ul></li>
+<li class="chapter" data-level="5.4" data-path="regression.html"><a href="regression.html#CorSec"><i class="fa fa-check"></i><b>5.4</b> Correlation</a>
+<ul>
+<li class="chapter" data-level="" data-path="regression.html"><a href="regression.html#some-notation-and-a-formula"><i class="fa fa-check"></i>Some notation and a formula</a></li>
+<li class="chapter" data-level="" data-path="regression.html"><a href="regression.html#correlation-in-r"><i class="fa fa-check"></i>Correlation in R</a></li>
+</ul></li>
+<li class="chapter" data-level="5.5" data-path="regression.html"><a href="regression.html#formulas-for-least-squares-regression"><i class="fa fa-check"></i><b>5.5</b> Formulas for Least Squares Regression</a>
+<ul>
+<li class="chapter" data-level="" data-path="regression.html"><a href="regression.html#the-coefficient-of-determination"><i class="fa fa-check"></i>The coefficient of determination</a></li>
+</ul></li>
+<li class="chapter" data-level="5.6" data-path="regression.html"><a href="regression.html#uncertainty-in-least-squares"><i class="fa fa-check"></i><b>5.6</b> Uncertainty in Least Squares</a>
+<ul>
+<li class="chapter" data-level="" data-path="regression.html"><a href="regression.html#confidence-and-prediction-intervals-for-responses"><i class="fa fa-check"></i>Confidence and prediction intervals for responses</a></li>
+<li class="chapter" data-level="" data-path="regression.html"><a href="regression.html#checking-assumptions"><i class="fa fa-check"></i>Checking assumptions</a></li>
+</ul></li>
+<li class="chapter" data-level="5.7" data-path="regression.html"><a href="regression.html#multilinear-regression-1"><i class="fa fa-check"></i><b>5.7</b> Multilinear Regression</a>
+<ul>
+<li class="chapter" data-level="" data-path="regression.html"><a href="regression.html#r-and-multilinear-regression"><i class="fa fa-check"></i>R and multilinear regression</a></li>
+<li class="chapter" data-level="" data-path="regression.html"><a href="regression.html#indicator-variables"><i class="fa fa-check"></i>Indicator variables</a></li>
+<li class="chapter" data-level="" data-path="regression.html"><a href="regression.html#fitting-polynomials"><i class="fa fa-check"></i>Fitting polynomials</a></li>
+<li class="chapter" data-level="" data-path="regression.html"><a href="regression.html#interactions"><i class="fa fa-check"></i>Interactions</a></li>
+</ul></li>
+<li class="chapter" data-level="5.8" data-path="regression.html"><a href="regression.html#model-selection"><i class="fa fa-check"></i><b>5.8</b> Model Selection</a>
+<ul>
+<li class="chapter" data-level="" data-path="regression.html"><a href="regression.html#best-subsets-regression"><i class="fa fa-check"></i>Best subsets regression</a></li>
+<li class="chapter" data-level="" data-path="regression.html"><a href="regression.html#stepwise-regression"><i class="fa fa-check"></i>Stepwise regression</a></li>
+<li class="chapter" data-level="" data-path="regression.html"><a href="regression.html#some-warnings"><i class="fa fa-check"></i>Some warnings</a></li>
+</ul></li>
+<li class="chapter" data-level="5.9" data-path="regression.html"><a href="regression.html#Logistic"><i class="fa fa-check"></i><b>5.9</b> Logistic Regression</a>
+<ul>
+<li class="chapter" data-level="" data-path="regression.html"><a href="regression.html#logistic-regression-with-multiple-independent-variables"><i class="fa fa-check"></i>Logistic regression with multiple independent variables</a></li>
+<li class="chapter" data-level="" data-path="regression.html"><a href="regression.html#likelihood-and-deviance"><i class="fa fa-check"></i>Likelihood and deviance</a></li>
+</ul></li>
+<li class="chapter" data-level="5.10" data-path="regression.html"><a href="regression.html#GDA"><i class="fa fa-check"></i><b>5.10</b> Gradient Descent</a>
+<ul>
+<li class="chapter" data-level="" data-path="regression.html"><a href="regression.html#functions-of-several-variables"><i class="fa fa-check"></i>Functions of several variables</a></li>
+<li class="chapter" data-level="" data-path="regression.html"><a href="regression.html#optimizing-parameters"><i class="fa fa-check"></i>Optimizing parameters</a></li>
+</ul></li>
+<li class="chapter" data-level="5.11" data-path="regression.html"><a href="regression.html#exercises-4"><i class="fa fa-check"></i><b>5.11</b> Exercises</a></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="svd-and-pca.html"><a href="svd-and-pca.html"><i class="fa fa-check"></i><b>6</b> SVD and PCA</a>
+<ul>
+<li class="chapter" data-level="6.1" data-path="svd-and-pca.html"><a href="svd-and-pca.html#DSM"><i class="fa fa-check"></i><b>6.1</b> Diagonalizable and Symmetric Matrices</a>
+<ul>
+<li class="chapter" data-level="" data-path="svd-and-pca.html"><a href="svd-and-pca.html#diagonalizable-matrices"><i class="fa fa-check"></i>Diagonalizable matrices</a></li>
+<li class="chapter" data-level="" data-path="svd-and-pca.html"><a href="svd-and-pca.html#symmetric-matrices"><i class="fa fa-check"></i>Symmetric matrices</a></li>
+<li class="chapter" data-level="" data-path="svd-and-pca.html"><a href="svd-and-pca.html#eigenvalues-and-eigenvectors-of-symmetric-matrices"><i class="fa fa-check"></i>Eigenvalues and eigenvectors of symmetric matrices</a></li>
+<li class="chapter" data-level="" data-path="svd-and-pca.html"><a href="svd-and-pca.html#orthogonal-diagonalization"><i class="fa fa-check"></i>Orthogonal diagonalization</a></li>
+</ul></li>
+<li class="chapter" data-level="6.2" data-path="svd-and-pca.html"><a href="svd-and-pca.html#quadratic-forms-and-constrained-optimization"><i class="fa fa-check"></i><b>6.2</b> Quadratic Forms and Constrained Optimization</a>
+<ul>
+<li class="chapter" data-level="" data-path="svd-and-pca.html"><a href="svd-and-pca.html#change-of-variables"><i class="fa fa-check"></i>Change of variables</a></li>
+<li class="chapter" data-level="" data-path="svd-and-pca.html"><a href="svd-and-pca.html#classifying-quadratic-forms"><i class="fa fa-check"></i>Classifying quadratic forms</a></li>
+<li class="chapter" data-level="" data-path="svd-and-pca.html"><a href="svd-and-pca.html#constrained-optimization"><i class="fa fa-check"></i>Constrained optimization</a></li>
+</ul></li>
+<li class="chapter" data-level="6.3" data-path="svd-and-pca.html"><a href="svd-and-pca.html#SVD"><i class="fa fa-check"></i><b>6.3</b> The Singular Value Decomposition</a>
+<ul>
+<li class="chapter" data-level="" data-path="svd-and-pca.html"><a href="svd-and-pca.html#singular-values"><i class="fa fa-check"></i>Singular values</a></li>
+<li class="chapter" data-level="" data-path="svd-and-pca.html"><a href="svd-and-pca.html#svd-with-r"><i class="fa fa-check"></i>SVD with R</a></li>
+</ul></li>
+<li class="chapter" data-level="6.4" data-path="svd-and-pca.html"><a href="svd-and-pca.html#applications-of-the-svd"><i class="fa fa-check"></i><b>6.4</b> Applications of the SVD</a>
+<ul>
+<li class="chapter" data-level="" data-path="svd-and-pca.html"><a href="svd-and-pca.html#movie-reviews-and-latent-factors"><i class="fa fa-check"></i>Movie reviews and latent factors</a></li>
+</ul></li>
+<li class="chapter" data-level="6.5" data-path="svd-and-pca.html"><a href="svd-and-pca.html#principal-component-analysis"><i class="fa fa-check"></i><b>6.5</b> Principal Component Analysis</a>
+<ul>
+<li class="chapter" data-level="" data-path="svd-and-pca.html"><a href="svd-and-pca.html#pca-in-r"><i class="fa fa-check"></i>PCA in R</a></li>
+<li class="chapter" data-level="" data-path="svd-and-pca.html"><a href="svd-and-pca.html#biplots"><i class="fa fa-check"></i>Biplots</a></li>
+<li class="chapter" data-level="" data-path="svd-and-pca.html"><a href="svd-and-pca.html#scaling"><i class="fa fa-check"></i>Scaling</a></li>
+</ul></li>
+<li class="chapter" data-level="6.6" data-path="svd-and-pca.html"><a href="svd-and-pca.html#exercises-5"><i class="fa fa-check"></i><b>6.6</b> Exercises</a></li>
+</ul></li>
+<li class="chapter" data-level="7" data-path="additional-topics.html"><a href="additional-topics.html"><i class="fa fa-check"></i><b>7</b> Additional Topics</a>
+<ul>
+<li class="chapter" data-level="7.1" data-path="additional-topics.html"><a href="additional-topics.html#k-means-clustering"><i class="fa fa-check"></i><b>7.1</b> <span class="math inline">\(k\)</span>-means Clustering</a>
+<ul>
+<li class="chapter" data-level="" data-path="additional-topics.html"><a href="additional-topics.html#k-means-clustering-1"><i class="fa fa-check"></i><span class="math inline">\(k\)</span>-means clustering</a></li>
+<li class="chapter" data-level="" data-path="additional-topics.html"><a href="additional-topics.html#cluster-optimization"><i class="fa fa-check"></i>Cluster optimization</a></li>
+<li class="chapter" data-level="" data-path="additional-topics.html"><a href="additional-topics.html#clustering-for-classification"><i class="fa fa-check"></i>Clustering for classification</a></li>
+</ul></li>
+<li class="chapter" data-level="7.2" data-path="additional-topics.html"><a href="additional-topics.html#collaborative-filtering"><i class="fa fa-check"></i><b>7.2</b> Collaborative Filtering</a>
+<ul>
+<li class="chapter" data-level="" data-path="additional-topics.html"><a href="additional-topics.html#similarity-measures"><i class="fa fa-check"></i>Similarity measures</a></li>
+<li class="chapter" data-level="" data-path="additional-topics.html"><a href="additional-topics.html#collaborative-filtering-with-recommenderlab"><i class="fa fa-check"></i>Collaborative filtering with recommenderlab</a></li>
+</ul></li>
+<li class="chapter" data-level="7.3" data-path="additional-topics.html"><a href="additional-topics.html#decision-tree-classification"><i class="fa fa-check"></i><b>7.3</b> Decision Tree Classification</a>
+<ul>
+<li class="chapter" data-level="" data-path="additional-topics.html"><a href="additional-topics.html#decision-trees-with-r"><i class="fa fa-check"></i>Decision trees with R</a></li>
+<li class="chapter" data-level="" data-path="additional-topics.html"><a href="additional-topics.html#random-forests"><i class="fa fa-check"></i>Random Forests</a></li>
+</ul></li>
+<li class="chapter" data-level="7.4" data-path="additional-topics.html"><a href="additional-topics.html#support-vector-machines"><i class="fa fa-check"></i><b>7.4</b> Support Vector Machines</a>
+<ul>
+<li class="chapter" data-level="" data-path="additional-topics.html"><a href="additional-topics.html#support-vector-machines-in-r"><i class="fa fa-check"></i>Support vector machines in R</a></li>
+</ul></li>
+<li class="chapter" data-level="7.5" data-path="additional-topics.html"><a href="additional-topics.html#exercises-6"><i class="fa fa-check"></i><b>7.5</b> Exercises</a></li>
+</ul></li>
+<li class="appendix"><span><b>Appendices</b></span></li>
+<li class="chapter" data-level="A" data-path="MVCA.html"><a href="MVCA.html"><i class="fa fa-check"></i><b>A</b> An Introduction to Multivariable Calculus</a>
+<ul>
+<li class="chapter" data-level="A.1" data-path="MVCA.html"><a href="MVCA.html#functions-of-several-variables-1"><i class="fa fa-check"></i><b>A.1</b> Functions of several variables</a>
+<ul>
+<li class="chapter" data-level="" data-path="MVCA.html"><a href="MVCA.html#minima-and-maxima"><i class="fa fa-check"></i>Minima and maxima</a></li>
+<li class="chapter" data-level="" data-path="MVCA.html"><a href="MVCA.html#limits-and-continuity"><i class="fa fa-check"></i>Limits and continuity</a></li>
+</ul></li>
+<li class="chapter" data-level="A.2" data-path="MVCA.html"><a href="MVCA.html#partial-derivatives"><i class="fa fa-check"></i><b>A.2</b> Partial Derivatives</a>
+<ul>
+<li class="chapter" data-level="" data-path="MVCA.html"><a href="MVCA.html#higher-order-partial-derivatives"><i class="fa fa-check"></i>Higher order partial derivatives</a></li>
+</ul></li>
+<li class="chapter" data-level="A.3" data-path="MVCA.html"><a href="MVCA.html#directional-derivatives"><i class="fa fa-check"></i><b>A.3</b> Directional Derivatives</a>
+<ul>
+<li class="chapter" data-level="" data-path="MVCA.html"><a href="MVCA.html#the-gradient-vector"><i class="fa fa-check"></i>The gradient vector</a></li>
+</ul></li>
+<li class="chapter" data-level="A.4" data-path="MVCA.html"><a href="MVCA.html#optimization"><i class="fa fa-check"></i><b>A.4</b> Optimization</a>
+<ul>
+<li class="chapter" data-level="" data-path="MVCA.html"><a href="MVCA.html#classifying-critical-points"><i class="fa fa-check"></i>Classifying critical points</a></li>
+</ul></li>
+<li class="chapter" data-level="A.5" data-path="MVCA.html"><a href="MVCA.html#exercises-7"><i class="fa fa-check"></i><b>A.5</b> Exercises</a></li>
+</ul></li>
+<li class="chapter" data-level="B" data-path="the-igraph-and-ggally-packages.html"><a href="the-igraph-and-ggally-packages.html"><i class="fa fa-check"></i><b>B</b> The iGraph and GGally Packages</a>
+<ul>
+<li class="chapter" data-level="" data-path="the-igraph-and-ggally-packages.html"><a href="the-igraph-and-ggally-packages.html#ggally"><i class="fa fa-check"></i>GGally</a></li>
+</ul></li>
+<li class="chapter" data-level="C" data-path="packages.html"><a href="packages.html"><i class="fa fa-check"></i><b>C</b> Packages</a></li>
+<li class="chapter" data-level="" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i>References</a></li>
+<li class="divider"></li>
+<li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Linear Algebra for Data Science</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="MVCA" class="section level1 hasAnchor" number="8">
+<h1><span class="header-section-number">A</span> An Introduction to Multivariable Calculus<a href="MVCA.html#MVCA" class="anchor-section" aria-label="Anchor link to header"></a></h1>
+<p>Section <a href="regression.html#GDA">5.10</a> on the gradient descent algorithm assumes a working knowledge of partial differentiation. This is a very brief summary of that and related topics from multivariable calculus. It does assume an working knowledge of single variable calculus.</p>
+<div id="functions-of-several-variables-1" class="section level2 hasAnchor" number="8.1">
+<h2><span class="header-section-number">A.1</span> Functions of several variables<a href="MVCA.html#functions-of-several-variables-1" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Many real-world quantities depend on more than one variable. For instance, the wind chill is a function of the temperature and the wind speed. The balance on a deposit is a function of the initial deposit, the interest rate, and time.</p>
+<p>For the most part, we’ll be focusing on functions of two variables. For example, consider <span class="math inline">\(f(x,y)=x^2+y^2.\)</span> When we plug in various <span class="math inline">\((x,y)\)</span>-pairs, we get different outputs.</p>
+<ul>
+<li><p><span class="math inline">\(f(1,2)=1^2+2^2=1+4=5\)</span></p></li>
+<li><p><span class="math inline">\(f(-1,3)=(-1)^2+3^2=1+9=10\)</span></p></li>
+</ul>
+<p>If we let <span class="math inline">\(z=f(x,y)\)</span>, then we can graph the set of points <span class="math inline">\((x,y,z)\)</span>, where <span class="math inline">\(x\)</span> and <span class="math inline">\(y\)</span> are in the domain of <span class="math inline">\(f\)</span>. These graphs are usually surfaces for nice functions. Figure <a href="MVCA.html#fig:3dplot">A.1</a> shows the graph of <span class="math inline">\(z=x^2+y^2\)</span> over the rectangle <span class="math inline">\(-2\leq x\leq 2,-2\leq y\leq 2\)</span>.</p>
+<div class="sourceCode" id="cb222"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb222-1"><a href="MVCA.html#cb222-1" tabindex="-1"></a>f <span class="ot">&lt;-</span> <span class="cf">function</span>(x,y) x<span class="sc">^</span><span class="dv">2</span><span class="sc">+</span>y<span class="sc">^</span><span class="dv">2</span></span>
+<span id="cb222-2"><a href="MVCA.html#cb222-2" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="fu">seq</span>(<span class="sc">-</span><span class="dv">2</span>, <span class="dv">2</span>, <span class="at">length =</span> <span class="dv">40</span>)</span>
+<span id="cb222-3"><a href="MVCA.html#cb222-3" tabindex="-1"></a>y <span class="ot">&lt;-</span> <span class="fu">seq</span>(<span class="sc">-</span><span class="dv">2</span>, <span class="dv">2</span>, <span class="at">length =</span> <span class="dv">40</span>)</span>
+<span id="cb222-4"><a href="MVCA.html#cb222-4" tabindex="-1"></a>z <span class="ot">&lt;-</span> <span class="fu">outer</span>(x, y, f)</span>
+<span id="cb222-5"><a href="MVCA.html#cb222-5" tabindex="-1"></a><span class="fu">persp</span>(x, y, z, <span class="at">theta =</span> <span class="dv">30</span>, <span class="at">phi =</span> <span class="dv">30</span>,  </span>
+<span id="cb222-6"><a href="MVCA.html#cb222-6" tabindex="-1"></a>      <span class="at">expand =</span> <span class="fl">0.5</span>, <span class="at">col =</span> <span class="st">&quot;lightblue&quot;</span>)</span></code></pre></div>
+<div class="figure" style="text-align: center"><span style="display:block;" id="fig:3dplot"></span>
+<img src="_main_files/figure-html/3dplot-1.png" alt="The graph of a function of two variables" width="75%" />
+<p class="caption">
+Figure A.1: The graph of a function of two variables
+</p>
+</div>
+<p>Another option for visualizing functions of two variables is to plot level curves. A <em>level curve</em> for the function <span class="math inline">\(f(x,y)\)</span> is the set of solutions to the equation
+<span class="math inline">\(f(x,y)=k\)</span> for some constant <span class="math inline">\(k\)</span>. Isotherms (curves of equal temperature) and isobars (equal pressure) on a weather map are examples of level curves. Topographic maps, as in Figure <a href="MVCA.html#fig:topo">A.2</a> show curves of equal elevation.</p>
+<div class="figure" style="text-align: center"><span style="display:block;" id="fig:topo"></span>
+<img src="_main_files/figure-html/topo-1.png" alt="A topographic map including a volcano" width="75%" />
+<p class="caption">
+Figure A.2: A topographic map including a volcano
+</p>
+</div>
+<p>For example, for <span class="math inline">\(f(x,y)=x^2+y^2\)</span>, level curves are given by the equation <span class="math inline">\(x^2+y^2=k.\)</span></p>
+<ul>
+<li><p>For <span class="math inline">\(k&gt;0\)</span>, the level curve will be the circle of radius <span class="math inline">\(\sqrt{k}\)</span> centered at the origin.</p></li>
+<li><p>For <span class="math inline">\(k=0\)</span>, the solution to <span class="math inline">\(x^2+y^2=0\)</span> is simply the point <span class="math inline">\((0,0)\)</span>.</p></li>
+<li><p>For <span class="math inline">\(k&lt;0\)</span>, the equation <span class="math inline">\(x^2+y^2=k\)</span> has no solution.</p></li>
+</ul>
+<p>We can graph level curves in two dimensions. When we plot several of them on the same graph, we get what is called a <em>contour plot</em>. If we want, we can shade the regions between level curves. In Figure <a href="MVCA.html#fig:contour">A.3</a> darker colors indicate lower function values. Note: <code>mathcolors</code> is a special color palette.</p>
+<div class="sourceCode" id="cb223"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb223-1"><a href="MVCA.html#cb223-1" tabindex="-1"></a><span class="fu">contour</span>(x,y,z, <span class="at">asp=</span><span class="dv">1</span>)</span>
+<span id="cb223-2"><a href="MVCA.html#cb223-2" tabindex="-1"></a><span class="fu">filled.contour</span>(x,y,z,  </span>
+<span id="cb223-3"><a href="MVCA.html#cb223-3" tabindex="-1"></a>                <span class="at">color =</span> mathcolors,  </span>
+<span id="cb223-4"><a href="MVCA.html#cb223-4" tabindex="-1"></a>            <span class="at">plot.axes =</span> {</span>
+<span id="cb223-5"><a href="MVCA.html#cb223-5" tabindex="-1"></a>               <span class="fu">axis</span>(<span class="dv">1</span>)</span>
+<span id="cb223-6"><a href="MVCA.html#cb223-6" tabindex="-1"></a>               <span class="fu">axis</span>(<span class="dv">2</span>)</span>
+<span id="cb223-7"><a href="MVCA.html#cb223-7" tabindex="-1"></a>               <span class="fu">contour</span>(x,y,z,</span>
+<span id="cb223-8"><a href="MVCA.html#cb223-8" tabindex="-1"></a>                    <span class="at">add =</span> <span class="cn">TRUE</span>)},<span class="at">asp=</span><span class="dv">1</span>)</span></code></pre></div>
+<div class="figure" style="text-align: center"><span style="display:block;" id="fig:contour"></span>
+<img src="_main_files/figure-html/contour-1.png" alt="Contour plots" width="40%" /><img src="_main_files/figure-html/contour-2.png" alt="Contour plots" width="40%" />
+<p class="caption">
+Figure A.3: Contour plots
+</p>
+</div>
+<div id="minima-and-maxima" class="section level3 unnumbered hasAnchor">
+<h3>Minima and maxima<a href="MVCA.html#minima-and-maxima" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>You can often use contour plots to locate local minima and maxima for functions. Figure <a href="MVCA.html#fig:expo">A.4</a> shows a contour plot for <span class="math inline">\(f(x,y)=\frac{x}{e^{x^2+y^2}}.\)</span> From the looks of it, this function appears to have a local minimum around <span class="math inline">\((-0.7,0)\)</span> and a local maximum around <span class="math inline">\((0.7,0)\)</span>.</p>
+<div class="figure" style="text-align: center"><span style="display:block;" id="fig:expo"></span>
+<img src="_main_files/figure-html/expo-1.png" alt="A contour plot for $f(x,y)=\frac{x}{e^{x^2+y^2}}$" width="75%" />
+<p class="caption">
+Figure A.4: A contour plot for <span class="math inline">\(f(x,y)=\frac{x}{e^{x^2+y^2}}\)</span>
+</p>
+</div>
+<p>Figure <a href="MVCA.html#fig:expo2">A.5</a> is the 3D graph of the same function, showing the local minimum and maximum.</p>
+<div class="figure" style="text-align: center"><span style="display:block;" id="fig:expo2"></span>
+<img src="_main_files/figure-html/expo2-1.png" alt="Another look at $f(x,y)=\frac{x}{e^{x^2+y^2}}$" width="672" />
+<p class="caption">
+Figure A.5: Another look at <span class="math inline">\(f(x,y)=\frac{x}{e^{x^2+y^2}}\)</span>
+</p>
+</div>
+<p>Figures <a href="MVCA.html#fig:hyper1">A.6</a> shows the graph and contour plot for <span class="math inline">\(f(x,y)=xy\)</span>. The lines <span class="math inline">\(x=0\)</span> and <span class="math inline">\(y=0\)</span> form the level set <span class="math inline">\(f(x,y)=0\)</span>. Their crossing is what we call a <em>saddle point</em>.</p>
+<div class="figure" style="text-align: center"><span style="display:block;" id="fig:hyper1"></span>
+<img src="_main_files/figure-html/hyper1-1.png" alt="The function $f(x,y)=xy$" width="45%" /><img src="_main_files/figure-html/hyper1-2.png" alt="The function $f(x,y)=xy$" width="45%" />
+<p class="caption">
+Figure A.6: The function <span class="math inline">\(f(x,y)=xy\)</span>
+</p>
+</div>
+<p>We will learn how to locate and classify minima and maxima soon.</p>
+</div>
+<div id="limits-and-continuity" class="section level3 unnumbered hasAnchor">
+<h3>Limits and continuity<a href="MVCA.html#limits-and-continuity" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Limits and continuity for functions of two variables are a bit more complicated than their 1-variable versions.</p>
+<div class="defbox">
+<div class="definition">
+<p><span id="def:unlabeled-div-131" class="definition"><strong>Definition A.1  </strong></span>Let <span class="math inline">\(f(x,y)\)</span> be a function defined on a neighborhood including the point <span class="math inline">\((a,b)\)</span> but not necessarily at <span class="math inline">\((a,b)\)</span> itself. We say that the <strong>limit</strong> of <span class="math inline">\(f\)</span> as <span class="math inline">\((x,y)\)</span> approaches <span class="math inline">\((a,b)\)</span> is <span class="math inline">\(L\)</span> and write
+<span class="math display">\[\lim_{(x,y)\to(a,b)}f(x,y)=L\]</span></p>
+<p>if for <span class="math inline">\(\epsilon&gt;0\)</span> there exists a <span class="math inline">\(\delta&gt;0\)</span> such that whenever</p>
+<p><span class="math display">\[\sqrt{(x-a)^2+(y-b)^2}&lt;\delta,|f(x,y)-L|&lt;\epsilon.\]</span></p>
+</div>
+</div>
+<p>Don’t worry about memorizing this; we won’t be using it. The idea is that for the limit to exist, the value of <span class="math inline">\(f\)</span> needs to get closer and closer to <span class="math inline">\(L\)</span> as the points <span class="math inline">\((x,y)\)</span> get closer and closer to <span class="math inline">\((a,b)\)</span>.</p>
+<p>Figure <a href="MVCA.html#fig:nice">A.7</a> shows the contour plot of a nice function around the point <span class="math inline">\((1,1)\)</span>. For points near <span class="math inline">\((1,1)\)</span>, the function values are close to the value of <span class="math inline">\(f(1,1)\)</span>.</p>
+<div class="figure" style="text-align: center"><span style="display:block;" id="fig:nice"></span>
+<img src="_main_files/figure-html/nice-1.png" alt="A nice function" width="75%" />
+<p class="caption">
+Figure A.7: A nice function
+</p>
+</div>
+<p>Figure <a href="MVCA.html#fig:nolimit">A.8</a> shows the contour plot for the graph of <span class="math inline">\(h(x,y)=\frac{xy^2}{x^2+y^4}\)</span> near the point <span class="math inline">\((0,0).\)</span> Note how the function values are all over the place. For this function, the limit does not exist at the point <span class="math inline">\((0,0)\)</span>.</p>
+<div class="figure" style="text-align: center"><span style="display:block;" id="fig:nolimit"></span>
+<img src="_main_files/figure-html/nolimit-1.png" alt="The limit does not exist" width="75%" />
+<p class="caption">
+Figure A.8: The limit does not exist
+</p>
+</div>
+<div class="defbox">
+<div class="definition">
+<p><span id="def:unlabeled-div-132" class="definition"><strong>Definition A.2  </strong></span>A function <span class="math inline">\(f\)</span> is <strong>continuous</strong> at a point <span class="math inline">\((a,b)\)</span> if</p>
+<p><span class="math display">\[\lim_{(x,y)\to(a,b)}f(x,y)=f(a,b).\]</span></p>
+</div>
+</div>
+<p>Fortunately for us, most, if not all, of the functions that we will be dealing with will be continuous on their domains.</p>
+<p>A <em>polynomial</em> in two variables is the sum of terms of the form <span class="math inline">\(cx^my^n\)</span>, where <span class="math inline">\(c\)</span> is a constant and <span class="math inline">\(m\)</span> and <span class="math inline">\(n\)</span> are nonnegative integers. For instance,
+<span class="math inline">\(f(x,y)=2x^3+4x^2y^2+xy^3+4y^4\)</span> and <span class="math inline">\(g(x,y)=xy\)</span> are polynomials. Polynomials are continuous everywhere on <span class="math inline">\(\mathbb{R}^2\)</span>.</p>
+<p>A <em>rational function</em> is the quotient of two polynomials, such as <span class="math inline">\(h(x,y)=\frac{xy^2}{x^2+y^4}\)</span> from before. Rational functions are continuous on their domains. This function, <span class="math inline">\(h(x,y),\)</span> whose contour plot we saw in Figure <a href="MVCA.html#fig:nolimit">A.8</a>, is discontinuous at <span class="math inline">\((0,0)\)</span>, but is continuous everywhere else.</p>
+</div>
+</div>
+<div id="partial-derivatives" class="section level2 hasAnchor" number="8.2">
+<h2><span class="header-section-number">A.2</span> Partial Derivatives<a href="MVCA.html#partial-derivatives" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Overall differentiability for functions of several variables is a complicated topic, but one fairly simple notion is that of a <em>partial derivative</em>. We can take a partial derivative of a function <em>with respect to</em> any of the variables, by pretending that the other variables are actually constant and applying the regular differentiation rules to what is left.</p>
+<div class="examplebox">
+<div class="example">
+<p><span id="exm:pd1" class="example"><strong>Example A.1  </strong></span>Let’s consider the function <span class="math inline">\(f(x,y)=x^2+3xy^2+y^3.\)</span>
+We can take the partial derivative of <span class="math inline">\(f\)</span> with respect to <span class="math inline">\(x,\)</span> denoted <span class="math inline">\(f_x,\)</span> by pretending that <span class="math inline">\(y\)</span> is a constant:</p>
+<p><span class="math display">\[\begin{align*}
+f(x,y)&amp;=x^2+3x\cdot\underbrace{y^2}_{\text{constant}}+\underbrace{y^3}_{\text{constant}}\\
+&amp;=x^2+3y^2x+y^3.
+\end{align*}\]</span></p>
+<p>So</p>
+<p><span class="math display">\[f_x(x,y)=2x+3y^2(1)+0=2x+3y^2.\]</span></p>
+<p>To take the partial with respect to <span class="math inline">\(y\)</span>, we pretend that <span class="math inline">\(x\)</span> is a constant:</p>
+<p><span class="math display">\[f(x,y)=\underbrace{x^2}_{\text{constant}}+\underbrace{3x}_{\text{constant}}\cdot y^2+y^3.\]</span></p>
+<p>So</p>
+<p><span class="math display">\[f_y(x,y)=0+3x\cdot 2y+3y^2=6xy+3y^2.\]</span></p>
+</div>
+</div>
+<div class="examplebox">
+<div class="example">
+<p><span id="exm:unlabeled-div-133" class="example"><strong>Example A.2  </strong></span>If <span class="math inline">\(f(x,y)=(3x+2y^2)^5\)</span>, then, using the chain rule for both</p>
+<p><span class="math display">\[f_x(x,y)=5(3x+2y^2)^4(3)=15(3x+2y^2)^4,\]</span></p>
+<p>and</p>
+<p><span class="math display">\[f_y(x,y)=5(3x+2y^2)^4(4y)=20y(3x+2y^2)^4.\]</span></p>
+</div>
+</div>
+<p>The Leibniz notation for partial derivatives involves a curly <span class="math inline">\(\partial\)</span> instead of the normal <span class="math inline">\(d\)</span>. For instance, <span class="math inline">\(f_x=\frac{\partial f}{\partial x}\)</span> and <span class="math inline">\(f_y=\frac{\partial f}{\partial y}.\)</span> For example</p>
+<p><span class="math display">\[\frac{\partial}{\partial x}\left(e^{x^2+y^2}\right)=e^{x^2+y^2}(2x)=2xe^{x^2+y^2}.\]</span></p>
+<div id="higher-order-partial-derivatives" class="section level3 unnumbered hasAnchor">
+<h3>Higher order partial derivatives<a href="MVCA.html#higher-order-partial-derivatives" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Since partial derivatives of functions of two or more variables are also functions of two or more variables, we can take their partial derivatives, too. In Example <a href="MVCA.html#exm:pd1">A.1</a>, for <span class="math inline">\(f(x,y)=x^2+3xy^2+y^3\)</span>, we learned that <span class="math inline">\(f_x(x,y)=2x+3y^2\)</span> and <span class="math inline">\(f_y(x,y)=6xy+3y^2\)</span>. Then</p>
+<p><span class="math display">\[f_{xx}(x,y)=\frac{\partial}{\partial x}f_x(x,y)=\frac{\partial}{\partial x}(2x+3y^2)=2\]</span></p>
+<p>and</p>
+<p><span class="math display">\[f_{yy}(x,y)=\frac{\partial}{\partial y}f_y(x,y)=\frac{\partial}{\partial y}(6xy+3y^2)=6x+6y.\]</span></p>
+<p>We can also take <em>mixed partial derivatives</em>:</p>
+<p><span class="math display">\[f_{xy}=\frac{\partial}{\partial y}f_x(x,y)=\frac{\partial}{\partial y}(2x+3y^2)=6y,\]</span></p>
+<p>and</p>
+<p><span class="math display">\[f_{yx}=\frac{\partial}{\partial x}f_y(x,y)=\frac{\partial}{\partial x}(6xy+3y^2)=6y.\]</span></p>
+<p>Hey, these are the same. Is that a coincidence? No. It is not a coincidence.</p>
+<div class="theorembox">
+<div class="theorem">
+<p><span id="thm:unlabeled-div-134" class="theorem"><strong>Theorem A.1  (Clairaut's Theorem) </strong></span>Suppose <span class="math inline">\(f\)</span> is defined on a disk <span class="math inline">\(D\)</span> that contains the point <span class="math inline">\((a,b)\)</span>. If the functions <span class="math inline">\(f_{xy}\)</span> and <span class="math inline">\(f_{yx}\)</span> are both continuous on <span class="math inline">\(D\)</span> then <span class="math inline">\(f_{xy}(a,b)=f_{yx}(a,b)\)</span>.</p>
+</div>
+</div>
+<p>Clairaut’s theorem is stated at a point, but if the mixed partial derivatives are continuous on a whole region, then they are equal on the whole region.</p>
+<p>The Leibniz notation for higher order derivatives is</p>
+<p><span class="math display">\[f_{xx}(x,y)=\frac{\partial}{\partial x}\left(\frac{\partial f}{\partial x}\right)=\frac{\partial^2 f}{\partial x^2},\]</span></p>
+<p><span class="math display">\[f_{yy}(x,y)=\frac{\partial}{\partial y}\left(\frac{\partial f}{\partial y}\right)=\frac{\partial^2 f}{\partial y^2},\]</span></p>
+<p><span class="math display">\[f_{xy}(x,y)=\frac{\partial}{\partial y}\left(\frac{\partial f}{\partial x}\right)=\frac{\partial^2 f}{\partial y\partial x},\]</span>
+and</p>
+<p><span class="math display">\[f_{yx}(x,y)=\frac{\partial}{\partial x}\left(\frac{\partial f}{\partial y}\right)=\frac{\partial^2 f}{\partial x\partial y}.\]</span></p>
+<p>In the subscript notation (such as <span class="math inline">\(f_{xy}\)</span>), the order of differentiation is read from left to right, while in Leibniz notation, it is read from right to left.</p>
+</div>
+</div>
+<div id="directional-derivatives" class="section level2 hasAnchor" number="8.3">
+<h2><span class="header-section-number">A.3</span> Directional Derivatives<a href="MVCA.html#directional-derivatives" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>If <span class="math inline">\(f\)</span> is a function of a single variable, its derivative at a number <span class="math inline">\(a, f&#39;(a)\)</span>, tells us the instantaneous rate of change of <span class="math inline">\(f(x)\)</span> at <span class="math inline">\(x=a.\)</span></p>
+<p>For example, if <span class="math inline">\(f(x)=x^2, f&#39;(x)=2x\)</span>, and <span class="math inline">\(f&#39;(3)=6\)</span>, which tells us that at <span class="math inline">\(x=3\)</span>, for each one unit of change in the <span class="math inline">\(x\)</span>-direction, <span class="math inline">\(f(x)\)</span> will change by about 6 units.</p>
+<p>If <span class="math inline">\(f\)</span> is a function of two variables, <span class="math inline">\(x\)</span> and <span class="math inline">\(y\)</span>, then the partials <span class="math inline">\(f_x\)</span> and <span class="math inline">\(f_y\)</span> will tell us the instantaneous rate of change of <span class="math inline">\(f\)</span> in the <span class="math inline">\(x\)</span> and <span class="math inline">\(y\)</span> directions, respectively.</p>
+<p>For example if <span class="math inline">\(f(x,y)=x^3-3xy^2\)</span>, then <span class="math inline">\(f_x(x,y)=3x^2-3y^2\)</span> and <span class="math inline">\(f_y(x,y)=-6xy\)</span>. If we evaluate these partials at the point <span class="math inline">\((2,1)\)</span>, we get</p>
+<p><span class="math display">\[f_x(2,1)=3\cdot2^2-3\cdot 1^2=12-3=9,\]</span></p>
+<p>and</p>
+<p><span class="math display">\[f_y(2,1)=-6\cdot 2\cdot 1=-12.\]</span></p>
+<p>Figure <a href="MVCA.html#fig:dd1">A.9</a> is the contour plot for <span class="math inline">\(f\)</span>. (In this version, darker colors represent smaller function values.) If we go in the positive <span class="math inline">\(x\)</span>-direction from the point <span class="math inline">\((2,1)\)</span>, the value of the function increases. If we go in the <span class="math inline">\(y\)</span>-direction, it decreases.</p>
+<div class="figure" style="text-align: center"><span style="display:block;" id="fig:dd1"></span>
+<img src="images/dd1.png" alt="Partial derivatives" width="75%" />
+<p class="caption">
+Figure A.9: Partial derivatives
+</p>
+</div>
+<p>Since we’re no longer trapped on the <span class="math inline">\(x\)</span>-axis, we can go in any direction we want (Fig. <a href="MVCA.html#fig:dd2">A.10</a>). The rate of change in an arbitrary direction is called the <em>directional derivative</em>.</p>
+<div class="figure" style="text-align: center"><span style="display:block;" id="fig:dd2"></span>
+<img src="images/dd2.png" alt="Directional derivatives" width="75%" />
+<p class="caption">
+Figure A.10: Directional derivatives
+</p>
+</div>
+<div class="defbox">
+<div class="definition">
+<p><span id="def:unlabeled-div-135" class="definition"><strong>Definition A.3  </strong></span>The <strong>directional derivative</strong> of <span class="math inline">\(f\)</span> at <span class="math inline">\((x_0,y_0)\)</span> in the direction of the <em>unit</em> vector <span class="math inline">\(\mathbf{u}=(u_1,u_2)\)</span> is</p>
+<p><span class="math display">\[D_{\mathbf{u}}f(x_0,y_0)=\lim_{h\to 0}\frac{f(x_0+hu_1,y_0+hu_2)-f(x_0,y_0)}{h}\]</span></p>
+<p>if this limit exists.</p>
+</div>
+</div>
+<p>Note: we want <span class="math inline">\(\mathbf{u}\)</span> to be a unit vector so this value tells us the approximate rate of change per unit traveled in the direction of <span class="math inline">\(\mathbf{u}.\)</span> We fortunately don’t have to use limits to calculate directional derivatives, thanks to this theorem.</p>
+<div class="theorembox">
+<div class="theorem">
+<p><span id="thm:unlabeled-div-136" class="theorem"><strong>Theorem A.2  </strong></span>If <span class="math inline">\(f\)</span> is a differentiable function of <span class="math inline">\(x\)</span> and <span class="math inline">\(y\)</span>, then <span class="math inline">\(f\)</span> has a directional derivative in the direction of any unit vector <span class="math inline">\(\mathbf{u}=(u_1,u_2)\)</span> and</p>
+<p><span class="math display">\[D_{\mathbf{u}}f(x,y)=f_x(x,y)u_1+f_y(x,y)u_2.\]</span></p>
+</div>
+</div>
+<div class="examplebox">
+<div class="example">
+<p><span id="exm:unlabeled-div-137" class="example"><strong>Example A.3  </strong></span>Let <span class="math inline">\(f(x,y)=x^3-3xy^2\)</span>. Then <span class="math inline">\(f_x(x,y)=3x^2-3y^2\)</span> and <span class="math inline">\(f_y(x,y)=-6xy\)</span>. Let’s find the directional derivative in the direction of <span class="math inline">\(\mathbf{u}=(\frac{4}{5},-\frac{3}{5})\)</span>.</p>
+<p><span class="math display">\[\begin{align*}
+D_{\mathbf{u}}f(2,1)&amp;=((3)(2^2)-(3)(1^2))\frac{4}{5}+-6(2)(1)(-\frac{3}{5})\\
+&amp;=9\cdot\frac{4}{5}+12\cdot\frac{3}{5}=\frac{36}{5}+\frac{36}{5}\\
+&amp;=\frac{72}{5}.
+\end{align*}\]</span></p>
+<p>If <span class="math inline">\(\mathbf{v}=(\frac{1}{\sqrt{2}},\frac{1}{\sqrt{2}})\)</span>, then
+<span class="math display">\[D_{\mathbf{v}}f(2,1)=9\cdot\frac{1}{\sqrt{2}}-12\frac{1}{\sqrt{2}}=-\frac{3}{\sqrt{2}}.\]</span></p>
+</div>
+</div>
+<div id="the-gradient-vector" class="section level3 unnumbered hasAnchor">
+<h3>The gradient vector<a href="MVCA.html#the-gradient-vector" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Note that for a unit vector <span class="math inline">\(\mathbf{u}=(u_1,u_2)\)</span>, the directional derivative can be written as a dot product:</p>
+<p><span class="math display">\[D_{\mathbf{u}}f(x,y)=f_x(x,y)u_1+f_y(x,y)u_2=\underbrace{(f_x(x,y),f_y(x,y))}_{\nabla f(x,y)}\cdot (u_1,u_2).\]</span></p>
+<p>We give the vector of the partial derivatives a name: the <em>gradient</em> of <span class="math inline">\(f\)</span>, denoted <span class="math inline">\(\nabla f\)</span>. Using this notation, we can write the directional derivative as</p>
+<p><span class="math display">\[D_{\mathbf{u}}f(x,y)=\nabla f(x,y)\cdot \mathbf{u}.\]</span></p>
+<p>If <span class="math inline">\(f=f(x,y,z)\)</span>, then <span class="math inline">\(\nabla f=(f_x,f_y,f_z)\)</span>, and so on.</p>
+<div class="examplebox">
+<div class="example">
+<p><span id="exm:unlabeled-div-138" class="example"><strong>Example A.4  </strong></span>Let <span class="math inline">\(f(x,y)=x^2+y^2\)</span>. Then <span class="math inline">\(\nabla f=(2x,2y),\)</span>
+and if <span class="math inline">\(\mathbf{u}=(\frac{1}{2},\frac{\sqrt{3}}{2})\)</span>, then</p>
+<p><span class="math display">\[D_{\mathbf{u}}f(-1,3)=(2(-1),2(3))\cdot(\frac{1}{2},\frac{\sqrt{3}}{2})=(-2)\cdot\frac{1}{2}+6\cdot \frac{\sqrt{3}}{2}=-1+3\sqrt{3}.\]</span></p>
+</div>
+</div>
+<p>Note that</p>
+<p><span class="math display">\[D_{\mathbf{u}}f(x,y)=\nabla f(x,y)\cdot \mathbf{u}=|\nabla f(x,y)||\mathbf{u}|\cos \theta,\]</span></p>
+<p>where <span class="math inline">\(\theta\)</span> is the angle between <span class="math inline">\(\nabla f(x,y)\)</span> and <span class="math inline">\(\mathbf{u}.\)</span> Since <span class="math inline">\(\mathbf{u}\)</span> is a unit vector <span class="math inline">\(|\mathbf{u}|=1\)</span>, so <span class="math inline">\(D_{\mathbf{u}}f(x,y)=|\nabla f(x,y)|\cos \theta.\)</span></p>
+<p>How big can this directional derivative be? It’s greatest when <span class="math inline">\(\cos \theta=1\)</span>, or when <span class="math inline">\(\theta=0\)</span>. That is, <em>the directional derivative is greatest in the direction of the gradient vector</em>! (It’s at its minimum when <span class="math inline">\(\mathbf{u}\)</span> is pointing in the opposite direction. We use this fact in Section <a href="regression.html#GDA">5.10</a> when we implement the gradient descent algorithm.) In other words, the gradient of <span class="math inline">\(f\)</span> points in the direction of maximum increase of <span class="math inline">\(f\)</span>, and that maximum value is <span class="math inline">\(|\nabla f|\)</span>.</p>
+<p>The gradient can be evaluated at several points, and the (scaled) vectors can be displayed on a graph. In the example below, the gradient field is superimposed on the contour plot. Note how the vectors are perpendicular to the level curves and are pointing uphill (from darker to lighter).</p>
+<div class="figure" style="text-align: center"><span style="display:block;" id="fig:gfp"></span>
+<img src="images/gfp.png" alt="The gradient vector points uphill" width="75%" />
+<p class="caption">
+Figure A.11: The gradient vector points uphill
+</p>
+</div>
+</div>
+</div>
+<div id="optimization" class="section level2 hasAnchor" number="8.4">
+<h2><span class="header-section-number">A.4</span> Optimization<a href="MVCA.html#optimization" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>An important task in multivariable calculus is to optimize functions of several variables. In the one variable case, we look for critical points: values where the derivative equals zero (or doesn’t exist).</p>
+<p>In the two-variable case, if a function <span class="math inline">\(f\)</span> has a minimum or maximum at a point, it must be a zero for both partial derivatives, <span class="math inline">\(f_x\)</span> and <span class="math inline">\(f_y\)</span>, or a place where at least one partial isn’t defined. (We’ll not worry about these.)</p>
+<p>This means that <span class="math inline">\(f\)</span> will have a minimum or a maximum at a point where <span class="math inline">\(\nabla f\)</span> is the zero vector. These points are called <em>critical points</em>.</p>
+<div class="examplebox">
+<div class="example">
+<p><span id="exm:cp1" class="example"><strong>Example A.5  </strong></span>Let <span class="math inline">\(f(x,y)=x^2+y^2-6x+4y+13\)</span>. Find the critical points of <span class="math inline">\(f\)</span>.</p>
+<p>We have <span class="math inline">\(f_x(x,y)=2x-6\)</span> and <span class="math inline">\(f_y=2y+4.\)</span> We set both of these equal to zero and solve for <span class="math inline">\(x\)</span> and <span class="math inline">\(y\)</span>.</p>
+<p><span class="math display">\[\begin{align*}
+    2x-6&amp;=0\\
+    2y+4&amp;=0.
+\end{align*}\]</span></p>
+<p>This system of equations is simple: <span class="math inline">\(x=3\)</span> and <span class="math inline">\(y=-2\)</span>. Our critical point is <span class="math inline">\((3,-2).\)</span></p>
+</div>
+</div>
+<div class="examplebox">
+<div class="example">
+<p><span id="exm:cp2" class="example"><strong>Example A.6  </strong></span>Find the critical points of <span class="math inline">\(f(x,y)=x^2+xy+y^2+y\)</span>.</p>
+<p>Our partial derivatives are <span class="math inline">\(f_x=2x+y\)</span> and <span class="math inline">\(f_y=x+2y+1.\)</span> Our system of equations is</p>
+<p><span class="math display">\[\begin{align*}
+    2x+y&amp;=0\\
+    x+2y&amp;=-1.
+\end{align*}\]</span></p>
+<p>The solution in this case is <span class="math inline">\((x,y)=(\frac13,-\frac23).\)</span></p>
+</div>
+</div>
+<div class="examplebox">
+<div class="example">
+<p><span id="exm:cp3" class="example"><strong>Example A.7  </strong></span>Let <span class="math inline">\(f(x,y)=4+x^3+y^3-3xy\)</span>. Then <span class="math inline">\(f_x=3x^2-3y\)</span> and <span class="math inline">\(f_y=3y^2-3x.\)</span> This one’s a bit more complicated because of the squared terms involved, but if we set <span class="math inline">\(f_x=3x^2-3y=0\)</span>, we get <span class="math inline">\(3y=3x^2\)</span> or <span class="math inline">\(y=x^2\)</span>.</p>
+<p>For the second equation, we have <span class="math inline">\(f_y=3y^2-3x=0,\)</span> and using <span class="math inline">\(y=x^2\)</span>, we get</p>
+<p><span class="math display">\[\begin{align*}
+    3(x^2)^2-3x&amp;=0\\
+    x^4-x&amp;=0\\
+    x(x^3-1)&amp;=0.
+\end{align*}\]</span></p>
+<p>Since <span class="math inline">\(x^3-1=0\)</span> means <span class="math inline">\(x^3=1\)</span> or <span class="math inline">\(x=1\)</span>, the two possible <span class="math inline">\(x\)</span> values are <span class="math inline">\(x=0\)</span> and <span class="math inline">\(x=1\)</span>. If <span class="math inline">\(x=0,y=0^2=0\)</span>, and if <span class="math inline">\(x=1,y=1^2=1\)</span>. Our two critical points are <span class="math inline">\((0,0)\)</span> and <span class="math inline">\((1,1)\)</span>. How do we classify them?</p>
+</div>
+</div>
+<div id="classifying-critical-points" class="section level3 unnumbered hasAnchor">
+<h3>Classifying critical points<a href="MVCA.html#classifying-critical-points" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Figure <a href="MVCA.html#fig:classifying">A.12</a> shows the contour plots for our three examples, with the critical points added.</p>
+<div class="figure" style="text-align: center"><span style="display:block;" id="fig:classifying"></span>
+<img src="images/opt1.png" alt="Classifying critical points" width="30%" /><img src="images/opt2.png" alt="Classifying critical points" width="30%" /><img src="images/opt3.png" alt="Classifying critical points" width="30%" />
+<p class="caption">
+Figure A.12: Classifying critical points
+</p>
+</div>
+<p>In the first two graphs, the critical points correspond to minima. In the last graph, one critical point corresponds to a minimum, and the other to a saddle point. These are two of the main possibilities for critical points.</p>
+<p>Much like the one-variable version, the two-variable version of the second derivative test can be used to classify critical points.</p>
+<div class="theorembox">
+<div class="theorem">
+<p><span id="thm:SDT" class="theorem"><strong>Theorem A.3  (The Second Derivative Test) </strong></span>Suppose the second partial derivatives of <span class="math inline">\(f\)</span> are continuous on a disk with center <span class="math inline">\((a,b)\)</span> and suppose that <span class="math inline">\(f_x(a,b)=0\)</span> and <span class="math inline">\(f_y(a,b)=0\)</span>. Let</p>
+<p><span class="math display">\[D=f_{xx}(a,b)f_{yy}(a,b)-[f_{xy}(a,b)]^2.\]</span></p>
+<ol style="list-style-type: decimal">
+<li><p>If <span class="math inline">\(D&gt;0\)</span> and <span class="math inline">\(f_{xx}(a,b)&gt;0\)</span>, then <span class="math inline">\(f\)</span> has a local minimum at <span class="math inline">\((a,b)\)</span>.</p></li>
+<li><p>If <span class="math inline">\(D&gt;0\)</span> and <span class="math inline">\(f_{xx}(a,b)&lt;0\)</span>, then <span class="math inline">\(f\)</span> has a local maximum at <span class="math inline">\((a,b)\)</span>.</p>
+<ol style="list-style-type: lower-alpha">
+<li>If <span class="math inline">\(D&lt;0\)</span>, then <span class="math inline">\(f\)</span> has a saddle point at <span class="math inline">\((a,b)\)</span>.</li>
+<li>If <span class="math inline">\(D=0\)</span>, there is no conclusion.</li>
+</ol></li>
+</ol>
+</div>
+</div>
+<p>Note that</p>
+<p><span class="math display">\[D=f_{xx}(a,b)f_{yy}(a,b)-[f_{xy}(a,b)]^2\]</span></p>
+<p>is the following determinant</p>
+<p><span class="math display">\[\begin{vmatrix}f_{xx}(a,b) &amp; f_{xy}(a,b)\\f_{yx}(a,b) &amp; f_{yy}(a,b)\end{vmatrix}.\]</span></p>
+<p>Since the two mixed partials are continuous in order for the theorem to work, they are equal, and their product can be written as <span class="math inline">\([f_{xy}(a,b)]^2\)</span>. The matrix involved is called the <em>Hessian</em> of <span class="math inline">\(f\)</span>.</p>
+<p>Let’s return to our examples and use the second derivative test.</p>
+<p>For <span class="math inline">\(f(x,y)=x^2+y^2-6x+4y+13\)</span> (Example <a href="MVCA.html#exm:cp1">A.5</a>), we had <span class="math inline">\(f_x=2x-6, f_y=2y+4\)</span>, and a critical point of <span class="math inline">\((3,-2).\)</span> The second-order partials are <span class="math inline">\(f_{xx}=2, f_{yy}=2,\)</span> and <span class="math inline">\(f_{xy}=f_{yx}=0.\)</span> This makes <span class="math inline">\(D=2\cdot 2-0^2=4&gt;0\)</span>. With <span class="math inline">\(f_{xx}(3,-2)=2&gt;0\)</span>, we have a <em>local minimum</em> at <span class="math inline">\((3,-2)\)</span> of <span class="math inline">\(f(3,-2)=3^2+(-2)^2-6(3)+4(-2)+13=0\)</span>.</p>
+<p>For <span class="math inline">\(f(x,y)=x^2+xy+y^2+y\)</span> (Example <a href="MVCA.html#exm:cp2">A.6</a>), we had <span class="math inline">\(f_x(x,y)=2x+y, f_y(x,y)=x+2y+1\)</span>, and a critical point of <span class="math inline">\((1/3,-2/3)\)</span>. The second-order partials are
+<span class="math inline">\(f_{xx}(x,y)=2, f_{yy}(x,y)=2,\)</span> and <span class="math inline">\(f_{xy}(x,y)=1.\)</span> This makes <span class="math inline">\(D=2\cdot 2-1^2=3&gt;0\)</span>. With <span class="math inline">\(f_{xx}(1/3,-2/3)=2&gt;0\)</span>, we again have a local minimum.</p>
+<p>For <span class="math inline">\(f(x,y)=4+x^3+y^3-3xy\)</span> (Example <a href="MVCA.html#exm:cp3">A.7</a>), we had <span class="math inline">\(f_x(x,y)=3x^2-3y,f_y(x,y)=3y^2-3x\)</span>, and critical points of <span class="math inline">\((0,0)\)</span> and <span class="math inline">\((1,1)\)</span>. The second-order partials are <span class="math inline">\(f_{xx}(x,y)=6x, f_{yy}(x,y)=6y\)</span>, and <span class="math inline">\(f_{xy}(x,y)=-3.\)</span> This gives us
+<span class="math display">\[D=D(x,y)=(6x)(6y)-(-3)^2=36xy-9.\]</span></p>
+<p>With <span class="math inline">\(D(0,0)=-9&lt;0\)</span>, we have a saddle point at <span class="math inline">\((0,0)\)</span>. With <span class="math inline">\(D(1,1)=36-9=27&gt;0\)</span> and <span class="math inline">\(f_{xx}(1,1)=6(1)&gt;0\)</span>, we have a local minimum at <span class="math inline">\((1,1)\)</span>.</p>
+</div>
+</div>
+<div id="exercises-7" class="section level2 hasAnchor" number="8.5">
+<h2><span class="header-section-number">A.5</span> Exercises<a href="MVCA.html#exercises-7" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<ol style="list-style-type: decimal">
+<li>Let <span class="math inline">\(f(x,y)=3x^2+4xy+5y.\)</span> Evaluate the following.
+<ol style="list-style-type: lower-alpha">
+<li><span class="math inline">\(f(-1,3)\)</span></li>
+<li><span class="math inline">\(f(2,4)\)</span></li>
+</ol></li>
+<li>Let <span class="math inline">\(g(x,y)=x^4+2x^2y-3xy^2+y^3.\)</span> Evaluate the following.
+<ol style="list-style-type: lower-alpha">
+<li><span class="math inline">\(g(2,3)\)</span></li>
+<li><span class="math inline">\(g(1,-1)\)</span></li>
+</ol></li>
+<li>Let <span class="math inline">\(f(x,y)=3x^2+4xy+5y.\)</span> Find the following.
+<ol style="list-style-type: lower-alpha">
+<li><span class="math inline">\(f_x(x,y)\)</span></li>
+<li><span class="math inline">\(f_y(x,y)\)</span></li>
+<li><span class="math inline">\(f_{xx}(x,y)\)</span></li>
+<li><span class="math inline">\(f_{yy}(x,y)\)</span></li>
+<li><span class="math inline">\(f_{xy}(x,y)\)</span></li>
+</ol></li>
+<li>Let <span class="math inline">\(g(x,y)=x^4+2x^2y-3xy^2+y^3.\)</span> Find the following.
+<ol style="list-style-type: lower-alpha">
+<li><span class="math inline">\(g_x(x,y)\)</span></li>
+<li><span class="math inline">\(g_y(x,y)\)</span></li>
+<li><span class="math inline">\(g_{xx}(x,y)\)</span></li>
+<li><span class="math inline">\(g_{yy}(x,y)\)</span></li>
+<li><span class="math inline">\(g_{xy}(x,y)\)</span></li>
+</ol></li>
+<li>Let <span class="math inline">\(f(x,y)=e^x\ln y.\)</span> Find the following.
+<ol style="list-style-type: lower-alpha">
+<li><span class="math inline">\(f_x(x,y)\)</span></li>
+<li><span class="math inline">\(f_y(x,y)\)</span></li>
+</ol></li>
+<li>Let <span class="math inline">\(g(x,y)= e^{2x}+\ln y^3.\)</span> Find the Following.
+<ol style="list-style-type: lower-alpha">
+<li><span class="math inline">\(g_x(x,y)\)</span></li>
+<li><span class="math inline">\(g_y(x,y)\)</span></li>
+</ol></li>
+<li>Let <span class="math inline">\(f(x,y)=(2x+3y)^4.\)</span> Find the following.
+<ol style="list-style-type: lower-alpha">
+<li><span class="math inline">\(f_x(x,y)\)</span></li>
+<li><span class="math inline">\(f_y(x,y)\)</span></li>
+</ol></li>
+<li>Let <span class="math inline">\(g(x,y)=(3x^2+3y^2)^5.\)</span> Find the following.
+<ol style="list-style-type: lower-alpha">
+<li><span class="math inline">\(g_x(x,y)\)</span></li>
+<li><span class="math inline">\(g_y(x,y)\)</span></li>
+</ol></li>
+<li>Figure <a href="MVCA.html#fig:ap9">A.13</a> shows the contour plot for a function that has a local minimum or maximum at the point <span class="math inline">\((3,4)\)</span> Is it a minimum or a maximum? Explain.</li>
+</ol>
+<div class="figure" style="text-align: center"><span style="display:block;" id="fig:ap9"></span>
+<img src="_main_files/figure-html/ap9-1.png" alt="Contour plot for Problem 9" width="75%" />
+<p class="caption">
+Figure A.13: Contour plot for Problem 9
+</p>
+</div>
+<ol start="10" style="list-style-type: decimal">
+<li>Figure <a href="MVCA.html#fig:ap10">A.14</a> shows the contour plot for a function that has a local minimum or maximum at the point <span class="math inline">\((2,-2)\)</span> Is it a minimum or a maximum? Explain.</li>
+</ol>
+<div class="figure" style="text-align: center"><span style="display:block;" id="fig:ap10"></span>
+<img src="_main_files/figure-html/ap10-1.png" alt="Contour plot for Problem 10" width="75%" />
+<p class="caption">
+Figure A.14: Contour plot for Problem 10
+</p>
+</div>
+<ol start="11" style="list-style-type: decimal">
+<li><p>Let <span class="math inline">\(f(x,y)=3x^3-2x^2y+4xy^2+y^3-2.\)</span></p>
+<ol style="list-style-type: lower-alpha">
+<li>Find <span class="math inline">\(\nabla f(x,y).\)</span></li>
+<li>Find <span class="math inline">\(D_{\mathbf{u}}f(3,1),\)</span> where <span class="math inline">\(\mathbf{u}=(3/5,4/5).\)</span></li>
+</ol></li>
+<li><p>Let <span class="math inline">\(g(x,y)=x^4+2x^2y-3xy^2+y^2.\)</span></p>
+<ol style="list-style-type: lower-alpha">
+<li>Find <span class="math inline">\(\nabla g(x,y).\)</span></li>
+<li>Find <span class="math inline">\(D_{\mathbf{u}}g(1,2),\)</span> where <span class="math inline">\(\mathbf{u}=(1/\sqrt{2},-1/\sqrt{2}).\)</span></li>
+</ol></li>
+<li><p>Let <span class="math inline">\(f(x,y)=x^2+2xy+2y^2+x\)</span>. Find and classify any critical points for <span class="math inline">\(f\)</span>.</p></li>
+<li><p>Let <span class="math inline">\(g(x,y)=2x^2+y^2-6x+2y+1.\)</span> Find and classify any critical points for <span class="math inline">\(g.\)</span></p></li>
+<li><p>Let <span class="math inline">\(f(x,y)=x^4+y^2+2xy.\)</span> Find and classify any critical points for <span class="math inline">\(f.\)</span></p></li>
+<li><p>Let <span class="math inline">\(g(x,y)=x^3-y^3-3x^2-3y^2-9x.\)</span> Find and classify any critical points for <span class="math inline">\(g.\)</span></p></li>
+</ol>
+
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="additional-topics.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="the-igraph-and-ggally-packages.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"whatsapp": false,
+"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": "https://github.com/USERNAME/REPO/edit/BRANCH/08-Appendix.Rmd",
+"text": "Edit"
+},
+"history": {
+"link": null,
+"text": null
+},
+"view": {
+"link": null,
+"text": null
+},
+"download": ["_main.pdf", "_main.epub"],
+"search": {
+"engine": "fuse",
+"options": null
+},
+"toc": {
+"collapse": "subsection"
+},
+"split_bib": false
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.9/latest.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>

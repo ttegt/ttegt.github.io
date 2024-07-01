@@ -1,0 +1,2445 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>Chapter 1 Matrices and Systems of Equations | Linear Algebra for Data Science</title>
+  <meta name="description" content="<p>This is a minimal example of using the bookdown package to write a book.
+The HTML output format for this example is bookdown::gitbook,
+set in the _output.yml file.</p>" />
+  <meta name="generator" content="bookdown 0.39 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="Chapter 1 Matrices and Systems of Equations | Linear Algebra for Data Science" />
+  <meta property="og:type" content="book" />
+  <meta property="og:image" content="/images/mfdscover.png" />
+  <meta property="og:description" content="<p>This is a minimal example of using the bookdown package to write a book.
+The HTML output format for this example is bookdown::gitbook,
+set in the _output.yml file.</p>" />
+  
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Chapter 1 Matrices and Systems of Equations | Linear Algebra for Data Science" />
+  
+  <meta name="twitter:description" content="<p>This is a minimal example of using the bookdown package to write a book.
+The HTML output format for this example is bookdown::gitbook,
+set in the _output.yml file.</p>" />
+  <meta name="twitter:image" content="/images/mfdscover.png" />
+
+<meta name="author" content="Tom Tegtmeyer" />
+
+
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="index.html"/>
+<link rel="next" href="vector-spaces.html"/>
+<script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+<link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
+<link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
+<script src="libs/kePrint-0.0.1/kePrint.js"></script>
+<link href="libs/lightable-0.0.1/lightable.css" rel="stylesheet" />
+
+
+<style type="text/css">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { color: #008000; } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { color: #008000; font-weight: bold; } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+<style type="text/css">
+  
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+</style>
+<style type="text/css">
+/* Used with Pandoc 2.11+ new --citeproc when CSL is used */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+  margin-bottom: 0em;
+}
+.hanging div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}
+</style>
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">Linear Algebra for Data Science</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Preface</a></li>
+<li class="chapter" data-level="1" data-path="matrices-and-systems-of-equations.html"><a href="matrices-and-systems-of-equations.html"><i class="fa fa-check"></i><b>1</b> Matrices and Systems of Equations</a>
+<ul>
+<li class="chapter" data-level="1.1" data-path="matrices-and-systems-of-equations.html"><a href="matrices-and-systems-of-equations.html#systems-of-equations"><i class="fa fa-check"></i><b>1.1</b> Systems of Equations</a>
+<ul>
+<li class="chapter" data-level="" data-path="matrices-and-systems-of-equations.html"><a href="matrices-and-systems-of-equations.html#the-geometry"><i class="fa fa-check"></i>The geometry</a></li>
+<li class="chapter" data-level="" data-path="matrices-and-systems-of-equations.html"><a href="matrices-and-systems-of-equations.html#the-three-cases"><i class="fa fa-check"></i>The three cases</a></li>
+</ul></li>
+<li class="chapter" data-level="1.2" data-path="matrices-and-systems-of-equations.html"><a href="matrices-and-systems-of-equations.html#GE"><i class="fa fa-check"></i><b>1.2</b> Method of Solution: Gaussian Elimination</a>
+<ul>
+<li class="chapter" data-level="" data-path="matrices-and-systems-of-equations.html"><a href="matrices-and-systems-of-equations.html#parameters"><i class="fa fa-check"></i>Parameters</a></li>
+<li class="chapter" data-level="" data-path="matrices-and-systems-of-equations.html"><a href="matrices-and-systems-of-equations.html#more-equations-more-variables"><i class="fa fa-check"></i>More equations, more variables</a></li>
+<li class="chapter" data-level="" data-path="matrices-and-systems-of-equations.html"><a href="matrices-and-systems-of-equations.html#overdetermined-and-underdetermined-systems"><i class="fa fa-check"></i>Overdetermined and underdetermined systems</a></li>
+</ul></li>
+<li class="chapter" data-level="1.3" data-path="matrices-and-systems-of-equations.html"><a href="matrices-and-systems-of-equations.html#matrices"><i class="fa fa-check"></i><b>1.3</b> Matrices</a>
+<ul>
+<li class="chapter" data-level="" data-path="matrices-and-systems-of-equations.html"><a href="matrices-and-systems-of-equations.html#elementary-row-operations"><i class="fa fa-check"></i>Elementary row operations</a></li>
+<li class="chapter" data-level="" data-path="matrices-and-systems-of-equations.html"><a href="matrices-and-systems-of-equations.html#row-echelon-form"><i class="fa fa-check"></i>Row echelon form</a></li>
+<li class="chapter" data-level="" data-path="matrices-and-systems-of-equations.html"><a href="matrices-and-systems-of-equations.html#reduced-row-echelon-form"><i class="fa fa-check"></i>Reduced row echelon form</a></li>
+<li class="chapter" data-level="" data-path="matrices-and-systems-of-equations.html"><a href="matrices-and-systems-of-equations.html#TM"><i class="fa fa-check"></i>Matrices with Technology</a></li>
+</ul></li>
+<li class="chapter" data-level="1.4" data-path="matrices-and-systems-of-equations.html"><a href="matrices-and-systems-of-equations.html#BMO"><i class="fa fa-check"></i><b>1.4</b> Basic Matrix Operations</a>
+<ul>
+<li class="chapter" data-level="" data-path="matrices-and-systems-of-equations.html"><a href="matrices-and-systems-of-equations.html#row-and-column-vectors"><i class="fa fa-check"></i>Row and column vectors</a></li>
+<li class="chapter" data-level="" data-path="matrices-and-systems-of-equations.html"><a href="matrices-and-systems-of-equations.html#matrix-addition"><i class="fa fa-check"></i>Matrix addition</a></li>
+<li class="chapter" data-level="" data-path="matrices-and-systems-of-equations.html"><a href="matrices-and-systems-of-equations.html#scalar-multiplication"><i class="fa fa-check"></i>Scalar Multiplication</a></li>
+<li class="chapter" data-level="" data-path="matrices-and-systems-of-equations.html"><a href="matrices-and-systems-of-equations.html#matrix-multiplication"><i class="fa fa-check"></i>Matrix multiplication</a></li>
+<li class="chapter" data-level="" data-path="matrices-and-systems-of-equations.html"><a href="matrices-and-systems-of-equations.html#multiplying-two-matrices"><i class="fa fa-check"></i>Multiplying two matrices</a></li>
+<li class="chapter" data-level="" data-path="matrices-and-systems-of-equations.html"><a href="matrices-and-systems-of-equations.html#identity-matrices"><i class="fa fa-check"></i>Identity Matrices</a></li>
+<li class="chapter" data-level="" data-path="matrices-and-systems-of-equations.html"><a href="matrices-and-systems-of-equations.html#technology"><i class="fa fa-check"></i>Technology</a></li>
+<li class="chapter" data-level="" data-path="matrices-and-systems-of-equations.html"><a href="matrices-and-systems-of-equations.html#the-transpose-of-a-matrix"><i class="fa fa-check"></i>The transpose of a matrix</a></li>
+</ul></li>
+<li class="chapter" data-level="1.5" data-path="matrices-and-systems-of-equations.html"><a href="matrices-and-systems-of-equations.html#Inverses"><i class="fa fa-check"></i><b>1.5</b> Matrix Inverses</a>
+<ul>
+<li class="chapter" data-level="" data-path="matrices-and-systems-of-equations.html"><a href="matrices-and-systems-of-equations.html#finding-inverses"><i class="fa fa-check"></i>Finding inverses</a></li>
+<li class="chapter" data-level="" data-path="matrices-and-systems-of-equations.html"><a href="matrices-and-systems-of-equations.html#a-formula-for-2-x-2-matrices"><i class="fa fa-check"></i>A formula for 2 x 2 matrices</a></li>
+</ul></li>
+<li class="chapter" data-level="1.6" data-path="matrices-and-systems-of-equations.html"><a href="matrices-and-systems-of-equations.html#dets"><i class="fa fa-check"></i><b>1.6</b> Determinants</a>
+<ul>
+<li class="chapter" data-level="" data-path="matrices-and-systems-of-equations.html"><a href="matrices-and-systems-of-equations.html#triangular-and-diagonal-matrices"><i class="fa fa-check"></i>Triangular and diagonal matrices</a></li>
+<li class="chapter" data-level="" data-path="matrices-and-systems-of-equations.html"><a href="matrices-and-systems-of-equations.html#upper-and-lower-triangular-matrices"><i class="fa fa-check"></i>Upper and lower triangular matrices</a></li>
+</ul></li>
+<li class="chapter" data-level="1.7" data-path="matrices-and-systems-of-equations.html"><a href="matrices-and-systems-of-equations.html#systems-of-linear-equations-as-matrix-equations"><i class="fa fa-check"></i><b>1.7</b> Systems of Linear Equations as Matrix Equations</a>
+<ul>
+<li class="chapter" data-level="" data-path="matrices-and-systems-of-equations.html"><a href="matrices-and-systems-of-equations.html#how-does-row-reduction-work"><i class="fa fa-check"></i>How does row reduction work?</a></li>
+</ul></li>
+<li class="chapter" data-level="1.8" data-path="matrices-and-systems-of-equations.html"><a href="matrices-and-systems-of-equations.html#Colley"><i class="fa fa-check"></i><b>1.8</b> Application: The Colley Matrix Method</a>
+<ul>
+<li class="chapter" data-level="" data-path="matrices-and-systems-of-equations.html"><a href="matrices-and-systems-of-equations.html#ratings-and-rankings"><i class="fa fa-check"></i>Ratings and Rankings</a></li>
+<li class="chapter" data-level="" data-path="matrices-and-systems-of-equations.html"><a href="matrices-and-systems-of-equations.html#the-bcs-and-wes-colley"><i class="fa fa-check"></i>The BCS and Wes Colley</a></li>
+<li class="chapter" data-level="" data-path="matrices-and-systems-of-equations.html"><a href="matrices-and-systems-of-equations.html#the-colley-matrix"><i class="fa fa-check"></i>The Colley Matrix</a></li>
+</ul></li>
+<li class="chapter" data-level="1.9" data-path="matrices-and-systems-of-equations.html"><a href="matrices-and-systems-of-equations.html#exercises"><i class="fa fa-check"></i><b>1.9</b> Exercises</a></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="vector-spaces.html"><a href="vector-spaces.html"><i class="fa fa-check"></i><b>2</b> Vector Spaces</a>
+<ul>
+<li class="chapter" data-level="2.1" data-path="vector-spaces.html"><a href="vector-spaces.html#artoo"><i class="fa fa-check"></i><b>2.1</b> The Vector Space <span class="math inline">\(\mathbb{R}^n\)</span></a>
+<ul>
+<li class="chapter" data-level="" data-path="vector-spaces.html"><a href="vector-spaces.html#vector-addition-and-scalar-multiplication"><i class="fa fa-check"></i>Vector addition and scalar multiplication</a></li>
+<li class="chapter" data-level="" data-path="vector-spaces.html"><a href="vector-spaces.html#linear-dependence-and-independence"><i class="fa fa-check"></i>Linear dependence and independence</a></li>
+<li class="chapter" data-level="" data-path="vector-spaces.html"><a href="vector-spaces.html#linear-combinations"><i class="fa fa-check"></i>Linear Combinations</a></li>
+<li class="chapter" data-level="" data-path="vector-spaces.html"><a href="vector-spaces.html#mathbbr3-and-mathbbrn"><i class="fa fa-check"></i><span class="math inline">\(\mathbb{R}^3\)</span> and <span class="math inline">\(\mathbb{R}^n\)</span></a></li>
+</ul></li>
+<li class="chapter" data-level="2.2" data-path="vector-spaces.html"><a href="vector-spaces.html#subspaces"><i class="fa fa-check"></i><b>2.2</b> Subspaces</a></li>
+<li class="chapter" data-level="2.3" data-path="vector-spaces.html"><a href="vector-spaces.html#linear-dependence-and-independence-1"><i class="fa fa-check"></i><b>2.3</b> Linear Dependence and Independence</a>
+<ul>
+<li class="chapter" data-level="" data-path="vector-spaces.html"><a href="vector-spaces.html#linear-dependence-revisited"><i class="fa fa-check"></i>Linear dependence revisited</a></li>
+</ul></li>
+<li class="chapter" data-level="2.4" data-path="vector-spaces.html"><a href="vector-spaces.html#basis-and-dimension"><i class="fa fa-check"></i><b>2.4</b> Basis and Dimension</a>
+<ul>
+<li class="chapter" data-level="" data-path="vector-spaces.html"><a href="vector-spaces.html#the-standard-basis-for-mathbbrn"><i class="fa fa-check"></i>The standard basis for <span class="math inline">\(\mathbb{R}^n\)</span></a></li>
+<li class="chapter" data-level="" data-path="vector-spaces.html"><a href="vector-spaces.html#the-dimension-of-a-subspace"><i class="fa fa-check"></i>The dimension of a subspace</a></li>
+<li class="chapter" data-level="" data-path="vector-spaces.html"><a href="vector-spaces.html#the-dimension-of-the-nullspace"><i class="fa fa-check"></i>The dimension of the Nullspace</a></li>
+<li class="chapter" data-level="" data-path="vector-spaces.html"><a href="vector-spaces.html#the-column-space-of-a-matrix"><i class="fa fa-check"></i>The column space of a matrix</a></li>
+<li class="chapter" data-level="" data-path="vector-spaces.html"><a href="vector-spaces.html#the-row-space"><i class="fa fa-check"></i>The row space</a></li>
+</ul></li>
+<li class="chapter" data-level="2.5" data-path="vector-spaces.html"><a href="vector-spaces.html#exercises-1"><i class="fa fa-check"></i><b>2.5</b> Exercises</a></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="eigenvalues-and-eigenvectors.html"><a href="eigenvalues-and-eigenvectors.html"><i class="fa fa-check"></i><b>3</b> Eigenvalues and Eigenvectors</a>
+<ul>
+<li class="chapter" data-level="3.1" data-path="eigenvalues-and-eigenvectors.html"><a href="eigenvalues-and-eigenvectors.html#eigenvalues-and-eigenvectors-1"><i class="fa fa-check"></i><b>3.1</b> Eigenvalues and Eigenvectors</a>
+<ul>
+<li class="chapter" data-level="" data-path="eigenvalues-and-eigenvectors.html"><a href="eigenvalues-and-eigenvectors.html#eigenvalues-and-eigenvectors-in-r"><i class="fa fa-check"></i>Eigenvalues and Eigenvectors in R</a></li>
+<li class="chapter" data-level="" data-path="eigenvalues-and-eigenvectors.html"><a href="eigenvalues-and-eigenvectors.html#higher-dimensional-matrices"><i class="fa fa-check"></i>Higher dimensional matrices</a></li>
+</ul></li>
+<li class="chapter" data-level="3.2" data-path="eigenvalues-and-eigenvectors.html"><a href="eigenvalues-and-eigenvectors.html#special-cases-and-complications"><i class="fa fa-check"></i><b>3.2</b> Special Cases and Complications</a>
+<ul>
+<li class="chapter" data-level="" data-path="eigenvalues-and-eigenvectors.html"><a href="eigenvalues-and-eigenvectors.html#diagonal-and-triangular-matrices"><i class="fa fa-check"></i>Diagonal and triangular matrices</a></li>
+<li class="chapter" data-level="" data-path="eigenvalues-and-eigenvectors.html"><a href="eigenvalues-and-eigenvectors.html#the-trace"><i class="fa fa-check"></i>The trace</a></li>
+<li class="chapter" data-level="" data-path="eigenvalues-and-eigenvectors.html"><a href="eigenvalues-and-eigenvectors.html#complications"><i class="fa fa-check"></i>Complications</a></li>
+<li class="chapter" data-level="" data-path="eigenvalues-and-eigenvectors.html"><a href="eigenvalues-and-eigenvectors.html#eigenvalues-of-a-transpose"><i class="fa fa-check"></i>Eigenvalues of a transpose</a></li>
+<li class="chapter" data-level="" data-path="eigenvalues-and-eigenvectors.html"><a href="eigenvalues-and-eigenvectors.html#matrix-powers"><i class="fa fa-check"></i>Matrix powers</a></li>
+</ul></li>
+<li class="chapter" data-level="3.3" data-path="eigenvalues-and-eigenvectors.html"><a href="eigenvalues-and-eigenvectors.html#application-the-leslie-matrix"><i class="fa fa-check"></i><b>3.3</b> Application: The Leslie Matrix</a></li>
+<li class="chapter" data-level="3.4" data-path="eigenvalues-and-eigenvectors.html"><a href="eigenvalues-and-eigenvectors.html#graphs-and-adjacency-matrices"><i class="fa fa-check"></i><b>3.4</b> Graphs and Adjacency Matrices</a>
+<ul>
+<li class="chapter" data-level="" data-path="eigenvalues-and-eigenvectors.html"><a href="eigenvalues-and-eigenvectors.html#adjacency-matrices"><i class="fa fa-check"></i>Adjacency matrices</a></li>
+<li class="chapter" data-level="" data-path="eigenvalues-and-eigenvectors.html"><a href="eigenvalues-and-eigenvectors.html#directed-adjacency-matrices"><i class="fa fa-check"></i>Directed adjacency matrices</a></li>
+<li class="chapter" data-level="" data-path="eigenvalues-and-eigenvectors.html"><a href="eigenvalues-and-eigenvectors.html#the-directed-graph-of-a-tournament"><i class="fa fa-check"></i>The directed graph of a tournament</a></li>
+</ul></li>
+<li class="chapter" data-level="3.5" data-path="eigenvalues-and-eigenvectors.html"><a href="eigenvalues-and-eigenvectors.html#random-surfers-and-stochastic-matrices"><i class="fa fa-check"></i><b>3.5</b> Random surfers and Stochastic Matrices</a>
+<ul>
+<li class="chapter" data-level="" data-path="eigenvalues-and-eigenvectors.html"><a href="eigenvalues-and-eigenvectors.html#stochastic-matrices"><i class="fa fa-check"></i>Stochastic matrices</a></li>
+<li class="chapter" data-level="" data-path="eigenvalues-and-eigenvectors.html"><a href="eigenvalues-and-eigenvectors.html#markov-chains"><i class="fa fa-check"></i>Markov Chains</a></li>
+<li class="chapter" data-level="" data-path="eigenvalues-and-eigenvectors.html"><a href="eigenvalues-and-eigenvectors.html#why-is-1-always-an-eigenvalue"><i class="fa fa-check"></i>Why is 1 always an eigenvalue?</a></li>
+</ul></li>
+<li class="chapter" data-level="3.6" data-path="eigenvalues-and-eigenvectors.html"><a href="eigenvalues-and-eigenvectors.html#the-markov-and-oracle-ranking-methods"><i class="fa fa-check"></i><b>3.6</b> The Markov and Oracle Ranking Methods</a>
+<ul>
+<li class="chapter" data-level="" data-path="eigenvalues-and-eigenvectors.html"><a href="eigenvalues-and-eigenvectors.html#the-markov-method"><i class="fa fa-check"></i>The Markov method</a></li>
+<li class="chapter" data-level="" data-path="eigenvalues-and-eigenvectors.html"><a href="eigenvalues-and-eigenvectors.html#the-oracle-method"><i class="fa fa-check"></i>The Oracle method</a></li>
+<li class="chapter" data-level="" data-path="eigenvalues-and-eigenvectors.html"><a href="eigenvalues-and-eigenvectors.html#modifications"><i class="fa fa-check"></i>Modifications</a></li>
+</ul></li>
+<li class="chapter" data-level="3.7" data-path="eigenvalues-and-eigenvectors.html"><a href="eigenvalues-and-eigenvectors.html#exercises-2"><i class="fa fa-check"></i><b>3.7</b> Exercises</a></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="orthogonality.html"><a href="orthogonality.html"><i class="fa fa-check"></i><b>4</b> Orthogonality</a>
+<ul>
+<li class="chapter" data-level="4.1" data-path="orthogonality.html"><a href="orthogonality.html#ILO"><i class="fa fa-check"></i><b>4.1</b> Inner Product, Length, and Orthogonality</a>
+<ul>
+<li class="chapter" data-level="" data-path="orthogonality.html"><a href="orthogonality.html#distance-in-mathbbrn"><i class="fa fa-check"></i>Distance in <span class="math inline">\(\mathbb{R}^n\)</span></a></li>
+</ul></li>
+<li class="chapter" data-level="4.2" data-path="orthogonality.html"><a href="orthogonality.html#orthogonal-subspaces"><i class="fa fa-check"></i><b>4.2</b> Orthogonal Subspaces</a>
+<ul>
+<li class="chapter" data-level="" data-path="orthogonality.html"><a href="orthogonality.html#the-row-space-and-nullspace-of-a-matrix"><i class="fa fa-check"></i>The row space and nullspace of a matrix</a></li>
+</ul></li>
+<li class="chapter" data-level="4.3" data-path="orthogonality.html"><a href="orthogonality.html#orthogonal-and-orthonormal-sets"><i class="fa fa-check"></i><b>4.3</b> Orthogonal and Orthonormal Sets</a>
+<ul>
+<li class="chapter" data-level="" data-path="orthogonality.html"><a href="orthogonality.html#orthogonal-projections"><i class="fa fa-check"></i>Orthogonal projections</a></li>
+<li class="chapter" data-level="" data-path="orthogonality.html"><a href="orthogonality.html#orthogonal-matrices"><i class="fa fa-check"></i>Orthogonal matrices</a></li>
+</ul></li>
+<li class="chapter" data-level="4.4" data-path="orthogonality.html"><a href="orthogonality.html#OProj"><i class="fa fa-check"></i><b>4.4</b> Orthogonal Projections</a></li>
+<li class="chapter" data-level="4.5" data-path="orthogonality.html"><a href="orthogonality.html#orthogonalization"><i class="fa fa-check"></i><b>4.5</b> Orthogonalization</a>
+<ul>
+<li class="chapter" data-level="" data-path="orthogonality.html"><a href="orthogonality.html#qr-factorization"><i class="fa fa-check"></i>QR-factorization</a></li>
+</ul></li>
+<li class="chapter" data-level="4.6" data-path="orthogonality.html"><a href="orthogonality.html#exercises-3"><i class="fa fa-check"></i><b>4.6</b> Exercises</a></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="regression.html"><a href="regression.html"><i class="fa fa-check"></i><b>5</b> Regression</a>
+<ul>
+<li class="chapter" data-level="5.1" data-path="regression.html"><a href="regression.html#LSQP"><i class="fa fa-check"></i><b>5.1</b> Least Squares Problems</a>
+<ul>
+<li class="chapter" data-level="" data-path="regression.html"><a href="regression.html#least-squares-error"><i class="fa fa-check"></i>Least squares error</a></li>
+<li class="chapter" data-level="" data-path="regression.html"><a href="regression.html#least-squares-and-the-qr-factorization"><i class="fa fa-check"></i>Least squares and the QR-factorization</a></li>
+</ul></li>
+<li class="chapter" data-level="5.2" data-path="regression.html"><a href="regression.html#application-the-massey-method"><i class="fa fa-check"></i><b>5.2</b> Application: The Massey Method</a>
+<ul>
+<li class="chapter" data-level="" data-path="regression.html"><a href="regression.html#adjustments"><i class="fa fa-check"></i>Adjustments</a></li>
+<li class="chapter" data-level="" data-path="regression.html"><a href="regression.html#offensive-and-defensive-ratings"><i class="fa fa-check"></i>Offensive and defensive ratings</a></li>
+</ul></li>
+<li class="chapter" data-level="5.3" data-path="regression.html"><a href="regression.html#LSRSec"><i class="fa fa-check"></i><b>5.3</b> Least Squares Regression</a>
+<ul>
+<li class="chapter" data-level="" data-path="regression.html"><a href="regression.html#multilinear-regression"><i class="fa fa-check"></i>Multilinear regression</a></li>
+</ul></li>
+<li class="chapter" data-level="5.4" data-path="regression.html"><a href="regression.html#CorSec"><i class="fa fa-check"></i><b>5.4</b> Correlation</a>
+<ul>
+<li class="chapter" data-level="" data-path="regression.html"><a href="regression.html#some-notation-and-a-formula"><i class="fa fa-check"></i>Some notation and a formula</a></li>
+<li class="chapter" data-level="" data-path="regression.html"><a href="regression.html#correlation-in-r"><i class="fa fa-check"></i>Correlation in R</a></li>
+</ul></li>
+<li class="chapter" data-level="5.5" data-path="regression.html"><a href="regression.html#formulas-for-least-squares-regression"><i class="fa fa-check"></i><b>5.5</b> Formulas for Least Squares Regression</a>
+<ul>
+<li class="chapter" data-level="" data-path="regression.html"><a href="regression.html#the-coefficient-of-determination"><i class="fa fa-check"></i>The coefficient of determination</a></li>
+</ul></li>
+<li class="chapter" data-level="5.6" data-path="regression.html"><a href="regression.html#uncertainty-in-least-squares"><i class="fa fa-check"></i><b>5.6</b> Uncertainty in Least Squares</a>
+<ul>
+<li class="chapter" data-level="" data-path="regression.html"><a href="regression.html#confidence-and-prediction-intervals-for-responses"><i class="fa fa-check"></i>Confidence and prediction intervals for responses</a></li>
+<li class="chapter" data-level="" data-path="regression.html"><a href="regression.html#checking-assumptions"><i class="fa fa-check"></i>Checking assumptions</a></li>
+</ul></li>
+<li class="chapter" data-level="5.7" data-path="regression.html"><a href="regression.html#multilinear-regression-1"><i class="fa fa-check"></i><b>5.7</b> Multilinear Regression</a>
+<ul>
+<li class="chapter" data-level="" data-path="regression.html"><a href="regression.html#r-and-multilinear-regression"><i class="fa fa-check"></i>R and multilinear regression</a></li>
+<li class="chapter" data-level="" data-path="regression.html"><a href="regression.html#indicator-variables"><i class="fa fa-check"></i>Indicator variables</a></li>
+<li class="chapter" data-level="" data-path="regression.html"><a href="regression.html#fitting-polynomials"><i class="fa fa-check"></i>Fitting polynomials</a></li>
+<li class="chapter" data-level="" data-path="regression.html"><a href="regression.html#interactions"><i class="fa fa-check"></i>Interactions</a></li>
+</ul></li>
+<li class="chapter" data-level="5.8" data-path="regression.html"><a href="regression.html#model-selection"><i class="fa fa-check"></i><b>5.8</b> Model Selection</a>
+<ul>
+<li class="chapter" data-level="" data-path="regression.html"><a href="regression.html#best-subsets-regression"><i class="fa fa-check"></i>Best subsets regression</a></li>
+<li class="chapter" data-level="" data-path="regression.html"><a href="regression.html#stepwise-regression"><i class="fa fa-check"></i>Stepwise regression</a></li>
+<li class="chapter" data-level="" data-path="regression.html"><a href="regression.html#some-warnings"><i class="fa fa-check"></i>Some warnings</a></li>
+</ul></li>
+<li class="chapter" data-level="5.9" data-path="regression.html"><a href="regression.html#Logistic"><i class="fa fa-check"></i><b>5.9</b> Logistic Regression</a>
+<ul>
+<li class="chapter" data-level="" data-path="regression.html"><a href="regression.html#logistic-regression-with-multiple-independent-variables"><i class="fa fa-check"></i>Logistic regression with multiple independent variables</a></li>
+<li class="chapter" data-level="" data-path="regression.html"><a href="regression.html#likelihood-and-deviance"><i class="fa fa-check"></i>Likelihood and deviance</a></li>
+</ul></li>
+<li class="chapter" data-level="5.10" data-path="regression.html"><a href="regression.html#GDA"><i class="fa fa-check"></i><b>5.10</b> Gradient Descent</a>
+<ul>
+<li class="chapter" data-level="" data-path="regression.html"><a href="regression.html#functions-of-several-variables"><i class="fa fa-check"></i>Functions of several variables</a></li>
+<li class="chapter" data-level="" data-path="regression.html"><a href="regression.html#optimizing-parameters"><i class="fa fa-check"></i>Optimizing parameters</a></li>
+</ul></li>
+<li class="chapter" data-level="5.11" data-path="regression.html"><a href="regression.html#exercises-4"><i class="fa fa-check"></i><b>5.11</b> Exercises</a></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="svd-and-pca.html"><a href="svd-and-pca.html"><i class="fa fa-check"></i><b>6</b> SVD and PCA</a>
+<ul>
+<li class="chapter" data-level="6.1" data-path="svd-and-pca.html"><a href="svd-and-pca.html#DSM"><i class="fa fa-check"></i><b>6.1</b> Diagonalizable and Symmetric Matrices</a>
+<ul>
+<li class="chapter" data-level="" data-path="svd-and-pca.html"><a href="svd-and-pca.html#diagonalizable-matrices"><i class="fa fa-check"></i>Diagonalizable matrices</a></li>
+<li class="chapter" data-level="" data-path="svd-and-pca.html"><a href="svd-and-pca.html#symmetric-matrices"><i class="fa fa-check"></i>Symmetric matrices</a></li>
+<li class="chapter" data-level="" data-path="svd-and-pca.html"><a href="svd-and-pca.html#eigenvalues-and-eigenvectors-of-symmetric-matrices"><i class="fa fa-check"></i>Eigenvalues and eigenvectors of symmetric matrices</a></li>
+<li class="chapter" data-level="" data-path="svd-and-pca.html"><a href="svd-and-pca.html#orthogonal-diagonalization"><i class="fa fa-check"></i>Orthogonal diagonalization</a></li>
+</ul></li>
+<li class="chapter" data-level="6.2" data-path="svd-and-pca.html"><a href="svd-and-pca.html#quadratic-forms-and-constrained-optimization"><i class="fa fa-check"></i><b>6.2</b> Quadratic Forms and Constrained Optimization</a>
+<ul>
+<li class="chapter" data-level="" data-path="svd-and-pca.html"><a href="svd-and-pca.html#change-of-variables"><i class="fa fa-check"></i>Change of variables</a></li>
+<li class="chapter" data-level="" data-path="svd-and-pca.html"><a href="svd-and-pca.html#classifying-quadratic-forms"><i class="fa fa-check"></i>Classifying quadratic forms</a></li>
+<li class="chapter" data-level="" data-path="svd-and-pca.html"><a href="svd-and-pca.html#constrained-optimization"><i class="fa fa-check"></i>Constrained optimization</a></li>
+</ul></li>
+<li class="chapter" data-level="6.3" data-path="svd-and-pca.html"><a href="svd-and-pca.html#SVD"><i class="fa fa-check"></i><b>6.3</b> The Singular Value Decomposition</a>
+<ul>
+<li class="chapter" data-level="" data-path="svd-and-pca.html"><a href="svd-and-pca.html#singular-values"><i class="fa fa-check"></i>Singular values</a></li>
+<li class="chapter" data-level="" data-path="svd-and-pca.html"><a href="svd-and-pca.html#svd-with-r"><i class="fa fa-check"></i>SVD with R</a></li>
+</ul></li>
+<li class="chapter" data-level="6.4" data-path="svd-and-pca.html"><a href="svd-and-pca.html#applications-of-the-svd"><i class="fa fa-check"></i><b>6.4</b> Applications of the SVD</a>
+<ul>
+<li class="chapter" data-level="" data-path="svd-and-pca.html"><a href="svd-and-pca.html#movie-reviews-and-latent-factors"><i class="fa fa-check"></i>Movie reviews and latent factors</a></li>
+</ul></li>
+<li class="chapter" data-level="6.5" data-path="svd-and-pca.html"><a href="svd-and-pca.html#principal-component-analysis"><i class="fa fa-check"></i><b>6.5</b> Principal Component Analysis</a>
+<ul>
+<li class="chapter" data-level="" data-path="svd-and-pca.html"><a href="svd-and-pca.html#pca-in-r"><i class="fa fa-check"></i>PCA in R</a></li>
+<li class="chapter" data-level="" data-path="svd-and-pca.html"><a href="svd-and-pca.html#biplots"><i class="fa fa-check"></i>Biplots</a></li>
+<li class="chapter" data-level="" data-path="svd-and-pca.html"><a href="svd-and-pca.html#scaling"><i class="fa fa-check"></i>Scaling</a></li>
+</ul></li>
+<li class="chapter" data-level="6.6" data-path="svd-and-pca.html"><a href="svd-and-pca.html#exercises-5"><i class="fa fa-check"></i><b>6.6</b> Exercises</a></li>
+</ul></li>
+<li class="chapter" data-level="7" data-path="additional-topics.html"><a href="additional-topics.html"><i class="fa fa-check"></i><b>7</b> Additional Topics</a>
+<ul>
+<li class="chapter" data-level="7.1" data-path="additional-topics.html"><a href="additional-topics.html#k-means-clustering"><i class="fa fa-check"></i><b>7.1</b> <span class="math inline">\(k\)</span>-means Clustering</a>
+<ul>
+<li class="chapter" data-level="" data-path="additional-topics.html"><a href="additional-topics.html#k-means-clustering-1"><i class="fa fa-check"></i><span class="math inline">\(k\)</span>-means clustering</a></li>
+<li class="chapter" data-level="" data-path="additional-topics.html"><a href="additional-topics.html#cluster-optimization"><i class="fa fa-check"></i>Cluster optimization</a></li>
+<li class="chapter" data-level="" data-path="additional-topics.html"><a href="additional-topics.html#clustering-for-classification"><i class="fa fa-check"></i>Clustering for classification</a></li>
+</ul></li>
+<li class="chapter" data-level="7.2" data-path="additional-topics.html"><a href="additional-topics.html#collaborative-filtering"><i class="fa fa-check"></i><b>7.2</b> Collaborative Filtering</a>
+<ul>
+<li class="chapter" data-level="" data-path="additional-topics.html"><a href="additional-topics.html#similarity-measures"><i class="fa fa-check"></i>Similarity measures</a></li>
+<li class="chapter" data-level="" data-path="additional-topics.html"><a href="additional-topics.html#collaborative-filtering-with-recommenderlab"><i class="fa fa-check"></i>Collaborative filtering with recommenderlab</a></li>
+</ul></li>
+<li class="chapter" data-level="7.3" data-path="additional-topics.html"><a href="additional-topics.html#decision-tree-classification"><i class="fa fa-check"></i><b>7.3</b> Decision Tree Classification</a>
+<ul>
+<li class="chapter" data-level="" data-path="additional-topics.html"><a href="additional-topics.html#decision-trees-with-r"><i class="fa fa-check"></i>Decision trees with R</a></li>
+<li class="chapter" data-level="" data-path="additional-topics.html"><a href="additional-topics.html#random-forests"><i class="fa fa-check"></i>Random Forests</a></li>
+</ul></li>
+<li class="chapter" data-level="7.4" data-path="additional-topics.html"><a href="additional-topics.html#support-vector-machines"><i class="fa fa-check"></i><b>7.4</b> Support Vector Machines</a>
+<ul>
+<li class="chapter" data-level="" data-path="additional-topics.html"><a href="additional-topics.html#support-vector-machines-in-r"><i class="fa fa-check"></i>Support vector machines in R</a></li>
+</ul></li>
+<li class="chapter" data-level="7.5" data-path="additional-topics.html"><a href="additional-topics.html#exercises-6"><i class="fa fa-check"></i><b>7.5</b> Exercises</a></li>
+</ul></li>
+<li class="appendix"><span><b>Appendices</b></span></li>
+<li class="chapter" data-level="A" data-path="MVCA.html"><a href="MVCA.html"><i class="fa fa-check"></i><b>A</b> An Introduction to Multivariable Calculus</a>
+<ul>
+<li class="chapter" data-level="A.1" data-path="MVCA.html"><a href="MVCA.html#functions-of-several-variables-1"><i class="fa fa-check"></i><b>A.1</b> Functions of several variables</a>
+<ul>
+<li class="chapter" data-level="" data-path="MVCA.html"><a href="MVCA.html#minima-and-maxima"><i class="fa fa-check"></i>Minima and maxima</a></li>
+<li class="chapter" data-level="" data-path="MVCA.html"><a href="MVCA.html#limits-and-continuity"><i class="fa fa-check"></i>Limits and continuity</a></li>
+</ul></li>
+<li class="chapter" data-level="A.2" data-path="MVCA.html"><a href="MVCA.html#partial-derivatives"><i class="fa fa-check"></i><b>A.2</b> Partial Derivatives</a>
+<ul>
+<li class="chapter" data-level="" data-path="MVCA.html"><a href="MVCA.html#higher-order-partial-derivatives"><i class="fa fa-check"></i>Higher order partial derivatives</a></li>
+</ul></li>
+<li class="chapter" data-level="A.3" data-path="MVCA.html"><a href="MVCA.html#directional-derivatives"><i class="fa fa-check"></i><b>A.3</b> Directional Derivatives</a>
+<ul>
+<li class="chapter" data-level="" data-path="MVCA.html"><a href="MVCA.html#the-gradient-vector"><i class="fa fa-check"></i>The gradient vector</a></li>
+</ul></li>
+<li class="chapter" data-level="A.4" data-path="MVCA.html"><a href="MVCA.html#optimization"><i class="fa fa-check"></i><b>A.4</b> Optimization</a>
+<ul>
+<li class="chapter" data-level="" data-path="MVCA.html"><a href="MVCA.html#classifying-critical-points"><i class="fa fa-check"></i>Classifying critical points</a></li>
+</ul></li>
+<li class="chapter" data-level="A.5" data-path="MVCA.html"><a href="MVCA.html#exercises-7"><i class="fa fa-check"></i><b>A.5</b> Exercises</a></li>
+</ul></li>
+<li class="chapter" data-level="B" data-path="the-igraph-and-ggally-packages.html"><a href="the-igraph-and-ggally-packages.html"><i class="fa fa-check"></i><b>B</b> The iGraph and GGally Packages</a>
+<ul>
+<li class="chapter" data-level="" data-path="the-igraph-and-ggally-packages.html"><a href="the-igraph-and-ggally-packages.html#ggally"><i class="fa fa-check"></i>GGally</a></li>
+</ul></li>
+<li class="chapter" data-level="C" data-path="packages.html"><a href="packages.html"><i class="fa fa-check"></i><b>C</b> Packages</a></li>
+<li class="chapter" data-level="" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i>References</a></li>
+<li class="divider"></li>
+<li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Linear Algebra for Data Science</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="matrices-and-systems-of-equations" class="section level1 hasAnchor" number="1">
+<h1><span class="header-section-number">Chapter 1</span> Matrices and Systems of Equations<a href="matrices-and-systems-of-equations.html#matrices-and-systems-of-equations" class="anchor-section" aria-label="Anchor link to header"></a></h1>
+<p>Matrices play an important role in Data Science. For instance, the infamous <code>mtcars</code> data frame has 11 columns of variables. Each row in the matrix represents a vehicle.</p>
+<pre><code>                   mpg cyl disp  hp drat    wt  qsec vs am gear carb
+Mazda RX4         21.0   6  160 110 3.90 2.620 16.46  0  1    4    4
+Mazda RX4 Wag     21.0   6  160 110 3.90 2.875 17.02  0  1    4    4
+Datsun 710        22.8   4  108  93 3.85 2.320 18.61  1  1    4    1
+Hornet 4 Drive    21.4   6  258 110 3.08 3.215 19.44  1  0    3    1
+Hornet Sportabout 18.7   8  360 175 3.15 3.440 17.02  0  0    3    2
+Valiant           18.1   6  225 105 2.76 3.460 20.22  1  0    3    1</code></pre>
+<p>The grayscale values of an image of Hahns Peak (Fig. <a href="matrices-and-systems-of-equations.html#fig:hahns">1.1</a>) in Routt County, Colorado, can be stored in a matrix.</p>
+<div class="figure"><span style="display:block;" id="fig:hahns"></span>
+<img src="_main_files/figure-html/hahns-1.png" alt="Hahns Peak (author photo)" width="672" />
+<p class="caption">
+Figure 1.1: Hahns Peak (author photo)
+</p>
+</div>
+<p>Here are the first ten rows and five columns of that matrix.</p>
+<pre><code>           [,1]      [,2]      [,3]      [,4]      [,5]
+ [1,] 0.8236078 0.8196863 0.8157647 0.8118431 0.8040000
+ [2,] 0.8196863 0.8196863 0.8157647 0.8079216 0.8040000
+ [3,] 0.8157647 0.8157647 0.8118431 0.8079216 0.8040000
+ [4,] 0.8118431 0.8079216 0.8079216 0.8040000 0.8000784
+ [5,] 0.8040000 0.8040000 0.8040000 0.8000784 0.7961569
+ [6,] 0.8000784 0.8000784 0.8000784 0.7961569 0.7961569
+ [7,] 0.7961569 0.7961569 0.7961569 0.7922353 0.7922353
+ [8,] 0.7961569 0.7922353 0.7922353 0.7922353 0.7922353
+ [9,] 0.7922353 0.7883137 0.7804706 0.7765490 0.7726275
+[10,] 0.7883137 0.7843922 0.7804706 0.7765490 0.7726275</code></pre>
+<p>Before we do any fancy things with these matrices, we need to start with the basics. We need to talk about systems of equations.</p>
+<div id="systems-of-equations" class="section level2 hasAnchor" number="1.1">
+<h2><span class="header-section-number">1.1</span> Systems of Equations<a href="matrices-and-systems-of-equations.html#systems-of-equations" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>The simplest example of a system of linear equations is a system of two equations and two variables, such as</p>
+<span class="math display" id="eq:2b2">\[\begin{equation}
+\left\{
+\begin{array}{ccl}
+x+y&amp;=&amp;150\\
+    12x+6y&amp;=&amp;1500
+\end{array}\right. .
+\tag{1.1}
+\end{equation}\]</span>
+<p>This system of equations is <em>linear</em> because both equations in the system are linear. A <em>solution</em> to the system of equations is an <span class="math inline">\((x,y)\)</span>-pair that satisfies both equations.</p>
+<div id="the-geometry" class="section level3 unnumbered hasAnchor">
+<h3>The geometry<a href="matrices-and-systems-of-equations.html#the-geometry" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>A single linear equation in two variables has a line as its graph. A linear system of two equations in two variables involves two lines (Fig. <a href="matrices-and-systems-of-equations.html#fig:intersecting">1.2</a>).</p>
+<div class="figure" style="text-align: center"><span style="display:block;" id="fig:intersecting"></span>
+<img src="images/soe1.png" alt="Two intersecting lines" width="50%" />
+<p class="caption">
+Figure 1.2: Two intersecting lines
+</p>
+</div>
+<p>A solution to the system must lie on both lines. In this case, it is the point of intersection.</p>
+<p>Not all systems of two linear equations in two variables have a solution. If the two lines are parallel, there is no solution (Fig. <a href="matrices-and-systems-of-equations.html#fig:parallel">1.3</a>). Such systems are called <em>inconsistent</em>. (A system with a solution is <em>consistent</em>.)</p>
+<div class="figure" style="text-align: center"><span style="display:block;" id="fig:parallel"></span>
+<img src="images/soe2.png" alt="Two parallel lines" width="50%" />
+<p class="caption">
+Figure 1.3: Two parallel lines
+</p>
+</div>
+<p>Sometimes the two equations actually represent the same line. In that case the system is called <em>dependent</em> (Fig. <a href="matrices-and-systems-of-equations.html#fig:dependent">1.4</a>). Since every point on the line is a solution to both equations, we have infinitely many solutions.</p>
+<div class="figure" style="text-align: center"><span style="display:block;" id="fig:dependent"></span>
+<img src="images/soe3.png" alt="Two equations, one line" width="50%" />
+<p class="caption">
+Figure 1.4: Two equations, one line
+</p>
+</div>
+</div>
+<div id="the-three-cases" class="section level3 unnumbered hasAnchor">
+<h3>The three cases<a href="matrices-and-systems-of-equations.html#the-three-cases" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>With a system of two linear equations in two variables, there are three possibilities.</p>
+<ol style="list-style-type: decimal">
+<li>Exactly one solution (intersecting lines)</li>
+<li>Infinitely many solutions (just one line)</li>
+<li>No solutions (parallel lines)</li>
+</ol>
+<p>It turns out, when we increase the number of variables and/or equations, there are still these three possibilities for the number of solutions.</p>
+</div>
+</div>
+<div id="GE" class="section level2 hasAnchor" number="1.2">
+<h2><span class="header-section-number">1.2</span> Method of Solution: Gaussian Elimination<a href="matrices-and-systems-of-equations.html#GE" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Let’s return to our original system of equations and try to solve it.</p>
+<span class="math display">\[\begin{equation*}
+\left\{
+\begin{array}{ccl}
+x+y&amp;=&amp;150\\
+    12x+6y&amp;=&amp;1500
+\end{array}\right. .
+\end{equation*}\]</span>
+<p>The method of <em>Gaussian elimination</em> involves getting the system into a form that looks like this.</p>
+<span class="math display">\[\begin{equation*}
+\left\{
+\begin{array}{rcl}
+*x+*y &amp; = &amp;* \\
+    *y &amp; = &amp; *
+\end{array}\right. ,
+\end{equation*}\]</span>
+<p>where the asterisks represent different constants. If we have it in this <em>upper triangular form</em>, we can immediately solve for <span class="math inline">\(y\)</span>, and once we know <span class="math inline">\(y\)</span>, we can use its value the first equation to solve for <span class="math inline">\(x\)</span>.</p>
+<p>We can put a system of equations into upper triangular form using a sequence of operations on the equations. The following operations do not change the solution set for a linear system.</p>
+<ol style="list-style-type: decimal">
+<li>Multiplying both sides of an equation by a nonzero constant</li>
+<li>Adding a multiple of one equation to another (on both sides)</li>
+<li>Rearranging the order of equations</li>
+</ol>
+<p>Once the system is in upper triangular form, we can use <em>back substitution</em> to solve for all the variables. In the system</p>
+<span class="math display">\[\begin{equation*}
+\left\{
+\begin{array}{ccl}
+x+y&amp;=&amp;150\\
+    12x+6y&amp;=&amp;1500
+\end{array}\right.
+\end{equation*}\]</span>
+<p>we want to turn the <span class="math inline">\(x\)</span> coefficient in the second equation into a <span class="math inline">\(0\)</span>. We can do this by multiplying the first equation by <span class="math inline">\(-12\)</span> and adding it to the second one. <em>Note that we keep the first equation as is.</em> This puts us into upper triangular form.</p>
+<span class="math display" id="eq:utf">\[\begin{equation*}
+\left\{
+\begin{array}{ccl}
+x+y&amp;=&amp;150\\
+    -6y&amp;=&amp;-300
+\end{array}\right. \tag{1.2}
+\end{equation*}\]</span>
+<p>We can now solve for <span class="math inline">\(y: y=\frac{-300}{-6}=50\)</span>. Plugging this value in for <span class="math inline">\(y\)</span> in the first equation gives us <span class="math inline">\(x+50=150\)</span> or <span class="math inline">\(x=100\)</span>. Our solution is <span class="math inline">\((x,y)=(100,50).\)</span> Refer back to Figure <a href="matrices-and-systems-of-equations.html#fig:intersecting">1.2</a> for the geometry.</p>
+<p>Let’s verify that <span class="math inline">\((x,y)=(100,50)\)</span> satisfies the original system <a href="matrices-and-systems-of-equations.html#eq:2b2">(1.1)</a>. For the first equation,</p>
+<p><span class="math display">\[x+y=100+50=150\,\checkmark\]</span></p>
+<p>For the second equation,</p>
+<p><span class="math display">\[12x+6y=12\cdot 100+6\cdot 50=1200+300=1500\,\checkmark\]</span></p>
+<div class="examplebox">
+<div class="example">
+<p><span id="exm:unlabeled-div-1" class="example"><strong>Example 1.1  </strong></span>Solve</p>
+<p><span class="math display">\[\begin{equation*}
+\left\{
+\begin{array}{ccl}
+x+2y&amp;=&amp;3\\
+    2x-3y&amp;=&amp;10
+\end{array}\right. .
+\end{equation*}\]</span></p>
+<p>If we add <span class="math inline">\(-2\)</span> times the first equation to the second, we get</p>
+<p><span class="math display">\[\begin{equation*}
+\left\{
+\begin{array}{rcl}
+x+2y&amp;=&amp;3\\
+    -7y&amp;=&amp;4
+\end{array}\right. .
+\end{equation*}\]</span></p>
+<p>Thus, <span class="math inline">\(y=-4/7\)</span> and <span class="math inline">\(x=3-2\left(-\frac{4}{7}\right)=\frac{21}{7}+\frac{8}{7}=\frac{29}{7}.\)</span> Our solution is <span class="math inline">\(\left(-\frac{4}{7},\frac{29}{7}\right).\)</span></p>
+</div>
+</div>
+<p>What could go wrong?</p>
+<div class="examplebox">
+<div class="example">
+<p><span id="exm:unlabeled-div-2" class="example"><strong>Example 1.2  </strong></span>Solve</p>
+<p><span class="math display">\[\begin{equation*}
+\left\{
+\begin{array}{ccl}
+2x+3y&amp;=&amp;6\\
+    4x+6y&amp;=&amp;7
+\end{array}\right. .
+\end{equation*}\]</span></p>
+<p>If we multiply the top equation by <span class="math inline">\(-2\)</span> and add it to the second, we get</p>
+<p><span class="math display">\[\begin{equation*}
+\left\{
+\begin{array}{ccl}
+2x+3y&amp;=&amp;6\\
+    0x+0y&amp;=&amp;-5
+\end{array}\right. .
+\end{equation*}\]</span></p>
+<p>Since <span class="math inline">\(0\neq -5\)</span>, this equation has no solution, i.e. it is inconsistent. The original lines were parallel.</p>
+</div>
+</div>
+<p>What else could we encounter?</p>
+<div class="examplebox">
+<div class="example">
+<p><span id="exm:unlabeled-div-3" class="example"><strong>Example 1.3  </strong></span>If we tweak the last system a little bit…</p>
+<p><span class="math display">\[\begin{equation*}
+\left\{
+\begin{array}{ccl}
+2x+3y&amp;=&amp;6\\
+    4x+6y&amp;=&amp;12
+\end{array}\right. ,
+\end{equation*}\]</span></p>
+<p>we see that by multiplying the top equation by 2 gives us identical equations. So</p>
+<ul>
+<li>the two equations represent the same line, and</li>
+<li>every point on that line is a solution, and</li>
+<li>there are infinitely many solutions.</li>
+</ul>
+</div>
+</div>
+<div id="parameters" class="section level3 unnumbered hasAnchor">
+<h3>Parameters<a href="matrices-and-systems-of-equations.html#parameters" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>When a system of equation has infinitely many solutions, we like to write the solutions in terms of <em>parameters</em>. For instance, in the last example, whose solution was the line <span class="math inline">\(2x+3y=6\)</span>, we can let <span class="math inline">\(y=t\)</span> and solve for <span class="math inline">\(x\)</span>: <span class="math inline">\(2x+3t=6\)</span> or <span class="math inline">\(x=3-\frac{3}{2}t\)</span>, and our solution is</p>
+<p><span class="math display">\[\left\{(3-\frac{3}{2}t,t),t\in \mathbb{R}\right\}.\]</span></p>
+<p>The last expression can be read as “the set of all ordered pairs of the form <span class="math inline">\((3-\frac{3}{2}t,t)\)</span>, where <span class="math inline">\(t\)</span> is an element of the real numbers.” Different values of <span class="math inline">\(t\)</span> lead to different solutions. For instance. if <span class="math inline">\(t=0,\)</span> we have <span class="math inline">\((x,y)=(3,0),\)</span> while if <span class="math inline">\(t=1,\)</span> we get <span class="math inline">\((x,y)=\left(\frac{3}{2},1\right).\)</span> Note that we can use any real number for <span class="math inline">\(t,\)</span> not just an integer.</p>
+<p>Parameterizations are not unique. Letting <span class="math inline">\(x=t\)</span> and solving for <span class="math inline">\(y\)</span> gives us a different-looking solution:</p>
+<p><span class="math display">\[\left\{(t,2-\frac{2}{3}t),t\in \mathbb{R}\right\}.\]</span></p>
+<p>In the next section, we will learn a systematic way to parameterize solutions.</p>
+</div>
+<div id="more-equations-more-variables" class="section level3 unnumbered hasAnchor">
+<h3>More equations, more variables<a href="matrices-and-systems-of-equations.html#more-equations-more-variables" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Here’s a system of three linear equations in three variables.</p>
+<div class="examplebox">
+<div class="example">
+<p><span id="exm:tbt" class="example"><strong>Example 1.4  </strong></span>Solve</p>
+<p><span class="math display">\[\begin{equation*}
+    \left\{
+    \begin{array}{ccl}
+    2x-2y+z&amp;=&amp;12\\
+    x+y-2z&amp;=&amp;-1\\
+    3x+y+2z&amp;=&amp;15
+    \end{array} \right. .
+\end{equation*}\]</span></p>
+<p>A single linear equation of the form</p>
+<p><span class="math display">\[ax+by+cz=d,\]</span></p>
+<p>where <span class="math inline">\(a,b,\)</span> and <span class="math inline">\(c\)</span> are constants (and not all zero), represents a plane in three dimensions. A solution to this system of equations would lie on the intersection of three planes. Again, the possibilities are zero, one, or infinitely many solutions.</p>
+<p>We can again use Gaussian elimination to get the system into upper triangular form. It works best if the <span class="math inline">\(x\)</span>-coefficient in the first equation is a 1.</p>
+<p>If we interchange the first and second equations, we make that happen.</p>
+<p><span class="math display">\[\begin{equation*}
+    \left\{
+    \begin{array}{ccl}
+    x+y-2z&amp;=&amp;-1\\
+    2x-2y+z&amp;=&amp;12\\
+    3x+y+2z&amp;=&amp;15
+    \end{array} \right. .
+\end{equation*}\]</span></p>
+<p>We can use the <span class="math inline">\(x\)</span> term in the first equation as a <em>pivot</em> to eliminate the <span class="math inline">\(x\)</span> term from the other two equations.</p>
+<p>Replace Equation 2 with <span class="math inline">\(-2\times\)</span> Equation 1 + Equation 2 (<span class="math inline">\(-2E1+E2\to E2\)</span>), and replace Equation 3 with <span class="math inline">\(-3\times\)</span> Equation 1 + Equation 3 (<span class="math inline">\(-3E1+E3\to E3\)</span>).</p>
+<p><span class="math display">\[\begin{equation*}
+    \left\{
+    \begin{array}{rcl}
+    x+y-2z&amp;=&amp;-1\\
+    -4y+5z&amp;=&amp;14\\
+    -2y+8z&amp;=&amp;18
+    \end{array} \right. .
+\end{equation*}\]</span></p>
+<p>Let’s divide Equation 3 by <span class="math inline">\(-2\)</span> and then interchange Equations 2 and 3. (-<span class="math inline">\(\frac{1}{2}E3\to E3,E2\leftrightarrow E3\)</span>.)</p>
+<p><span class="math display">\[\begin{equation*}
+    \left\{
+    \begin{array}{rcl}
+    x+y-2z&amp;=&amp;-1\\
+    y-4z&amp;=&amp;-9\\
+    -4y+5z&amp;=&amp;14
+    \end{array} \right. .
+\end{equation*}\]</span></p>
+<p>Now we’ll use the <span class="math inline">\(y\)</span> in Equation 2 as a pivot to eliminate the <span class="math inline">\(y\)</span> term in Equation 3. <span class="math inline">\((4E2+E3\to E3.)\)</span></p>
+<p><span class="math display">\[\begin{equation*}
+    \left\{
+    \begin{array}{rcl}
+    x+y-2z&amp;=&amp;-1\\
+    y-4z&amp;=&amp;-9\\
+    -11z&amp;=&amp;-22
+    \end{array} \right. .
+\end{equation*}\]</span></p>
+<p>We are now in triangular form, and we can solve immediately for <span class="math inline">\(z\)</span>: <span class="math inline">\(z=2\)</span>. We can use it in the second equation to solve for <span class="math inline">\(y\)</span>: <span class="math inline">\(y-4(2)=-9, y=-1\)</span>. Finally, knowing the values of <span class="math inline">\(y\)</span> and <span class="math inline">\(z\)</span> allows us to use Equation 1 to solve for <span class="math inline">\(x\)</span>: <span class="math inline">\(x+(-1)-2(2)=-1\)</span> or <span class="math inline">\(x=4.\)</span> Our solution is <span class="math inline">\((x,y,z)=(4,-1,2)\)</span>.</p>
+</div>
+</div>
+<p>What would a no-solution case look like? After Gaussian elimination, perhaps we end up with something like this:</p>
+<div class="examplebox">
+<div class="example">
+<p><span id="exm:unlabeled-div-4" class="example"><strong>Example 1.5  </strong></span><span class="math display">\[\begin{equation*}
+    \left\{
+    \begin{array}{rcl}
+    x+2y+4z&amp;=&amp;2\\
+    y-3z&amp;=&amp;1\\
+    0&amp;=&amp;7
+    \end{array} \right. .
+\end{equation*}\]</span></p>
+<p>Similar to the “<span class="math inline">\(2\times 2\)</span>” case, a bottom row with <span class="math inline">\(0=a\)</span>, where <span class="math inline">\(a\neq 0\)</span> would indicate an inconsistent system.</p>
+</div>
+</div>
+<div class="examplebox">
+<div class="example">
+<p><span id="exm:unlabeled-div-5" class="example"><strong>Example 1.6  </strong></span>By tweaking the last example just a bit, we can arrive at a case with infinitely many solutions.</p>
+<p><span class="math display">\[\begin{equation*}
+    \left\{
+    \begin{array}{rcl}
+    x+2y+4z&amp;=&amp;2\\
+    y-3z&amp;=&amp;1\\
+    0&amp;=&amp;0
+    \end{array} \right. .
+\end{equation*}\]</span></p>
+<p>The last equation is no longer a problem, but now we basically have more equations than unknowns. Again, we’ll use a parameter. Let <span class="math inline">\(z=t\)</span>. Then <span class="math inline">\(y-3t=1\)</span> or <span class="math inline">\(y=1+3t\)</span>. Also, <span class="math inline">\(x+2(1+3t)+4t=2\)</span>, which leads to <span class="math inline">\(x=-10t\)</span>. We write the solution as</p>
+<p><span class="math display">\[\left\{(-10t,1+3t,t),t\in\mathbb{R}\right\}.\]</span></p>
+<p>Again, this parameterization is not unique. Because there is a single parameter, our solution is a line in 3 dimensions.</p>
+</div>
+</div>
+<div class="examplebox">
+<div class="example">
+<p><span id="exm:tfv" class="example"><strong>Example 1.7  </strong></span>It is also possible after Gaussian elimination to end up with a system that looks like this.</p>
+<p><span class="math display">\[\begin{equation*}
+    \left\{
+    \begin{array}{rcl}
+    x+4y-3z&amp;=&amp;2\\
+    0&amp;=&amp;0\\
+    0&amp;=&amp;0
+    \end{array} \right.
+\end{equation*}\]</span></p>
+<p>That is, the three equations actually represent the same plane. In this case we use two parameters, <span class="math inline">\(s\)</span> and <span class="math inline">\(t\)</span> and solve for the third in terms of them. With <span class="math inline">\(y=s\)</span> and <span class="math inline">\(z=t\)</span>, we get <span class="math inline">\(x=2-4y+3z=2-4s+3t\)</span>. Our solution is</p>
+<p><span class="math display">\[\left\{(2-4s+3t,s,t),(s,t)\in \mathbb{R}^2\right\}.\]</span></p>
+</div>
+</div>
+</div>
+<div id="overdetermined-and-underdetermined-systems" class="section level3 unnumbered hasAnchor">
+<h3>Overdetermined and underdetermined systems<a href="matrices-and-systems-of-equations.html#overdetermined-and-underdetermined-systems" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>We don’t have to have the same number of equations as variables. When we have more equations than variables, the system is called <em>overdetermined</em>. For example,</p>
+<p><span class="math display">\[\begin{equation*}
+    \left\{
+    \begin{array}{ccl}
+    x+2y&amp;=&amp;3\\
+    2x-y&amp;=&amp;5\\
+    3x+y&amp;=&amp;8 \end{array} \right.
+\end{equation*}\]</span></p>
+<p>has three equations but only two unknowns. Though the system does have a single solution (left as an exercise), overdetermined systems often have no solution. They show up in linear regression and in other cases where there are more observations than there are variables.</p>
+<p><em>Underdetermined</em> systems have more variables than equations. For instance,</p>
+<p><span class="math display">\[\begin{equation*}
+    \left\{ \begin{array}{rcl}
+    x+2y-3z&amp;=&amp;1\\
+    y+2z&amp;=&amp;4 \end{array} \right.
+\end{equation*}\]</span></p>
+<p>is underdetermined. Underdetermined systems don’t have to have a solution, but if there’s one solution, there are infinitely many. Why?</p>
+</div>
+</div>
+<div id="matrices" class="section level2 hasAnchor" number="1.3">
+<h2><span class="header-section-number">1.3</span> Matrices<a href="matrices-and-systems-of-equations.html#matrices" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>A <em>matrix</em> is a rectangular array of numbers. Matrices can be used to store the coefficients in a system of equations. For instance, this system we saw in the last section,</p>
+<p><span class="math display">\[\begin{equation*}
+\left\{
+\begin{array}{rcl}
+2x-2y+z&amp;=&amp;12\\
+    x+y-2z&amp;=&amp;-1\\
+    3x+y+2z&amp;=&amp;15
+\end{array}\right.
+\end{equation*}\]</span></p>
+<p>can be written</p>
+<p><span class="math display">\[\left[\begin{array}{rrr|r}
+2&amp;-2&amp;1&amp;12\\
+1 &amp; 1 &amp; -2 &amp; -1\\
+3 &amp; 1 &amp; 2 &amp; 15
+\end{array}\right].\]</span></p>
+<p>This is what we call an <em>augmented matrix</em>, with the constants separated from the coefficients by a vertical line. The <em>coefficient matrix</em> is the matrix to the left of the line. We will be studying important properties of the coefficient matrix in the future.</p>
+<div id="elementary-row-operations" class="section level3 unnumbered hasAnchor">
+<h3>Elementary row operations<a href="matrices-and-systems-of-equations.html#elementary-row-operations" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>The three operations on systems of equations from the previous section have matrix equivalents, called <em>elementary row operations</em>. They are as follows.</p>
+<ol style="list-style-type: decimal">
+<li>Interchanging two rows</li>
+<li>Multiplying a row by a nonzero constant</li>
+<li>Adding a constant multiple of one row to another</li>
+</ol>
+<p>We can use these three operations to solve a system of equations. (We are basically doing Gaussian elimination, but we’re not writing down the variables all the time.)</p>
+<div class="examplebox">
+<div class="example">
+<p><span id="exm:unlabeled-div-6" class="example"><strong>Example 1.8  </strong></span>Solve using matrices:</p>
+<p><span class="math display">\[ \left\{ \begin{array}{rcl}
+y-4z&amp;=&amp;8\\
+    2x-3y+2z&amp;=&amp;1\\
+    4x-8y+12z&amp;=&amp;1 \end{array} \right. \]</span></p>
+<p>The augmented matrix is</p>
+<p><span class="math display">\[\left[\begin{array}{rrr|r}
+0&amp;1&amp;-4&amp;8\\
+2 &amp; -3 &amp; 2 &amp; 1\\
+4 &amp; -8 &amp; 12 &amp; 1
+\end{array}\right].\]</span></p>
+<p>Here is one possible sequence of steps.</p>
+<p><span class="math display">\[\left[\begin{array}{rrr|r}
+0&amp;1&amp;-4&amp;8\\
+2 &amp; -3 &amp; 2 &amp; 1\\
+4 &amp; -8 &amp; 12 &amp; 1
+\end{array}\right] \xrightarrow{R1\leftrightarrow R2}
+\left[\begin{array}{rrr|r}
+2 &amp; -3 &amp; 2 &amp; 1\\
+0 &amp; 1 &amp; -4 &amp; 8\\
+4 &amp; -8 &amp; 12 &amp; 1
+\end{array}\right]\]</span></p>
+<p><span class="math display">\[\xrightarrow{-2R1+R3\to R3}
+\left[\begin{array}{rrr|r}
+2 &amp; -3 &amp; 2 &amp; 1\\
+0 &amp; 1 &amp; -4 &amp; 8 \\
+0 &amp; -2 &amp; 8 &amp; -1
+\end{array}\right]\xrightarrow{2R2+R3\to R3}
+\left[\begin{array}{rrr|r}
+2 &amp; -3 &amp; 2 &amp; 1\\
+0 &amp; 1 &amp; -4 &amp; 8 \\
+0 &amp; 0 &amp; 0 &amp; 15
+\end{array}\right].
+\]</span></p>
+<p>The last line in the last matrix is equivalent to the equation <span class="math inline">\(0=15\)</span>. The system has no solution. (It is inconsistent.)</p>
+</div>
+</div>
+</div>
+<div id="row-echelon-form" class="section level3 unnumbered hasAnchor">
+<h3>Row echelon form<a href="matrices-and-systems-of-equations.html#row-echelon-form" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Let’s do one last thing to the final matrix in the last example.</p>
+<p><span class="math display">\[\left[\begin{array}{rrr|r}
+2 &amp; -3 &amp; 2 &amp; 1\\
+0 &amp; 1 &amp; -4 &amp; 8 \\
+0 &amp; 0 &amp; 0 &amp; 15
+\end{array}\right] \xrightarrow[\frac{1}{15}R3\to R3]{\frac{1}{2}R1\to R1}
+\left[\begin{array}{rrr|r}
+1 &amp; -\frac32 &amp; 1 &amp; \frac12 \\
+0 &amp; 1 &amp; -4 &amp; 8 \\
+0 &amp; 0 &amp; 0 &amp; 1
+\end{array}\right]
+\]</span></p>
+<p>This new matrix satisfies the following properties.</p>
+<ol style="list-style-type: decimal">
+<li>All rows consisting entirely of zeros (if any) are at the bottom.</li>
+<li>The first nonzero entry in each row is 1. This first nonzero entry is called the <em>leading</em> 1.</li>
+<li>Each leading 1 appears to the right of the leading 1 in any row above it.</li>
+</ol>
+<p>A matrix satisfying these three properties is said to be in <em>row echelon form</em>. (Note: not everyone requires the first nonzero term in each row to be a 1.) Gaussian elimination on a matrix will leave it in row echelon form.</p>
+</div>
+<div id="reduced-row-echelon-form" class="section level3 unnumbered hasAnchor">
+<h3>Reduced row echelon form<a href="matrices-and-systems-of-equations.html#reduced-row-echelon-form" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>In the process of solving this system in Example <a href="matrices-and-systems-of-equations.html#exm:tbt">1.4</a></p>
+<p><span class="math display">\[\begin{equation*}
+    \left\{
+    \begin{array}{ccl}
+    2x-2y+z&amp;=&amp;12\\
+    x+y-2z&amp;=&amp;-1\\
+    3x+y+2z&amp;=&amp;15
+    \end{array} \right. ,
+\end{equation*}\]</span></p>
+<p>we reduced it to this</p>
+<p><span class="math display">\[\begin{equation*}
+    \left\{
+    \begin{array}{rcl}
+    x+y-2z&amp;=&amp;-1\\
+    y-4z&amp;=&amp;-9\\
+    -11z&amp;=&amp;-22
+    \end{array} \right. ,
+\end{equation*}\]</span></p>
+<p>which has row echelon matrix form</p>
+<p><span class="math display">\[\left[\begin{array}{rrr|r}
+1 &amp; 1 &amp; -2 &amp; -1\\
+0 &amp; 1 &amp; -4 &amp; -9\\
+0 &amp; 0 &amp; 1 &amp; 2
+\end{array}\right].\]</span></p>
+<p>We used back substitution to solve the system, but we can also do more with the matrix:</p>
+<p><span class="math display">\[\left[\begin{array}{rrr|r}
+1 &amp; 1 &amp; -2 &amp; -1\\
+0 &amp; 1 &amp; -4 &amp; -9\\
+0 &amp; 0 &amp; 1 &amp; 2
+\end{array}\right]
+\xrightarrow{-R2+R1\to R1}
+\left[\begin{array}{rrr|r}
+1 &amp; 0 &amp; 2 &amp; 8\\
+0 &amp; 1 &amp; -4 &amp; -9\\
+0 &amp; 0 &amp; 1 &amp; 2
+\end{array}\right]\]</span></p>
+<p><span class="math display">\[\xrightarrow[4R3+R2\to R2]{-2R3+R1\to R1}
+\left[\begin{array}{rrr|r}
+1 &amp; 0 &amp; 0 &amp; 4\\
+0 &amp; 1 &amp; 0 &amp; -1\\
+0 &amp; 0 &amp; 1 &amp; 2
+\end{array}\right].
+\]</span></p>
+<p>We can immediately read off the solution to the system without having to back substitute: <span class="math inline">\(x=4,y=-1,z=2\)</span>. This matrix is in what we call <em>reduced row echelon form</em>.</p>
+<p>A matrix is in reduced row echelon form if it is in row echelon form and each leading 1 is the only nonzero entry in its column. (Note: while not everyone requires leading ones in <em>row echelon form</em>, the standard definition of <em>reduced row echelon form</em> does require them.) The reduced row echelon form of a matrix is unique. The process used to put a matrix into reduced row echelon form is called <em>Gauss-Jordan elimination</em>.</p>
+<p>Most graphing calculators can put matrices into reduced row echelon form. In the future, we will learn how to do it with R.</p>
+<div class="examplebox">
+<div class="example">
+<p><span id="exm:unlabeled-div-7" class="example"><strong>Example 1.9  </strong></span>Which of the following augmented matrices are in reduced row echelon form?</p>
+<p><span class="math display">\[\mathbf{A}=\left[\begin{array}{rrrr|r}
+1 &amp; 0 &amp; 0 &amp; 0 &amp; 2\\
+0 &amp; 1 &amp; 0 &amp; 0 &amp; 3\\
+0 &amp; 0 &amp; 1 &amp; 0 &amp; -2\\
+0 &amp; 0 &amp; 0 &amp; 1 &amp; -3\end{array}\right] \]</span></p>
+<p><span class="math display">\[\mathbf{B}=\left[\begin{array}{rrrr|r}
+1 &amp; 0 &amp; 3 &amp; 0 &amp; 2\\
+0 &amp; 1 &amp; 2 &amp; 0 &amp; 3\\
+0 &amp; 0 &amp; 0 &amp; 1 &amp; -2\\
+0 &amp; 0 &amp; 0 &amp; 0 &amp; 0\end{array}\right] \]</span></p>
+<p><span class="math display">\[\mathbf{C}=\left[\begin{array}{rrr|r}
+1 &amp; 1 &amp; 0 &amp;  2\\
+0 &amp; 1 &amp; 0 &amp;  3\\
+0 &amp; 0 &amp;  1 &amp;  -2\end{array}\right] \]</span></p>
+<p><span class="math display">\[\mathbf{D}=\left[\begin{array}{rrr|r}
+1 &amp; 0 &amp; 1 &amp; 3\\
+0 &amp; 1 &amp; 1 &amp; 2\end{array}\right] \]</span></p>
+<p>Only matrix <span class="math inline">\(\mathbf{C}\)</span> is not in reduced row echelon form. The leading 1 in the second row has a nonzero value above it. In the second matrix, the leading ones are in columns 1, 2, and 4.</p>
+</div>
+</div>
+<p>After using Gauss-Jordan elimination to get a matrix into reduced row echelon form, we can read the solution to the corresponding system of equations fairly easily. For instance (assuming the columns represent <span class="math inline">\(x,y,z,\)</span> and <span class="math inline">\(w\)</span>, respectively), the system of equations corresponding to the first matrix in the last example</p>
+<p><span class="math display">\[\left[\begin{array}{rrrr|r}
+1 &amp; 0 &amp; 0 &amp; 0 &amp; 2\\
+0 &amp; 1 &amp; 0 &amp; 0 &amp; 3\\
+0 &amp; 0 &amp; 1 &amp; 0 &amp; -2\\
+0 &amp; 0 &amp; 0 &amp; 1 &amp; -3\end{array}\right] \]</span></p>
+<p>has the solution <span class="math inline">\(x=2,y=3,z=-2\)</span>, and <span class="math inline">\(w=-3\)</span>.</p>
+<p>What about the solution to this one?</p>
+<p><span class="math display">\[\left[\begin{array}{rrr|r}
+1 &amp; 0 &amp; 1 &amp; 3\\
+0 &amp; 1 &amp; 1 &amp; 2\end{array}\right] \]</span></p>
+<p>Note that there is no leading 1 in the third column. Variables whose columns have no leading 1 are called <em>free variables</em> and can actually take on any value. The rest of the solution depends on them. It’s traditional to assign parameters to these free variables. Here <span class="math inline">\(z\)</span> is free, so we let <span class="math inline">\(z=t\)</span> and solve for the rest.</p>
+<p>We use the second row to solve for <span class="math inline">\(y\)</span>:</p>
+<p><span class="math display">\[y+z=2\to  y=2-z\to y=2-t\]</span></p>
+<p>Similarly, we can use the first row to solve for <span class="math inline">\(x\)</span>:</p>
+<p><span class="math display">\[x+z=3\to x=3-z\to x=3-t\]</span></p>
+<p>Our solution is <span class="math inline">\(\{(3-t,2-t,t),t\in\mathbb{R}\}\)</span>.</p>
+<p>It turns out that the reduced row echelon form of a matrix is unique, so our system of assigning parameters to the free variables gives us a systematic way of producing consistent parameterizations for solutions.</p>
+<div class="examplebox">
+<div class="example">
+<p><span id="exm:unlabeled-div-8" class="example"><strong>Example 1.10  </strong></span>This matrix also has a free variable.</p>
+<p><span class="math display">\[\left[\begin{array}{rrrr|r}
+1 &amp; 0 &amp; 3 &amp; 0 &amp; 2\\
+0 &amp; 1 &amp; 2 &amp; 0 &amp; 3\\
+0 &amp; 0 &amp; 0 &amp; 1 &amp; -2\\
+0 &amp; 0 &amp; 0 &amp; 0 &amp; 0\end{array}\right] \]</span></p>
+<p>If the variables are <span class="math inline">\(x,y,z\)</span>, and <span class="math inline">\(w\)</span>, then <span class="math inline">\(z\)</span> is again a free variable. Let <span class="math inline">\(z=t\)</span>.
+Note that <span class="math inline">\(w=-2\)</span>, regardless of the value of <span class="math inline">\(z\)</span>. We also get <span class="math inline">\(x=2-3z=2-3t\)</span> and <span class="math inline">\(y=3-2z=3-2t\)</span>, so the general solution is</p>
+<p><span class="math display">\[\{(2-3t,3-2t,t,-2),t\in\mathbb{R}\}\]</span></p>
+<p>Another nice feature of this approach is that we can solve for the non-free or <em>basic</em> variables in terms of the free variables alone.</p>
+</div>
+</div>
+<div class="examplebox">
+<div class="example">
+<p><span id="exm:unlabeled-div-9" class="example"><strong>Example 1.11  </strong></span>What if we have more than one free variable? We saw the following (reduced) system in Example <a href="matrices-and-systems-of-equations.html#exm:tfv">1.7</a></p>
+<p><span class="math display">\[\begin{equation*}
+    \left\{
+    \begin{array}{rcl}
+    x+4y-3z&amp;=&amp;2\\
+    0&amp;=&amp;0\\
+    0&amp;=&amp;0
+    \end{array} \right.
+\end{equation*}\]</span></p>
+<p>The corresponding matrix is</p>
+<p><span class="math display">\[\left[\begin{array}{rrr|r}
+1 &amp; 4 &amp; -3 &amp; 2\\
+0 &amp; 0 &amp; 0 &amp; 0\\
+0 &amp; 0 &amp; 0 &amp; 0
+\end{array}\right].\]</span></p>
+<p>Here, <span class="math inline">\(y\)</span> and <span class="math inline">\(z\)</span> are free variables. In this system, <span class="math inline">\(x\)</span> is the only basic variable. If we let <span class="math inline">\(y=s\)</span> and <span class="math inline">\(z=t\)</span>, we can solve for <span class="math inline">\(x\)</span> and get the solution we saw before.</p>
+</div>
+</div>
+</div>
+<div id="TM" class="section level3 unnumbered hasAnchor">
+<h3>Matrices with Technology<a href="matrices-and-systems-of-equations.html#TM" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>We use small-scale examples with nice solutions to illustrate the concepts, but in the real world, we use software packages to perform our computations.</p>
+<p>For small matrices, the <a href="https://www.desmos.com/matrix">Desmos</a><span class="citation">[<a href="#ref-Desmos">6</a>]</span> matrix calculator is handy for basic matrix operations, and will even put a matrix in reduced row echelon form with the touch of the <code>rref</code> button.</p>
+<p>In R, there are a few different ways to create a matrix. The <code>matrix</code> function is one of those ways.</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="matrices-and-systems-of-equations.html#cb3-1" tabindex="-1"></a>M <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="fu">c</span>(<span class="dv">2</span>,<span class="dv">1</span>,<span class="dv">3</span>,<span class="sc">-</span><span class="dv">2</span>,<span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">1</span>,<span class="sc">-</span><span class="dv">2</span>,<span class="dv">2</span>,<span class="dv">12</span>,<span class="sc">-</span><span class="dv">1</span>,<span class="dv">15</span>), <span class="at">nrow =</span> <span class="dv">3</span>)</span>
+<span id="cb3-2"><a href="matrices-and-systems-of-equations.html#cb3-2" tabindex="-1"></a>M</span></code></pre></div>
+<pre><code>##      [,1] [,2] [,3] [,4]
+## [1,]    2   -2    1   12
+## [2,]    1    1   -2   -1
+## [3,]    3    1    2   15</code></pre>
+<p>We have created the augmented matrix that goes with Example <a href="matrices-and-systems-of-equations.html#exm:tbt">1.4</a>. (Note that neither Desmos nor R will display the augmentation bar. We just have to imagine it being there.) By default, when we feed the <code>matrix</code> function a vector (created by the <code>c</code> function), it will fill the matrix column-by-column. We specified the number of rows to be 3 with the <code>nrow = 3</code> argument, so when the first column fills up, the next 3 values go in column 2. If we want to enter the values by row, we can add a <code>byrow = TRUE</code> argument.</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="matrices-and-systems-of-equations.html#cb5-1" tabindex="-1"></a>M2 <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="fu">c</span>(<span class="dv">2</span>,<span class="dv">1</span>,<span class="dv">3</span>,<span class="sc">-</span><span class="dv">2</span>,<span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">1</span>,<span class="sc">-</span><span class="dv">2</span>,<span class="dv">2</span>,<span class="dv">12</span>,<span class="sc">-</span><span class="dv">1</span>,<span class="dv">15</span>), <span class="at">byrow =</span> <span class="cn">TRUE</span>,  </span>
+<span id="cb5-2"><a href="matrices-and-systems-of-equations.html#cb5-2" tabindex="-1"></a>              <span class="at">nrow =</span> <span class="dv">3</span>)</span>
+<span id="cb5-3"><a href="matrices-and-systems-of-equations.html#cb5-3" tabindex="-1"></a>M2</span></code></pre></div>
+<pre><code>##      [,1] [,2] [,3] [,4]
+## [1,]    2    1    3   -2
+## [2,]    1    1    1   -2
+## [3,]    2   12   -1   15</code></pre>
+<p>To put a matrix into RREF form, we need the <code>rref</code> function from the <code>pracma</code> package.</p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="matrices-and-systems-of-equations.html#cb7-1" tabindex="-1"></a><span class="fu">library</span>(pracma)</span>
+<span id="cb7-2"><a href="matrices-and-systems-of-equations.html#cb7-2" tabindex="-1"></a><span class="fu">rref</span>(M)</span></code></pre></div>
+<pre><code>##      [,1] [,2] [,3] [,4]
+## [1,]    1    0    0    4
+## [2,]    0    1    0   -1
+## [3,]    0    0    1    2</code></pre>
+<p>With no free variables, we can read off our solution in the 4th column: <span class="math inline">\({(x,y,z)=(4,-1,2)}\)</span>.</p>
+</div>
+</div>
+<div id="BMO" class="section level2 hasAnchor" number="1.4">
+<h2><span class="header-section-number">1.4</span> Basic Matrix Operations<a href="matrices-and-systems-of-equations.html#BMO" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>So far, we’ve only used matrices as shorthand for an underlying linear system. It turns out that matrices have useful algebraic properties, which we will now study.</p>
+<p>The <em>dimension</em> or <em>size</em> of a matrix is the number of rows and columns. An <span class="math inline">\(m\times n\)</span> matrix has <span class="math inline">\(m\)</span> rows (horizontal) and <span class="math inline">\(n\)</span> columns (vertical). Here are some examples.</p>
+<ul>
+<li><p><span class="math inline">\(\begin{bmatrix}
+2 &amp; 3 &amp; 2\\
+1 &amp; 2 &amp; 4
+\end{bmatrix} {\text{ is } 2\times 3}\)</span></p></li>
+<li><p><span class="math inline">\(\begin{bmatrix}
+-1 &amp; 3 &amp; 6 &amp; 2\\
+2 &amp; 1 &amp; 0 &amp; 0\\
+3 &amp; 5 &amp; 1 &amp; 2
+\end{bmatrix}{\text{ is } 3\times 4}\)</span></p></li>
+<li><p><span class="math inline">\(\begin{bmatrix}
+2 &amp; 1 \\
+1 &amp; -2
+\end{bmatrix}{\text{ is } 2\times 2 \text{ (a } \textit{square matrix}\text{)}}\)</span></p></li>
+</ul>
+<div id="row-and-column-vectors" class="section level3 unnumbered hasAnchor">
+<h3>Row and column vectors<a href="matrices-and-systems-of-equations.html#row-and-column-vectors" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>An <span class="math inline">\(m\times 1\)</span> matrix is called a <em>column vector</em>.</p>
+<p><span class="math display">\[\begin{bmatrix}
+2\\4\\-1\\6\\7
+\end{bmatrix} \]</span></p>
+<p>A <span class="math inline">\(1\times n\)</span> matrix is called a <em>row vector</em>.</p>
+<p><span class="math display">\[\begin{bmatrix}
+1 &amp; 2 &amp; -1 &amp; 5 &amp; 4 &amp; 8
+\end{bmatrix}\]</span></p>
+</div>
+<div id="matrix-addition" class="section level3 unnumbered hasAnchor">
+<h3>Matrix addition<a href="matrices-and-systems-of-equations.html#matrix-addition" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Two matrices of the same dimension can be added together. The addition is entry-wise.
+<span class="math display">\[\begin{align*}
+\begin{bmatrix}
+2 &amp; 4 &amp; -1\\
+3 &amp; 2 &amp; 3
+\end{bmatrix}+
+\begin{bmatrix}
+4 &amp; 2 &amp; 1\\
+2 &amp; -2 &amp; 3
+\end{bmatrix}&amp;=
+\begin{bmatrix}
+2+4 &amp; 4+2 &amp; -1+1\\
+3+2 &amp; 2+-2 &amp; 3+3
+\end{bmatrix}\\
+&amp;=
+\begin{bmatrix}
+6 &amp; 6 &amp; 0\\
+5 &amp; 0 &amp; 6
+\end{bmatrix}
+\end{align*}\]</span></p>
+<p>Matrix subtraction is similar. Again, the matrices must be of the same size.
+<span class="math display">\[\begin{align*}
+\begin{bmatrix}
+2 &amp; 4 &amp; -1\\
+3 &amp; 2 &amp; 3
+\end{bmatrix}-
+\begin{bmatrix}
+4 &amp; 2 &amp; 1\\
+2 &amp; -2 &amp; 3
+\end{bmatrix}&amp;=
+\begin{bmatrix}
+2-4 &amp; 4-2 &amp; -1-1\\
+3-2 &amp; 2-(-2) &amp; 3-3
+\end{bmatrix}\\
+&amp;=
+\begin{bmatrix}
+-2 &amp; 2 &amp; -2\\
+1 &amp; 4 &amp; 0
+\end{bmatrix}
+\end{align*}\]</span></p>
+</div>
+<div id="scalar-multiplication" class="section level3 unnumbered hasAnchor">
+<h3>Scalar Multiplication<a href="matrices-and-systems-of-equations.html#scalar-multiplication" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>A matrix can be multiplied by a constant. This process is called <em>scalar multiplication</em> to avoid confusion with <em>matrix multiplication</em>, which we will see in a bit. In scalar multiplication, each entry in the matrix is multiplied by the constant.</p>
+<p>For instance</p>
+<p><span class="math display">\[2\begin{bmatrix}
+2 &amp; 1\\-3 &amp; 4
+\end{bmatrix}=
+\begin{bmatrix}
+2\cdot 2 &amp; 2\cdot 1\\ 2\cdot (-3) &amp; 2\cdot 4
+\end{bmatrix}=
+\begin{bmatrix}
+4 &amp; 2\\-6 &amp; 8
+\end{bmatrix}.\]</span></p>
+<p>The <em>additive inverse</em> of a matrix <span class="math inline">\(\mathbf{A}\)</span> is
+<span class="math inline">\(-\mathbf{A}=(-1)\mathbf{A}\)</span>.</p>
+<p>All of these operations are easily performed in Desmos and R. With <span class="math inline">\(\mathbf{M}\)</span> and <span class="math inline">\(\mathbf{M2}\)</span> from before, we get the following.</p>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="matrices-and-systems-of-equations.html#cb9-1" tabindex="-1"></a>M</span></code></pre></div>
+<pre><code>##      [,1] [,2] [,3] [,4]
+## [1,]    2   -2    1   12
+## [2,]    1    1   -2   -1
+## [3,]    3    1    2   15</code></pre>
+<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="matrices-and-systems-of-equations.html#cb11-1" tabindex="-1"></a>M2</span></code></pre></div>
+<pre><code>##      [,1] [,2] [,3] [,4]
+## [1,]    2    1    3   -2
+## [2,]    1    1    1   -2
+## [3,]    2   12   -1   15</code></pre>
+<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb13-1"><a href="matrices-and-systems-of-equations.html#cb13-1" tabindex="-1"></a>M<span class="sc">+</span>M2</span></code></pre></div>
+<pre><code>##      [,1] [,2] [,3] [,4]
+## [1,]    4   -1    4   10
+## [2,]    2    2   -1   -3
+## [3,]    5   13    1   30</code></pre>
+<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb15-1"><a href="matrices-and-systems-of-equations.html#cb15-1" tabindex="-1"></a>M<span class="sc">-</span>M2</span></code></pre></div>
+<pre><code>##      [,1] [,2] [,3] [,4]
+## [1,]    0   -3   -2   14
+## [2,]    0    0   -3    1
+## [3,]    1  -11    3    0</code></pre>
+<div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb17-1"><a href="matrices-and-systems-of-equations.html#cb17-1" tabindex="-1"></a><span class="dv">2</span><span class="sc">*</span>M</span></code></pre></div>
+<pre><code>##      [,1] [,2] [,3] [,4]
+## [1,]    4   -4    2   24
+## [2,]    2    2   -4   -2
+## [3,]    6    2    4   30</code></pre>
+<div class="sourceCode" id="cb19"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb19-1"><a href="matrices-and-systems-of-equations.html#cb19-1" tabindex="-1"></a><span class="sc">-</span>M</span></code></pre></div>
+<pre><code>##      [,1] [,2] [,3] [,4]
+## [1,]   -2    2   -1  -12
+## [2,]   -1   -1    2    1
+## [3,]   -3   -1   -2  -15</code></pre>
+<p>Make sure to use the <code>*</code> for <em>any</em> scalar multiplication.</p>
+<p>The <span class="math inline">\(m\times n\)</span> <em>zero matrix</em> <span class="math inline">\(\mathbf{0}\)</span> is the <span class="math inline">\(m\times n\)</span> matrix with all zero entries. For instance, the <span class="math inline">\(2\times 3\)</span> zero matrix is</p>
+<p><span class="math display">\[\mathbf{0}=
+\begin{bmatrix}
+0 &amp; 0 &amp; 0\\0 &amp; 0 &amp; 0
+\end{bmatrix}.\]</span></p>
+<div class="propbox">
+<p><strong>Properties of matrix arithmetic</strong></p>
+<p>Let <span class="math inline">\(\mathbf{A}, \mathbf{B},\)</span> and <span class="math inline">\(\mathbf{C}\)</span> be any <span class="math inline">\(m\times n\)</span> matrices, and let <span class="math inline">\(\mathbf{0}\)</span> be the <span class="math inline">\(m\times n\)</span> zero matrix. We have the following properties.</p>
+<ol style="list-style-type: decimal">
+<li><p>Commutative property: <span class="math inline">\(\mathbf{A}+\mathbf{B}=\mathbf{B}+\mathbf{A}\)</span></p></li>
+<li><p>Associative property: <span class="math inline">\(\mathbf{A}+(\mathbf{B}+\mathbf{C})=(\mathbf{A}+\mathbf{B})+\mathbf{C}\)</span></p></li>
+<li><p>Identity property of addition: <span class="math inline">\(\mathbf{A}+\mathbf{0}=\mathbf{0}+\mathbf{A}=\mathbf{A}\)</span></p></li>
+<li><p>Inverse property of addition: <span class="math inline">\(\mathbf{A}+(-\mathbf{A})=(-\mathbf{A})+\mathbf{A}=\mathbf{0}\)</span></p></li>
+</ol>
+</div>
+<p>These properties follow from the analogous properties for real numbers.</p>
+</div>
+<div id="matrix-multiplication" class="section level3 unnumbered hasAnchor">
+<h3>Matrix multiplication<a href="matrices-and-systems-of-equations.html#matrix-multiplication" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>It would be simple to define the product of two matrices in a similar manner. (In fact, the <code>*</code> operator in R does exactly that.) It turns out that a different definition is more useful for applications, but it will take a little motivation.</p>
+<div class="examplebox">
+<div class="example">
+<p><span id="exm:unlabeled-div-10" class="example"><strong>Example 1.12  </strong></span>A movie theater sold 200 tickets for a screening. Adult tickets cost $12, senior tickets cost $8, and children’s tickets cost $6 each. The theater received $1,960 in revenue and sold 10 more senior tickets than children’s tickets. How many of each type of ticket were sold?</p>
+<p>Let <span class="math inline">\(x,y,\)</span> and <span class="math inline">\(z\)</span> represent the number of adult, senior, and children’s tickets sold, respectively. There are three equations here.</p>
+<ul>
+<li>Tickets Sold: <span class="math inline">\(x+y+z=200\)</span></li>
+<li>Revenue: <span class="math inline">\(12x+8y+6z=1960\)</span></li>
+<li>Senior/child: <span class="math inline">\(y-z=10\)</span></li>
+</ul>
+<p>The augmented matrix for the system and its reduced row echelon form look like this.</p>
+<p><span class="math display">\[\left[\begin{array}{ccc|l} 1&amp;1&amp;1&amp;200\\12 &amp; 8 &amp; 6 &amp; 1960\\0 &amp; 1 &amp; -1 &amp; 10\end{array}\right]\leadsto \left[\begin{array}{ccc|l} 1&amp;0&amp;0&amp;110\\0 &amp; 1 &amp; 0 &amp; 50\\0 &amp; 0 &amp; 1 &amp; 40\end{array}\right].\]</span></p>
+<p>The theater sold 110 adult tickets, 50 senior tickets, and 40 children’s tickets. Let’s store these numbers in a column vector.</p>
+<p><span class="math display">\[\mathbf{v}=\begin{bmatrix} 110\\50\\40\end{bmatrix}\]</span></p>
+<p>Let’s look at the coefficient matrix, this solution vector, and the augmented vector together.</p>
+<p><span class="math display">\[\begin{bmatrix}1&amp;1&amp;1\\12 &amp; 8 &amp; 6\\0 &amp; 1 &amp; -1 \end{bmatrix},\begin{bmatrix} 110\\50\\40\end{bmatrix},\text{ and }\begin{bmatrix} 200\\1960\\10\end{bmatrix}\]</span></p>
+<p>We can get the revenue by combining the middle row and the solution vector:</p>
+<p><span class="math display">\[\text{Revenue} = 12\cdot110+8\cdot 50+6\cdot 40=1960\]</span></p>
+<p><span class="math display">\[\begin{bmatrix}&amp;&amp;\\12 &amp; 8 &amp; 6\\ &amp;  &amp;  \end{bmatrix},\begin{bmatrix} 110\\50\\40\end{bmatrix},\begin{bmatrix} \\1960\\ \\ \end{bmatrix}\]</span></p>
+<p>You might recognize this as a <em>dot product</em> of vectors:</p>
+<p><span class="math display">\[(a_1,a_2,a_3)\cdot (b_1,b_2,b_3)=a_1b_1+a_2b_2+a_3b_3.\]</span></p>
+<p>The total revenue, the second entry in the augmented vector is the dot product of the second row of the coefficient matrix and the solution vector. Similarly, the first entry (ticket sales) is the dot product of the first row and the solution vector, and the third entry is the dot product of the third row and the solution vector.</p>
+<p>This is how we are going to define the product of a matrix and a vector.</p>
+<p><span class="math display">\[\begin{bmatrix}1&amp;1&amp;1\\12 &amp; 8 &amp; 6\\0 &amp; 1 &amp; -1 \end{bmatrix}\begin{bmatrix} 110\\50\\40\end{bmatrix}=\begin{bmatrix} 200\\1960\\10\end{bmatrix}\]</span></p>
+</div>
+</div>
+<p>Here’s an another example</p>
+<div class="examplebox">
+<div class="example">
+<p><span id="exm:unlabeled-div-11" class="example"><strong>Example 1.13  </strong></span><span class="math display">\[
+\underbrace{\begin{bmatrix}
+2 &amp; 4 &amp; 1 &amp; 5\\
+1 &amp; -3 &amp; 2 &amp; 4\end{bmatrix}}_{2\times 4}\underbrace{\begin{bmatrix} 3 \\ -1 \\ 2 \\ 3
+\end{bmatrix}}_{4\times 1}=\begin{bmatrix} 2\cdot 3+4\cdot (-1)+1\cdot 2+5\cdot 3\\ 1\cdot 3+(-3)\cdot (-1)+2\cdot 2+4\cdot 3
+\end{bmatrix}
+=\underbrace{\begin{bmatrix} 19\\22\end{bmatrix}}_{2\times 1}
+\]</span></p>
+</div>
+</div>
+</div>
+<div id="multiplying-two-matrices" class="section level3 unnumbered hasAnchor">
+<h3>Multiplying two matrices<a href="matrices-and-systems-of-equations.html#multiplying-two-matrices" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Having defined what it means to multiply a vector by a matrix, we can now talk about multiplying two matrices.</p>
+<p><span class="math display">\[\underbrace{\begin{bmatrix}
+2 &amp; 4 &amp; 1 &amp; 5\\
+1 &amp; -3 &amp; 2 &amp; 4
+\end{bmatrix}}_{2\times 4}
+\underbrace{\begin{bmatrix}
+1 &amp; 2\\
+-2 &amp; 3\\
+2 &amp; 2\\
+-1 &amp; 4
+\end{bmatrix}}_{4\times 2}=
+\underbrace{
+\begin{bmatrix}
+-9 &amp; 38 \\ 7 &amp; 13\end{bmatrix}}_{2\times 2}\]</span></p>
+<p>If <span class="math inline">\(\mathbf{A}\)</span> is an <span class="math inline">\(m\times n\)</span> matrix and <span class="math inline">\(\mathbf{B}\)</span> is an <span class="math inline">\(n\times k\)</span> matrix, then their product <span class="math inline">\(\mathbf{A}\mathbf{B}\)</span> is an <span class="math inline">\(m\times k\)</span> matrix whose <span class="math inline">\(i\)</span>th column is the product of <span class="math inline">\(\mathbf{A}\)</span> and the <span class="math inline">\(i\)</span>th column of <span class="math inline">\(\mathbf{B}\)</span>.</p>
+<p>The first column in the product is</p>
+<p><span class="math display">\[\begin{bmatrix}
+  2 &amp; 4 &amp; 1 &amp; 5\\
+  1 &amp; -3 &amp; 2 &amp; 4
+  \end{bmatrix}
+  \begin{bmatrix}
+  1 &amp; *\\
+  -2 &amp; *\\
+  2 &amp; *\\
+  -1 &amp; *
+    \end{bmatrix}=
+    \begin{bmatrix}
+  -9 &amp; * \\ 7 &amp; *\end{bmatrix}
+  \]</span>
+and the second column is</p>
+<p><span class="math display">\[\begin{bmatrix}
+  2 &amp; 4 &amp; 1 &amp; 5\\
+  1 &amp; -3 &amp; 2 &amp; 4
+  \end{bmatrix}
+  \begin{bmatrix}
+  * &amp; 2\\
+  * &amp; 3\\
+  * &amp; 2\\
+  * &amp; 4
+  \end{bmatrix}=
+    \begin{bmatrix}
+  * &amp; 38 \\ * &amp; 13\end{bmatrix}.\]</span></p>
+<div class="examplebox">
+<div class="example">
+<p><span id="exm:twobytwo" class="example"><strong>Example 1.14  </strong></span>Multiply</p>
+<p><span class="math display">\[\begin{bmatrix} 2 &amp; -1 \\ 3 &amp; -2\end{bmatrix} \begin{bmatrix}1 &amp; 2\\3 &amp; 4\end{bmatrix}.\]</span></p>
+<p>Let’s introduce some notation. Suppose <span class="math inline">\(\mathbf{C}\)</span> is an <span class="math inline">\(m\times n\)</span> matrix. We denote the row <span class="math inline">\(i\)</span>, column <span class="math inline">\(j\)</span> entry of <span class="math inline">\(\mathbf{C}\)</span> by <span class="math inline">\(c_{ij}\)</span>. If <span class="math inline">\(\mathbf{C}=\mathbf{A}\mathbf{B}\)</span>, then <span class="math inline">\(c_{ij}\)</span> is the dot product of row <span class="math inline">\(i\)</span> of <span class="math inline">\(\mathbf{A}\)</span> and column <span class="math inline">\(j\)</span> of <span class="math inline">\(\mathbf{B}\)</span>.</p>
+<p>The row 1, column 1 entry in our product is</p>
+<p><span class="math display">\[\begin{bmatrix} 2 &amp; -1 \\ * &amp; *\end{bmatrix} \begin{bmatrix}1 &amp; *\\3 &amp; *\end{bmatrix}=\begin{bmatrix} 2\cdot 1+(-1)\cdot 3 &amp; *\\ * &amp; *\end{bmatrix}=\begin{bmatrix} -1 &amp; *\\ * &amp; *\end{bmatrix}\]</span></p>
+<p>Pairing all of the other possible rows and columns gives us</p>
+<p><span class="math display">\[\begin{bmatrix} 2 &amp; -1 \\ 3 &amp; -2\end{bmatrix} \begin{bmatrix}1 &amp; 2\\3 &amp; 4\end{bmatrix}=\begin{bmatrix}-1 &amp; 0\\-3 &amp; -2\end{bmatrix}\]</span></p>
+</div>
+</div>
+<p>You can’t just multiply any pair of matrices. For example</p>
+<p><span class="math display">\[\underbrace{\begin{bmatrix} 1 &amp; 2 &amp; 3\\2 &amp; 4 &amp; 1\end{bmatrix}}_{2\times 3}\underbrace{\begin{bmatrix} 2&amp; 3\\1 &amp; 4\end{bmatrix}}_{2\times 2}\]</span></p>
+<p>doesn’t work, because the number of columns on the left and the number of rows on the right don’t match up.</p>
+<p>What happens when we multiply the two matrices from Example <a href="matrices-and-systems-of-equations.html#exm:twobytwo">1.14</a>, but in the opposite order?</p>
+<p><span class="math display">\[\begin{bmatrix}1 &amp; 2\\3 &amp; 4\end{bmatrix}
+\begin{bmatrix} 2 &amp; -1 \\ 3 &amp; -2\end{bmatrix} =\begin{bmatrix}
+8 &amp; -5 \\18 &amp; -11
+\end{bmatrix}.\]</span></p>
+<p>We get a different answer. Matrix multiplication is <strong>not</strong> commutative. In fact,</p>
+<p><span class="math display">\[\begin{bmatrix}
+1 &amp; 2 &amp; 1\\2 &amp; 1 &amp; 3\end{bmatrix} \begin{bmatrix}
+1 &amp; 2 &amp; -1\\ 2 &amp; 1 &amp; 4 \\1 &amp; -1 &amp; -1
+\end{bmatrix}=
+\begin{bmatrix}
+6 &amp; 3 &amp; 6\\7 &amp; 2 &amp; -1
+\end{bmatrix},\]</span></p>
+<p>but</p>
+<p><span class="math display">\[\begin{bmatrix}
+1 &amp; 2 &amp; -1\\ 2 &amp; 1 &amp; 4 \\1 &amp; -1 &amp; -1
+\end{bmatrix}
+\begin{bmatrix}
+1 &amp; 2 &amp; 1\\2 &amp; 1 &amp; 3\end{bmatrix} \]</span></p>
+<p>isn’t even defined.</p>
+<div class="propbox">
+<p><strong>Properties of Matrix Multiplication</strong></p>
+<p>If <span class="math inline">\(\mathbf{A},\mathbf{B},\)</span> and <span class="math inline">\(\mathbf{C}\)</span> are matrices such that all the indicated sums and products exist and <span class="math inline">\(r\)</span> is a scalar, then the following properties are satisfied.</p>
+<ol style="list-style-type: decimal">
+<li><p>Associative: <span class="math inline">\(\mathbf{A}(\mathbf{BC})=(\mathbf{AB})\mathbf{C}\)</span></p></li>
+<li><p>Distributive:</p>
+<ol style="list-style-type: lower-alpha">
+<li><p><span class="math inline">\(\mathbf{A}(\mathbf{B}+\mathbf{C})=\mathbf{AB}+\mathbf{AC}\)</span></p></li>
+<li><p><span class="math inline">\((\mathbf{A}+\mathbf{B})\mathbf{C}=\mathbf{AC}+\mathbf{BC}\)</span></p></li>
+</ol></li>
+<li><p>Scalar Commutativity: <span class="math inline">\(\mathbf{A}(r\mathbf{B})=r\mathbf{A}\mathbf{B}\)</span></p></li>
+</ol>
+</div>
+<p>These properties are a little harder to prove, but note that associativity means that we can multiply three or more matrices by multiplying two at a time, and the pairing does not matter.</p>
+</div>
+<div id="identity-matrices" class="section level3 unnumbered hasAnchor">
+<h3>Identity Matrices<a href="matrices-and-systems-of-equations.html#identity-matrices" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>The <em>main diagonal</em>, or more simply, the <em>diagonal</em> of a square (<span class="math inline">\(n\times n\)</span>) matrix <span class="math inline">\(\mathbf{A}\)</span> are the entries of the form <span class="math inline">\(a_{ii}\)</span>. That is, they are the entries whose row and column indices match.</p>
+<p>The diagonal of this matrix is highlighted.</p>
+<p><span class="math display">\[\begin{bmatrix} \mathbf{3} &amp; 2 &amp; 1\\ 4 &amp; \mathbf{-3} &amp; 1\\4 &amp; 2 &amp; \mathbf{9}\end{bmatrix}\]</span></p>
+<p>The <span class="math inline">\(n\times n\)</span> <em>identity matrix</em> <span class="math inline">\(\mathbf{I}\)</span> has ones along its main diagonal and zeros everywhere else. For example</p>
+<ul>
+<li><span class="math inline">\(2\times 2:\mathbf{I}=\displaystyle{\begin{bmatrix}
+  1 &amp; 0 \\0 &amp; 1\end{bmatrix}}\)</span></li>
+<li><span class="math inline">\(3\times 3:\mathbf{I}=\displaystyle{\begin{bmatrix}
+  1 &amp; 0 &amp; 0\\0 &amp; 1 &amp; 0\\0 &amp; 0 &amp; 1
+  \end{bmatrix}}\)</span></li>
+</ul>
+<p>If <span class="math inline">\(\mathbf{A}\)</span> is any matrix, and <span class="math inline">\(\mathbf{I}\)</span> is the appropriately sized identity matrix, then <span class="math inline">\(\mathbf{AI}=\mathbf{A}\)</span>. Similarly, <span class="math inline">\(\mathbf{IA}=\mathbf{A}\)</span> for the appropriately sized <span class="math inline">\(\mathbf{I}.\)</span></p>
+<p>For example,</p>
+<p><span class="math display">\[\begin{bmatrix}
+    1 &amp; 0 \\0 &amp; 1\end{bmatrix} \begin{bmatrix} 2 &amp; 1 &amp; 4\\3 &amp; -2 &amp; 6\end{bmatrix}=\begin{bmatrix} 2 &amp; 1 &amp; 4\\3 &amp; -2 &amp; 6\end{bmatrix}\]</span></p>
+<p>and</p>
+<p><span class="math display">\[\begin{bmatrix} 2 &amp; 1 &amp; 4\\3 &amp; -2 &amp; 6\end{bmatrix}\begin{bmatrix}
+    1 &amp; 0 &amp; 0\\0 &amp; 1 &amp; 0\\0 &amp; 0 &amp; 1
+    \end{bmatrix}=\begin{bmatrix} 2 &amp; 1 &amp; 4\\3 &amp; -2 &amp; 6\end{bmatrix}.\]</span></p>
+</div>
+<div id="technology" class="section level3 unnumbered hasAnchor">
+<h3>Technology<a href="matrices-and-systems-of-equations.html#technology" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>In <a href="https://www.desmos.com/matrix">Desmos</a>, we can multiply matrices using <code>*</code>. (It will show a <span class="math inline">\(\cdot\)</span>).</p>
+<p>In R, we must use the <code>%*%</code> operator to perform matrix multiplication as we defined it. (As mentioned before, <code>*</code> will multiply the corresponding entries in the two matrices, which is useful for some things, but not for our purposes.)</p>
+<div class="sourceCode" id="cb21"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb21-1"><a href="matrices-and-systems-of-equations.html#cb21-1" tabindex="-1"></a>A <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="fu">c</span>(<span class="dv">2</span>,<span class="dv">1</span>,<span class="dv">3</span>,<span class="sc">-</span><span class="dv">2</span>,<span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">1</span>,<span class="sc">-</span><span class="dv">2</span>,<span class="dv">2</span>), <span class="at">nrow =</span> <span class="dv">3</span>)</span>
+<span id="cb21-2"><a href="matrices-and-systems-of-equations.html#cb21-2" tabindex="-1"></a>A</span></code></pre></div>
+<pre><code>##      [,1] [,2] [,3]
+## [1,]    2   -2    1
+## [2,]    1    1   -2
+## [3,]    3    1    2</code></pre>
+<div class="sourceCode" id="cb23"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb23-1"><a href="matrices-and-systems-of-equations.html#cb23-1" tabindex="-1"></a>B <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">3</span>,<span class="dv">5</span>,<span class="dv">1</span>,<span class="dv">2</span>), <span class="at">nrow =</span> <span class="dv">3</span>)</span>
+<span id="cb23-2"><a href="matrices-and-systems-of-equations.html#cb23-2" tabindex="-1"></a>B</span></code></pre></div>
+<pre><code>##      [,1] [,2]
+## [1,]    1    5
+## [2,]    2    1
+## [3,]    3    2</code></pre>
+<div class="sourceCode" id="cb25"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb25-1"><a href="matrices-and-systems-of-equations.html#cb25-1" tabindex="-1"></a>A<span class="sc">%*%</span>B</span></code></pre></div>
+<pre><code>##      [,1] [,2]
+## [1,]    1   10
+## [2,]   -3    2
+## [3,]   11   20</code></pre>
+<div class="sourceCode" id="cb27"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb27-1"><a href="matrices-and-systems-of-equations.html#cb27-1" tabindex="-1"></a>B<span class="sc">%*%</span>A</span></code></pre></div>
+<pre><code>## Error in B %*% A: non-conformable arguments</code></pre>
+</div>
+<div id="the-transpose-of-a-matrix" class="section level3 unnumbered hasAnchor">
+<h3>The transpose of a matrix<a href="matrices-and-systems-of-equations.html#the-transpose-of-a-matrix" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>One operation on a matrix that will come in handy in the future is the <em>transpose</em>.</p>
+<div class="defbox">
+<div class="definition">
+<p><span id="def:unlabeled-div-12" class="definition"><strong>Definition 1.1  </strong></span>Let <span class="math inline">\(\mathbf{A}\)</span> be an <span class="math inline">\(m\times n\)</span> matrix. The <em>transpose</em> of <span class="math inline">\(\mathbf{A}\)</span>, denoted <span class="math inline">\(\mathbf{A}^T,\)</span> is the <span class="math inline">\(n\times m\)</span> matrix whose rows are the columns of <span class="math inline">\(\mathbf{A}\)</span> and whose columns are the rows of <span class="math inline">\(\mathbf{A}\)</span>.</p>
+</div>
+</div>
+<p>Here are some examples. If</p>
+<p><span class="math display">\[\mathbf{A}=\begin{bmatrix} a &amp; b\\c &amp; d\end{bmatrix},\]</span></p>
+<p>then</p>
+<p><span class="math display">\[\mathbf{A}^T=\begin{bmatrix} a&amp; c\\b&amp; d\end{bmatrix}.\]</span></p>
+<p>If
+<span class="math display">\[\mathbf{A}=\begin{bmatrix}1 &amp; 2 &amp; 3\\4 &amp; 5 &amp; 6\end{bmatrix},\]</span>
+then</p>
+<p><span class="math display">\[\mathbf{A}^T=\begin{bmatrix} 1 &amp; 4\\2 &amp; 5\\3 &amp; 6\end{bmatrix}.\]</span></p>
+<div class="propbox">
+<p><strong>Properties of the Transpose</strong></p>
+<p>If and are matrices of compatible sizes, and <span class="math inline">\(c\)</span> is a constant, then we have the following properties.</p>
+<ol style="list-style-type: decimal">
+<li><p><span class="math inline">\(\left(\textbf{A}^T\right)^T=\textbf{A}\)</span></p></li>
+<li><p><span class="math inline">\((\textbf{A}+\textbf{B})^T=\textbf{A}^T+\textbf{B}^T\)</span></p></li>
+<li><p><span class="math inline">\((c\textbf{A})^T=c\textbf{A}^T\)</span></p></li>
+<li><p><span class="math inline">\((\textbf{A}\textbf{B})^T=\textbf{B}^T\textbf{A}^T\)</span></p></li>
+</ol>
+</div>
+<p>In R, the function <code>t</code> will take the transpose of a matrix.</p>
+<div class="sourceCode" id="cb29"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb29-1"><a href="matrices-and-systems-of-equations.html#cb29-1" tabindex="-1"></a>B <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">3</span>,<span class="dv">5</span>,<span class="dv">1</span>,<span class="dv">2</span>), <span class="at">nrow =</span> <span class="dv">3</span>)</span>
+<span id="cb29-2"><a href="matrices-and-systems-of-equations.html#cb29-2" tabindex="-1"></a>B</span></code></pre></div>
+<pre><code>##      [,1] [,2]
+## [1,]    1    5
+## [2,]    2    1
+## [3,]    3    2</code></pre>
+<div class="sourceCode" id="cb31"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb31-1"><a href="matrices-and-systems-of-equations.html#cb31-1" tabindex="-1"></a><span class="fu">t</span>(B)</span></code></pre></div>
+<pre><code>##      [,1] [,2] [,3]
+## [1,]    1    2    3
+## [2,]    5    1    2</code></pre>
+</div>
+</div>
+<div id="Inverses" class="section level2 hasAnchor" number="1.5">
+<h2><span class="header-section-number">1.5</span> Matrix Inverses<a href="matrices-and-systems-of-equations.html#Inverses" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>An <span class="math inline">\(n\times n\)</span> matrix <span class="math inline">\(\mathbf{A}\)</span> is <em>invertible</em> if there is an <span class="math inline">\(n\times n\)</span> matrix <span class="math inline">\(\mathbf{A}^{-1}\)</span> such that</p>
+<p><span class="math display">\[\mathbf{A}\mathbf{A}^{-1}=\mathbf{A}^{-1}\mathbf{A}=\mathbf{I}.\]</span></p>
+<p>The matrix <span class="math inline">\(\mathbf{A}^{-1}\)</span> is the <em>inverse</em> of <span class="math inline">\(\mathbf{A}\)</span>.</p>
+<p>For instance, if <span class="math inline">\(\displaystyle{\mathbf{A}=\begin{bmatrix}
+2 &amp; 1\\1 &amp; 1
+\end{bmatrix}}\)</span> and <span class="math inline">\(\mathbf{B}=\displaystyle{\begin{bmatrix}
+1 &amp; -1\\-1 &amp; 2
+\end{bmatrix}},\)</span> let’s show that <span class="math inline">\(\mathbf{B}=\mathbf{A}^{-1}.\)</span> We have</p>
+<p><span class="math display">\[\mathbf{AB}=\begin{bmatrix}
+2 &amp; 1\\1 &amp; 1
+\end{bmatrix}\begin{bmatrix}
+1 &amp; -1\\-1 &amp; 2
+\end{bmatrix}=\begin{bmatrix}
+1 &amp; 0 \\0 &amp; 1
+\end{bmatrix}=\mathbf{I},\]</span></p>
+<p>and</p>
+<p><span class="math display">\[\mathbf{BA}=\begin{bmatrix}
+1 &amp; -1\\-1 &amp; 2
+\end{bmatrix}\begin{bmatrix}
+2 &amp; 1\\1 &amp; 1
+\end{bmatrix}=\begin{bmatrix}
+1 &amp; 0 \\0 &amp; 1
+\end{bmatrix}=\mathbf{I},\]</span></p>
+<p>so <span class="math inline">\(\mathbf{B}=\mathbf{A}^{-1}\)</span> (and <span class="math inline">\(\mathbf{A}=\mathbf{B}^{-1})\)</span>.</p>
+<div id="finding-inverses" class="section level3 unnumbered hasAnchor">
+<h3>Finding inverses<a href="matrices-and-systems-of-equations.html#finding-inverses" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>We can find the inverse of a matrix <span class="math inline">\(\mathbf{A}\)</span> by solving the matrix equation <span class="math inline">\(\mathbf{AX}=\mathbf{I}\)</span>. The way we do this is by row reduction with the matrix <span class="math inline">\(\mathbf{A}\)</span> augmented by the columns of <span class="math inline">\(\mathbf{I}\)</span>.</p>
+<p>For example, to find <span class="math inline">\(\mathbf{A}^{-1}\)</span> for <span class="math inline">\(\mathbf{A}=\displaystyle{\begin{bmatrix}
+2 &amp; 1\\1 &amp; 1
+\end{bmatrix}}\)</span>, we row reduce</p>
+<p><span class="math display">\[\left[\begin{array}{cc|cc}
+2 &amp; 1 &amp; 1 &amp; 0\\1 &amp; 1 &amp; 0 &amp; 1
+\end{array}\right].\]</span></p>
+<p><span class="math display">\[\begin{align*}\left[\begin{array}{cc|cc}
+2 &amp; 1 &amp; 1 &amp; 0\\1 &amp; 1 &amp; 0 &amp; 1
+\end{array}\right]&amp;\xrightarrow{R1\leftrightarrow R2}\left[\begin{array}{cc|cc}
+1 &amp; 1 &amp; 0 &amp; 1\\2 &amp; 1 &amp; 1 &amp; 0
+\end{array}\right] \xrightarrow{-2R1+R2\to R2} \left[\begin{array}{cc|cc}
+     1&amp; 1 &amp; 0 &amp; 1  \\
+     0 &amp; -1 &amp; 1 &amp; -2
+\end{array}\right] \\
+&amp;\xrightarrow{-R2\to R2} \left[\begin{array}{cc|cc}
+     1&amp; 1 &amp; 0 &amp; 1  \\
+     0 &amp; 1 &amp; -1 &amp; 2
+\end{array}\right] \xrightarrow{-R2+R1\to R1}
+\left[\begin{array}{rr|rr}
+     1&amp; 0 &amp; 1 &amp; -1  \\
+     0 &amp; 1 &amp; -1 &amp; 2
+\end{array}\right]
+\end{align*}\]</span></p>
+<p>and our inverse is</p>
+<p><span class="math display">\[\mathbf{A}^{-1}=\begin{bmatrix}
+1 &amp; -1\\-1 &amp; 2
+\end{bmatrix}.\]</span></p>
+<div class="examplebox">
+<div class="example">
+<p><span id="exm:3b3inv" class="example"><strong>Example 1.15  </strong></span>Here’s a <span class="math inline">\(3\times 3\)</span> example, though we will skip the messy bit.</p>
+<p>Find <span class="math inline">\(\mathbf{A}^{-1}\)</span> if</p>
+<p><span class="math display">\[\mathbf{A}=\begin{bmatrix} 1 &amp; 2 &amp; 3\\3 &amp; 1 &amp; 1\\1 &amp; 4 &amp; 5\end{bmatrix}.\]</span></p>
+<p>We augment <span class="math inline">\(\mathbf{A}\)</span> with the <span class="math inline">\(3\times 3\)</span> identity matrix and reduce.</p>
+<p><span class="math display">\[\left[\begin{array}{ccc|ccc} 1 &amp; 2 &amp; 3 &amp; 1 &amp; 0 &amp; 0\\3 &amp; 1 &amp; 1 &amp; 0 &amp; 1 &amp; 0\\1 &amp; 4 &amp; 5 &amp; 0 &amp; 0 &amp; 1\end{array}\right] \leadsto \left[\begin{array}{ccc|ccc} 1 &amp; 0 &amp; 0 &amp; \frac{1}{6} &amp; \frac{1}{3} &amp; -\frac{1}{6}\\0 &amp; 1 &amp; 0 &amp; -\frac{7}{3} &amp; \frac{1}{3} &amp; \frac{4}{3} \\ 0 &amp; 0 &amp; 1 &amp; \frac{11}{6} &amp; -\frac{1}{3} &amp; -\frac{5}{6}\end{array}\right]\]</span></p>
+<p>Our inverse is</p>
+<p><span class="math display">\[\mathbf{A}^{-1}=\begin{bmatrix}\frac{1}{6} &amp; \frac{1}{3} &amp; -\frac{1}{6}\\-\frac{7}{3} &amp; \frac{1}{3} &amp; \frac{4}{3} \\ \frac{11}{6} &amp;-\frac{1}{3} &amp; -\frac{5}{6}\end{bmatrix}.\]</span></p>
+<p>They aren’t always pretty.</p>
+</div>
+</div>
+<p>Not all square matrices have inverses. For instance, if <span class="math inline">\(\mathbf{A}=\displaystyle{\begin{bmatrix}
+1 &amp; 2\\ -2 &amp; -4
+\end{bmatrix}}\)</span>, when we try to find our inverse, we get</p>
+<p><span class="math display">\[\left[\begin{array}{rr|rr}
+    1 &amp; 2 &amp; 1 &amp; 0\\
+    -2 &amp; -4 &amp; 0 &amp; 1
+\end{array}\right]\xrightarrow{2R1+R2\to R2}
+\left[\begin{array}{rr|rr}
+    1 &amp; 2 &amp; 1 &amp; 0  \\
+    0 &amp; 0 &amp; 2 &amp; 1
+\end{array}\right]\]</span></p>
+<p>and we’re stuck. This matrix has no inverse. Noninvertible matrices are also called <em>singular</em>. They play an important role in Linear Algebra.</p>
+</div>
+<div id="a-formula-for-2-x-2-matrices" class="section level3 unnumbered hasAnchor">
+<h3>A formula for 2 x 2 matrices<a href="matrices-and-systems-of-equations.html#a-formula-for-2-x-2-matrices" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Using row reduction on the augmented matrix</p>
+<p><span class="math display">\[\left[\mathbf{A}|\mathbf{I}\right]=\left[\begin{array}{rr|rr}
+a &amp; b &amp; 1 &amp; 0\\ c &amp; d &amp; 0 &amp; 1
+\end{array}\right] \]</span></p>
+<p>leads to the following formula for <span class="math inline">\(\mathbf{A}^{-1}\)</span>. We’ll state it as our first theorem.</p>
+<div class="theorembox">
+<div class="theorem">
+<p><span id="thm:2b2invthm" class="theorem"><strong>Theorem 1.1  </strong></span>If <span class="math inline">\(\mathbf{A}=\displaystyle{\begin{bmatrix}a &amp; b\\c &amp; d\end{bmatrix}}\)</span> and <span class="math inline">\(ad-bc\neq 0\)</span>, then <span class="math inline">\(\mathbf{A}\)</span> is invertible and</p>
+<p><span class="math display" id="eq:2b2inv">\[\mathbf{A}^{-1}=\frac{1}{ad-bc}\begin{bmatrix}
+d &amp; -b\\-c &amp; a
+\end{bmatrix}.\tag{1.3}\]</span></p>
+</div>
+</div>
+<p>This result is very handy. Here are some examples.</p>
+<div class="examplebox">
+<div class="example">
+<p><span id="exm:unlabeled-div-13" class="example"><strong>Example 1.16  </strong></span>Let <span class="math inline">\(\mathbf{A}=\displaystyle{\begin{bmatrix}
+2 &amp; -1 \\ 3 &amp; 4
+\end{bmatrix}}.\)</span></p>
+<p>Then</p>
+<p><span class="math display">\[\mathbf{A}^{-1}=\frac{1}{2\cdot 4-(-1)\cdot 3}\begin{bmatrix}
+4 &amp; 1\\-3 &amp; 2
+\end{bmatrix}=\frac{1}{11}\begin{bmatrix}
+4 &amp; 1\\-3 &amp; 2
+\end{bmatrix}=\begin{bmatrix}
+\frac{4}{11} &amp; \frac{1}{11}\\ -\frac{3}{11} &amp; \frac{2}{11}
+\end{bmatrix}.\]</span></p>
+</div>
+</div>
+<div class="examplebox">
+<div class="example">
+<p><span id="exm:unlabeled-div-14" class="example"><strong>Example 1.17  </strong></span>If <span class="math inline">\(\mathbf{B}=\displaystyle{\begin{bmatrix}
+2 &amp; 3\\6 &amp; 9
+\end{bmatrix}},\)</span></p>
+<p>then</p>
+<p><span class="math display">\[\mathbf{B}^{-1}=\frac{1}{2\cdot 9-6\cdot 3}\begin{bmatrix}
+9 &amp; -3 \\ -6 &amp; 2
+\end{bmatrix}=\frac{1}{0}\begin{bmatrix}
+9 &amp; -3 \\ -6 &amp; 2
+\end{bmatrix}\dots\]</span></p>
+<p>This matrix is not invertible. Note that the second row of <span class="math inline">\(\mathbf{B}\)</span> is a multiple of the first row. The second column is also a multiple of the first column. For singular <span class="math inline">\(2\times 2\)</span> matrices, this is always the case. It’s more complicated for bigger matrices.</p>
+</div>
+</div>
+<p>Speaking of larger matrices, there is a general formula for the inverse of an <span class="math inline">\(n\times n\)</span> matrix, but it involves concepts that we are not going to get to. You might see it in a higher level Linear Algebra or Matrix Algebra course.</p>
+<p>As is usually the case, most of the time we will be using technology to find inverses. Desmos has an inverse matrix button. In R, we use the multipurpose <code>solve</code> function.</p>
+<div class="sourceCode" id="cb33"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb33-1"><a href="matrices-and-systems-of-equations.html#cb33-1" tabindex="-1"></a>A <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="fu">c</span>(<span class="dv">2</span>,<span class="dv">1</span>,<span class="dv">3</span>,<span class="sc">-</span><span class="dv">2</span>,<span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">1</span>,<span class="sc">-</span><span class="dv">2</span>,<span class="dv">2</span>), <span class="at">nrow =</span> <span class="dv">3</span>)</span>
+<span id="cb33-2"><a href="matrices-and-systems-of-equations.html#cb33-2" tabindex="-1"></a>A</span></code></pre></div>
+<pre><code>##      [,1] [,2] [,3]
+## [1,]    2   -2    1
+## [2,]    1    1   -2
+## [3,]    3    1    2</code></pre>
+<div class="sourceCode" id="cb35"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb35-1"><a href="matrices-and-systems-of-equations.html#cb35-1" tabindex="-1"></a><span class="fu">solve</span>(A)</span></code></pre></div>
+<pre><code>##             [,1]        [,2]      [,3]
+## [1,]  0.18181818  0.22727273 0.1363636
+## [2,] -0.36363636  0.04545455 0.2272727
+## [3,] -0.09090909 -0.36363636 0.1818182</code></pre>
+<p>The following properties of are helpful.</p>
+<div class="propbox">
+<p><strong>Properties of matrix inverses</strong></p>
+<p>Let <span class="math inline">\(\mathbf{A}\)</span> and <span class="math inline">\(\mathbf{B}\)</span> be invertible <span class="math inline">\(n\times n\)</span> matrices. Then</p>
+<ol style="list-style-type: decimal">
+<li><p><span class="math inline">\(\mathbf{A}^{-1}\)</span> is invertible and <span class="math inline">\((\mathbf{A}^{-1})^{-1}=\mathbf{A}.\)</span></p></li>
+<li><p><span class="math inline">\(\mathbf{A}\mathbf{B}\)</span> is invertible and <span class="math inline">\((\mathbf{A}\mathbf{B})^{-1}=\mathbf{B}^{-1}\mathbf{A}^{-1}\)</span>.</p></li>
+</ol>
+</div>
+<p>Property 2 is easy to prove. For instance,</p>
+<p><span class="math display">\[(\mathbf{AB})(\mathbf{B}^{-1}\mathbf{A}^{-1})=\mathbf{A}(\mathbf{B}\mathbf{B}^{-1})\mathbf{A}^{-1}=\mathbf{A}\mathbf{I}\mathbf{A}^{-1}=\mathbf{A}\mathbf{A}^{-1}=\mathbf{I}.\]</span></p>
+<p>Showing</p>
+<p><span class="math display">\[(\mathbf{B}^{-1}\mathbf{A}^{-1})(\mathbf{AB})=\mathbf{I}\]</span></p>
+<p>is similar.</p>
+</div>
+</div>
+<div id="dets" class="section level2 hasAnchor" number="1.6">
+<h2><span class="header-section-number">1.6</span> Determinants<a href="matrices-and-systems-of-equations.html#dets" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>In Section <a href="matrices-and-systems-of-equations.html#Inverses">1.5</a>, we learned that the <span class="math inline">\(2\times 2\)</span> matrix</p>
+<p><span class="math display">\[\begin{bmatrix}
+a &amp; b\\c&amp; d
+\end{bmatrix}\]</span></p>
+<p>is invertible if and only if <span class="math inline">\(ad-bc\neq 0\)</span>. We give this value a name.</p>
+<div class="defbox">
+<div class="definition">
+<p><span id="def:unlabeled-div-15" class="definition"><strong>Definition 1.2  </strong></span>The <span class="math inline">\(\mathbf{determinant}\)</span> of the <span class="math inline">\(2\times 2\)</span> matrix</p>
+<p><span class="math display">\[\mathbf{A}=\begin{bmatrix}
+a &amp; b\\c&amp; d
+\end{bmatrix},\]</span></p>
+<p>denoted <span class="math inline">\(\det \mathbf{A}\)</span> or <span class="math inline">\(|\mathbf{A}|\)</span>, is <span class="math inline">\(ad-bc\)</span>.</p>
+</div>
+</div>
+<p>Here are some examples.</p>
+<div class="examplebox">
+<div class="example">
+<p><span id="exm:unlabeled-div-16" class="example"><strong>Example 1.18  </strong></span><span class="math display">\[\begin{vmatrix}
+2 &amp; 4\\3 &amp; 1
+\end{vmatrix}=2\cdot 1-4\cdot 3=-10\]</span></p>
+<p>The matrix <span class="math inline">\(\begin{bmatrix}2 &amp; 4\\3 &amp; 1
+\end{bmatrix}\)</span> is invertible.</p>
+</div>
+</div>
+<div class="examplebox">
+<div class="example">
+<p><span id="exm:unlabeled-div-17" class="example"><strong>Example 1.19  </strong></span><span class="math display">\[\begin{vmatrix}
+4 &amp; 1\\ 8 &amp; 2
+\end{vmatrix}=4\cdot 2-1\cdot 8=0\]</span></p>
+<p>The corresponding matrix is not invertible. Recall that another name for a noninvertible matrix is <em>singular</em>.</p>
+</div>
+</div>
+<p>Larger square matrices also have determinants, though it can get complicated. Here’s a trick for a <span class="math inline">\(3\times 3\)</span> matrix. If</p>
+<p><span class="math display">\[\mathbf{A}=
+\begin{bmatrix}
+a_{11}&amp;a_{12}&amp;a_{13}\\a_{21}&amp;a_{22}&amp;a_{23}\\a_{31}&amp;a_{32}&amp;a_{33}
+\end{bmatrix}\]</span></p>
+<p>augment the matrix by adding copies of the first two columns on the right.</p>
+<p><span class="math display">\[\left|\begin{array}{rrr|rr}
+a_{11}&amp;a_{12}&amp;a_{13}&amp;a_{11}&amp;a_{12}\\a_{21}&amp;a_{22}&amp;a_{23}&amp;a_{21}&amp;a_{22}\\a_{31}&amp;a_{32}&amp;a_{33}&amp;a_{31}&amp;a_{32}
+\end{array}\right|\]</span></p>
+<p>We have</p>
+<p><span class="math display">\[\det\mathbf{A}=a_{11}a_{22}a_{33}+a_{12}a_{23}a_{31}+a_{13}a_{21}a_{32}-a_{31}a_{22}a_{13}-a_{32}a_{23}a_{11}-a_{33}a_{21}a_{12}.\]</span></p>
+<p>The first three terms are the downward (left to right) diagonal products. The second three are the upward (left to right) diagonal products. Downward terms are added and upward terms are subtracted.</p>
+<p><span class="math display">\[\left|\begin{array}{rrr|rr}
+a_{11}&amp;a_{12}&amp;a_{13}&amp;&amp;\\&amp;a_{22}&amp;a_{23}&amp;a_{21}&amp;\\&amp;&amp;a_{33}&amp;a_{31}&amp;a_{32}
+\end{array}\right|\]</span></p>
+<p><span class="math display">\[\left|\begin{array}{rrr|rr}
+&amp;&amp;a_{13}&amp;a_{11}&amp;a_{12}\\&amp;a_{22}&amp;a_{23}&amp;a_{21}&amp;\\a_{31}&amp;a_{32}&amp;a_{33}&amp;&amp;
+\end{array}\right|\]</span></p>
+<div class="examplebox">
+<div class="example">
+<p><span id="exm:unlabeled-div-18" class="example"><strong>Example 1.20  </strong></span>If</p>
+<p><span class="math display">\[\mathbf{A}=\begin{bmatrix} 1 &amp; 2 &amp; 3\\0 &amp; 2 &amp; 1\\1 &amp; 3 &amp; 0    \end{bmatrix}\]</span></p>
+<p><span class="math display">\[\begin{align*}
+|\mathbf{A}|&amp;=(1)(2)(0)+(2)(1)(1)+(3)(0)(3)-(1)(2)(3)-(3)(1)(1)-(0)(0)(2)\\
+&amp;=0+2+0-6-3-0=-7.
+\end{align*}\]</span></p>
+</div>
+</div>
+<p>There are formulas for determinants of larger matrices that involve finding determinants of smaller submatrices. For instance, one way to find the determinant of a <span class="math inline">\(4\times 4\)</span> matrix involves finding four <span class="math inline">\(3\times 3\)</span> determinants. As usual, we will leave that task for technology. Desmos has a <code>det</code> button. Base R has the <code>det</code> function.</p>
+<div class="sourceCode" id="cb37"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb37-1"><a href="matrices-and-systems-of-equations.html#cb37-1" tabindex="-1"></a>A <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="fu">c</span>(<span class="dv">2</span>,<span class="dv">1</span>,<span class="dv">3</span>,<span class="sc">-</span><span class="dv">2</span>,<span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">1</span>,<span class="sc">-</span><span class="dv">2</span>,<span class="dv">2</span>), <span class="at">nrow =</span> <span class="dv">3</span>)</span>
+<span id="cb37-2"><a href="matrices-and-systems-of-equations.html#cb37-2" tabindex="-1"></a>A</span></code></pre></div>
+<pre><code>##      [,1] [,2] [,3]
+## [1,]    2   -2    1
+## [2,]    1    1   -2
+## [3,]    3    1    2</code></pre>
+<div class="sourceCode" id="cb39"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb39-1"><a href="matrices-and-systems-of-equations.html#cb39-1" tabindex="-1"></a><span class="fu">det</span>(A)</span></code></pre></div>
+<pre><code>## [1] 22</code></pre>
+<p>The relationship between the determinant of a <span class="math inline">\(2\times 2\)</span> matrix and its invertibility holds for all square matrices.</p>
+<div class="theorembox">
+<div class="theorem">
+<p><span id="thm:unlabeled-div-19" class="theorem"><strong>Theorem 1.2  </strong></span>An <span class="math inline">\(n\times n\)</span> matrix <span class="math inline">\(\mathbf{A}\)</span> is invertible if and only if <span class="math inline">\(\det\mathbf{A}\neq 0\)</span>.</p>
+</div>
+</div>
+<p>We also have the following nice theorem involving products.</p>
+<div class="theorembox">
+<div class="theorem">
+<p><span id="thm:proddet" class="theorem"><strong>Theorem 1.3  </strong></span>Let <span class="math inline">\(\mathbf{A}\)</span> and <span class="math inline">\(\mathbf{B}\)</span> be <span class="math inline">\(n\times n\)</span> matrices. Then</p>
+<p><span class="math display">\[\det(\mathbf{A}\mathbf{B})=\det(\mathbf{B}\mathbf{A})=\det\mathbf{A}\det \mathbf{B}.\]</span></p>
+</div>
+</div>
+<p>We’ll leave proofs of both of these for another course.</p>
+<p>There are some matrices for which the determinant is easy to compute.</p>
+<div id="triangular-and-diagonal-matrices" class="section level3 unnumbered hasAnchor">
+<h3>Triangular and diagonal matrices<a href="matrices-and-systems-of-equations.html#triangular-and-diagonal-matrices" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>We defined the diagonal or main diagonal of a square matrix in Section <a href="matrices-and-systems-of-equations.html#BMO">1.4</a> when we introduced identity matrices. A <em>diagonal matrix</em> is a square matrix whose off-diagonal terms are all zero. For example</p>
+<p><span class="math display">\[\mathbf{A}=\begin{bmatrix}
+2 &amp; 0 &amp; 0\\0 &amp; -1 &amp; 0\\0 &amp; 0 &amp; 4\end{bmatrix}\]</span></p>
+<p>is a diagonal matrix. The determinant of a diagonal matrix is the product of the diagonal entries. This is clear in the <span class="math inline">\(2\times 2\)</span> case:</p>
+<p><span class="math display">\[\begin{vmatrix} a &amp; 0\\0 &amp; d\end{vmatrix}=ad-0=ad.\]</span></p>
+<p>In the <span class="math inline">\(3\times 3\)</span> case, with the trick we learned, the the only downward or upward diagonal product that doesn’t contain a zero is the main diagonal. For our matrix <span class="math inline">\(\mathbf{A}\)</span> above, we have <span class="math inline">\(\det \mathbf{A}=(2)(-1)(4)=-8.\)</span></p>
+</div>
+<div id="upper-and-lower-triangular-matrices" class="section level3 unnumbered hasAnchor">
+<h3>Upper and lower triangular matrices<a href="matrices-and-systems-of-equations.html#upper-and-lower-triangular-matrices" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>A square matrix is called <em>upper triangular</em> if all of the entries below the main diagonal are zero. A matrix is <em>lower triangular</em> if all of the entries above the main diagonal are zero. For example</p>
+<p><span class="math display">\[\mathbf{U}=\begin{bmatrix}
+2 &amp; 1 &amp; 3\\0 &amp; 5 &amp; 1\\0 &amp; 0 &amp; 2\end{bmatrix} \text{ and }
+\mathbf{L}=\begin{bmatrix}
+1 &amp; 0 &amp; 0\\2 &amp; -1 &amp; 0\\4 &amp; 5 &amp; 6\end{bmatrix}\]</span></p>
+<p>are upper and lower triangular, respectively. The determinant of a triangular matrix is also the product of the diagonal entries, so</p>
+<p><span class="math display">\[\det\mathbf{U}=20 \text{ and } \det\mathbf{L}=-6.\]</span></p>
+<p>One last fact about determinants that we will state but not prove is the following.</p>
+<div class="theorembox">
+<div class="theorem">
+<p><span id="thm:unlabeled-div-20" class="theorem"><strong>Theorem 1.4  </strong></span>Let <span class="math inline">\(\mathbf{A}\)</span> be an <span class="math inline">\(n\times n\)</span> matrix. Then <span class="math inline">\(\det \mathbf{A}^T=\det\mathbf{A}.\)</span></p>
+</div>
+</div>
+<p>This is clearly true for <span class="math inline">\(2\times 2\)</span> matrices, as</p>
+<p><span class="math display">\[\begin{vmatrix}a &amp; b\\c&amp; d\end{vmatrix}=ad-bc=ad-cb=\begin{vmatrix}a &amp; c\\b&amp; d\end{vmatrix}.\]</span></p>
+</div>
+</div>
+<div id="systems-of-linear-equations-as-matrix-equations" class="section level2 hasAnchor" number="1.7">
+<h2><span class="header-section-number">1.7</span> Systems of Linear Equations as Matrix Equations<a href="matrices-and-systems-of-equations.html#systems-of-linear-equations-as-matrix-equations" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Consider the product
+<span class="math display">\[\begin{align*}
+\mathbf{A}\mathbf{x}&amp;=\begin{bmatrix}
+a_{11}&amp;a_{12}&amp;a_{13}\\a_{21}&amp;a_{22}&amp;a_{23}\\a_{31}&amp;a_{32}&amp;a_{33}
+\end{bmatrix}\begin{bmatrix}x_1\\x_2\\x_3\end{bmatrix}\\
+&amp;=
+\begin{bmatrix}
+a_{11}x_1+a_{12}x_2+a_{13}x_3\\
+a_{21}x_1+a_{22}x_2+a_{23}x_3\\
+a_{31}x_1+a_{32}x_2+a_{33}x_3
+\end{bmatrix}
+\end{align*}\]</span></p>
+<p>The entries in <span class="math inline">\(\mathbf{A}\mathbf{x}\)</span> make up the left hand side of a system of equations! We can write a system of linear equations as a matrix equation. The system</p>
+<p><span class="math display">\[\begin{align*}
+a_{11}x_1+a_{12}x_2+a_{13}x_3&amp;=b_1\\
+a_{21}x_1+a_{22}x_2+a_{23}x_3&amp;=b_2\\
+a_{31}x_1+a_{32}x_2+a_{33}x_3&amp;=b_3
+\end{align*}\]</span></p>
+<p>can be written</p>
+<p><span class="math display">\[\begin{bmatrix}
+a_{11}&amp;a_{12}&amp;a_{13}\\a_{21}&amp;a_{22}&amp;a_{23}\\a_{31}&amp;a_{32}&amp;a_{33}
+\end{bmatrix}\begin{bmatrix}x_1\\x_2\\x_3\end{bmatrix}=\begin{bmatrix}b_1\\b_2\\b_3\end{bmatrix}\]</span></p>
+<p>or</p>
+<p><span class="math display">\[\mathbf{A}\mathbf{x}=\mathbf{b}.\]</span></p>
+<p>If <span class="math inline">\(\mathbf{A}\)</span> is an invertible <span class="math inline">\(n\times n\)</span> matrix, then multiplying both sides of the equation on the left by <span class="math inline">\(\mathbf{A}^{-1}\)</span> gives us our solution.</p>
+<p><span class="math display">\[\begin{align*}
+\mathbf{A}^{-1}(\mathbf{A}\mathbf{x})&amp;=\mathbf{A}^{-1}\mathbf{b}\\
+\mathbf{x}=\mathbf{A}^{-1}\mathbf{b}
+\end{align*}\]</span></p>
+<div class="theorembox">
+<div class="theorem">
+<p><span id="thm:IMT" class="theorem"><strong>Theorem 1.5  </strong></span>Let <span class="math inline">\(\mathbf{A}\)</span> be an invertible <span class="math inline">\(n\times n\)</span> matrix. Then the matrix equation</p>
+<p><span class="math display">\[\mathbf{A}\mathbf{x}=\mathbf{b}\]</span></p>
+<p>has the unique solution</p>
+<p><span class="math display">\[\mathbf{x}=\mathbf{A}^{-1}\mathbf{b}.\]</span></p>
+</div>
+</div>
+<p>This theorem, together with Theorem <a href="matrices-and-systems-of-equations.html#thm:2b2invthm">1.1</a> makes it easy to solve <span class="math inline">\(2\times 2\)</span> systems.</p>
+<div class="examplebox">
+<div class="example">
+<p><span id="exm:unlabeled-div-21" class="example"><strong>Example 1.21  </strong></span>Solve</p>
+<p><span class="math display">\[\begin{bmatrix}3&amp;1\\2&amp;1\end{bmatrix}\begin{bmatrix}x\\y\end{bmatrix}=\begin{bmatrix}4\\3\end{bmatrix}.\]</span></p>
+<p>If <span class="math inline">\(\mathbf{A}=\begin{bmatrix}3&amp;1\\2&amp;1\end{bmatrix}\)</span>, then</p>
+<p><span class="math display">\[\mathbf{A}^{-1}=\frac{1}{3\cdot 1-1\cdot 2}\begin{bmatrix}1 &amp; -1\\-2 &amp; 3\end{bmatrix}=\begin{bmatrix}1 &amp; -1\\-2 &amp; 3\end{bmatrix},\]</span></p>
+<p>so</p>
+<p><span class="math display">\[\begin{bmatrix}x\\y\end{bmatrix}=\begin{bmatrix}1 &amp; -1\\-2 &amp; 3\end{bmatrix}\begin{bmatrix}4\\3\end{bmatrix}=\begin{bmatrix}1\\1\end{bmatrix}.\]</span></p>
+</div>
+</div>
+<p>There are a few things to keep in mind.</p>
+<ul>
+<li><p>It is often more efficient for machines to solve a system of equations by row reduction than by taking inverses.</p></li>
+<li><p>If <span class="math inline">\(\mathbf{A}\)</span> is singular, there still can be a solution (actually, infinitely many). Row reduction will always work.</p></li>
+</ul>
+<p>Here is a little trick to help avoid the messiness of fractions in systems.</p>
+<div class="examplebox">
+<div class="example">
+<p><span id="exm:unlabeled-div-22" class="example"><strong>Example 1.22  </strong></span>Solve</p>
+<p><span class="math display">\[\begin{bmatrix} 5 &amp; 2\\3 &amp; 4\end{bmatrix}\begin{bmatrix}x\\y\end{bmatrix}=\begin{bmatrix} 4\\2\end{bmatrix}.\]</span></p>
+<p>By Theorem <a href="matrices-and-systems-of-equations.html#thm:IMT">1.5</a>,</p>
+<p><span class="math display">\[\begin{align*}
+\begin{bmatrix}x\\y\end{bmatrix}&amp;=\frac{1}{5\cdot4-3\cdot2}\begin{bmatrix}4 &amp; -2\\-3 &amp; 5\end{bmatrix}\begin{bmatrix} 4\\2\end{bmatrix}\\
+&amp;=\frac{1}{14}\begin{bmatrix}12\\-2\end{bmatrix}\\
+&amp;=\begin{bmatrix}\frac{6}{7}\\-\frac{1}{7}\end{bmatrix}.
+\end{align*}\]</span></p>
+<p>By leaving the fraction from the inverse outside of the matrix, the matrix multiplication was much easier.</p>
+</div>
+</div>
+<div id="how-does-row-reduction-work" class="section level3 unnumbered hasAnchor">
+<h3>How does row reduction work?<a href="matrices-and-systems-of-equations.html#how-does-row-reduction-work" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>To understand how the elementary row operations lead to solutions of systems of linear equations, we are going to consider <em>elementary matrices</em>. An elementary matrix is a square matrix that performs an elementary row operation by left multiplication. For example, if</p>
+<p><span class="math display">\[\mathbf{E}=\begin{bmatrix} 1 &amp; 0 &amp; 0\\2 &amp; 1 &amp; 0\\0 &amp; 0 &amp; 1\end{bmatrix},\]</span></p>
+<p>and</p>
+<p><span class="math display">\[\mathbf{A}=\begin{bmatrix} a_{11} &amp; a_{12} &amp; a_{13}\\a_{21} &amp; a_{22} &amp; a_{23}\\ a_{31} &amp; a_{32} &amp; a_{33}\end{bmatrix},\]</span></p>
+<p>is an arbitrary <span class="math inline">\(3\times 3\)</span> matrix, then</p>
+<p><span class="math display">\[\begin{align*}
+\mathbf{E}\mathbf{A}&amp;=\begin{bmatrix} 1 &amp; 0 &amp; 0\\2 &amp; 1 &amp; 0\\0 &amp; 0 &amp; 1\end{bmatrix}\begin{bmatrix} a_{11} &amp; a_{12} &amp; a_{13}\\a_{21} &amp; a_{22} &amp; a_{23}\\ a_{31} &amp; a_{32} &amp; a_{33}\end{bmatrix}\\
+&amp;=\begin{bmatrix}  a_{11} &amp; a_{12} &amp; a_{13}\\2a_{11}+a_{21} &amp; 2a_{12}+a_{22} &amp; 2a_{13}+a_{23}\\ a_{31} &amp; a_{32} &amp; a_{33}\end{bmatrix}.
+\end{align*}\]</span></p>
+<p>Multiplication on the left by the elementary matrix <span class="math inline">\(\mathbf{E}\)</span> added twice row 1 to row 2 of <span class="math inline">\(\mathbf{A}.\)</span> In fact, multiplication on the left by this matrix <span class="math inline">\(\mathbf{E}\)</span> will perform that elementary row operation on any matrix with three rows. <em>Every</em> elementary row operation can be performed by multiplication on the left by one of these elementary matrices.</p>
+<p>How do we find the right matrix for the job? Note what multiplication by <span class="math inline">\(\mathbf{E}\)</span> does to the identity matrix of the same size:</p>
+<p><span class="math display">\[\mathbf{E}\mathbf{I}=\mathbf{E}.\]</span></p>
+<p>To figure out the right elementary matrix to use, figure out what it does to the identity matrix. For instance, if we want to interchange rows 2 and 4 of a <span class="math inline">\(4\times 4\)</span> matrix, we just interchange rows 2 and 4 of the <span class="math inline">\(4\times 4\)</span> identity:</p>
+<p><span class="math display">\[\mathbf{I}=\begin{bmatrix} 1 &amp; 0 &amp; 0 &amp; 0\\\mathbf{0} &amp; \mathbf{1} &amp; \mathbf{0} &amp; \mathbf{0}\\0 &amp; 0 &amp; 1 &amp; 0\\\mathbf{0} &amp; \mathbf{0} &amp;\mathbf{0} &amp;\mathbf{1}\end{bmatrix},\mathbf{E}=\begin{bmatrix} 1 &amp; 0 &amp; 0 &amp; 0\\\mathbf{0} &amp; \mathbf{0} &amp;\mathbf{0} &amp;\mathbf{1}\\0 &amp; 0 &amp; 1 &amp; 0\\\mathbf{0} &amp; \mathbf{1} &amp; \mathbf{0} &amp; \mathbf{0}\end{bmatrix}.\]</span></p>
+<p>If we want to multiply row 2 of a <span class="math inline">\(2\times 2\)</span> matrix by <span class="math inline">\(-3\)</span>, the elementary matrix that does that is</p>
+<p><span class="math display">\[\mathbf{E}=\begin{bmatrix} 1 &amp; 0 \\-3\cdot 0 &amp; -3\cdot 1\end{bmatrix}=\begin{bmatrix} 1&amp;0\\0&amp;-3\end{bmatrix}.\]</span></p>
+<p>When we perform elementary row operations on an augmented matrix <span class="math inline">\(\left[\begin{array}{c|c}\mathbf{A} &amp; \mathbf{b}\end{array}\right],\)</span> we are basically performing the same operations on the coefficient matrix <span class="math inline">\(\mathbf{A}\)</span> and the vector of constants <span class="math inline">\(\mathbf{b}\)</span> simultaneously. This is equivalent to multiplying both sides of the equation <span class="math inline">\(\mathbf{A}\mathbf{x}=\mathbf{b}\)</span> on the left by elementary matrices. Moreover, if <span class="math inline">\(\mathbf{x}\)</span> is a solution to <span class="math inline">\(\mathbf{A}\mathbf{x}=\mathbf{b}\)</span>, then it is also a solution to <span class="math inline">\(\mathbf{E}\mathbf{A}\mathbf{x}=\mathbf{E}\mathbf{b}\)</span>.</p>
+<p>This means that when we perform Gaussian elimination on an augmented matrix, we are preserving solutions to the underlying system of equations. Even better, elementary row operations are always invertible! For example, if multiplication by</p>
+<p><span class="math display">\[\mathbf{E}=\begin{bmatrix} 1 &amp; 0 &amp; 0\\2 &amp; 1 &amp; 0\\0 &amp; 0 &amp; 1\end{bmatrix}\]</span></p>
+<p>adds twice row one to row 2, it’s inverse will <em>subtract</em> twice row one from row two:</p>
+<p><span class="math display">\[\mathbf{E}^{-1}=\begin{bmatrix} 1 &amp; 0 &amp; 0\\-2 &amp; 1 &amp; 0\\0 &amp; 0 &amp; 1\end{bmatrix}.\]</span></p>
+<p>Elementary matrices that perform row interchanges are their own inverses! If you multiply one row by a nonzero constant, you can multiply that same row by the reciprocal of that constant to undo it.</p>
+<p>Why this talk of inverses? Because, if <span class="math inline">\(\mathbf{x}\)</span> is a solution to <span class="math inline">\((\mathbf{E}\mathbf{A})\mathbf{x}=\mathbf{E}\mathbf{b},\)</span> then <span class="math inline">\(\mathbf{x}\)</span> is also a solution to
+<span class="math display">\[\mathbf{E}^{-1}\mathbf{E}\mathbf{A}\mathbf{x}=\mathbf{E}^{-1}\mathbf{E}\mathbf{b},\]</span></p>
+<p>or <span class="math inline">\(\mathbf{A}\mathbf{x}=\mathbf{b}.\)</span> In other words, we do not gain or lose solutions when we perform elementary row operations.
+When we perform them in a strategic manner, we can get to a place where we can find the complete set of solutions, if there is one.</p>
+</div>
+</div>
+<div id="Colley" class="section level2 hasAnchor" number="1.8">
+<h2><span class="header-section-number">1.8</span> Application: The Colley Matrix Method<a href="matrices-and-systems-of-equations.html#Colley" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Suppose we want to rank websites or sports teams or individuals. For teams and individuals, if everyone has plays everyone else, we can often use just the winning percentages. Frequently that’s not the case, or we need to break ties. For these and other reasons, several different ways of ranking teams based on pairwise comparisons have been developed.</p>
+<div class="notebox">
+<p>Note: for website rankings, we can consider a link from Site A to Site B as a “win” for Site B. That way, we get similar pairwise comparisons.</p>
+</div>
+<p>In this book, we will be considering several different ranking methods. The first one we will look at only requires solving a simple linear system of equations. It is the Colley Matrix Method.</p>
+<div id="ratings-and-rankings" class="section level3 unnumbered hasAnchor">
+<h3>Ratings and Rankings<a href="matrices-and-systems-of-equations.html#ratings-and-rankings" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>The terms <em>rating</em> and <em>ranking</em> are often confused. Here are some definitions.</p>
+<div class="defbox">
+<div class="definition">
+<p><span id="def:unlabeled-div-23" class="definition"><strong>Definition 1.3  </strong></span>A <strong>rating</strong> is a numerical value that designates a team or individual’s quality. A <strong>ranking</strong> is an ordered list of teams or individuals according to their relative ratings, or a team or individual’s position in the overall ranking.</p>
+</div>
+</div>
+<div class="examplebox">
+<div class="example">
+<p><span id="exm:toy" class="example"><strong>Example 1.23  </strong></span>We’ll be using this example throughout the book. Suppose we have a 5-team college football conference. The results appear below, with the score on the left coming from the team on the left.</p>
+<table>
+<colgroup>
+<col width="17%" />
+<col width="19%" />
+<col width="16%" />
+<col width="14%" />
+<col width="16%" />
+<col width="15%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th></th>
+<th align="right"><strong>Aardvarks</strong></th>
+<th align="right"><strong>Beagles</strong></th>
+<th align="right"><strong>Crocs</strong></th>
+<th align="right"><strong>Donkeys</strong></th>
+<th align="right"><strong>Egrets</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><strong>Aardvarks</strong></td>
+<td align="right">x</td>
+<td align="right">17-31</td>
+<td align="right">6-42</td>
+<td align="right">x</td>
+<td align="right">17-7</td>
+</tr>
+<tr class="even">
+<td><strong>Beagles</strong></td>
+<td align="right"></td>
+<td align="right">x</td>
+<td align="right">3-59</td>
+<td align="right">10-35</td>
+<td align="right">x</td>
+</tr>
+<tr class="odd">
+<td><strong>Crocs</strong></td>
+<td align="right"></td>
+<td align="right"></td>
+<td align="right">x</td>
+<td align="right">21-20</td>
+<td align="right">49-0</td>
+</tr>
+<tr class="even">
+<td><strong>Donkeys</strong></td>
+<td align="right"></td>
+<td align="right"></td>
+<td align="right"></td>
+<td align="right">x</td>
+<td align="right">28-21</td>
+</tr>
+<tr class="odd">
+<td><strong>Egrets</strong></td>
+<td align="right"></td>
+<td align="right"></td>
+<td align="right"></td>
+<td align="right"></td>
+<td align="right">x</td>
+</tr>
+</tbody>
+</table>
+<p>Here are the standings. (W-L = Win-Loss Record, PCT = Winning Percentage as a decimal, PF = Points For, PA = Points Against, PD = Point Difference, i.e. PF-PA)</p>
+<table>
+<thead>
+<tr class="header">
+<th><strong>Team</strong></th>
+<th align="right"><strong>W-L</strong></th>
+<th align="right"><strong>PCT</strong></th>
+<th align="right"><strong>PF</strong></th>
+<th align="right"><strong>PA</strong></th>
+<th align="right"><strong>PD</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><strong>Crocs</strong></td>
+<td align="right">4-0</td>
+<td align="right">1.000</td>
+<td align="right">171</td>
+<td align="right">29</td>
+<td align="right">142</td>
+</tr>
+<tr class="even">
+<td><strong>Donkeys</strong></td>
+<td align="right">2-1</td>
+<td align="right">0.667</td>
+<td align="right">83</td>
+<td align="right">52</td>
+<td align="right">31</td>
+</tr>
+<tr class="odd">
+<td><strong>Aardvarks</strong></td>
+<td align="right">1-2</td>
+<td align="right">0.333</td>
+<td align="right">40</td>
+<td align="right">80</td>
+<td align="right">-40</td>
+</tr>
+<tr class="even">
+<td><strong>Beagles</strong></td>
+<td align="right">1-2</td>
+<td align="right">0.333</td>
+<td align="right">44</td>
+<td align="right">111</td>
+<td align="right">-67</td>
+</tr>
+<tr class="odd">
+<td><strong>Egrets</strong></td>
+<td align="right">0-3</td>
+<td align="right">0.000</td>
+<td align="right">28</td>
+<td align="right">94</td>
+<td align="right">-66</td>
+</tr>
+</tbody>
+</table>
+<p>The Crocs are on top, followed by the Donkeys. The Aardvarks and Beagles are tied for 3rd, while the Egrets are in the basement.</p>
+</div>
+</div>
+</div>
+<div id="the-bcs-and-wes-colley" class="section level3 unnumbered hasAnchor">
+<h3>The BCS and Wes Colley<a href="matrices-and-systems-of-equations.html#the-bcs-and-wes-colley" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>The Bowl Championship Series (BCS) involved a consortium of college bowl games. Before the 4-team playoff was instituted, the BCS used a collection of human polls and “computer polls” to pick the top two teams to play for the national title <span class="citation">[<a href="#ref-BCS">7</a>]</span>.</p>
+<p>One of the stipulations for being included as a computer poll was that the method couldn’t take margin of victory into consideration. One of the computer polls chosen was the <a href="https://www.colleyrankings.com/">Colley Matrix Method</a> <span class="citation">[<a href="#ref-Colley">8</a>]</span>, developed by physicist Wes Colley.</p>
+<div class="notebox">
+<p>Note: the following discussion goes through the derivation of the Colley Matrix Method. The actual matrices involved at the end are fairly straightforward.</p>
+</div>
+<p>The first step in Colley’s method is to use what is known as <em>Laplace’s rule of succession</em> <span class="citation">[see <a href="#ref-OA">9</a>]</span> to adjust a team’s winning percentage. If team <span class="math inline">\(i\)</span> has <span class="math inline">\(w_i\)</span> wins and <span class="math inline">\(l_i\)</span> losses, the adjusted rating <span class="math inline">\(r_i\)</span> is</p>
+<p><span class="math display">\[r_i=\frac{w_i+1}{\underbrace{w_i+l_i}_{t_i}+2}=\frac{w_i+1}{t_i+2}.\]</span></p>
+<p>It basically adds one win and one loss to each team’s record. It moves everyone’s rating towards 0.500.</p>
+<p>The next step involves an algebraic trick. We can rewrite a team’s win total as</p>
+<p><span class="math display">\[\begin{align*}
+    w_i&amp;=\frac{w_i-l_i}{2}+\frac{w_i+l_i}{2}\\
+    &amp;=\frac{w_i-l_i}{2}+\frac{t_i}{2}\\
+    &amp;=\frac{w_i-l_i}{2}+\sum_{j=1}^{t_i}\frac{1}{2}.
+\end{align*}\]</span></p>
+<p>The <span class="math inline">\(\Sigma\)</span> in the last line means add <span class="math inline">\(t_i\)</span> copies of <span class="math inline">\(\frac{1}{2}\)</span>. One way to think about the <span class="math inline">\(\frac{1}{2}\)</span> term is as the average rating of all teams. Colley’s big idea is to replace it with the ratings of the actual teams faced by team <span class="math inline">\(i\)</span>.</p>
+<p>Let <span class="math inline">\(O_i\)</span> be the collection of teams played by team <span class="math inline">\(i\)</span>. (If a team plays an opponent more than once, it appears in <span class="math inline">\(O_i\)</span> that number of times.) The adjusted win total based on strength of opponents, <span class="math inline">\(w_i^*,\)</span> is now</p>
+<p><span class="math display">\[w^*_i=\frac{w_i-l_i}{2}+\sum_{j\in O_i}r_j.\]</span></p>
+<p>We use this to adjust team <span class="math inline">\(i\)</span>’s rating in the rule of succession:</p>
+<p><span class="math display">\[r_i=\frac{1+(w_i-l_i)/2+\sum_{j\in O_i}r_j}{2+t_i}.\]</span></p>
+<p>This looks a little unwieldy, so let’s consider an individual team.</p>
+<p>Suppose team 1 plays teams 2, 3, and 5 in a 5-team league, winning one and losing two. Then their rating is</p>
+<p><span class="math display">\[\begin{align*}
+r_1&amp;=\frac{1+(1-2)/2+(r_2+r_3+r_5)}{2+3}\\
+&amp;=\frac{\frac{1}{2}+r_2+r_3+r_5}{5}
+\end{align*}\]</span></p>
+<p>Multiplying both sides by 5 and rearranging gives us</p>
+<p><span class="math display">\[5r_1-r_2-r_3-r_5=\frac{1}{2},\]</span></p>
+<p>or</p>
+<p><span class="math display">\[5r_1-r_2-r_3+0r_4-r_5=\frac{1}{2}.\]</span></p>
+<p>This equation is one linear equation. There are four more for teams 2-5. We get a system of linear equations that we can solve to get the ratings. What do the coefficients look like? Let’s look at our example equation.</p>
+<ul>
+<li><p>The 5 in front of <span class="math inline">\(r_1\)</span> is 2 more than the number of games team 1 played, i.e. <span class="math inline">\(2+t_1\)</span>.</p></li>
+<li><p>Each team that team 1 played has a <span class="math inline">\(-1\)</span> in front of it. Note: if the teams play <span class="math inline">\(n\)</span> times, the coefficient would be <span class="math inline">\(-n\)</span>. Teams that didn’t play team 1 have a 0 coefficient.</p></li>
+<li><p>The right hand side is <span class="math inline">\(1+(w_1-l_1)/2\)</span>.</p></li>
+</ul>
+</div>
+<div id="the-colley-matrix" class="section level3 unnumbered hasAnchor">
+<h3>The Colley Matrix<a href="matrices-and-systems-of-equations.html#the-colley-matrix" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>The Colley Matrix <span class="math inline">\(\mathbf{C}\)</span> is the the coefficient matrix. The entries in <span class="math inline">\(\mathbf{C}\)</span> are given by</p>
+<p><span class="math display">\[\mathbf{C}_{ij}=\begin{cases} 2+t_i,&amp; i=j \text{ (diagonal entries)}\\-n_{ij}, &amp;i\neq j\end{cases},\]</span></p>
+<p>where <span class="math inline">\(n_{ij}\)</span> is the number of times team <span class="math inline">\(i\)</span> and team <span class="math inline">\(j\)</span> have played each other. The right hand side vector <span class="math inline">\(\mathbf{b}\)</span> has entries <span class="math inline">\(b_i=1+(w_i-l_i)/2\)</span>. The system of equations to solve in matrix form is</p>
+<p><span class="math display">\[\mathbf{C}\mathbf{r}=\mathbf{b},\]</span></p>
+<p>where <span class="math inline">\(\mathbf{r}\)</span> is the vector of ratings. It can be shown that <span class="math inline">\(\mathbf{C}\)</span> is invertible <span class="citation">[<a href="#ref-Colley">8</a>]</span>.</p>
+<div class="examplebox">
+<div class="example">
+<p><span id="exm:ColleyExample" class="example"><strong>Example 1.24  </strong></span>For our toy example, the Colley matrix is</p>
+<p><span class="math display">\[\mathbf{C}=\begin{bmatrix}
+5 &amp; -1 &amp; -1 &amp; 0 &amp; -1\\
+-1 &amp; 5 &amp; -1 &amp; -1 &amp; 0\\
+-1 &amp; -1 &amp; 6 &amp; -1 &amp; -1\\
+0 &amp; -1 &amp; -1 &amp; 5 &amp; -1\\
+-1 &amp; 0 &amp; -1 &amp; -1 &amp; 5
+\end{bmatrix}.\]</span></p>
+<p>The diagonal entries tell us that most teams have played <span class="math inline">\(5-2=3\)</span> games, while <span class="math inline">\(c_{33}=6\)</span> tells us that the Crocs have played four. The off-diagonal zeros represent teams that have not met. The other matchups have occurred exactly once.</p>
+<p>From the standings, we can construct the <span class="math inline">\(\mathbf{b}\)</span> vector.</p>
+<table>
+<thead>
+<tr class="header">
+<th align="left"><strong>Team</strong></th>
+<th align="left"><strong>W-L</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left"><strong>Aardvarks</strong></td>
+<td align="left">1-2</td>
+</tr>
+<tr class="even">
+<td align="left"><strong>Beagles</strong></td>
+<td align="left">1-2</td>
+</tr>
+<tr class="odd">
+<td align="left"><strong>Crocs</strong></td>
+<td align="left">4-0</td>
+</tr>
+<tr class="even">
+<td align="left"><strong>Donkeys</strong></td>
+<td align="left">2-1</td>
+</tr>
+<tr class="odd">
+<td align="left"><strong>Egrets</strong></td>
+<td align="left">0-3</td>
+</tr>
+</tbody>
+</table>
+<p>We get</p>
+<p><span class="math display">\[\mathbf{b}=\begin{bmatrix}1+(1-2)/2\\1+(1-2)/2\\1+(4-0)/2\\1+(2-1)/2\\1+(0-3)/2\end{bmatrix}=\begin{bmatrix} 1/2\\1/2\\3\\3/2\\-1/2\end{bmatrix}\]</span></p>
+<p>That makes our equation</p>
+<p><span class="math display">\[\begin{bmatrix}
+5 &amp; -1 &amp; -1 &amp; 0 &amp; -1\\
+-1 &amp; 5 &amp; -1 &amp; -1 &amp; 0\\
+-1 &amp; -1 &amp; 6 &amp; -1 &amp; -1\\
+0 &amp; -1 &amp; -1 &amp; 5 &amp; -1\\
+-1 &amp; 0 &amp; -1 &amp; -1 &amp; 5
+\end{bmatrix}\begin{bmatrix}r_1\\r_2\\r_3\\r_4\\r_5\end{bmatrix}=\begin{bmatrix} 1/2\\1/2\\3\\3/2\\-1/2\end{bmatrix}.\]</span></p>
+<p>The solution is</p>
+<p><span class="math display">\[\mathbf{r}=\begin{bmatrix} 0.400\\0.457\\0.786\\0.600\\0.257\end{bmatrix}.\]</span></p>
+<p>With the Colley ratings calculated, we can now rank the teams accordingly.</p>
+<table>
+<colgroup>
+<col width="22%" />
+<col width="12%" />
+<col width="12%" />
+<col width="17%" />
+<col width="11%" />
+<col width="11%" />
+<col width="11%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th align="left"><strong>Team</strong></th>
+<th><strong>W-L</strong></th>
+<th><strong>PCT</strong></th>
+<th><strong>Rating</strong></th>
+<th><strong>PF</strong></th>
+<th><strong>PA</strong></th>
+<th><strong>PD</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left"><strong>Crocs</strong></td>
+<td>4-0</td>
+<td>1.000</td>
+<td>0.786</td>
+<td>171</td>
+<td>29</td>
+<td>142</td>
+</tr>
+<tr class="even">
+<td align="left"><strong>Donkeys</strong></td>
+<td>2-1</td>
+<td>0.667</td>
+<td>0.600</td>
+<td>83</td>
+<td>52</td>
+<td>31</td>
+</tr>
+<tr class="odd">
+<td align="left"><strong>Beagles</strong></td>
+<td>1-2</td>
+<td>0.333</td>
+<td>0.457</td>
+<td>44</td>
+<td>111</td>
+<td>-67</td>
+</tr>
+<tr class="even">
+<td align="left"><strong>Aardvarks</strong></td>
+<td>1-2</td>
+<td>0.333</td>
+<td>0.400</td>
+<td>40</td>
+<td>80</td>
+<td>-40</td>
+</tr>
+<tr class="odd">
+<td align="left"><strong>Egrets</strong></td>
+<td>0-3</td>
+<td>0.000</td>
+<td>0.257</td>
+<td>28</td>
+<td>94</td>
+<td>-66</td>
+</tr>
+</tbody>
+</table>
+<p>The rankings tend to follow the winning percentages, but the Beagles get the edge over the Aardvarks. The main difference is that the Beagles didn’t play the cellar-dwelling Egrets. (The fact that the Beagles beat the Aardvarks in their head-to-head matchup didn’t actually matter. Also note, the points for and against do not come into play in this method.)</p>
+</div>
+</div>
+<div style="page-break-after: always;"></div>
+</div>
+</div>
+<div id="exercises" class="section level2 hasAnchor" number="1.9">
+<h2><span class="header-section-number">1.9</span> Exercises<a href="matrices-and-systems-of-equations.html#exercises" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<ol style="list-style-type: decimal">
+<li><p>We saw that a system of two linear equations in two variables can be described in terms of two lines. How those lines intersect determines how many solutions, if any, there are. Describe, geometrically, the possibilities when we have a system of <em>three</em> linear equations in two variables.</p></li>
+<li><p>A linear equation in three variables can be represented by a plane in three dimensions. Describe geometrically the possibilities when we have a system of three linear equations in three variables.</p></li>
+<li><p>Consider the system of equations
+<span class="math display">\[\begin{align*}
+\left\{\begin{array}{rrr}
+ax+2y&amp;=&amp;1\\
+4x+5y&amp;=&amp;3
+\end{array}\right. .
+\end{align*}\]</span></p>
+<ol style="list-style-type: lower-alpha">
+<li>For what values of <span class="math inline">\(a\)</span> (if any) does the system have a unique solution?</li>
+<li>For what values of <span class="math inline">\(a\)</span> (if any) does the system have no solutions?</li>
+<li>For what values of <span class="math inline">\(a\)</span> (if any) does the system have infinitly many solutions?</li>
+</ol></li>
+<li><p>Consider the system of equations
+<span class="math display">\[\begin{align*}
+\left\{\begin{array}{rrr}
+2x+by&amp;=&amp;4\\
+3x+4y&amp;=&amp;6
+\end{array}\right. .
+\end{align*}\]</span></p>
+<ol style="list-style-type: lower-alpha">
+<li>For what values of <span class="math inline">\(b\)</span> (if any) does the system have a unique solution?</li>
+<li>For what values of <span class="math inline">\(b\)</span> (if any) does the system have no solutions?</li>
+<li>For what values of <span class="math inline">\(b\)</span> (if any) does the system have infinitly many solutions?</li>
+</ol></li>
+<li><p>A barbershop charges $20 for an adult haircut and $12 for a youth haircut. One day the barbershop has 40 customers and has $664 in revenue. Set up and solve a system of equations to determine how many adult and how many youth customers they had.</p></li>
+<li><p>A golf tournament sells reserved seats for $120 and general admission tickets for $58. For the Sunday final round, the total attendance was 8,425, and the ticket revenue was $563,980. Set up and solve a system of equations to determine how many of each type of ticket was sold.</p></li>
+<li><p>Perform Gaussian elimination on this system of equations and solve.
+<span class="math display">\[\begin{align*}
+\left\{
+\begin{array}{rrr}
+2x+4y+6z&amp;=&amp;2\\
+2x+5y+10z&amp;=&amp;3\\
+4x+7y+10z&amp;=&amp;2
+\end{array}\right.
+\end{align*}\]</span></p></li>
+<li><p>Perform Gaussian elimination on this system of equations and solve.
+<span class="math display">\[\begin{align*}
+\left\{
+\begin{array}{rrr}
+2x+2y+4z&amp;=&amp;2\\
+2x+3y+8z&amp;=&amp;3\\
+4x+2y+2z&amp;=&amp;1
+\end{array}\right.
+\end{align*}\]</span></p></li>
+<li><p>Find a parametric solution to the following system of equations.
+<span class="math display">\[\begin{align*}
+\left\{
+\begin{array}{rrc}
+x+3y+4z&amp;=&amp;2\\
+3y+8z&amp;=&amp;3
+\end{array}\right.
+\end{align*}\]</span></p></li>
+<li><p>Find a parametric solution to the following system of equations.
+<span class="math display">\[\begin{align*}
+\left\{
+\begin{array}{rrc}
+x+2y-3z&amp;=&amp;1\\
+2y+8z&amp;=&amp;1
+\end{array}\right.
+\end{align*}\]</span></p></li>
+<li><p>Put this augmented matrix in reduced row echelon form and solve the underlying system. Assume the variables are <span class="math inline">\(x,y,\)</span> and <span class="math inline">\(z\)</span>.
+<span class="math display">\[\left[\begin{array}{rrr|r}
+1 &amp; 1 &amp; 3 &amp;  2\\
+0 &amp; 1 &amp; 2 &amp;  3\\
+0 &amp; 0 &amp;  1 &amp;  -2\end{array}\right] \]</span></p></li>
+<li><p>Put this augmented matrix in reduced row echelon form and solve the underlying system. Assume the variables are <span class="math inline">\(x,y,\)</span> and <span class="math inline">\(z\)</span>.
+<span class="math display">\[\left[\begin{array}{rrr|r}
+1 &amp; 3 &amp; 2 &amp;  1\\
+0 &amp; 1 &amp; 2 &amp;  2\\
+0 &amp; 0 &amp;  1 &amp;  -2\end{array}\right] \]</span></p></li>
+<li><p>Find a parametric solution to the system of equations whose augmented matrix has the following reduced row echelon form. Assume the variables in order are <span class="math inline">\(x,y,z,\)</span> and <span class="math inline">\(w.\)</span>
+<span class="math display">\[\left[\begin{array}{rrrr|r}
+1 &amp; 0 &amp; 4 &amp; 0 &amp; 2\\0 &amp; 1 &amp; 2 &amp; 0 &amp; 1\\0 &amp; 0 &amp; 0 &amp; 1 &amp; 3\end{array}\right]\]</span></p></li>
+<li><p>Find a parametric solution to the system of equations whose augmented matrix has the following reduced row echelon form. Assume the variables in order are <span class="math inline">\(x,y,z,\)</span> and <span class="math inline">\(w.\)</span>
+<span class="math display">\[\left[\begin{array}{rrrr|r}
+1 &amp; 2 &amp; 0 &amp; 2 &amp; 3\\0 &amp; 0 &amp; 1 &amp; 2 &amp; 1\\0 &amp; 0 &amp; 0 &amp; 0 &amp; 0\end{array}\right]\]</span></p></li>
+<li><p>Write the corresponding system of equations in augmented matrix form and solve by putting into reduced row echelon form.
+<span class="math display">\[
+\left\{
+\begin{array}{rrr}
+x+2y+3z-2w&amp;=&amp; 2\\
+3x+y-z+w&amp;=&amp;10\\
+x+y+z+w&amp;=&amp;2\\
+5x-y+3z+2w&amp;=&amp;7
+\end{array}\right.
+\]</span></p></li>
+<li><p>Write the corresponding system of equations in augmented matrix form and solve by putting into reduced row echelon form.
+<span class="math display">\[
+\left\{
+\begin{array}{rrr}
+x+2y+3z-3w&amp;=&amp; 2\\
+4x+y-2z+w&amp;=&amp;5\\
+2x+y+3z+w&amp;=&amp;2\\
+2x-2y+z+3w&amp;=&amp;6
+\end{array}\right.
+\]</span></p></li>
+<li><p>For
+<span class="math display">\[\mathbf{A}=\begin{bmatrix}1 &amp; 2\\4&amp; 1\end{bmatrix},\mathbf{B}=\begin{bmatrix}2 &amp; -1\\1 &amp; 4\end{bmatrix},\]</span>
+find</p>
+<ol style="list-style-type: lower-alpha">
+<li><span class="math inline">\(\mathbf{A}+\mathbf{B}\)</span></li>
+<li><span class="math inline">\(\mathbf{A}-\mathbf{B}\)</span></li>
+<li><span class="math inline">\(2\mathbf{A}+\mathbf{B}\)</span></li>
+<li><span class="math inline">\(\mathbf{A}^T\)</span></li>
+<li><span class="math inline">\(\mathbf{B}^T\)</span></li>
+<li><span class="math inline">\(\mathbf{A}\mathbf{B}\)</span></li>
+<li><span class="math inline">\(\mathbf{B}\mathbf{A}\)</span></li>
+</ol></li>
+<li><p>For
+<span class="math display">\[\mathbf{A}=\begin{bmatrix}2 &amp; 1\\1&amp; 4\end{bmatrix},\mathbf{B}=\begin{bmatrix}3 &amp; -2\\1 &amp; 2\end{bmatrix},\]</span>
+find</p>
+<ol style="list-style-type: lower-alpha">
+<li><span class="math inline">\(\mathbf{A}+\mathbf{B}\)</span></li>
+<li><span class="math inline">\(\mathbf{A}-\mathbf{B}\)</span></li>
+<li><span class="math inline">\(2\mathbf{A}+\mathbf{B}\)</span></li>
+<li><span class="math inline">\(\mathbf{A}^T\)</span></li>
+<li><span class="math inline">\(\mathbf{B}^T\)</span></li>
+<li><span class="math inline">\(\mathbf{A}\mathbf{B}\)</span></li>
+<li><span class="math inline">\(\mathbf{B}\mathbf{A}\)</span></li>
+</ol></li>
+<li><p>For <span class="math display">\[\mathbf{A}=\begin{bmatrix}3 &amp; 1\\2&amp; 4\\1 &amp; 4\end{bmatrix},\mathbf{B}=\begin{bmatrix}3 &amp; -2\\1 &amp; 2\end{bmatrix},\]</span>
+find the following, if possible.</p>
+<ol style="list-style-type: lower-alpha">
+<li><span class="math inline">\(\mathbf{A}\mathbf{B}\)</span></li>
+<li><span class="math inline">\(\mathbf{B}\mathbf{A}\)</span></li>
+</ol></li>
+<li><p>For <span class="math display">\[\mathbf{A}=\begin{bmatrix} 1 &amp; 3\\2 &amp; 5\end{bmatrix},\mathbf{B}=\begin{bmatrix}2 &amp; -2\\3 &amp; 3\\4&amp;4\end{bmatrix},\]</span>
+find the following, if possible.</p>
+<ol style="list-style-type: lower-alpha">
+<li><span class="math inline">\(\mathbf{A}\mathbf{B}\)</span></li>
+<li><span class="math inline">\(\mathbf{B}\mathbf{A}\)</span></li>
+</ol></li>
+<li><p>Find <span class="math inline">\(\mathbf{A}^{-1}\)</span> if <span class="math inline">\(\mathbf{A}=\begin{bmatrix} 2 &amp; 1\\5 &amp; 2\end{bmatrix}\)</span> by hand.</p></li>
+<li><p>Find <span class="math inline">\(\mathbf{B}^{-1}\)</span> if <span class="math inline">\(\mathbf{B}=\begin{bmatrix} 1 &amp; 1\\3 &amp; 2\end{bmatrix}\)</span> by hand.</p></li>
+<li><p>Find <span class="math inline">\(\mathbf{A}^{-1}\)</span> if
+<span class="math display">\[\mathbf{A}=\begin{bmatrix} 1 &amp; 1 &amp; 1\\2 &amp; 1 &amp; 1\\3 &amp; 1 &amp; -2\end{bmatrix}.\]</span></p></li>
+<li><p>Find <span class="math inline">\(\mathbf{B}^{-1}\)</span> if
+<span class="math display">\[\mathbf{B}=\begin{bmatrix} 2 &amp; 3 &amp; 8\\1 &amp; 2 &amp; -1\\2 &amp; 2 &amp; 4\end{bmatrix}.\]</span></p></li>
+<li><p>Find <span class="math inline">\(\det\mathbf{A}\)</span> if <span class="math inline">\(\mathbf{A}=\begin{bmatrix} 1 &amp; 1\\3 &amp; -1\end{bmatrix}.\)</span></p></li>
+<li><p>Find <span class="math inline">\(\det\mathbf{B}\)</span> if <span class="math inline">\(\mathbf{B}=\begin{bmatrix} 2 &amp; 1\\4 &amp; 1\end{bmatrix}.\)</span></p></li>
+<li><p>Find <span class="math inline">\(\det\mathbf{A}\)</span> if
+<span class="math display">\[\mathbf{A}=\begin{bmatrix} 1 &amp; 2 &amp; 3\\1 &amp; 4 &amp; 9\\1 &amp; 8 &amp; 27\end{bmatrix}.\]</span></p></li>
+<li><p>Find <span class="math inline">\(\det\mathbf{B}\)</span> if
+<span class="math display">\[\mathbf{B}=\begin{bmatrix} 1 &amp; 2 &amp; 3\\1 &amp; 3 &amp; 4\\1 &amp; 4 &amp; 5\end{bmatrix}.\]</span></p></li>
+<li><p>Find the value of <span class="math inline">\(a\)</span> that makes <span class="math inline">\(\det\mathbf{A}=0,\)</span> if <span class="math inline">\(\mathbf{A}=\begin{bmatrix} a &amp; 2\\4 &amp; 5\end{bmatrix}.\)</span></p></li>
+<li><p>Find the value of <span class="math inline">\(b\)</span> that makes <span class="math inline">\(\det\mathbf{B}=0,\)</span> if <span class="math inline">\(\mathbf{B}=\begin{bmatrix} 2 &amp; b\\3 &amp; 4\end{bmatrix}.\)</span></p></li>
+<li><p>Solve by hand, using inverses.
+<span class="math display">\[\begin{bmatrix} 2 &amp; 5\\1 &amp; 3\end{bmatrix}\mathbf{x}=\begin{bmatrix}1\\4\end{bmatrix}\]</span></p></li>
+<li><p>Solve by hand, using inverses.
+<span class="math display">\[\begin{bmatrix} 4 &amp; 2\\5 &amp; -1\end{bmatrix}\mathbf{x}=\begin{bmatrix}3\\2\end{bmatrix}\]</span></p></li>
+<li><p>Find elementary <span class="math inline">\(3\times 3\)</span> matrices that perform the following operations.</p>
+<ol style="list-style-type: lower-alpha">
+<li>Add 5 times row 2 to row 1.</li>
+<li>Interchange rows 2 and 3.</li>
+<li>Multiply row 1 by 7.</li>
+</ol></li>
+<li><p>Find elementary <span class="math inline">\(3\times 3\)</span> matrices that perform the following operations.</p>
+<ol style="list-style-type: lower-alpha">
+<li>Subtract 3 times row 3 from row 1.</li>
+<li>Interchange rows 1 and 3.</li>
+<li>Multiply row 2 by -5.</li>
+</ol></li>
+<li><p>Find the inverses of the matrices in Problem 29.</p></li>
+<li><p>Find the inverses of the matrices in Problem 30.</p></li>
+<li><p>A six team league has the following Colley matrix <span class="math inline">\(\mathbf{C}\)</span> and <span class="math inline">\(\mathbf{b}\)</span> vector.
+<span class="math display">\[\mathbf{C}=\begin{bmatrix}
+  5 &amp; -1 &amp; 0 &amp; 0 &amp; -1 &amp; -1 \\
+  -1 &amp; 5 &amp; -2 &amp; 0 &amp; 0 &amp; 0 \\
+  0 &amp; -2 &amp; 7 &amp; 0 &amp; -1 &amp; -2 \\
+  0 &amp; 0 &amp; 0 &amp; 3 &amp; 0 &amp; -1 \\
+  -1 &amp; 0 &amp; -1 &amp; 0 &amp; 5 &amp; -1 \\
+  -1 &amp; 0 &amp; -2 &amp; -1 &amp; -1 &amp; 7\end{bmatrix},\mathbf{b}=\begin{bmatrix} 0.5\\1.5\\0.5\\0.5\\0.5\\2.5\end{bmatrix}\]</span>
+Find the following.</p>
+<ol style="list-style-type: lower-alpha">
+<li>How many games did each team play?</li>
+<li>Which teams played against each other more than once?</li>
+<li>Can you determine what Team 6’s Win-Loss record was?</li>
+<li>Find the Colley ratings vector <span class="math inline">\(\mathbf{r}\)</span>.</li>
+</ol></li>
+<li><p>A six team league has the following Colley matrix <span class="math inline">\(\mathbf{C}\)</span> and <span class="math inline">\(\mathbf{b}\)</span> vector.
+<span class="math display">\[\mathbf{C}=\begin{bmatrix}
+  6 &amp; -1 &amp; 0 &amp; -1 &amp; -1 &amp; -1 \\
+  -1 &amp; 6 &amp; -2 &amp; 0 &amp; 0 &amp; -1 \\
+  0 &amp; -2 &amp; 5 &amp; -1 &amp; 0 &amp; 0 \\
+  -1 &amp; 0 &amp; -1 &amp; 5 &amp; 0 &amp; -1 \\
+  -1 &amp; 0 &amp; 0 &amp; 0 &amp; 3 &amp; 0 \\
+  -1 &amp; -1 &amp; 0 &amp; -1 &amp; 0 &amp; 5\end{bmatrix},\mathbf{b}=\begin{bmatrix} 0.0\\0.0\\1.5\\0.5\\1.5\\2.5\end{bmatrix}\]</span>
+Find the following.</p>
+<ol style="list-style-type: lower-alpha">
+<li>How many games did each team play?</li>
+<li>Which teams played against each other more than once?</li>
+<li>Can you determine what Team 6’s Win-Loss record was?</li>
+<li>Find the Colley ratings vector <span class="math inline">\(\mathbf{r}\)</span>.</li>
+</ol></li>
+<li><p>Early in the season, a football division has the following results. Use the Colley Matrix Method to find the division ratings.</p></li>
+</ol>
+<table>
+<thead>
+<tr class="header">
+<th align="left">Winner</th>
+<th align="right">Score</th>
+<th align="left">Loser</th>
+<th align="right">Score</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">Argos</td>
+<td align="right">20</td>
+<td align="left">Brahmas</td>
+<td align="right">13</td>
+</tr>
+<tr class="even">
+<td align="left">Cobbers</td>
+<td align="right">31</td>
+<td align="left">Brahmas</td>
+<td align="right">10</td>
+</tr>
+<tr class="odd">
+<td align="left">Argos</td>
+<td align="right">24</td>
+<td align="left">Cobbers</td>
+<td align="right">21</td>
+</tr>
+<tr class="even">
+<td align="left">Dukes</td>
+<td align="right">10</td>
+<td align="left">Brahmas</td>
+<td align="right">7</td>
+</tr>
+<tr class="odd">
+<td align="left">Brahmas</td>
+<td align="right">35</td>
+<td align="left">Dukes</td>
+<td align="right">3</td>
+</tr>
+</tbody>
+</table>
+<ol start="40" style="list-style-type: decimal">
+<li>Early in the season, a football division has the following results. Use the Colley Matrix Method to find the division ratings.</li>
+</ol>
+<table>
+<thead>
+<tr class="header">
+<th align="left">Winner</th>
+<th align="right">Score</th>
+<th align="left">Loser</th>
+<th align="right">Score</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">Argos</td>
+<td align="right">28</td>
+<td align="left">Cobbers</td>
+<td align="right">14</td>
+</tr>
+<tr class="even">
+<td align="left">Brahmas</td>
+<td align="right">21</td>
+<td align="left">Argos</td>
+<td align="right">13</td>
+</tr>
+<tr class="odd">
+<td align="left">Brahmas</td>
+<td align="right">17</td>
+<td align="left">Dukes</td>
+<td align="right">10</td>
+</tr>
+<tr class="even">
+<td align="left">Dukes</td>
+<td align="right">31</td>
+<td align="left">Brahmas</td>
+<td align="right">28</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+<h3>References<a href="references.html#references" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<div id="refs" class="references csl-bib-body" entry-spacing="0">
+<div id="ref-Desmos" class="csl-entry">
+<div class="csl-left-margin">6. </div><div class="csl-right-inline"><a href="http://https://www.desmos.com/matrix">Desmos matrix calculator</a>.</div>
+</div>
+<div id="ref-BCS" class="csl-entry">
+<div class="csl-left-margin">7. </div><div class="csl-right-inline">Callaghan T, Mucha PJ, Porter MA (2004) The bowl championship series: A mathematical review. <em>Notices Amer Math Soc</em> 51: 887–893.</div>
+</div>
+<div id="ref-Colley" class="csl-entry">
+<div class="csl-left-margin">8. </div><div class="csl-right-inline">Colley WN (2002) <a href="https://www.colleyrankings.com/">The <span>C</span>olley matrix method</a>.</div>
+</div>
+<div id="ref-OA" class="csl-entry">
+<div class="csl-left-margin">9. </div><div class="csl-right-inline">Olofsson P, Andersson M (2012) Probability, statistics, and stochastic processes, 2nd ed., John Wiley &amp; Sons, Inc.</div>
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="index.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="vector-spaces.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"whatsapp": false,
+"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": "https://github.com/USERNAME/REPO/edit/BRANCH/index.Rmd",
+"text": "Edit"
+},
+"history": {
+"link": null,
+"text": null
+},
+"view": {
+"link": null,
+"text": null
+},
+"download": ["_main.pdf", "_main.epub"],
+"search": {
+"engine": "fuse",
+"options": null
+},
+"toc": {
+"collapse": "subsection"
+},
+"split_bib": false
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.9/latest.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>

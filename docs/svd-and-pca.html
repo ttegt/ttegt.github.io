@@ -1,0 +1,1646 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>Chapter 6 SVD and PCA | Linear Algebra for Data Science</title>
+  <meta name="description" content="<p>This is a minimal example of using the bookdown package to write a book.
+The HTML output format for this example is bookdown::gitbook,
+set in the _output.yml file.</p>" />
+  <meta name="generator" content="bookdown 0.39 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="Chapter 6 SVD and PCA | Linear Algebra for Data Science" />
+  <meta property="og:type" content="book" />
+  <meta property="og:image" content="/images/mfdscover.png" />
+  <meta property="og:description" content="<p>This is a minimal example of using the bookdown package to write a book.
+The HTML output format for this example is bookdown::gitbook,
+set in the _output.yml file.</p>" />
+  
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Chapter 6 SVD and PCA | Linear Algebra for Data Science" />
+  
+  <meta name="twitter:description" content="<p>This is a minimal example of using the bookdown package to write a book.
+The HTML output format for this example is bookdown::gitbook,
+set in the _output.yml file.</p>" />
+  <meta name="twitter:image" content="/images/mfdscover.png" />
+
+<meta name="author" content="Tom Tegtmeyer" />
+
+
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="regression.html"/>
+<link rel="next" href="additional-topics.html"/>
+<script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+<link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
+<link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
+<script src="libs/kePrint-0.0.1/kePrint.js"></script>
+<link href="libs/lightable-0.0.1/lightable.css" rel="stylesheet" />
+
+
+<style type="text/css">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { color: #008000; } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { color: #008000; font-weight: bold; } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+<style type="text/css">
+  
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+</style>
+<style type="text/css">
+/* Used with Pandoc 2.11+ new --citeproc when CSL is used */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+  margin-bottom: 0em;
+}
+.hanging div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}
+</style>
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">Linear Algebra for Data Science</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Preface</a></li>
+<li class="chapter" data-level="1" data-path="matrices-and-systems-of-equations.html"><a href="matrices-and-systems-of-equations.html"><i class="fa fa-check"></i><b>1</b> Matrices and Systems of Equations</a>
+<ul>
+<li class="chapter" data-level="1.1" data-path="matrices-and-systems-of-equations.html"><a href="matrices-and-systems-of-equations.html#systems-of-equations"><i class="fa fa-check"></i><b>1.1</b> Systems of Equations</a>
+<ul>
+<li class="chapter" data-level="" data-path="matrices-and-systems-of-equations.html"><a href="matrices-and-systems-of-equations.html#the-geometry"><i class="fa fa-check"></i>The geometry</a></li>
+<li class="chapter" data-level="" data-path="matrices-and-systems-of-equations.html"><a href="matrices-and-systems-of-equations.html#the-three-cases"><i class="fa fa-check"></i>The three cases</a></li>
+</ul></li>
+<li class="chapter" data-level="1.2" data-path="matrices-and-systems-of-equations.html"><a href="matrices-and-systems-of-equations.html#GE"><i class="fa fa-check"></i><b>1.2</b> Method of Solution: Gaussian Elimination</a>
+<ul>
+<li class="chapter" data-level="" data-path="matrices-and-systems-of-equations.html"><a href="matrices-and-systems-of-equations.html#parameters"><i class="fa fa-check"></i>Parameters</a></li>
+<li class="chapter" data-level="" data-path="matrices-and-systems-of-equations.html"><a href="matrices-and-systems-of-equations.html#more-equations-more-variables"><i class="fa fa-check"></i>More equations, more variables</a></li>
+<li class="chapter" data-level="" data-path="matrices-and-systems-of-equations.html"><a href="matrices-and-systems-of-equations.html#overdetermined-and-underdetermined-systems"><i class="fa fa-check"></i>Overdetermined and underdetermined systems</a></li>
+</ul></li>
+<li class="chapter" data-level="1.3" data-path="matrices-and-systems-of-equations.html"><a href="matrices-and-systems-of-equations.html#matrices"><i class="fa fa-check"></i><b>1.3</b> Matrices</a>
+<ul>
+<li class="chapter" data-level="" data-path="matrices-and-systems-of-equations.html"><a href="matrices-and-systems-of-equations.html#elementary-row-operations"><i class="fa fa-check"></i>Elementary row operations</a></li>
+<li class="chapter" data-level="" data-path="matrices-and-systems-of-equations.html"><a href="matrices-and-systems-of-equations.html#row-echelon-form"><i class="fa fa-check"></i>Row echelon form</a></li>
+<li class="chapter" data-level="" data-path="matrices-and-systems-of-equations.html"><a href="matrices-and-systems-of-equations.html#reduced-row-echelon-form"><i class="fa fa-check"></i>Reduced row echelon form</a></li>
+<li class="chapter" data-level="" data-path="matrices-and-systems-of-equations.html"><a href="matrices-and-systems-of-equations.html#TM"><i class="fa fa-check"></i>Matrices with Technology</a></li>
+</ul></li>
+<li class="chapter" data-level="1.4" data-path="matrices-and-systems-of-equations.html"><a href="matrices-and-systems-of-equations.html#BMO"><i class="fa fa-check"></i><b>1.4</b> Basic Matrix Operations</a>
+<ul>
+<li class="chapter" data-level="" data-path="matrices-and-systems-of-equations.html"><a href="matrices-and-systems-of-equations.html#row-and-column-vectors"><i class="fa fa-check"></i>Row and column vectors</a></li>
+<li class="chapter" data-level="" data-path="matrices-and-systems-of-equations.html"><a href="matrices-and-systems-of-equations.html#matrix-addition"><i class="fa fa-check"></i>Matrix addition</a></li>
+<li class="chapter" data-level="" data-path="matrices-and-systems-of-equations.html"><a href="matrices-and-systems-of-equations.html#scalar-multiplication"><i class="fa fa-check"></i>Scalar Multiplication</a></li>
+<li class="chapter" data-level="" data-path="matrices-and-systems-of-equations.html"><a href="matrices-and-systems-of-equations.html#matrix-multiplication"><i class="fa fa-check"></i>Matrix multiplication</a></li>
+<li class="chapter" data-level="" data-path="matrices-and-systems-of-equations.html"><a href="matrices-and-systems-of-equations.html#multiplying-two-matrices"><i class="fa fa-check"></i>Multiplying two matrices</a></li>
+<li class="chapter" data-level="" data-path="matrices-and-systems-of-equations.html"><a href="matrices-and-systems-of-equations.html#identity-matrices"><i class="fa fa-check"></i>Identity Matrices</a></li>
+<li class="chapter" data-level="" data-path="matrices-and-systems-of-equations.html"><a href="matrices-and-systems-of-equations.html#technology"><i class="fa fa-check"></i>Technology</a></li>
+<li class="chapter" data-level="" data-path="matrices-and-systems-of-equations.html"><a href="matrices-and-systems-of-equations.html#the-transpose-of-a-matrix"><i class="fa fa-check"></i>The transpose of a matrix</a></li>
+</ul></li>
+<li class="chapter" data-level="1.5" data-path="matrices-and-systems-of-equations.html"><a href="matrices-and-systems-of-equations.html#Inverses"><i class="fa fa-check"></i><b>1.5</b> Matrix Inverses</a>
+<ul>
+<li class="chapter" data-level="" data-path="matrices-and-systems-of-equations.html"><a href="matrices-and-systems-of-equations.html#finding-inverses"><i class="fa fa-check"></i>Finding inverses</a></li>
+<li class="chapter" data-level="" data-path="matrices-and-systems-of-equations.html"><a href="matrices-and-systems-of-equations.html#a-formula-for-2-x-2-matrices"><i class="fa fa-check"></i>A formula for 2 x 2 matrices</a></li>
+</ul></li>
+<li class="chapter" data-level="1.6" data-path="matrices-and-systems-of-equations.html"><a href="matrices-and-systems-of-equations.html#dets"><i class="fa fa-check"></i><b>1.6</b> Determinants</a>
+<ul>
+<li class="chapter" data-level="" data-path="matrices-and-systems-of-equations.html"><a href="matrices-and-systems-of-equations.html#triangular-and-diagonal-matrices"><i class="fa fa-check"></i>Triangular and diagonal matrices</a></li>
+<li class="chapter" data-level="" data-path="matrices-and-systems-of-equations.html"><a href="matrices-and-systems-of-equations.html#upper-and-lower-triangular-matrices"><i class="fa fa-check"></i>Upper and lower triangular matrices</a></li>
+</ul></li>
+<li class="chapter" data-level="1.7" data-path="matrices-and-systems-of-equations.html"><a href="matrices-and-systems-of-equations.html#systems-of-linear-equations-as-matrix-equations"><i class="fa fa-check"></i><b>1.7</b> Systems of Linear Equations as Matrix Equations</a>
+<ul>
+<li class="chapter" data-level="" data-path="matrices-and-systems-of-equations.html"><a href="matrices-and-systems-of-equations.html#how-does-row-reduction-work"><i class="fa fa-check"></i>How does row reduction work?</a></li>
+</ul></li>
+<li class="chapter" data-level="1.8" data-path="matrices-and-systems-of-equations.html"><a href="matrices-and-systems-of-equations.html#Colley"><i class="fa fa-check"></i><b>1.8</b> Application: The Colley Matrix Method</a>
+<ul>
+<li class="chapter" data-level="" data-path="matrices-and-systems-of-equations.html"><a href="matrices-and-systems-of-equations.html#ratings-and-rankings"><i class="fa fa-check"></i>Ratings and Rankings</a></li>
+<li class="chapter" data-level="" data-path="matrices-and-systems-of-equations.html"><a href="matrices-and-systems-of-equations.html#the-bcs-and-wes-colley"><i class="fa fa-check"></i>The BCS and Wes Colley</a></li>
+<li class="chapter" data-level="" data-path="matrices-and-systems-of-equations.html"><a href="matrices-and-systems-of-equations.html#the-colley-matrix"><i class="fa fa-check"></i>The Colley Matrix</a></li>
+</ul></li>
+<li class="chapter" data-level="1.9" data-path="matrices-and-systems-of-equations.html"><a href="matrices-and-systems-of-equations.html#exercises"><i class="fa fa-check"></i><b>1.9</b> Exercises</a></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="vector-spaces.html"><a href="vector-spaces.html"><i class="fa fa-check"></i><b>2</b> Vector Spaces</a>
+<ul>
+<li class="chapter" data-level="2.1" data-path="vector-spaces.html"><a href="vector-spaces.html#artoo"><i class="fa fa-check"></i><b>2.1</b> The Vector Space <span class="math inline">\(\mathbb{R}^n\)</span></a>
+<ul>
+<li class="chapter" data-level="" data-path="vector-spaces.html"><a href="vector-spaces.html#vector-addition-and-scalar-multiplication"><i class="fa fa-check"></i>Vector addition and scalar multiplication</a></li>
+<li class="chapter" data-level="" data-path="vector-spaces.html"><a href="vector-spaces.html#linear-dependence-and-independence"><i class="fa fa-check"></i>Linear dependence and independence</a></li>
+<li class="chapter" data-level="" data-path="vector-spaces.html"><a href="vector-spaces.html#linear-combinations"><i class="fa fa-check"></i>Linear Combinations</a></li>
+<li class="chapter" data-level="" data-path="vector-spaces.html"><a href="vector-spaces.html#mathbbr3-and-mathbbrn"><i class="fa fa-check"></i><span class="math inline">\(\mathbb{R}^3\)</span> and <span class="math inline">\(\mathbb{R}^n\)</span></a></li>
+</ul></li>
+<li class="chapter" data-level="2.2" data-path="vector-spaces.html"><a href="vector-spaces.html#subspaces"><i class="fa fa-check"></i><b>2.2</b> Subspaces</a></li>
+<li class="chapter" data-level="2.3" data-path="vector-spaces.html"><a href="vector-spaces.html#linear-dependence-and-independence-1"><i class="fa fa-check"></i><b>2.3</b> Linear Dependence and Independence</a>
+<ul>
+<li class="chapter" data-level="" data-path="vector-spaces.html"><a href="vector-spaces.html#linear-dependence-revisited"><i class="fa fa-check"></i>Linear dependence revisited</a></li>
+</ul></li>
+<li class="chapter" data-level="2.4" data-path="vector-spaces.html"><a href="vector-spaces.html#basis-and-dimension"><i class="fa fa-check"></i><b>2.4</b> Basis and Dimension</a>
+<ul>
+<li class="chapter" data-level="" data-path="vector-spaces.html"><a href="vector-spaces.html#the-standard-basis-for-mathbbrn"><i class="fa fa-check"></i>The standard basis for <span class="math inline">\(\mathbb{R}^n\)</span></a></li>
+<li class="chapter" data-level="" data-path="vector-spaces.html"><a href="vector-spaces.html#the-dimension-of-a-subspace"><i class="fa fa-check"></i>The dimension of a subspace</a></li>
+<li class="chapter" data-level="" data-path="vector-spaces.html"><a href="vector-spaces.html#the-dimension-of-the-nullspace"><i class="fa fa-check"></i>The dimension of the Nullspace</a></li>
+<li class="chapter" data-level="" data-path="vector-spaces.html"><a href="vector-spaces.html#the-column-space-of-a-matrix"><i class="fa fa-check"></i>The column space of a matrix</a></li>
+<li class="chapter" data-level="" data-path="vector-spaces.html"><a href="vector-spaces.html#the-row-space"><i class="fa fa-check"></i>The row space</a></li>
+</ul></li>
+<li class="chapter" data-level="2.5" data-path="vector-spaces.html"><a href="vector-spaces.html#exercises-1"><i class="fa fa-check"></i><b>2.5</b> Exercises</a></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="eigenvalues-and-eigenvectors.html"><a href="eigenvalues-and-eigenvectors.html"><i class="fa fa-check"></i><b>3</b> Eigenvalues and Eigenvectors</a>
+<ul>
+<li class="chapter" data-level="3.1" data-path="eigenvalues-and-eigenvectors.html"><a href="eigenvalues-and-eigenvectors.html#eigenvalues-and-eigenvectors-1"><i class="fa fa-check"></i><b>3.1</b> Eigenvalues and Eigenvectors</a>
+<ul>
+<li class="chapter" data-level="" data-path="eigenvalues-and-eigenvectors.html"><a href="eigenvalues-and-eigenvectors.html#eigenvalues-and-eigenvectors-in-r"><i class="fa fa-check"></i>Eigenvalues and Eigenvectors in R</a></li>
+<li class="chapter" data-level="" data-path="eigenvalues-and-eigenvectors.html"><a href="eigenvalues-and-eigenvectors.html#higher-dimensional-matrices"><i class="fa fa-check"></i>Higher dimensional matrices</a></li>
+</ul></li>
+<li class="chapter" data-level="3.2" data-path="eigenvalues-and-eigenvectors.html"><a href="eigenvalues-and-eigenvectors.html#special-cases-and-complications"><i class="fa fa-check"></i><b>3.2</b> Special Cases and Complications</a>
+<ul>
+<li class="chapter" data-level="" data-path="eigenvalues-and-eigenvectors.html"><a href="eigenvalues-and-eigenvectors.html#diagonal-and-triangular-matrices"><i class="fa fa-check"></i>Diagonal and triangular matrices</a></li>
+<li class="chapter" data-level="" data-path="eigenvalues-and-eigenvectors.html"><a href="eigenvalues-and-eigenvectors.html#the-trace"><i class="fa fa-check"></i>The trace</a></li>
+<li class="chapter" data-level="" data-path="eigenvalues-and-eigenvectors.html"><a href="eigenvalues-and-eigenvectors.html#complications"><i class="fa fa-check"></i>Complications</a></li>
+<li class="chapter" data-level="" data-path="eigenvalues-and-eigenvectors.html"><a href="eigenvalues-and-eigenvectors.html#eigenvalues-of-a-transpose"><i class="fa fa-check"></i>Eigenvalues of a transpose</a></li>
+<li class="chapter" data-level="" data-path="eigenvalues-and-eigenvectors.html"><a href="eigenvalues-and-eigenvectors.html#matrix-powers"><i class="fa fa-check"></i>Matrix powers</a></li>
+</ul></li>
+<li class="chapter" data-level="3.3" data-path="eigenvalues-and-eigenvectors.html"><a href="eigenvalues-and-eigenvectors.html#application-the-leslie-matrix"><i class="fa fa-check"></i><b>3.3</b> Application: The Leslie Matrix</a></li>
+<li class="chapter" data-level="3.4" data-path="eigenvalues-and-eigenvectors.html"><a href="eigenvalues-and-eigenvectors.html#graphs-and-adjacency-matrices"><i class="fa fa-check"></i><b>3.4</b> Graphs and Adjacency Matrices</a>
+<ul>
+<li class="chapter" data-level="" data-path="eigenvalues-and-eigenvectors.html"><a href="eigenvalues-and-eigenvectors.html#adjacency-matrices"><i class="fa fa-check"></i>Adjacency matrices</a></li>
+<li class="chapter" data-level="" data-path="eigenvalues-and-eigenvectors.html"><a href="eigenvalues-and-eigenvectors.html#directed-adjacency-matrices"><i class="fa fa-check"></i>Directed adjacency matrices</a></li>
+<li class="chapter" data-level="" data-path="eigenvalues-and-eigenvectors.html"><a href="eigenvalues-and-eigenvectors.html#the-directed-graph-of-a-tournament"><i class="fa fa-check"></i>The directed graph of a tournament</a></li>
+</ul></li>
+<li class="chapter" data-level="3.5" data-path="eigenvalues-and-eigenvectors.html"><a href="eigenvalues-and-eigenvectors.html#random-surfers-and-stochastic-matrices"><i class="fa fa-check"></i><b>3.5</b> Random surfers and Stochastic Matrices</a>
+<ul>
+<li class="chapter" data-level="" data-path="eigenvalues-and-eigenvectors.html"><a href="eigenvalues-and-eigenvectors.html#stochastic-matrices"><i class="fa fa-check"></i>Stochastic matrices</a></li>
+<li class="chapter" data-level="" data-path="eigenvalues-and-eigenvectors.html"><a href="eigenvalues-and-eigenvectors.html#markov-chains"><i class="fa fa-check"></i>Markov Chains</a></li>
+<li class="chapter" data-level="" data-path="eigenvalues-and-eigenvectors.html"><a href="eigenvalues-and-eigenvectors.html#why-is-1-always-an-eigenvalue"><i class="fa fa-check"></i>Why is 1 always an eigenvalue?</a></li>
+</ul></li>
+<li class="chapter" data-level="3.6" data-path="eigenvalues-and-eigenvectors.html"><a href="eigenvalues-and-eigenvectors.html#the-markov-and-oracle-ranking-methods"><i class="fa fa-check"></i><b>3.6</b> The Markov and Oracle Ranking Methods</a>
+<ul>
+<li class="chapter" data-level="" data-path="eigenvalues-and-eigenvectors.html"><a href="eigenvalues-and-eigenvectors.html#the-markov-method"><i class="fa fa-check"></i>The Markov method</a></li>
+<li class="chapter" data-level="" data-path="eigenvalues-and-eigenvectors.html"><a href="eigenvalues-and-eigenvectors.html#the-oracle-method"><i class="fa fa-check"></i>The Oracle method</a></li>
+<li class="chapter" data-level="" data-path="eigenvalues-and-eigenvectors.html"><a href="eigenvalues-and-eigenvectors.html#modifications"><i class="fa fa-check"></i>Modifications</a></li>
+</ul></li>
+<li class="chapter" data-level="3.7" data-path="eigenvalues-and-eigenvectors.html"><a href="eigenvalues-and-eigenvectors.html#exercises-2"><i class="fa fa-check"></i><b>3.7</b> Exercises</a></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="orthogonality.html"><a href="orthogonality.html"><i class="fa fa-check"></i><b>4</b> Orthogonality</a>
+<ul>
+<li class="chapter" data-level="4.1" data-path="orthogonality.html"><a href="orthogonality.html#ILO"><i class="fa fa-check"></i><b>4.1</b> Inner Product, Length, and Orthogonality</a>
+<ul>
+<li class="chapter" data-level="" data-path="orthogonality.html"><a href="orthogonality.html#distance-in-mathbbrn"><i class="fa fa-check"></i>Distance in <span class="math inline">\(\mathbb{R}^n\)</span></a></li>
+</ul></li>
+<li class="chapter" data-level="4.2" data-path="orthogonality.html"><a href="orthogonality.html#orthogonal-subspaces"><i class="fa fa-check"></i><b>4.2</b> Orthogonal Subspaces</a>
+<ul>
+<li class="chapter" data-level="" data-path="orthogonality.html"><a href="orthogonality.html#the-row-space-and-nullspace-of-a-matrix"><i class="fa fa-check"></i>The row space and nullspace of a matrix</a></li>
+</ul></li>
+<li class="chapter" data-level="4.3" data-path="orthogonality.html"><a href="orthogonality.html#orthogonal-and-orthonormal-sets"><i class="fa fa-check"></i><b>4.3</b> Orthogonal and Orthonormal Sets</a>
+<ul>
+<li class="chapter" data-level="" data-path="orthogonality.html"><a href="orthogonality.html#orthogonal-projections"><i class="fa fa-check"></i>Orthogonal projections</a></li>
+<li class="chapter" data-level="" data-path="orthogonality.html"><a href="orthogonality.html#orthogonal-matrices"><i class="fa fa-check"></i>Orthogonal matrices</a></li>
+</ul></li>
+<li class="chapter" data-level="4.4" data-path="orthogonality.html"><a href="orthogonality.html#OProj"><i class="fa fa-check"></i><b>4.4</b> Orthogonal Projections</a></li>
+<li class="chapter" data-level="4.5" data-path="orthogonality.html"><a href="orthogonality.html#orthogonalization"><i class="fa fa-check"></i><b>4.5</b> Orthogonalization</a>
+<ul>
+<li class="chapter" data-level="" data-path="orthogonality.html"><a href="orthogonality.html#qr-factorization"><i class="fa fa-check"></i>QR-factorization</a></li>
+</ul></li>
+<li class="chapter" data-level="4.6" data-path="orthogonality.html"><a href="orthogonality.html#exercises-3"><i class="fa fa-check"></i><b>4.6</b> Exercises</a></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="regression.html"><a href="regression.html"><i class="fa fa-check"></i><b>5</b> Regression</a>
+<ul>
+<li class="chapter" data-level="5.1" data-path="regression.html"><a href="regression.html#LSQP"><i class="fa fa-check"></i><b>5.1</b> Least Squares Problems</a>
+<ul>
+<li class="chapter" data-level="" data-path="regression.html"><a href="regression.html#least-squares-error"><i class="fa fa-check"></i>Least squares error</a></li>
+<li class="chapter" data-level="" data-path="regression.html"><a href="regression.html#least-squares-and-the-qr-factorization"><i class="fa fa-check"></i>Least squares and the QR-factorization</a></li>
+</ul></li>
+<li class="chapter" data-level="5.2" data-path="regression.html"><a href="regression.html#application-the-massey-method"><i class="fa fa-check"></i><b>5.2</b> Application: The Massey Method</a>
+<ul>
+<li class="chapter" data-level="" data-path="regression.html"><a href="regression.html#adjustments"><i class="fa fa-check"></i>Adjustments</a></li>
+<li class="chapter" data-level="" data-path="regression.html"><a href="regression.html#offensive-and-defensive-ratings"><i class="fa fa-check"></i>Offensive and defensive ratings</a></li>
+</ul></li>
+<li class="chapter" data-level="5.3" data-path="regression.html"><a href="regression.html#LSRSec"><i class="fa fa-check"></i><b>5.3</b> Least Squares Regression</a>
+<ul>
+<li class="chapter" data-level="" data-path="regression.html"><a href="regression.html#multilinear-regression"><i class="fa fa-check"></i>Multilinear regression</a></li>
+</ul></li>
+<li class="chapter" data-level="5.4" data-path="regression.html"><a href="regression.html#CorSec"><i class="fa fa-check"></i><b>5.4</b> Correlation</a>
+<ul>
+<li class="chapter" data-level="" data-path="regression.html"><a href="regression.html#some-notation-and-a-formula"><i class="fa fa-check"></i>Some notation and a formula</a></li>
+<li class="chapter" data-level="" data-path="regression.html"><a href="regression.html#correlation-in-r"><i class="fa fa-check"></i>Correlation in R</a></li>
+</ul></li>
+<li class="chapter" data-level="5.5" data-path="regression.html"><a href="regression.html#formulas-for-least-squares-regression"><i class="fa fa-check"></i><b>5.5</b> Formulas for Least Squares Regression</a>
+<ul>
+<li class="chapter" data-level="" data-path="regression.html"><a href="regression.html#the-coefficient-of-determination"><i class="fa fa-check"></i>The coefficient of determination</a></li>
+</ul></li>
+<li class="chapter" data-level="5.6" data-path="regression.html"><a href="regression.html#uncertainty-in-least-squares"><i class="fa fa-check"></i><b>5.6</b> Uncertainty in Least Squares</a>
+<ul>
+<li class="chapter" data-level="" data-path="regression.html"><a href="regression.html#confidence-and-prediction-intervals-for-responses"><i class="fa fa-check"></i>Confidence and prediction intervals for responses</a></li>
+<li class="chapter" data-level="" data-path="regression.html"><a href="regression.html#checking-assumptions"><i class="fa fa-check"></i>Checking assumptions</a></li>
+</ul></li>
+<li class="chapter" data-level="5.7" data-path="regression.html"><a href="regression.html#multilinear-regression-1"><i class="fa fa-check"></i><b>5.7</b> Multilinear Regression</a>
+<ul>
+<li class="chapter" data-level="" data-path="regression.html"><a href="regression.html#r-and-multilinear-regression"><i class="fa fa-check"></i>R and multilinear regression</a></li>
+<li class="chapter" data-level="" data-path="regression.html"><a href="regression.html#indicator-variables"><i class="fa fa-check"></i>Indicator variables</a></li>
+<li class="chapter" data-level="" data-path="regression.html"><a href="regression.html#fitting-polynomials"><i class="fa fa-check"></i>Fitting polynomials</a></li>
+<li class="chapter" data-level="" data-path="regression.html"><a href="regression.html#interactions"><i class="fa fa-check"></i>Interactions</a></li>
+</ul></li>
+<li class="chapter" data-level="5.8" data-path="regression.html"><a href="regression.html#model-selection"><i class="fa fa-check"></i><b>5.8</b> Model Selection</a>
+<ul>
+<li class="chapter" data-level="" data-path="regression.html"><a href="regression.html#best-subsets-regression"><i class="fa fa-check"></i>Best subsets regression</a></li>
+<li class="chapter" data-level="" data-path="regression.html"><a href="regression.html#stepwise-regression"><i class="fa fa-check"></i>Stepwise regression</a></li>
+<li class="chapter" data-level="" data-path="regression.html"><a href="regression.html#some-warnings"><i class="fa fa-check"></i>Some warnings</a></li>
+</ul></li>
+<li class="chapter" data-level="5.9" data-path="regression.html"><a href="regression.html#Logistic"><i class="fa fa-check"></i><b>5.9</b> Logistic Regression</a>
+<ul>
+<li class="chapter" data-level="" data-path="regression.html"><a href="regression.html#logistic-regression-with-multiple-independent-variables"><i class="fa fa-check"></i>Logistic regression with multiple independent variables</a></li>
+<li class="chapter" data-level="" data-path="regression.html"><a href="regression.html#likelihood-and-deviance"><i class="fa fa-check"></i>Likelihood and deviance</a></li>
+</ul></li>
+<li class="chapter" data-level="5.10" data-path="regression.html"><a href="regression.html#GDA"><i class="fa fa-check"></i><b>5.10</b> Gradient Descent</a>
+<ul>
+<li class="chapter" data-level="" data-path="regression.html"><a href="regression.html#functions-of-several-variables"><i class="fa fa-check"></i>Functions of several variables</a></li>
+<li class="chapter" data-level="" data-path="regression.html"><a href="regression.html#optimizing-parameters"><i class="fa fa-check"></i>Optimizing parameters</a></li>
+</ul></li>
+<li class="chapter" data-level="5.11" data-path="regression.html"><a href="regression.html#exercises-4"><i class="fa fa-check"></i><b>5.11</b> Exercises</a></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="svd-and-pca.html"><a href="svd-and-pca.html"><i class="fa fa-check"></i><b>6</b> SVD and PCA</a>
+<ul>
+<li class="chapter" data-level="6.1" data-path="svd-and-pca.html"><a href="svd-and-pca.html#DSM"><i class="fa fa-check"></i><b>6.1</b> Diagonalizable and Symmetric Matrices</a>
+<ul>
+<li class="chapter" data-level="" data-path="svd-and-pca.html"><a href="svd-and-pca.html#diagonalizable-matrices"><i class="fa fa-check"></i>Diagonalizable matrices</a></li>
+<li class="chapter" data-level="" data-path="svd-and-pca.html"><a href="svd-and-pca.html#symmetric-matrices"><i class="fa fa-check"></i>Symmetric matrices</a></li>
+<li class="chapter" data-level="" data-path="svd-and-pca.html"><a href="svd-and-pca.html#eigenvalues-and-eigenvectors-of-symmetric-matrices"><i class="fa fa-check"></i>Eigenvalues and eigenvectors of symmetric matrices</a></li>
+<li class="chapter" data-level="" data-path="svd-and-pca.html"><a href="svd-and-pca.html#orthogonal-diagonalization"><i class="fa fa-check"></i>Orthogonal diagonalization</a></li>
+</ul></li>
+<li class="chapter" data-level="6.2" data-path="svd-and-pca.html"><a href="svd-and-pca.html#quadratic-forms-and-constrained-optimization"><i class="fa fa-check"></i><b>6.2</b> Quadratic Forms and Constrained Optimization</a>
+<ul>
+<li class="chapter" data-level="" data-path="svd-and-pca.html"><a href="svd-and-pca.html#change-of-variables"><i class="fa fa-check"></i>Change of variables</a></li>
+<li class="chapter" data-level="" data-path="svd-and-pca.html"><a href="svd-and-pca.html#classifying-quadratic-forms"><i class="fa fa-check"></i>Classifying quadratic forms</a></li>
+<li class="chapter" data-level="" data-path="svd-and-pca.html"><a href="svd-and-pca.html#constrained-optimization"><i class="fa fa-check"></i>Constrained optimization</a></li>
+</ul></li>
+<li class="chapter" data-level="6.3" data-path="svd-and-pca.html"><a href="svd-and-pca.html#SVD"><i class="fa fa-check"></i><b>6.3</b> The Singular Value Decomposition</a>
+<ul>
+<li class="chapter" data-level="" data-path="svd-and-pca.html"><a href="svd-and-pca.html#singular-values"><i class="fa fa-check"></i>Singular values</a></li>
+<li class="chapter" data-level="" data-path="svd-and-pca.html"><a href="svd-and-pca.html#svd-with-r"><i class="fa fa-check"></i>SVD with R</a></li>
+</ul></li>
+<li class="chapter" data-level="6.4" data-path="svd-and-pca.html"><a href="svd-and-pca.html#applications-of-the-svd"><i class="fa fa-check"></i><b>6.4</b> Applications of the SVD</a>
+<ul>
+<li class="chapter" data-level="" data-path="svd-and-pca.html"><a href="svd-and-pca.html#movie-reviews-and-latent-factors"><i class="fa fa-check"></i>Movie reviews and latent factors</a></li>
+</ul></li>
+<li class="chapter" data-level="6.5" data-path="svd-and-pca.html"><a href="svd-and-pca.html#principal-component-analysis"><i class="fa fa-check"></i><b>6.5</b> Principal Component Analysis</a>
+<ul>
+<li class="chapter" data-level="" data-path="svd-and-pca.html"><a href="svd-and-pca.html#pca-in-r"><i class="fa fa-check"></i>PCA in R</a></li>
+<li class="chapter" data-level="" data-path="svd-and-pca.html"><a href="svd-and-pca.html#biplots"><i class="fa fa-check"></i>Biplots</a></li>
+<li class="chapter" data-level="" data-path="svd-and-pca.html"><a href="svd-and-pca.html#scaling"><i class="fa fa-check"></i>Scaling</a></li>
+</ul></li>
+<li class="chapter" data-level="6.6" data-path="svd-and-pca.html"><a href="svd-and-pca.html#exercises-5"><i class="fa fa-check"></i><b>6.6</b> Exercises</a></li>
+</ul></li>
+<li class="chapter" data-level="7" data-path="additional-topics.html"><a href="additional-topics.html"><i class="fa fa-check"></i><b>7</b> Additional Topics</a>
+<ul>
+<li class="chapter" data-level="7.1" data-path="additional-topics.html"><a href="additional-topics.html#k-means-clustering"><i class="fa fa-check"></i><b>7.1</b> <span class="math inline">\(k\)</span>-means Clustering</a>
+<ul>
+<li class="chapter" data-level="" data-path="additional-topics.html"><a href="additional-topics.html#k-means-clustering-1"><i class="fa fa-check"></i><span class="math inline">\(k\)</span>-means clustering</a></li>
+<li class="chapter" data-level="" data-path="additional-topics.html"><a href="additional-topics.html#cluster-optimization"><i class="fa fa-check"></i>Cluster optimization</a></li>
+<li class="chapter" data-level="" data-path="additional-topics.html"><a href="additional-topics.html#clustering-for-classification"><i class="fa fa-check"></i>Clustering for classification</a></li>
+</ul></li>
+<li class="chapter" data-level="7.2" data-path="additional-topics.html"><a href="additional-topics.html#collaborative-filtering"><i class="fa fa-check"></i><b>7.2</b> Collaborative Filtering</a>
+<ul>
+<li class="chapter" data-level="" data-path="additional-topics.html"><a href="additional-topics.html#similarity-measures"><i class="fa fa-check"></i>Similarity measures</a></li>
+<li class="chapter" data-level="" data-path="additional-topics.html"><a href="additional-topics.html#collaborative-filtering-with-recommenderlab"><i class="fa fa-check"></i>Collaborative filtering with recommenderlab</a></li>
+</ul></li>
+<li class="chapter" data-level="7.3" data-path="additional-topics.html"><a href="additional-topics.html#decision-tree-classification"><i class="fa fa-check"></i><b>7.3</b> Decision Tree Classification</a>
+<ul>
+<li class="chapter" data-level="" data-path="additional-topics.html"><a href="additional-topics.html#decision-trees-with-r"><i class="fa fa-check"></i>Decision trees with R</a></li>
+<li class="chapter" data-level="" data-path="additional-topics.html"><a href="additional-topics.html#random-forests"><i class="fa fa-check"></i>Random Forests</a></li>
+</ul></li>
+<li class="chapter" data-level="7.4" data-path="additional-topics.html"><a href="additional-topics.html#support-vector-machines"><i class="fa fa-check"></i><b>7.4</b> Support Vector Machines</a>
+<ul>
+<li class="chapter" data-level="" data-path="additional-topics.html"><a href="additional-topics.html#support-vector-machines-in-r"><i class="fa fa-check"></i>Support vector machines in R</a></li>
+</ul></li>
+<li class="chapter" data-level="7.5" data-path="additional-topics.html"><a href="additional-topics.html#exercises-6"><i class="fa fa-check"></i><b>7.5</b> Exercises</a></li>
+</ul></li>
+<li class="appendix"><span><b>Appendices</b></span></li>
+<li class="chapter" data-level="A" data-path="MVCA.html"><a href="MVCA.html"><i class="fa fa-check"></i><b>A</b> An Introduction to Multivariable Calculus</a>
+<ul>
+<li class="chapter" data-level="A.1" data-path="MVCA.html"><a href="MVCA.html#functions-of-several-variables-1"><i class="fa fa-check"></i><b>A.1</b> Functions of several variables</a>
+<ul>
+<li class="chapter" data-level="" data-path="MVCA.html"><a href="MVCA.html#minima-and-maxima"><i class="fa fa-check"></i>Minima and maxima</a></li>
+<li class="chapter" data-level="" data-path="MVCA.html"><a href="MVCA.html#limits-and-continuity"><i class="fa fa-check"></i>Limits and continuity</a></li>
+</ul></li>
+<li class="chapter" data-level="A.2" data-path="MVCA.html"><a href="MVCA.html#partial-derivatives"><i class="fa fa-check"></i><b>A.2</b> Partial Derivatives</a>
+<ul>
+<li class="chapter" data-level="" data-path="MVCA.html"><a href="MVCA.html#higher-order-partial-derivatives"><i class="fa fa-check"></i>Higher order partial derivatives</a></li>
+</ul></li>
+<li class="chapter" data-level="A.3" data-path="MVCA.html"><a href="MVCA.html#directional-derivatives"><i class="fa fa-check"></i><b>A.3</b> Directional Derivatives</a>
+<ul>
+<li class="chapter" data-level="" data-path="MVCA.html"><a href="MVCA.html#the-gradient-vector"><i class="fa fa-check"></i>The gradient vector</a></li>
+</ul></li>
+<li class="chapter" data-level="A.4" data-path="MVCA.html"><a href="MVCA.html#optimization"><i class="fa fa-check"></i><b>A.4</b> Optimization</a>
+<ul>
+<li class="chapter" data-level="" data-path="MVCA.html"><a href="MVCA.html#classifying-critical-points"><i class="fa fa-check"></i>Classifying critical points</a></li>
+</ul></li>
+<li class="chapter" data-level="A.5" data-path="MVCA.html"><a href="MVCA.html#exercises-7"><i class="fa fa-check"></i><b>A.5</b> Exercises</a></li>
+</ul></li>
+<li class="chapter" data-level="B" data-path="the-igraph-and-ggally-packages.html"><a href="the-igraph-and-ggally-packages.html"><i class="fa fa-check"></i><b>B</b> The iGraph and GGally Packages</a>
+<ul>
+<li class="chapter" data-level="" data-path="the-igraph-and-ggally-packages.html"><a href="the-igraph-and-ggally-packages.html#ggally"><i class="fa fa-check"></i>GGally</a></li>
+</ul></li>
+<li class="chapter" data-level="C" data-path="packages.html"><a href="packages.html"><i class="fa fa-check"></i><b>C</b> Packages</a></li>
+<li class="chapter" data-level="" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i>References</a></li>
+<li class="divider"></li>
+<li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Linear Algebra for Data Science</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="svd-and-pca" class="section level1 hasAnchor" number="6">
+<h1><span class="header-section-number">Chapter 6</span> SVD and PCA<a href="svd-and-pca.html#svd-and-pca" class="anchor-section" aria-label="Anchor link to header"></a></h1>
+<p>In this chapter, we will learn about two common techniques involving data matrices: the Singular Value Decomposition (SVD) and Principal Component Analysis (PCA). In order to discuss them, we need to lay a foundation. This development is based on that of David C. Lay, Steven R. Lay, and Judi J. McDonald <span class="citation">[<a href="#ref-LLM">5</a>]</span>.</p>
+<div id="DSM" class="section level2 hasAnchor" number="6.1">
+<h2><span class="header-section-number">6.1</span> Diagonalizable and Symmetric Matrices<a href="svd-and-pca.html#DSM" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Diagonal matrices are nice to work with. For instance</p>
+<p><span class="math display">\[\begin{bmatrix}\lambda_1 &amp;  &amp;  &amp;  &amp; \\ &amp; \lambda_2 &amp;&amp;&amp;\\ &amp; &amp; \lambda_3 &amp; &amp;\\ &amp;&amp;&amp;\ddots &amp;\\&amp;&amp;&amp;&amp; \lambda_n\end{bmatrix}^2=\begin{bmatrix}\lambda_1^2 &amp;  &amp;  &amp;  &amp; \\ &amp; \lambda_2^2 &amp;&amp;&amp;\\ &amp; &amp; \lambda_3^2 &amp; &amp;\\ &amp;&amp;&amp;\ddots &amp;\\&amp;&amp;&amp;&amp; \lambda_n^2\end{bmatrix}\]</span></p>
+<p>(the off-diagonal entries are all 0), and for positive integers <span class="math inline">\(k\)</span>,</p>
+<p><span class="math display">\[\begin{bmatrix}\lambda_1 &amp;  &amp;  &amp;  &amp; \\ &amp; \lambda_2 &amp;&amp;&amp;\\ &amp; &amp; \lambda_3 &amp; &amp;\\ &amp;&amp;&amp;\ddots &amp;\\&amp;&amp;&amp;&amp; \lambda_n\end{bmatrix}^k=\begin{bmatrix}\lambda_1^k &amp;  &amp;  &amp;  &amp; \\ &amp; \lambda_2^k &amp;&amp;&amp;\\ &amp; &amp; \lambda_3^k &amp; &amp;\\ &amp;&amp;&amp;\ddots &amp;\\&amp;&amp;&amp;&amp; \lambda_n^k\end{bmatrix}\]</span></p>
+<p>For example,</p>
+<p><span class="math display">\[\begin{bmatrix}2 &amp; 0 &amp; 0\\0 &amp; -1 &amp; 0\\0 &amp; 0 &amp; 3\end{bmatrix}^3=\begin{bmatrix}2^3 &amp; 0 &amp; 0\\0 &amp; (-1)^3 &amp; 0\\0 &amp; 0 &amp; 3^3\end{bmatrix}=\begin{bmatrix}8 &amp; 0 &amp; 0\\0 &amp; -1 &amp; 0\\0 &amp; 0 &amp; 27\end{bmatrix}.\]</span></p>
+<p>Note what multiplication on the left by a diagonal matrix does.</p>
+<p><span class="math display">\[\mathbf{D}\mathbf{A}=\begin{bmatrix}\lambda_1 &amp; 0 &amp; 0\\0 &amp; \lambda_2 &amp; 0\\0 &amp; 0 &amp; \lambda_3\end{bmatrix}\begin{bmatrix}a_{11} &amp; a_{12} &amp; a_{13}\\a_{21} &amp; a_{22} &amp; a_{23}\\a_{31} &amp; a_{32} &amp; a_{33}\end{bmatrix}= \begin{bmatrix}\lambda_1a_{11}&amp; \lambda_1a_{12} &amp; \lambda_1a_{13}\\\lambda_2a_{21} &amp; \lambda_2a_{22}&amp; \lambda_2a_{23}\\\lambda_3a_{31} &amp; \lambda_3a_{32} &amp; \lambda_3a_{33}\end{bmatrix}.\]</span></p>
+<p>Row <span class="math inline">\(i\)</span> of <span class="math inline">\(\mathbf{A}\)</span> is multiplied by <span class="math inline">\(\lambda_i\)</span>. For example,</p>
+<p><span class="math display">\[\begin{bmatrix}2 &amp; 0\\0 &amp; -3\end{bmatrix}\begin{bmatrix}1 &amp; 2\\3 &amp; 4\end{bmatrix}=\begin{bmatrix}2 &amp; 4\\-9&amp;-12\end{bmatrix}.\]</span></p>
+<p>Multiplication on the <em>right</em> by a diagonal matrix does the analogous thing to the <em>columns</em>.</p>
+<p><span class="math display">\[\mathbf{A}\mathbf{D}=\begin{bmatrix}a_{11} &amp; a_{12} &amp; a_{13}\\a_{21} &amp; a_{22} &amp; a_{23}\\a_{31} &amp; a_{32} &amp; a_{33}\end{bmatrix}\begin{bmatrix}\lambda_1 &amp; 0 &amp; 0\\0 &amp; \lambda_2 &amp; 0\\0 &amp; 0 &amp; \lambda_3\end{bmatrix}=\begin{bmatrix}\lambda_1a_{11} &amp; \lambda_2a_{12} &amp; \lambda_3a_{13}\\\lambda_1a_{21} &amp; \lambda_2a_{22} &amp; \lambda_3 a_{23}\\ \lambda_1a_{31} &amp; \lambda_2 a_{32} &amp; \lambda_3 a_{33}\end{bmatrix}.\]</span></p>
+<p>If we write <span class="math inline">\(\mathbf{A}=\begin{bmatrix}\mathbf{a}_1 &amp; \mathbf{a}_2 &amp; \cdots &amp; \mathbf{a}_n\end{bmatrix}\)</span>,then</p>
+<p><span class="math display">\[\begin{bmatrix}\mathbf{a}_1 &amp; \mathbf{a}_2 &amp; \cdots &amp; \mathbf{a}_n\end{bmatrix}\begin{bmatrix}\lambda_1 &amp;  &amp;  &amp;  &amp; \\ &amp; \lambda_2 &amp;&amp;&amp;\\ &amp; &amp; \lambda_3 &amp; &amp;\\ &amp;&amp;&amp;\ddots &amp;\\&amp;&amp;&amp;&amp; \lambda_n\end{bmatrix}=\begin{bmatrix}\lambda_1\mathbf{a}_1 &amp; \lambda_2\mathbf{a}_2 &amp; \cdots &amp; \lambda_n\mathbf{a}_n\end{bmatrix}.\]</span></p>
+<div id="diagonalizable-matrices" class="section level3 unnumbered hasAnchor">
+<h3>Diagonalizable matrices<a href="svd-and-pca.html#diagonalizable-matrices" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Some matrices can be factored with one of the factors being a diagonal matrix. Here’s a definition.</p>
+<div class="defbox">
+<div class="definition">
+<p><span id="def:unlabeled-div-110" class="definition"><strong>Definition 6.1  </strong></span>An <span class="math inline">\(n\times n\)</span> matrix <span class="math inline">\(\mathbf{A}\)</span> is said to be <strong>diagonalizable</strong> if there exists an invertible <span class="math inline">\(n\times n\)</span> matrix <span class="math inline">\(\mathbf{P}\)</span> and an <span class="math inline">\(n\times n\)</span> diagonal matrix <span class="math inline">\(\mathbf{D}\)</span> such that
+<span class="math display">\[\mathbf{A}=\mathbf{P}\mathbf{D}\mathbf{P}^{-1}.\]</span></p>
+</div>
+</div>
+<p>The following theorem tells us exactly which matrices are diagonalizable and how to diagonalize them <span class="citation">[<a href="#ref-LLM">5</a>]</span>.</p>
+<div class="theorembox">
+<div class="theorem">
+<p><span id="thm:unlabeled-div-111" class="theorem"><strong>Theorem 6.1  </strong></span>An <span class="math inline">\(n\times n\)</span> matrix <span class="math inline">\(\mathbf{A}\)</span> is diagonalizable if and only if <span class="math inline">\(\mathbf{A}\)</span> has <span class="math inline">\(n\)</span> linearly independent eigenvectors. In particular, <span class="math inline">\(\mathbf{A}=\mathbf{P}\mathbf{D}\mathbf{P}^{-1}\)</span> with <span class="math inline">\(\mathbf{D}\)</span> a diagonal matrix if and only if the columns of <span class="math inline">\(\mathbf{P}\)</span> are linearly independent eigenvectors of <span class="math inline">\(\mathbf{A}\)</span> and the diagonal entries of <span class="math inline">\(\mathbf{D}\)</span> are the corresponding eigenvalues, in order.</p>
+</div>
+</div>
+<div class="proof">
+<p><span id="unlabeled-div-112" class="proof"><em>Proof</em>. </span>(Idea) Let <span class="math inline">\(\mathbf{P}=\begin{bmatrix}\mathbf{v}_1 &amp; \mathbf{v}_2 &amp; \cdots &amp; \mathbf{v}_n\end{bmatrix}\)</span>, with <span class="math inline">\(\mathbf{v}_i\)</span> being the <span class="math inline">\(i\)</span>th column of <span class="math inline">\(\mathbf{P}.\)</span> Then</p>
+<p><span class="math display">\[\mathbf{A}\mathbf{P}=\mathbf{A}\begin{bmatrix}\mathbf{v}_1 &amp; \mathbf{v}_2 &amp; \cdots &amp; \mathbf{v}_n\end{bmatrix}=\begin{bmatrix}\mathbf{A}\mathbf{v}_1 &amp; \mathbf{A}\mathbf{v}_2 &amp; \cdots &amp; \mathbf{A}\mathbf{v}_n\end{bmatrix}.\]</span></p>
+<p>Also,</p>
+<p><span class="math display">\[\mathbf{P}\mathbf{D}=\mathbf{P}\begin{bmatrix}\lambda_1 &amp;  &amp;  &amp;  &amp; \\ &amp; \lambda_2 &amp;&amp;&amp;\\ &amp; &amp; \lambda_3 &amp; &amp;\\ &amp;&amp;&amp;\ddots &amp;\\&amp;&amp;&amp;&amp; \lambda_n\end{bmatrix}=\begin{bmatrix}\lambda_1\mathbf{v}_1 &amp; \lambda_2\mathbf{v}_2 &amp; \cdots &amp; \lambda_n\mathbf{v}_n \end{bmatrix}.\]</span></p>
+<p>If <span class="math inline">\(\mathbf{A}=\mathbf{P}\mathbf{D}\mathbf{P}^{-1}\)</span>, then <span class="math inline">\(\mathbf{A}\mathbf{P}=\mathbf{P}\mathbf{D}\)</span>, and <span class="math inline">\(\mathbf{A}\mathbf{v}_i=\lambda_i\mathbf{v}_i\)</span> for all <span class="math inline">\(i\)</span>. That is, the <span class="math inline">\(i\)</span>th column of <span class="math inline">\(\mathbf{P}\)</span> is an eigenvector of <span class="math inline">\(\mathbf{A}\)</span> with corresponding eigenvalue <span class="math inline">\(\lambda_i\)</span>.</p>
+</div>
+<div class="examplebox">
+<div class="example">
+<p><span id="exm:2b2diag" class="example"><strong>Example 6.1  </strong></span>Let <span class="math inline">\(\mathbf{A}=\begin{bmatrix}1 &amp; 2\\2 &amp; 1\end{bmatrix}\)</span>. The eigenvalues of <span class="math inline">\(\mathbf{A}\)</span> are <span class="math inline">\(\lambda_1=3\)</span> and <span class="math inline">\(\lambda_2=-1\)</span>, with corresponding eigenvectors <span class="math inline">\(\mathbf{v}_1=(1,1)\)</span> and <span class="math inline">\(\mathbf{v}_2=(-1,1)\)</span>. The eigenvectors go in the columns of <span class="math inline">\(\mathbf{P}.\)</span> With <span class="math inline">\(\mathbf{P}=\begin{bmatrix}1 &amp; -1\\1 &amp; 1\end{bmatrix}\)</span>, we have <span class="math inline">\(\mathbf{D}=\begin{bmatrix}3 &amp; 0\\0 &amp; -1\end{bmatrix}\)</span> and <span class="math inline">\(\mathbf{P}^{-1}=\frac{1}{2}\begin{bmatrix}1 &amp; 1\\-1 &amp; 1\end{bmatrix}\)</span>. That means that we can write</p>
+<p><span class="math display">\[\begin{bmatrix}1 &amp; 2\\2 &amp; 1\end{bmatrix}=\begin{bmatrix}1 &amp; -1\\1 &amp; 1\end{bmatrix}\begin{bmatrix}3 &amp; 0\\0 &amp; -1\end{bmatrix}\begin{bmatrix}\frac{1}{2} &amp; \frac{1}{2}\\-\frac{1}{2} &amp; \frac{1}{2}\end{bmatrix}.\]</span></p>
+<p>Note that if we enter the eigenvectors in a different order, we will get a different diagonalization.</p>
+</div>
+</div>
+<p>Diagonalization has many applications. For one thing, it makes diagonalizable matrices easy to exponentiate. Indeed, for a positive integer <span class="math inline">\(k\)</span>,</p>
+<p><span class="math display">\[\begin{align*}
+\mathbf{A}^k=(\mathbf{P}\mathbf{D}\mathbf{P}^{-1})^k&amp;=\underbrace{\mathbf{P}\mathbf{D}\mathbf{P}^{-1}\mathbf{P}\mathbf{D}\mathbf{P}^{-1}\cdots\mathbf{P}\mathbf{D}\mathbf{P}^{-1}}_{k \text{ terms }}\\
+&amp;=\mathbf{P}\mathbf{D}^k\mathbf{P}^{-1}
+\end{align*}\]</span></p>
+<p>For the matrix from Example <a href="svd-and-pca.html#exm:2b2diag">6.1</a>,</p>
+<p><span class="math display">\[\begin{align*} \mathbf{A}^3&amp;=\mathbf{P}\mathbf{D}^3\mathbf{P}^{-1}\\
+\begin{bmatrix}1 &amp; 2\\2 &amp; 1\end{bmatrix}^3&amp;=\begin{bmatrix}1 &amp; -1\\1 &amp; 1\end{bmatrix}\begin{bmatrix}3^3 &amp; 0\\0 &amp; (-1)^3\end{bmatrix}\begin{bmatrix}\frac{1}{2} &amp; \frac{1}{2}\\-\frac{1}{2} &amp; \frac{1}{2}\end{bmatrix}\\
+&amp;=\begin{bmatrix}13 &amp; 14\\14 &amp; 13\end{bmatrix}.
+\end{align*}\]</span></p>
+<p>Not all matrices are diagonalizable. For instance, the triangular matrix</p>
+<p><span class="math display">\[\mathbf{A}=\begin{bmatrix}3 &amp; 2\\0 &amp; 3\end{bmatrix}\]</span></p>
+<p>has a repeated eigenvalue of <span class="math inline">\(\lambda=3\)</span>. When we try to solve for the eigenvectors, we get</p>
+<p><span class="math display">\[\mathbf{A}-3\mathbf{I}=\begin{bmatrix}0 &amp; 2\\0 &amp; 0\end{bmatrix}.\]</span></p>
+<p>Solving <span class="math inline">\((\mathbf{A}-3\mathbf{I})\mathbf{v}=\mathbf{0}\)</span> using an augmented matrix, we have</p>
+<p><span class="math display">\[\left[\begin{array}{rr|r}0 &amp; 2 &amp; 0\\0 &amp; 0 &amp; 0\end{array}\right],\]</span></p>
+<p>which gives us <span class="math inline">\(v_2=0\)</span>. Any eigenvector is of the form <span class="math inline">\((v_1,0)\)</span>. There is no second linearly independent eigenvector.</p>
+</div>
+<div id="symmetric-matrices" class="section level3 unnumbered hasAnchor">
+<h3>Symmetric matrices<a href="svd-and-pca.html#symmetric-matrices" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Symmetric matrices are going to play an important role in future applications. Here’s the definition.</p>
+<div class="defbox">
+<div class="definition">
+<p><span id="def:unlabeled-div-113" class="definition"><strong>Definition 6.2  </strong></span>A matrix <span class="math inline">\(\mathbf{A}\)</span> is <em>symmetric</em> if
+<span class="math display">\[\mathbf{A}^T=\mathbf{A}.\]</span></p>
+</div>
+</div>
+<p>Note that since the transpose of an <span class="math inline">\(m\times n\)</span> matrix is a <span class="math inline">\(n\times m\)</span> matrix, only square matrices can be symmetric. Here are some examples. The matrices</p>
+<p><span class="math display">\[\begin{bmatrix}1 &amp; 2\\2 &amp; 1\end{bmatrix} \text{ and } \begin{bmatrix} 2 &amp; 4 &amp; -1\\4 &amp; 5 &amp; 2\\-1 &amp; 2 &amp; 8\end{bmatrix}\]</span>
+are symmetric. The matrices</p>
+<p><span class="math display">\[\begin{bmatrix} 2 &amp; 1\\2 &amp; 3\end{bmatrix} \text{ and } \begin{bmatrix} 1 &amp; 2 &amp; 3\\2 &amp; 1 &amp; 5\end{bmatrix}\]</span></p>
+<p>are not.</p>
+<p>You might remember that when we were using normal equations to solve least squares problems, we encountered symmetric matrices. In fact, we have the following theorem.</p>
+<div class="theorembox">
+<div class="theorem">
+<p><span id="thm:unlabeled-div-114" class="theorem"><strong>Theorem 6.2  </strong></span>Let <span class="math inline">\(\mathbf{A}\)</span> be an <span class="math inline">\(m\times n\)</span> matrix. Then the <span class="math inline">\(n\times n\)</span> matrix <span class="math inline">\(\mathbf{M}=\mathbf{A}^T\mathbf{A}\)</span> is symmetric.</p>
+</div>
+</div>
+<div class="proof">
+<p><span id="unlabeled-div-115" class="proof"><em>Proof</em>. </span>The proof is simple:
+<span class="math display">\[\mathbf{M}^T=(\mathbf{A}^T\mathbf{A})^T=\mathbf{A}^T(\mathbf{A}^T)^T=\mathbf{A}^T\mathbf{A}=\mathbf{M}.\]</span></p>
+<p>Note that by the same reasoning, <span class="math inline">\(\mathbf{A}\mathbf{A}^T\)</span> is also symmetric.</p>
+</div>
+</div>
+<div id="eigenvalues-and-eigenvectors-of-symmetric-matrices" class="section level3 unnumbered hasAnchor">
+<h3>Eigenvalues and eigenvectors of symmetric matrices<a href="svd-and-pca.html#eigenvalues-and-eigenvectors-of-symmetric-matrices" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Eigenvectors of symmetric matrices have a special property. Let’s start with an example. Let</p>
+<p><span class="math display">\[\mathbf{A}=\left[\begin{array}{rrr}6 &amp; -2 &amp; -1\\-2 &amp; 6 &amp; -1\\-1 &amp; -1 &amp; 5\end{array}\right].\]</span></p>
+<p>With a little work, we find that the eigenvalues are <span class="math inline">\(\lambda_1=8,\lambda_2=6,\)</span> and <span class="math inline">\(\lambda_3=3\)</span>, with corresponding eigenvectors,</p>
+<p><span class="math display">\[\mathbf{v}_1=\left[\begin{array}{r}-1\\1\\0\end{array}\right],\mathbf{v}_2=\left[\begin{array}{r}-1\\-1\\2\end{array}\right], \text{ and } \mathbf{v}_3=\begin{bmatrix}1\\1\\1\end{bmatrix}.\]</span></p>
+<p>A quick check reveals that these eigenvectors are mutually orthogonal!</p>
+<p>In Example <a href="svd-and-pca.html#exm:2b2diag">6.1</a>, we diagonalized the symmetric matrix <span class="math inline">\(\begin{bmatrix}1 &amp; 2\\2&amp;1\end{bmatrix}.\)</span> Not mentioned at the time was the fact that the eigenvectors</p>
+<p><span class="math display">\[\mathbf{v}_1=\begin{bmatrix}1\\1\end{bmatrix} \text{ and } \mathbf{v}_2=\begin{bmatrix}-1\\1\end{bmatrix}\]</span></p>
+<p>are also mutually orthogonal. We have a theorem.</p>
+<div class="theorembox">
+<div class="theorem">
+<p><span id="thm:unlabeled-div-116" class="theorem"><strong>Theorem 6.3  </strong></span>If <span class="math inline">\(\mathbf{A}\)</span> is symmetric, then any two eigenvectors of <span class="math inline">\(\mathbf{A}\)</span> corresponding to different eigenvalues are orthogonal.</p>
+</div>
+</div>
+<div class="proof">
+<p><span id="unlabeled-div-117" class="proof"><em>Proof</em>. </span>The proof is simple enough. Let <span class="math inline">\(\mathbf{v}_1\)</span> and <span class="math inline">\(\mathbf{v}_2\)</span> be eigenvectors with corresponding eigenvalues <span class="math inline">\(\lambda_1\)</span> and <span class="math inline">\(\lambda_2\)</span>, where <span class="math inline">\(\lambda_1\neq \lambda_2\)</span>. We want to show that <span class="math inline">\(\mathbf{v}_1\cdot \mathbf{v}_2=0\)</span>. We have</p>
+<p><span class="math display">\[\begin{align*}
+    \lambda_1\mathbf{v}_1\cdot \mathbf{v}_2&amp;=(\lambda_1\mathbf{v}_1)^T\mathbf{v}_2\\
+    &amp;=(\mathbf{A}\mathbf{v}_1)^T\mathbf{v}_2\\
+    &amp;=\mathbf{v}_1^T\mathbf{A}^T\mathbf{v}_2=\mathbf{v}_1^T(\mathbf{A}\mathbf{v}_2) \text{( because} \mathbf{A}^T=\mathbf{A})\\
+    &amp;=\mathbf{v}_1^T(\lambda_2\mathbf{v}_2)\\
+    &amp;=\lambda_2\mathbf{v}_1^T\mathbf{v}_2=\lambda_2\mathbf{v}_1\cdot \mathbf{v}_2.
+\end{align*}\]</span></p>
+<p>Since <span class="math inline">\(\lambda_1\neq \lambda_2\)</span>, we can only have equality if <span class="math inline">\(\mathbf{v}_1\cdot \mathbf{v}_2=0\)</span>.</p>
+</div>
+</div>
+<div id="orthogonal-diagonalization" class="section level3 unnumbered hasAnchor">
+<h3>Orthogonal diagonalization<a href="svd-and-pca.html#orthogonal-diagonalization" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Assuming we have a full set of linearly independent eigenvectors, when we diagonalize a symmetric matrix, we can use <em>orthonormal</em> eigenvectors in the matrix <span class="math inline">\(\mathbf{P},\)</span> making <span class="math inline">\(\mathbf{P}\)</span> an <em>orthogonal</em> matrix. (Remember them? They satisfy the property that <span class="math inline">\(\mathbf{P}^{-1}=\mathbf{P}^T\)</span>.) A matrix that can be diagonalized using an orthogonal matrix is called <em>orthogonally diagonalizable</em>.</p>
+<p>Suppose a matrix <span class="math inline">\(\mathbf{A}\)</span> is orthogonally diagonalizable. Then
+<span class="math display">\[\begin{align*}
+\mathbf{A}^T&amp;=(\mathbf{P}\mathbf{D}\mathbf{P}^{-1})^T\\
+    &amp;=(\mathbf{P}\mathbf{D}\mathbf{P}^T)^T\\
+    &amp;=(\mathbf{P}^T)^T\mathbf{D}^T\mathbf{P}^T\\
+    &amp;=\mathbf{P}\mathbf{D}\mathbf{P}^T=\mathbf{P}\mathbf{D}\mathbf{P}^{-1}=\mathbf{A}
+\end{align*}\]</span></p>
+<p>All orthogonally diagonalizable matrices are symmetric. It works both ways, though showing that all symmetric matrices are orthogonally diagonalizable is more complicated.</p>
+<div class="theorembox">
+<div class="theorem">
+<p><span id="thm:unlabeled-div-118" class="theorem"><strong>Theorem 6.4  </strong></span>An <span class="math inline">\(n\times n\)</span> matrix <span class="math inline">\(\mathbf{A}\)</span> is orthogonally diagonalizable if and only if <span class="math inline">\(\mathbf{A}\)</span> is a symmetric matrix.</p>
+</div>
+</div>
+<p>This theorem is key for our future applications.</p>
+</div>
+</div>
+<div id="quadratic-forms-and-constrained-optimization" class="section level2 hasAnchor" number="6.2">
+<h2><span class="header-section-number">6.2</span> Quadratic Forms and Constrained Optimization<a href="svd-and-pca.html#quadratic-forms-and-constrained-optimization" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Many important properties of symmetric matrices appear in the context of <em>quadratic forms</em>. If <span class="math inline">\(\mathbf{A}\)</span> is a symmetric <span class="math inline">\(n\times n\)</span> matrix and <span class="math inline">\(\mathbf{x}\)</span> is a vector in <span class="math inline">\(\mathbb{R}^n\)</span>, then the real-valued function</p>
+<p><span class="math display">\[Q(\mathbf{x})=\mathbf{x}^T\mathbf{A}\mathbf{x}\]</span></p>
+<p>is called a <em>quadratic form</em>.</p>
+<div class="examplebox">
+<div class="example">
+<p><span id="exm:unlabeled-div-119" class="example"><strong>Example 6.2  </strong></span>Let <span class="math inline">\(\mathbf{A}=\begin{bmatrix}2 &amp; 3\\3 &amp; 1\end{bmatrix}\)</span> and let <span class="math inline">\(\mathbf{x}=\begin{bmatrix}x_1\\x_2\end{bmatrix}\)</span>. Then</p>
+<p><span class="math display">\[\begin{align*}
+Q(\mathbf{x})&amp;=\begin{bmatrix}x_1 &amp; x_2\end{bmatrix}\begin{bmatrix}2 &amp; 3\\3 &amp; 1\end{bmatrix}\begin{bmatrix}x_1\\x_2\end{bmatrix}\\
+&amp;=\begin{bmatrix}x_1 &amp; x_2\end{bmatrix}\begin{bmatrix}2x_1+3x_2\\3x_1+x_2\end{bmatrix}\\
+&amp;=2x_1^2+3x_1x_2+3x_1x_2+x_2^2\\
+&amp;=2x_1^2+6x_1x_2+x_2^2
+\end{align*}\]</span></p>
+<p>Some notes:</p>
+<ul>
+<li><p>This is a quadratic function in <span class="math inline">\(x_1\)</span> and <span class="math inline">\(x_2\)</span>.</p></li>
+<li><p>The <span class="math inline">\(x_1^2\)</span> and <span class="math inline">\(x_2^2\)</span> coefficients are the diagonal entries of <span class="math inline">\(\mathbf{A},\)</span> while the <span class="math inline">\(x_1x_2\)</span> cross term is twice the off-diagonal entry.</p></li>
+</ul>
+</div>
+</div>
+<div class="examplebox">
+<div class="example">
+<p><span id="exm:unlabeled-div-120" class="example"><strong>Example 6.3  </strong></span>Let <span class="math inline">\(\mathbf{A}=\begin{bmatrix}4 &amp; -2\\-2 &amp; 5\end{bmatrix}\)</span>. Then</p>
+<p><span class="math display">\[Q(\mathbf{x})=4x_1^2-4x_1x_2+5x_2^2.\]</span></p>
+</div>
+</div>
+<div class="examplebox">
+<div class="example">
+<p><span id="exm:unlabeled-div-121" class="example"><strong>Example 6.4  </strong></span>Here’s a <span class="math inline">\(3\times 3\)</span> example. Let</p>
+<p><span class="math display">\[\mathbf{A}=\begin{bmatrix} 2 &amp; 5 &amp; 6\\5 &amp; 3 &amp; -3\\6 &amp; -3 &amp; -1\end{bmatrix}\]</span></p>
+<p>The <span class="math inline">\(ij\)</span>-entry in <span class="math inline">\(\mathbf{A}\)</span> represents the <span class="math inline">\(x_ix_j\)</span>-coefficient. Since <span class="math inline">\(x_{ij}=x_{ji}\)</span> and <span class="math inline">\(a_{ij}=a_{ji},\)</span> the off-diagonal terms double up when simplified. Thus, <span class="math inline">\(Q(\mathbf{x})=2x_1^2+3x_2^2-x_3^2+10x_1x_2+12x_1x_3-6x_2x_3.\)</span></p>
+</div>
+</div>
+<p>The nicest quadratic forms come from diagonal matrices. For instance, if</p>
+<p><span class="math display">\[\mathbf{A}=\begin{bmatrix}2 &amp; 0 &amp; 0\\0 &amp; 5 &amp; 0\\0 &amp; 0 &amp; -3\end{bmatrix},\]</span></p>
+<p>then <span class="math inline">\(Q(\mathbf{x})=2x_1^2+5x_2^2-3x_3^2\)</span>, with no cross terms.
+It turns out that we can apply what’s called a change of variables to turn any quadratic form into one without cross terms.</p>
+<div id="change-of-variables" class="section level3 unnumbered hasAnchor">
+<h3>Change of variables<a href="svd-and-pca.html#change-of-variables" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>If <span class="math inline">\(\mathbf{x}\)</span> is a variable vector in <span class="math inline">\(\mathbb{R}^n\)</span> and <span class="math inline">\(\mathbf{P}\)</span> is an invertible <span class="math inline">\(n\times n\)</span> matrix, then a <em>change of variables</em> is an equation of the form
+<span class="math inline">\(\mathbf{x}=\mathbf{P}\mathbf{y},\)</span> or equivalently, <span class="math inline">\(\mathbf{y}=\mathbf{P}^{-1}\mathbf{x}.\)</span></p>
+<p>Basically, we are writing <span class="math inline">\(\mathbf{x}\)</span> in terms of a new basis for <span class="math inline">\(\mathbb{R}^n\)</span> and the coefficients in that new basis are the components of <span class="math inline">\(\mathbf{y}.\)</span> We can write the quadratic form <span class="math inline">\(\mathbf{x}^T\mathbf{A}\mathbf{x}\)</span> in terms of <span class="math inline">\(\mathbf{y}\)</span> as follows:</p>
+<p><span class="math display">\[\mathbf{x}^T\mathbf{A}\mathbf{x}=(\mathbf{P}\mathbf{y})^T\mathbf{A}(\mathbf{P}\mathbf{y})=\mathbf{y}^T\mathbf{P}^T\mathbf{A}\mathbf{P}\mathbf{y}=\mathbf{y}^T(\mathbf{P}^T\mathbf{A}\mathbf{P})\mathbf{y}.\]</span></p>
+<p>Since <span class="math inline">\(\mathbf{A}\)</span> is symmetric,</p>
+<p><span class="math display">\[(\mathbf{P}^T\mathbf{A}\mathbf{P})^T=\mathbf{P}^T\mathbf{A}^T(\mathbf{P}^T)^T=\mathbf{P}^T\mathbf{A}\mathbf{P},\]</span></p>
+<p>so <span class="math inline">\(\mathbf{P}^T\mathbf{A}\mathbf{P}\)</span> is also symmetric and <span class="math inline">\(R(\mathbf{y})=\mathbf{y}^T(\mathbf{P}^T\mathbf{A}\mathbf{P})\mathbf{y}\)</span> is a quadratic form in <span class="math inline">\(\mathbf{y}.\)</span></p>
+<p>Why are we doing this? We learned in Section <a href="svd-and-pca.html#DSM">6.1</a> that if <span class="math inline">\(\mathbf{A}\)</span> is symmetric, then it is orthogonally diagonalizable. That is, there is an orthogonal matrix <span class="math inline">\(\mathbf{P}\)</span> such that <span class="math inline">\(\mathbf{A}=\mathbf{P}\mathbf{D}\mathbf{P}^T\)</span>, where <span class="math inline">\(\mathbf{D}\)</span> is diagonal. If we choose such a <span class="math inline">\(\mathbf{P}\)</span> for our change of variable, then the matrix <span class="math inline">\(\mathbf{P}^T\mathbf{A}\mathbf{P}=\mathbf{D}\)</span> is diagonal, and the resulting quadratic form can be written in terms of the eigenvalues of <span class="math inline">\(\mathbf{A},\)</span> with no cross terms.</p>
+<p>In Section <a href="svd-and-pca.html#DSM">6.1</a>, we diagonalized the symmetric matrix <span class="math inline">\(\mathbf{A}=\begin{bmatrix}1 &amp; 2\\2 &amp; 1\end{bmatrix}\)</span> using the orthogonal matrix</p>
+<p><span class="math display">\[\mathbf{P}=\begin{bmatrix} 1/\sqrt{2} &amp; -1/\sqrt{2}\\1/\sqrt{2} &amp; 1/\sqrt{2}\end{bmatrix},\]</span></p>
+<p>and <span class="math inline">\(\mathbf{D}=\begin{bmatrix}3 &amp; 0\\0 &amp; -1\end{bmatrix}\)</span>. Under the change of variable <span class="math inline">\(\mathbf{x}=\mathbf{P}\mathbf{y}\)</span>, the quadratic form <span class="math inline">\(Q(\mathbf{x})=x_1^2+4x_1x_2+x_2^2\)</span> becomes <span class="math inline">\(R(\mathbf{y})=3y_1^2-y_2^2\)</span>.</p>
+</div>
+<div id="classifying-quadratic-forms" class="section level3 unnumbered hasAnchor">
+<h3>Classifying quadratic forms<a href="svd-and-pca.html#classifying-quadratic-forms" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>There are just a few types of quadratic forms. Figure <a href="svd-and-pca.html#fig:qf1">6.1</a> shows some representative graphs in <span class="math inline">\(\mathbb{R}^2\)</span>.</p>
+<div class="figure" style="text-align: center"><span style="display:block;" id="fig:qf1"></span>
+<img src="images/qf3a.png" alt="Some quadratic forms on $\mathbb{R}^2$" width="40%" /><img src="images/qf3b.png" alt="Some quadratic forms on $\mathbb{R}^2$" width="40%" /><img src="images/qf3c.png" alt="Some quadratic forms on $\mathbb{R}^2$" width="40%" /><img src="images/qf3d.png" alt="Some quadratic forms on $\mathbb{R}^2$" width="40%" />
+<p class="caption">
+Figure 6.1: Some quadratic forms on <span class="math inline">\(\mathbb{R}^2\)</span>
+</p>
+</div>
+<p>The upper left quadratic form <span class="math inline">\(Q(\mathbf{x})=3x_1^2+7x_2^2\)</span> is positive for all nonzero <span class="math inline">\(\mathbf{x}.\)</span> The last is negative for all nonzero <span class="math inline">\(\mathbf{x}.\)</span> Here are some definitions.</p>
+<div class="defbox">
+<div class="definition">
+<p><span id="def:unlabeled-div-122" class="definition"><strong>Definition 6.3  </strong></span>A quadratic form <span class="math inline">\(Q\)</span> is</p>
+<ol style="list-style-type: decimal">
+<li><p><strong>positive definite</strong> if <span class="math inline">\(Q(\mathbf{x})&gt;0\)</span> for all <span class="math inline">\(\mathbf{x}\neq \mathbf{0}\)</span>,</p></li>
+<li><p><strong>negative definite</strong> if <span class="math inline">\(Q(\mathbf{x})&lt;0\)</span> for all <span class="math inline">\(\mathbf{x}\neq \mathbf{0}\)</span>,</p></li>
+<li><p><strong>indefinite</strong> if <span class="math inline">\(Q(\mathbf{x})\)</span> assumes both positive and negative values.</p></li>
+</ol>
+</div>
+</div>
+<p>In Figure <a href="svd-and-pca.html#fig:qf1">6.1</a>, the upper left form is positive definite. The bottom right is negative definite. The saddle-shaped one is indefinite. The one on the upper right is never negative, but is 0 at places other than the origin. If <span class="math inline">\(Q(\mathbf{x})\geq 0\)</span> for <span class="math inline">\(\mathbf{x}\neq \mathbf{0}\)</span>, <span class="math inline">\(Q\)</span> is said to be <em>positive semidefinite</em>. Negative semidefinite has an analogous definition.</p>
+<p>The eigenvalues of a symmetric matrix determine whether the corresponding quadratic form is positive definite, negative definite, indefinite, and so on.</p>
+<div class="theorembox">
+<div class="theorem">
+<p><span id="thm:unlabeled-div-123" class="theorem"><strong>Theorem 6.5  </strong></span>Let <span class="math inline">\(\mathbf{A}\)</span> be an <span class="math inline">\(n\times n\)</span> symmetric matrix. Then the quadratic form <span class="math inline">\(Q(\mathbf{x})=\mathbf{x}^T\mathbf{A}\mathbf{x}\)</span> is</p>
+<ol style="list-style-type: decimal">
+<li><p>positive definite if and only if the eigenvalues of <span class="math inline">\(\mathbf{A}\)</span> are all positive,</p></li>
+<li><p>negative definite if and only if the eigenvalues of <span class="math inline">\(\mathbf{A}\)</span> are all negative, or</p></li>
+<li><p>indefinite if and only if some eigenvalues of <span class="math inline">\(\mathbf{A}\)</span> are positive and some are negative.</p></li>
+</ol>
+</div>
+</div>
+<p>The positive semidefinite example <span class="math inline">\(Q(\mathbf{x})=3x_1^2\)</span> had one positive eigenvalue and the other was 0.</p>
+<div class="notebox">
+<p>Remember the Second Derivative Test for functions of two variables (Theorem <a href="MVCA.html#thm:SDT">A.3</a> in Appendix A)? It boils down to determining whether the matrix of second order partial derivatives at a critical point is positive definite (local minimum), negative definite (local maximum), indefinite (saddle point), or something else. This idea can be extended to functions of any number of variables.</p>
+</div>
+</div>
+<div id="constrained-optimization" class="section level3 unnumbered hasAnchor">
+<h3>Constrained optimization<a href="svd-and-pca.html#constrained-optimization" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>An important property of all matrices, and symmetric matrices in particular, is how they act on unit vectors. Recall that a unit vector is a vector that has length 1. This can be written as <span class="math inline">\(|\mathbf{x}|=1\)</span>, or equivalently, <span class="math inline">\(|\mathbf{x}|^2=1\)</span>, <span class="math inline">\(\mathbf{x}^T\mathbf{x}=1\)</span>, or <span class="math inline">\(x_1^2+x_2^2+\cdots+x_n^2=1\)</span>. The form <span class="math inline">\(\mathbf{x}^T\mathbf{x}=1\)</span> is especially useful when working with quadratic forms.</p>
+<p>A <em>constrained optimization</em> problem for a quadratic form would be like the following: find the maximum and minimum values of the quadratic form <span class="math inline">\(Q(\mathbf{x})=7x_1^2+3x_2^2+2x_3^2\)</span>, subject to the constraint <span class="math inline">\(\mathbf{x}^T\mathbf{x}=1\)</span>.</p>
+<p>Note that, since <span class="math inline">\(x_2^2\geq 0\)</span> and <span class="math inline">\(x_3^2\geq 0\)</span>, we can write</p>
+<p><span class="math display">\[\begin{align*}
+Q(\mathbf{x})&amp;=7x_1^2+3x_2^2+2x_3^2\\
+&amp;\leq 7x_1^2+7x_2^2+7x_3^2\\
+&amp;=7(x_1^2+x_2^2+x_3^2)\\
+&amp;=7|\mathbf{x}|^2=7.
+\end{align*}\]</span></p>
+<p>We have an upper bound of 7, which is attained, since <span class="math inline">\(Q(1,0,0)=Q(-1,0,0)=7\)</span>. Our maximum value is 7. Similarly,</p>
+<p><span class="math display">\[Q(\mathbf{x})\geq 2x_1^2+2x_2^2+2x_3^2=2(x_1^2+x_2^2+x_3^2)=2,\]</span></p>
+<p>and <span class="math inline">\(Q(0,0,1)=2\)</span>, so the minimum value is 2.</p>
+<p>Our example quadratic form has the associated diagonal matrix</p>
+<p><span class="math display">\[\mathbf{A}=\begin{bmatrix}7 &amp; 0 &amp; 0\\0 &amp; 3 &amp; 0\\0 &amp; 0 &amp; 2\end{bmatrix},\]</span></p>
+<p>whose eigenvalues are 7, 3, and 2. Our maximum for <span class="math inline">\(Q\)</span> was 7, the largest eigenvalue, and the minimum was 2, the smallest. This is true for all quadratic forms, not just diagonal ones<span class="citation">[<a href="#ref-LLM">5</a>]</span>.</p>
+<div class="theorembox">
+<div class="theorem">
+<p><span id="thm:unlabeled-div-124" class="theorem"><strong>Theorem 6.6  </strong></span>Let <span class="math inline">\(\mathbf{A}\)</span> be a symmetric <span class="math inline">\(n\times n\)</span> matrix and define <span class="math inline">\(m=\min\{\mathbf{x}^T\mathbf{A}\mathbf{x},\mathbf{x}^T\mathbf{x}=1\}\)</span> and <span class="math inline">\(M=\max\{\mathbf{x}^T\mathbf{A}\mathbf{x},\mathbf{x}^T\mathbf{x}=1\}\)</span>. Then <span class="math inline">\(M\)</span> is the greatest eigenvalue <span class="math inline">\(\lambda_1\)</span> of <span class="math inline">\(\mathbf{A}\)</span> and <span class="math inline">\(m\)</span> is the least eigenvalue of <span class="math inline">\(\mathbf{A}, \lambda_n.\)</span> The value of <span class="math inline">\(\mathbf{x}^T\mathbf{A}\mathbf{x}\)</span> is <span class="math inline">\(M\)</span> when <span class="math inline">\(\mathbf{x}\)</span> is a unit eigenvector <span class="math inline">\(\mathbf{u}_1\)</span> of <span class="math inline">\(\mathbf{A}\)</span> corresponding to <span class="math inline">\(M\)</span> and is <span class="math inline">\(m\)</span> when <span class="math inline">\(\mathbf{x}\)</span> is a unit eigenvector of <span class="math inline">\(\mathbf{A}\)</span> corresponding to <span class="math inline">\(m\)</span>.</p>
+</div>
+</div>
+<p>The proof relies on orthogonal diagonalization and the fact that when <span class="math inline">\(\mathbf{P}\)</span> is orthogonal, <span class="math inline">\(|\mathbf{x}|=|\mathbf{P}\mathbf{y}|=|\mathbf{y}|\)</span>.</p>
+<p>So, a quadratic form is maximized in the direction of the eigenvector corresponding to the largest eigenvalue. What can we say about the second largest eigenvalue and its corresponding eigenvector?</p>
+<div class="theorembox">
+<div class="theorem">
+<p><span id="thm:constrainedop" class="theorem"><strong>Theorem 6.7  </strong></span>Let <span class="math inline">\(\mathbf{A}, \lambda_1\)</span>, and <span class="math inline">\(\mathbf{u}_1\)</span> be as in the previous theorem. Then the maximum value of <span class="math inline">\(\mathbf{x}^T\mathbf{A}\mathbf{x}\)</span> subject to the constraints
+<span class="math display">\[\mathbf{x}^T\mathbf{x}=1,\mathbf{x}^T\mathbf{u}_1=0\]</span>
+is the second greatest eigenvalue <span class="math inline">\(\lambda_2\)</span>, and this maximum is attained when <span class="math inline">\(\mathbf{x}\)</span> is an eigenvector <span class="math inline">\(\mathbf{u}_2\)</span> corresponding to <span class="math inline">\(\lambda_2\)</span><span class="citation">[<a href="#ref-LLM">5</a>]</span>.</p>
+</div>
+</div>
+<p>The new constraint <span class="math inline">\(\mathbf{x}^T\mathbf{u}_1=0\)</span> means that we are basically eliminating the <span class="math inline">\(\mathbf{u}_1\)</span> direction, and optimizing what’s left. This theorem can be generalized down to the smallest eigenvalue.</p>
+<div class="examplebox">
+<div class="example">
+<p><span id="exm:unlabeled-div-125" class="example"><strong>Example 6.5  </strong></span>Theorem <a href="svd-and-pca.html#thm:constrainedop">6.7</a> isn’t very exciting for <span class="math inline">\(2\times 2\)</span> matrices, because there are only 2 directions. Here’s a <span class="math inline">\(3\times 3\)</span> example. The matrix</p>
+<p><span class="math display">\[\mathbf{A}=\begin{bmatrix}11 &amp; -1 &amp; 2\\-1 &amp; 14 &amp; -1\\2 &amp; -1 &amp; 11\end{bmatrix}\]</span></p>
+<p>has eigenvalues <span class="math inline">\(\lambda_1=15,\lambda_2=12,\)</span> and <span class="math inline">\(\lambda_3=9\)</span>. Corresponding unit eigenvectors are</p>
+<p><span class="math display">\[\mathbf{u}_1=\begin{bmatrix}1/\sqrt{6}\\-2/\sqrt{6}\\1/\sqrt{6}\end{bmatrix},\mathbf{u}_2=\begin{bmatrix}1/\sqrt{3}\\1/\sqrt{3}\\1/\sqrt{3}\end{bmatrix}, \mathbf{u}_3=\begin{bmatrix}-1/\sqrt{2}\\0\\1/\sqrt{2}\end{bmatrix}.\]</span></p>
+<p>For unit vectors, the maximum value of <span class="math inline">\(Q(\mathbf{x})=\mathbf{x}^T\mathbf{A}\mathbf{x}\)</span> is <span class="math inline">\(Q(\mathbf{u}_1)=15\)</span>. For unit vectors orthogonal to <span class="math inline">\(\mathbf{u}_1\)</span>, the maximum value is <span class="math inline">\(Q(\mathbf{u}_2)=12\)</span>.</p>
+</div>
+</div>
+<p>These theorems are important in principal component analysis, which we will see later in this chapter. In PCA, we diagonalize a symmetric covariance matrix, creating new, uncorrelated variables. These new variables can be listed in order of decreasing variance.</p>
+</div>
+</div>
+<div id="SVD" class="section level2 hasAnchor" number="6.3">
+<h2><span class="header-section-number">6.3</span> The Singular Value Decomposition<a href="svd-and-pca.html#SVD" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Recall that an <span class="math inline">\(n\times n\)</span> matrix <span class="math inline">\(\mathbf{A}\)</span> is diagonalizable if it can be written as</p>
+<p><span class="math display">\[\mathbf{A}=\mathbf{P}\mathbf{D}\mathbf{P}^{-1},\]</span></p>
+<p>where <span class="math inline">\(\mathbf{P}\)</span> is an invertible matrix and <span class="math inline">\(\mathbf{D}\)</span> is a diagonal matrix. This factorization tells us a lot about how multiplication by <span class="math inline">\(\mathbf{A}\)</span> transforms a vector <span class="math inline">\(\mathbf{x}.\)</span> We can write
+<span class="math display">\[\mathbf{A}\mathbf{x}=\mathbf{P}\mathbf{D}\mathbf{P}^{-1}\mathbf{x}.\]</span></p>
+<p>The product <span class="math inline">\(\mathbf{P}^{-1}\mathbf{x}\)</span> is a change of variables. Multiplication by <span class="math inline">\(\mathbf{D}\)</span> then scales the resulting vector by different amounts in different directions, according to the eigenvalues of <span class="math inline">\(\mathbf{A}\)</span>, which are the entries in <span class="math inline">\(\mathbf{D}\)</span>. The final multiplication by <span class="math inline">\(\mathbf{P}\)</span> returns the result to the original basis.</p>
+<p>It turns out, we can do a similar analysis for any matrix—even non-square ones—using the <em>singular value decomposition</em>.</p>
+<p>Here’s a motivating example. Let</p>
+<p><span class="math display">\[\mathbf{A}=\begin{bmatrix}3 &amp; 0\\8 &amp; 3\end{bmatrix}.\]</span></p>
+<p>Find the maximum value of <span class="math inline">\(|\mathbf{A}\mathbf{x}|\)</span> for <span class="math inline">\(|\mathbf{x}|=1\)</span>.</p>
+<p>We can maximize <span class="math inline">\(|\mathbf{A}\mathbf{x}|\)</span> by maximizing</p>
+<p><span class="math display">\[|\mathbf{A}\mathbf{x}|^2=(\mathbf{A}\mathbf{x})\cdot(\mathbf{A}\mathbf{x})=(\mathbf{A}\mathbf{x})^T(\mathbf{A}\mathbf{x})=\mathbf{x}^T(\mathbf{A}^T\mathbf{A})\mathbf{x}.\]</span></p>
+<p>Since <span class="math inline">\(\mathbf{A}^T\mathbf{A}\)</span> is symmetric, this is a quadratic form, which we can maximize by finding the largest eigenvalue. We have</p>
+<p><span class="math display">\[\mathbf{A}^T\mathbf{A}=\begin{bmatrix}3 &amp; 8\\0 &amp; 3\end{bmatrix}\begin{bmatrix}3 &amp; 0 \\8 &amp; 3\end{bmatrix}=\begin{bmatrix}73 &amp; 24\\24 &amp; 9\end{bmatrix}.\]</span></p>
+<p>The eigenvalues are <span class="math inline">\(\lambda_1=81\)</span> and <span class="math inline">\(\lambda_2=1\)</span>. The corresponding eigenvectors are <span class="math inline">\(\mathbf{x}_1=(3,1)\)</span> and <span class="math inline">\(\mathbf{x}_2=(-1,3)\)</span>, which we can make unit length by dividing by <span class="math inline">\(\sqrt{10}\)</span>:</p>
+<p><span class="math display">\[\mathbf{v}_1=\begin{bmatrix}3/\sqrt{10}\\1/\sqrt{10}\end{bmatrix},\mathbf{v}_2=\begin{bmatrix}-1/\sqrt{10}\\ 3/\sqrt{10}\end{bmatrix}.\]</span></p>
+<p>The maximum value of <span class="math inline">\(|\mathbf{A}\mathbf{x}|^2\)</span> on the unit circle is <span class="math inline">\(81\)</span>, which happens at <span class="math inline">\((3/\sqrt{10},1/\sqrt{10})\)</span>, so the maximum value of <span class="math inline">\(|\mathbf{A}\mathbf{x}|\)</span> is <span class="math inline">\(\sqrt{81}=9\)</span>. Meanwhile the minimum value of <span class="math inline">\(|\mathbf{A}\mathbf{x}|\)</span> is <span class="math inline">\(\sqrt{1}=1\)</span>, at the point <span class="math inline">\((-1/\sqrt{10},3/\sqrt{10})\)</span>.</p>
+<p>Geometrically speaking, multiplication by <span class="math inline">\(\mathbf{A}\)</span> takes points on the unit circle onto an ellipse. The point <span class="math inline">\(\mathbf{v}_1=(3/\sqrt{10},1/\sqrt{10})\)</span> gets mapped to the point</p>
+<p><span class="math display">\[\mathbf{A}\mathbf{v}_1=\begin{bmatrix}3 &amp; 0\\8 &amp; 3\end{bmatrix}\begin{bmatrix}3/\sqrt{10}\\1/\sqrt{10}\end{bmatrix}=\begin{bmatrix}9/\sqrt{10}\\27/\sqrt{10}\end{bmatrix},\]</span></p>
+<p>which is 9 units away from the origin, while</p>
+<p><span class="math display">\[\mathbf{A}\mathbf{v}_2=\begin{bmatrix}3 &amp; 0\\8 &amp; 3\end{bmatrix}\begin{bmatrix}-1/\sqrt{10}\\3/\sqrt{10}\end{bmatrix}=\begin{bmatrix}-3/\sqrt{10}\\1/\sqrt{10}\end{bmatrix},\]</span></p>
+<p>which is 1 unit away. (Note that <span class="math inline">\(\mathbf{A}(-\mathbf{v}_1)\)</span> and <span class="math inline">\(\mathbf{A}(-\mathbf{v}_2)\)</span> are also 9 and 1 units away from the origin, respectively.)</p>
+<p>Figure <a href="svd-and-pca.html#fig:svd1">6.2</a> shows the geometry.</p>
+<div class="figure" style="text-align: center"><span style="display:block;" id="fig:svd1"></span>
+<img src="img1.png" alt="Multiplication by $\mathbf{A}$" width="200" height="40%" /><img src="img2.png" alt="Multiplication by $\mathbf{A}$" width="96" height="40%" />
+<p class="caption">
+Figure 6.2: Multiplication by <span class="math inline">\(\mathbf{A}\)</span>
+</p>
+</div>
+<div id="singular-values" class="section level3 unnumbered hasAnchor">
+<h3>Singular values<a href="svd-and-pca.html#singular-values" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>For any <span class="math inline">\(m\times n\)</span> matrix <span class="math inline">\(\mathbf{A},\)</span> we can orthogonally diagonalize <span class="math inline">\(\mathbf{A}^T\mathbf{A}\)</span>. Let <span class="math inline">\(\{\mathbf{v}_1,\dots,\mathbf{v}_n\}\)</span> be an orthonormal basis for <span class="math inline">\(\mathbb{R}^n\)</span> consisting of eigenvectors of <span class="math inline">\(\mathbf{A}^T\mathbf{A}\)</span> with corresponding eigenvalues <span class="math inline">\(\lambda_1,\dots, \lambda_n\)</span>. Note that</p>
+<p><span class="math display">\[|\mathbf{A}\mathbf{v}_i|^2=\mathbf{v}_i^T\mathbf{A}^T\mathbf{A}\mathbf{v}_i=\mathbf{v}_i^T(\lambda_i\mathbf{v}_i)=\lambda_i(\mathbf{v}_i^T\mathbf{v}_i)=\lambda_i.\]</span></p>
+<p>Since <span class="math inline">\(|\mathbf{A}\mathbf{v}_i|^2\geq 0\)</span>, we have <span class="math inline">\(\lambda_i\geq 0\)</span> for all <span class="math inline">\(i\)</span>. We can renumber them, if necessary, in decreasing order, so that</p>
+<p><span class="math display">\[\lambda_1\geq \lambda_2\geq \cdots \geq \lambda_n\geq 0.\]</span></p>
+<p>The <em>singular values</em> of <span class="math inline">\(\mathbf{A}\)</span> are the square roots of these numbers, <span class="math inline">\(\sigma_i=\sqrt{\lambda_i}\)</span> and satisfy</p>
+<p><span class="math display">\[\sigma_1\geq \sigma_2\geq \cdots \geq \sigma_n\geq 0.\]</span></p>
+<p>In our example, not only were <span class="math inline">\(\mathbf{v}_1\)</span> and <span class="math inline">\(\mathbf{v}_2\)</span> orthogonal, so were <span class="math inline">\(\mathbf{A}\mathbf{v}_1\)</span> and <span class="math inline">\(\mathbf{A}\mathbf{v}_2\)</span>. This is not a coincidence. Here’s the key theorem that leads to the singular value decomposition of a matrix<span class="citation">[<a href="#ref-LLM">5</a>]</span>.</p>
+<div class="theorembox">
+<div class="theorem">
+<p><span id="thm:unlabeled-div-126" class="theorem"><strong>Theorem 6.8  </strong></span>Suppose <span class="math inline">\(\{\mathbf{v}_1,\dots,\mathbf{v}_n\}\)</span> is an orthonormal basis for <span class="math inline">\(\mathbb{R}^n\)</span> consisting of eigenvectors of <span class="math inline">\(\mathbf{A}^T\mathbf{A}\)</span> whose eigenvalues satisfy <span class="math inline">\(\lambda_1\geq \cdots \geq \lambda_n\)</span>, and suppose that <span class="math inline">\(\mathbf{A}\)</span> has <span class="math inline">\(r\)</span> nonzero singular values. Then <span class="math inline">\(\{\mathbf{A}\mathbf{v}_1,\dots,\mathbf{A}\mathbf{v}_r\}\)</span> is an orthogonal basis for <span class="math inline">\(\text{Col }\mathbf{A}\)</span> and <span class="math inline">\(\text{rank }\mathbf{A}=r\)</span>.</p>
+</div>
+</div>
+<p>There are three results in this theorem: (1) the nonzero <span class="math inline">\(\mathbf{A}\mathbf{v}_i\)</span>’s form an orthogonal set, (2) they form a basis for the column space of <span class="math inline">\(\mathbf{A},\)</span> and (3) the rank of <span class="math inline">\(\mathbf{A}\)</span> is equal to the number of nonzero singular values of <span class="math inline">\(\mathbf{A}.\)</span></p>
+<p>The orthogonal part is simple. Since <span class="math inline">\(\mathbf{v}_i\)</span> and <span class="math inline">\(\lambda_j\mathbf{v}_j\)</span> are orthogonal for <span class="math inline">\(i\neq j\)</span> and <span class="math inline">\(\mathbf{v}_j\)</span> is an eigenvector of <span class="math inline">\(\mathbf{A}^T\mathbf{A}\)</span>,
+<span class="math display">\[(\mathbf{A}\mathbf{v}_i)^T(\mathbf{A}\mathbf{v}_j)=\mathbf{v}_i^T(\mathbf{A}^T\mathbf{A})\mathbf{v}_j=\mathbf{v}_i^T(\lambda_j\mathbf{v}_j)=0.\]</span></p>
+<p>The singular value decomposition of an <span class="math inline">\(m\times n\)</span> matrix with rank <span class="math inline">\(r\)</span> involves a “diagonal-like” <span class="math inline">\(m\times n\)</span> matrix</p>
+<p><span class="math display">\[\Sigma=\begin{bmatrix}\mathbf{D} &amp; \mathbf{0}\\\mathbf{0} &amp; \mathbf{0}\end{bmatrix}.\]</span></p>
+<p>The submatrix <span class="math inline">\(\mathbf{D}\)</span> is an <span class="math inline">\(r\times r\)</span> diagonal matrix consisting of the nonzero singular values of <span class="math inline">\(\mathbf{A}.\)</span> The rest of the matrix is filled with zeros, if necessary, to create the <span class="math inline">\(m \times n\)</span> matrix. For example, if <span class="math inline">\(\mathbf{A}\)</span> is a <span class="math inline">\(3\times 4\)</span> matrix of rank 2, with nonzero singular values 5 and 2, then</p>
+<p><span class="math display">\[\Sigma=\begin{bmatrix} 5 &amp; 0 &amp; 0 &amp; 0\\0 &amp; 2 &amp; 0 &amp; 0\\0 &amp; 0 &amp; 0 &amp; 0\end{bmatrix}.\]</span></p>
+<p>When actually using the SVD, only <span class="math inline">\(\mathbf{D}\)</span> is needed, as we will see.</p>
+<p>Here is the theorem that presents the singular value decomposition<span class="citation">[<a href="#ref-LLM">5</a>]</span>.</p>
+<div class="theorembox">
+<div class="theorem">
+<p><span id="thm:unlabeled-div-127" class="theorem"><strong>Theorem 6.9  </strong></span>Let <span class="math inline">\(\mathbf{A}\)</span> be an <span class="math inline">\(m\times n\)</span> matrix with rank <span class="math inline">\(r\)</span>. Then there exists an <span class="math inline">\(m\times n\)</span> matrix <span class="math inline">\(\Sigma\)</span> as before, for which the diagonal entries in <span class="math inline">\(\mathbf{D}\)</span> are the <span class="math inline">\(r\)</span> nonzero singular values of <span class="math inline">\(\mathbf{A},\sigma_1\geq \sigma_2\geq \cdots \geq \sigma_r&gt;0\)</span>, and there exist an <span class="math inline">\(m\times m\)</span> orthogonal matrix <span class="math inline">\(\mathbf{U}\)</span> and an <span class="math inline">\(n\times n\)</span> orthogonal matrix <span class="math inline">\(\mathbf{V}\)</span> such that</p>
+<p><span class="math display">\[\mathbf{A}=\mathbf{U}\Sigma\mathbf{V}^T.\]</span></p>
+</div>
+</div>
+<p>(Remember that for an orthogonal matrix <span class="math inline">\(\mathbf{V}, \mathbf{V}^{-1}=\mathbf{V}^T\)</span>.) The columns of <span class="math inline">\(\mathbf{U}\)</span> are the <em>left singular vectors</em> of <span class="math inline">\(\mathbf{A},\)</span> while the columns of <span class="math inline">\(\mathbf{V}\)</span> are the <em>right singular vectors</em>. Except for <span class="math inline">\(\Sigma\)</span>, the decomposition isn’t unique.</p>
+<p>We’ve already discussed where <span class="math inline">\(\Sigma\)</span> comes from. For <span class="math inline">\(\mathbf{V},\)</span> we use</p>
+<p><span class="math display">\[\mathbf{V}=\begin{bmatrix} \mathbf{v}_1 &amp; \mathbf{v}_2 &amp; \cdots &amp; \mathbf{v}_n\end{bmatrix},\]</span></p>
+<p>where the <span class="math inline">\(\mathbf{v}_i\)</span>’s are as before. Since <span class="math inline">\(\{\mathbf{A}\mathbf{v}_1,\dots,\mathbf{A}\mathbf{v}_r\}\)</span> is already an orthogonal basis for the column space of <span class="math inline">\(\mathbf{A},\)</span> we set</p>
+<p><span class="math display">\[\mathbf{u}_i=\frac{1}{|\mathbf{A}\mathbf{v}_i|}\mathbf{A}\mathbf{v}_i=\frac{1}{\sigma_i}\mathbf{A}\mathbf{v}_i, 1\leq i\leq r.\]</span></p>
+<p>If <span class="math inline">\(r&lt;m\)</span>, we need to extend this to a full orthonormal basis for <span class="math inline">\(\mathbb{R}^m,\{\mathbf{u}_1,\dots,\mathbf{u}_r,\mathbf{u}_{r+1},\dots \mathbf{u}_m\}\)</span>. (In practice, this step is usually not necessary, as the extra vectors contribute nothing to the final product.)<a href="#fn3" class="footnote-ref" id="fnref3"><sup>3</sup></a> This gives us <span class="math inline">\(\mathbf{U}=\begin{bmatrix}\mathbf{u}_1 &amp; \mathbf{u}_2 &amp; \cdots &amp; \mathbf{u}_m\end{bmatrix}\)</span>.</p>
+<p>How does this factorization work? Note that</p>
+<p><span class="math display">\[\mathbf{A}\mathbf{V}=\begin{bmatrix}\mathbf{A}\mathbf{v}_1 &amp; \cdots &amp; \mathbf{A}\mathbf{v}_n\end{bmatrix}=\begin{bmatrix}\sigma_1\mathbf{u}_1 &amp; \cdots &amp; \sigma_r \mathbf{u}_r &amp; \mathbf{0} &amp; \cdots &amp;\mathbf{0}\end{bmatrix}.\]</span></p>
+<p>Meanwhile,</p>
+<p><span class="math display">\[\begin{align*}
+\mathbf{U}\Sigma&amp;=\begin{bmatrix}\mathbf{u}_1 \cdots \mathbf{u}_m\end{bmatrix} \left[\begin{array}{cccc|c}\sigma_1 &amp;&amp;&amp; &amp;\\&amp; \sigma_2 &amp;&amp;&amp;\mathbf{0}\\&amp;&amp;\ddots &amp;&amp;\\ &amp; &amp;&amp; \sigma_r &amp; \\ \hline &amp;&amp;\mathbf{0}&amp;&amp;\mathbf{0}\end{array}\right]\\
+&amp;=\begin{bmatrix}\sigma_1\mathbf{u}_1 &amp; \cdots &amp; \sigma_r\mathbf{u}_r &amp; \mathbf{0} &amp; \cdots &amp; \mathbf{0}\end{bmatrix}\\
+&amp;=\mathbf{A}\mathbf{V}
+\end{align*}\]</span></p>
+<p>Since <span class="math inline">\(\mathbf{U}\Sigma=\mathbf{A}\mathbf{V}\)</span>, and <span class="math inline">\(\mathbf{V}\)</span> is orthogonal, <span class="math inline">\(\mathbf{A}=\mathbf{U}\Sigma \mathbf{V}^{-1}=\mathbf{U}\Sigma \mathbf{V}^T.\)</span></p>
+<div class="examplebox">
+<div class="example">
+<p><span id="exm:unlabeled-div-128" class="example"><strong>Example 6.6  </strong></span>Let’s return to our example from the beginning, with <span class="math inline">\(\mathbf{A}=\begin{bmatrix}3 &amp; 0\\8 &amp; 3\end{bmatrix}\)</span>.
+The eigenvalues of <span class="math inline">\(\mathbf{A}^T\mathbf{A}\)</span> are <span class="math inline">\(\lambda_1=81\)</span> and <span class="math inline">\(\lambda_2=1\)</span>, so <span class="math inline">\(\sigma_1=9\)</span> and <span class="math inline">\(\sigma_2=1.\)</span> ( So <span class="math inline">\(\mathbf{A}\)</span> has rank 2.) The orthonormal eigenvectors are <span class="math inline">\(\mathbf{v}_1=(3/\sqrt{10},1/\sqrt{10})\)</span> and <span class="math inline">\(\mathbf{v}_2=(-1/\sqrt{10},3/\sqrt{10})\)</span>. We have</p>
+<p><span class="math display">\[\mathbf{u}_1=\frac{1}{\sigma_1}\mathbf{A}\mathbf{v}_1=\frac{1}{9}(9/\sqrt{10},27/\sqrt{10})=(1/\sqrt{10},3/\sqrt{10})\]</span></p>
+<p>and</p>
+<p><span class="math display">\[\mathbf{u}_2=\frac{1}{\sigma_2}\mathbf{A}\mathbf{v}_2=(-3/\sqrt{10},1/\sqrt{10}).\]</span></p>
+<p>Our singular value decomposition is</p>
+<p><span class="math display">\[\begin{align*}
+\mathbf{A}&amp;=\mathbf{U}\Sigma\mathbf{V}^T\\
+&amp;=\begin{bmatrix} 1/\sqrt{10} &amp; -3\sqrt{10}\\ 3\sqrt{10} &amp; 1\sqrt{10}\end{bmatrix}\begin{bmatrix}9 &amp; 0\\0 &amp; 1\end{bmatrix}\begin{bmatrix}3/\sqrt{10} &amp; 1/\sqrt{10}\\-1/\sqrt{10} &amp; 3/\sqrt{10}\end{bmatrix}.
+\end{align*}\]</span></p>
+</div>
+</div>
+<p>In the standard SVD formulation</p>
+<p><span class="math display">\[\underbrace{\mathbf{A}}_{m\times n}=\underbrace{\mathbf{U}}_{m\times m}\underbrace{\Sigma}_{m\times n}\underbrace{\mathbf{V}^T}_{n\times n}.\]</span></p>
+<p>In practice, when <span class="math inline">\(r&lt;m\)</span> and/or <span class="math inline">\(r&lt;n\)</span>, there may be columns of <span class="math inline">\(\mathbf{U}\)</span> or rows of <span class="math inline">\(\mathbf{V}^T\)</span> that aren’t needed, because they’ll get zeroed out when multiplying by <span class="math inline">\(\Sigma\)</span>. As a result, we can write</p>
+<p><span class="math display">\[\underbrace{\mathbf{A}}_{m\times n}=\underbrace{\mathbf{U}&#39;}_{m\times r}\underbrace{\mathbf{D}}_{r\times r}\underbrace{\mathbf{V}&#39;^T}_{r\times n}.\]</span></p>
+<p>This is particularly useful, because we don’t have to worry about extending our <span class="math inline">\(\mathbf{u}_i\)</span> vectors to a full basis of <span class="math inline">\(\mathbb{R}^m\)</span>. We can also approximate <span class="math inline">\(\mathbf{A}\)</span> with a lower rank matrix by eliminating some of the smaller singular values from <span class="math inline">\(\mathbf{D}.\)</span></p>
+<div class="examplebox">
+<div class="example">
+<p><span id="exm:svdnsq" class="example"><strong>Example 6.7  </strong></span>Let</p>
+<p><span class="math display">\[\mathbf{A}=\begin{bmatrix} 17 &amp; 6\\22 &amp; 21\\10 &amp; 30\end{bmatrix}.\]</span></p>
+<p>We have</p>
+<p><span class="math display">\[\mathbf{A}^T\mathbf{A}=\begin{bmatrix}873 &amp; 864 \\864 &amp; 1377\end{bmatrix},\]</span></p>
+<p>which has eigenvalues <span class="math inline">\(\lambda_1=2025\)</span> and <span class="math inline">\(\lambda_2=225\)</span>, and corresponding eigenvectors <span class="math inline">\(\mathbf{x}_1=(3,4)\)</span> and <span class="math inline">\(\mathbf{x}_2=(-4,3)\)</span>, respectively. These normalize to <span class="math inline">\(\mathbf{v}_1=(3/5,4/5)\)</span> and <span class="math inline">\(\mathbf{v}_2=(-4/5,3/5)\)</span>, respectively. The singular values are <span class="math inline">\(\sigma_1=\sqrt{2025}=45\)</span> and <span class="math inline">\(\sigma_2=\sqrt{225}=15\)</span>. Our first two left singular vectors are</p>
+<p><span class="math display">\[\mathbf{u}_1=\frac{1}{45}\begin{bmatrix}17 &amp; 6\\22 &amp; 21\\10 &amp; 30\end{bmatrix}\begin{bmatrix}3/5\\4/5\end{bmatrix}=\begin{bmatrix}1/3\\2/3\\2/3\end{bmatrix},\]</span></p>
+<p>and</p>
+<p><span class="math display">\[\mathbf{u}_2=\frac{1}{15}\begin{bmatrix}17 &amp; 6\\22 &amp; 21\\10 &amp; 30\end{bmatrix}\begin{bmatrix}-4/5\\3/5\end{bmatrix}=\begin{bmatrix}-2/3\\-1/3\\2/3\end{bmatrix}.\]</span></p>
+<p>We could find a third orthogonal vector, but we don’t need it. The full SVD for our matrix <span class="math inline">\(\mathbf{A},\)</span> with asterisks representing the unknown vector, is this:</p>
+<p><span class="math display">\[\mathbf{A}=\begin{bmatrix} 17 &amp; 6\\22 &amp; 21\\10 &amp; 30\end{bmatrix}=\begin{bmatrix} 1/3 &amp; -2/3 &amp; *\\2/3 &amp; -1/3 &amp; *\\2/3 &amp; 2/3 &amp; *\end{bmatrix}\begin{bmatrix}45 &amp; 0\\0 &amp; 15 \\0 &amp; 0\end{bmatrix} \begin{bmatrix}3/5 &amp; 4/5\\-4/5 &amp; 3/5\end{bmatrix},\]</span></p>
+<p>but we can get away with writing</p>
+<p><span class="math display">\[\mathbf{A}=\begin{bmatrix} 17 &amp; 6\\22 &amp; 21\\10 &amp; 30\end{bmatrix}=\begin{bmatrix} 1/3 &amp; -2/3 \\2/3 &amp; -1/3 \\2/3 &amp; 2/3 \end{bmatrix}\begin{bmatrix}45 &amp; 0\\0 &amp; 15\end{bmatrix} \begin{bmatrix}3/5 &amp; 4/5\\-4/5 &amp; 3/5\end{bmatrix}.\]</span></p>
+</div>
+</div>
+</div>
+<div id="svd-with-r" class="section level3 unnumbered hasAnchor">
+<h3>SVD with R<a href="svd-and-pca.html#svd-with-r" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>The R function <code>SVD</code> calculates the singular value decomposition for a matrix. The example in this chunk uses the matrix <span class="math inline">\(\mathbf{A}\)</span> from Example <a href="svd-and-pca.html#exm:svdnsq">6.7</a>.</p>
+<div class="sourceCode" id="cb162"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb162-1"><a href="svd-and-pca.html#cb162-1" tabindex="-1"></a>A <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="fu">c</span>(<span class="dv">17</span>,<span class="dv">22</span>,<span class="dv">10</span>,<span class="dv">6</span>,<span class="dv">21</span>,<span class="dv">30</span>), <span class="at">nrow =</span> <span class="dv">3</span>)</span>
+<span id="cb162-2"><a href="svd-and-pca.html#cb162-2" tabindex="-1"></a><span class="fu">svd</span>(A)</span></code></pre></div>
+<pre><code>## $d
+## [1] 45 15
+## 
+## $u
+##            [,1]       [,2]
+## [1,] -0.3333333  0.6666667
+## [2,] -0.6666667  0.3333333
+## [3,] -0.6666667 -0.6666667
+## 
+## $v
+##      [,1] [,2]
+## [1,] -0.6  0.8
+## [2,] -0.8 -0.6</code></pre>
+<p>Note that <span class="math inline">\(\mathbf{u}_1\)</span> and <span class="math inline">\(\mathbf{v}_1\)</span> have the opposite signs from what we used. By default, the number of columns in <span class="math inline">\(\mathbf{U}\)</span> and <span class="math inline">\(\mathbf{V}\)</span> for an <span class="math inline">\(m\times n\)</span> matrix is the minimum of <span class="math inline">\(m\)</span> and <span class="math inline">\(n.\)</span> This can be changed by changing the <code>nu</code> or <code>nv</code> settings, respectively. Here, we set <code>nu = 3</code> to get a third left singular vector.</p>
+<div class="sourceCode" id="cb164"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb164-1"><a href="svd-and-pca.html#cb164-1" tabindex="-1"></a><span class="fu">svd</span>(A, <span class="at">nu =</span> <span class="dv">3</span>)<span class="sc">$</span>u</span></code></pre></div>
+<pre><code>##            [,1]       [,2]       [,3]
+## [1,] -0.3333333  0.6666667  0.6666667
+## [2,] -0.6666667  0.3333333 -0.6666667
+## [3,] -0.6666667 -0.6666667  0.3333333</code></pre>
+</div>
+</div>
+<div id="applications-of-the-svd" class="section level2 hasAnchor" number="6.4">
+<h2><span class="header-section-number">6.4</span> Applications of the SVD<a href="svd-and-pca.html#applications-of-the-svd" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Many real-world data matrices are essentially rank-deficient, but due to noise they are technically full rank. We can use the singular value decomposition to approximate a matrix with a lower-rank matrix. In fact, the Eckart-Young-Mirsky Theorem<span class="citation">[<a href="#ref-EYM">21</a>]</span> says that, for a given matrix <span class="math inline">\(\mathbf{A},\)</span> with singular value decomposition <span class="math inline">\(\mathbf{A}=\mathbf{U}\Sigma\mathbf{V}^T\)</span>, the matrix</p>
+<p><span class="math display">\[\mathbf{U}_k\mathbf{D}_k\mathbf{V}_k^T,\]</span></p>
+<p>where <span class="math inline">\(\mathbf{U}_k=\begin{bmatrix}\mathbf{u}_1 &amp; \cdots &amp; \mathbf{u}_k\end{bmatrix}\)</span>, <span class="math inline">\(\mathbf{D}_k\)</span> is the <span class="math inline">\(k\times k\)</span> diagonal matrix with entries <span class="math inline">\(\sigma_1,\dots,\sigma_k\)</span>, and <span class="math inline">\(\mathbf{V}_k=\begin{bmatrix}\mathbf{v}_1 &amp; \cdots &amp; \mathbf{v}_k\end{bmatrix}\)</span> is the “best” rank-<span class="math inline">\(k\)</span> approximation of <span class="math inline">\(\mathbf{A}.\)</span></p>
+<p>This best approximation idea can be used to compress the sizes of images. The images in Figure <a href="svd-and-pca.html#fig:hp12">6.3</a> are of Hahns Peak in Colorado. The image on the right has its grayscale values stored in a <span class="math inline">\(2016\times 1512\)</span> matrix.</p>
+<div class="figure" style="text-align: center"><span style="display:block;" id="fig:hp12"></span>
+<img src="images/hpc.png" alt="Color and grayscale images of Hahns Peak" width="40%" /><img src="images/hpbw.png" alt="Color and grayscale images of Hahns Peak" width="40%" />
+<p class="caption">
+Figure 6.3: Color and grayscale images of Hahns Peak
+</p>
+</div>
+<p>If we look at the first hundred singular values of the grayscale matrix, we see that the first one is huge, but they get smaller quickly (Fig. <a href="svd-and-pca.html#fig:hpsvd">6.4</a>).</p>
+<div class="figure" style="text-align: center"><span style="display:block;" id="fig:hpsvd"></span>
+<img src="images/svdp1.png" alt="The singular values of the grayscale image" width="50%" />
+<p class="caption">
+Figure 6.4: The singular values of the grayscale image
+</p>
+</div>
+<p>Figure <a href="svd-and-pca.html#fig:hpfive">6.5</a> shows the rank 2, 50, 100, and 200 approximations of the grayscale matrix, moving from left to right. The full rank image is on the bottom right.</p>
+<div class="figure" style="text-align: center"><span style="display:block;" id="fig:hpfive"></span>
+<img src="images/hprk2.png" alt="Rank 2, 50, 100, and 200 images with full rank version for comparison" width="30%" /><img src="images/hprk50.png" alt="Rank 2, 50, 100, and 200 images with full rank version for comparison" width="30%" /><img src="images/hprk100.png" alt="Rank 2, 50, 100, and 200 images with full rank version for comparison" width="30%" /><img src="images/hprk200.png" alt="Rank 2, 50, 100, and 200 images with full rank version for comparison" width="30%" /><img src="images/hpbw2.png" alt="Rank 2, 50, 100, and 200 images with full rank version for comparison" width="30%" />
+<p class="caption">
+Figure 6.5: Rank 2, 50, 100, and 200 images with full rank version for comparison
+</p>
+</div>
+<p>The original <span class="math inline">\(2016\times 1512\)</span> matrix contains 3,048,192 grayscale values. For the rank-200 version, <span class="math inline">\(\mathbf{U}_{200}\)</span> is a <span class="math inline">\(2016\times 200\)</span> matrix, <span class="math inline">\(\mathbf{D}_{200}\)</span> contains just the 200 largest singular values, and <span class="math inline">\(\mathbf{V}_{200}\)</span> is a <span class="math inline">\(1512\times 200\)</span> matrix, for a total of</p>
+<p><span class="math display">\[2016\times200+200+1512\times200=705{,}800\]</span></p>
+<p>stored values.</p>
+<div id="movie-reviews-and-latent-factors" class="section level3 unnumbered hasAnchor">
+<h3>Movie reviews and latent factors<a href="svd-and-pca.html#movie-reviews-and-latent-factors" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Consider the following collection of movie ratings.</p>
+<table style="width:100%;">
+<colgroup>
+<col width="15%" />
+<col width="16%" />
+<col width="16%" />
+<col width="16%" />
+<col width="16%" />
+<col width="16%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th></th>
+<th align="left">Movie 1</th>
+<th align="left">Movie 2</th>
+<th align="left">Movie 3</th>
+<th align="left">Movie 4</th>
+<th align="left">Movie 5</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><strong>User 1</strong></td>
+<td align="left">5</td>
+<td align="left">1</td>
+<td align="left">4</td>
+<td align="left">4</td>
+<td align="left">3</td>
+</tr>
+<tr class="even">
+<td><strong>User 2</strong></td>
+<td align="left">1</td>
+<td align="left">4</td>
+<td align="left">4</td>
+<td align="left">3</td>
+<td align="left">4</td>
+</tr>
+<tr class="odd">
+<td><strong>User 3</strong></td>
+<td align="left">4</td>
+<td align="left">2</td>
+<td align="left">4</td>
+<td align="left">4</td>
+<td align="left">5</td>
+</tr>
+<tr class="even">
+<td><strong>User 4</strong></td>
+<td align="left">5</td>
+<td align="left">3</td>
+<td align="left">3</td>
+<td align="left">4</td>
+<td align="left">4</td>
+</tr>
+</tbody>
+</table>
+<p>We are going to put these ratings in a matrix <span class="math inline">\(\mathbf{R},\)</span> with <span class="math inline">\(r_{ij}\)</span> being User <span class="math inline">\(i\)</span>’s rating for movie <span class="math inline">\(j.\)</span> We will use the singular value decomposition of the matrix <span class="math inline">\(\mathbf{R}\)</span> to analyze the ratings.</p>
+<p><span class="math display">\[\mathbf{R}=\begin{bmatrix}5&amp;1&amp;4&amp;4&amp;3\\1&amp;4&amp;4&amp;3&amp;4\\4&amp;2&amp;4&amp;4&amp;5\\5&amp;3&amp;3&amp;4&amp;4\end{bmatrix}\]</span></p>
+<p>We will use R to do the heavy lifting for us.</p>
+<div class="sourceCode" id="cb166"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb166-1"><a href="svd-and-pca.html#cb166-1" tabindex="-1"></a>R <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="fu">c</span>(<span class="dv">5</span>,<span class="dv">1</span>,<span class="dv">4</span>,<span class="dv">5</span>,<span class="dv">1</span>,<span class="dv">4</span>,<span class="dv">2</span>,<span class="dv">3</span>,  </span>
+<span id="cb166-2"><a href="svd-and-pca.html#cb166-2" tabindex="-1"></a>      <span class="dv">4</span>,<span class="dv">4</span>,<span class="dv">4</span>,<span class="dv">3</span>,<span class="dv">4</span>,<span class="dv">3</span>,<span class="dv">4</span>,<span class="dv">4</span>,<span class="dv">3</span>,<span class="dv">4</span>,<span class="dv">5</span>,<span class="dv">4</span>),<span class="at">nrow=</span><span class="dv">4</span>)</span>
+<span id="cb166-3"><a href="svd-and-pca.html#cb166-3" tabindex="-1"></a><span class="fu">svd</span>(R)</span></code></pre></div>
+<pre><code>## $d
+## [1] 16.114148  3.744072  1.497255  1.036521
+## 
+## $u
+##           [,1]        [,2]       [,3]        [,4]
+## [1,] 0.4904799  0.51873885  0.4468865  0.53910294
+## [2,] 0.4301572 -0.83671990  0.1141805  0.31910404
+## [3,] 0.5414149  0.02460074  0.3164221 -0.77855112
+## [4,] 0.5303435  0.17379475 -0.8289345  0.03740046
+## 
+## $v
+##           [,1]        [,2]        [,3]        [,4]
+## [1,] 0.4778368  0.72764379 -0.35422907  0.08433651
+## [2,] 0.3031478 -0.60296777 -0.63472869  0.35755979
+## [3,] 0.4616588 -0.17417852  0.68335245  0.41564503
+## [4,] 0.4678761  0.09571868  0.05345639  0.14386708
+## [5,] 0.4977313 -0.25973865  0.04258056 -0.81949974</code></pre>
+<p>Note that the fifth column of <span class="math inline">\(\mathbf{V},\)</span> which corresponds to the 5th right singular vector of <span class="math inline">\(\mathbf{R}\)</span> isn’t displayed. It does not contribute to the overall product.</p>
+<p>We can use the SVD to decompose an individual rating. Consider User 3’s rating of Movie 2: <span class="math inline">\(r_{32}=2.\)</span> Working from right to left:</p>
+<ol style="list-style-type: decimal">
+<li><p>The product <span class="math inline">\(\mathbf{D}\mathbf{V}^T\)</span> scales the rows of <span class="math inline">\(\mathbf{V}^T\)</span> by the corresponding singular values.</p></li>
+<li><p>The entry <span class="math inline">\(r_{32}\)</span> is then the dot product of row 3 of <span class="math inline">\(\mathbf{U}\)</span> and column 2 of <span class="math inline">\(\mathbf{D}\mathbf{V}^T.\)</span></p></li>
+</ol>
+<p><span class="math display">\[\begin{bmatrix} &amp;&amp;&amp;\\&amp;&amp;&amp;\\&amp;2&amp;&amp;\\&amp;&amp;&amp;\end{bmatrix}=\begin{bmatrix}&amp;&amp;&amp;\\&amp;&amp;&amp;\\0.54 &amp; 0.02 &amp; 0.32 &amp; -0.78\\&amp;&amp;&amp;\end{bmatrix}\begin{bmatrix}&amp;16.1\cdot 0.30 &amp;&amp;&amp;\\&amp;3.7\cdot (-0.60)&amp;&amp;&amp;\\&amp;1.5\cdot (-0.63)&amp;&amp;&amp;\\&amp;1.0\cdot 0.36&amp;&amp;&amp;\end{bmatrix}\]</span></p>
+<p>How User 3’s rating of a movie differs from any other user’s rating is determined by the values in row 3, columns 1-4 of <span class="math inline">\(\mathbf{U}\)</span>. We can call these columns <em>user latent factors</em>.</p>
+<p>Looking at column 1 (latent factor 1) of <span class="math inline">\(\mathbf{U},\)</span> we don’t see much variation among the values. Latent factor 2 seems to separate the users quite a bit, with a big negative number for User 2. The third latent factor seems to separate User 4 from the rest, while the fourth separates User 3.</p>
+<p>We can do a similar analysis with the rows of <span class="math inline">\(\mathbf{V}^T,\)</span> which are the columns of <span class="math inline">\(\mathbf{V}.\)</span> We can call these the <em>movie</em> or <em>item latent factors</em>. As with the first user latent factor, the first movie latent factor values are fairly uniform. The second, third, and fourth latent factors do show some differences between the movies.</p>
+<p>Note that the user and item latent factors are matched up with a singular value. The first singular value is by far the largest, and that factor pair tends to contribute the most to the overall rating. The singular values basically tell us how important each user/item latent factor pair is.</p>
+<p>If we center the ratings by subtracting the movie mean from each column, we get the following SVD.</p>
+<div class="sourceCode" id="cb168"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb168-1"><a href="svd-and-pca.html#cb168-1" tabindex="-1"></a><span class="fu">scale</span>(R, <span class="at">scale =</span> <span class="cn">FALSE</span>) <span class="co">#centers the columns of R</span></span></code></pre></div>
+<pre><code>##       [,1] [,2]  [,3]  [,4] [,5]
+## [1,]  1.25 -1.5  0.25  0.25   -1
+## [2,] -2.75  1.5  0.25 -0.75    0
+## [3,]  0.25 -0.5  0.25  0.25    1
+## [4,]  1.25  0.5 -0.75  0.25    0
+## attr(,&quot;scaled:center&quot;)
+## [1] 3.75 2.50 3.75 3.75 4.00</code></pre>
+<div class="sourceCode" id="cb170"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb170-1"><a href="svd-and-pca.html#cb170-1" tabindex="-1"></a><span class="fu">svd</span>(<span class="fu">scale</span>(R, <span class="at">scale =</span> <span class="cn">FALSE</span>))</span></code></pre></div>
+<pre><code>## $d
+## [1] 3.868878e+00 1.599410e+00 1.312886e+00 9.227372e-17
+## 
+## $u
+##            [,1]        [,2]       [,3] [,4]
+## [1,]  0.4984524 -0.65140307 -0.2778834 -0.5
+## [2,] -0.8297467 -0.17701836 -0.1737382 -0.5
+## [3,]  0.1016640  0.09703764  0.8545456 -0.5
+## [4,]  0.2296302  0.73138379 -0.4029240 -0.5
+## 
+## $v
+##             [,1]       [,2]       [,3]        [,4]
+## [1,]  0.83159063  0.3820382 -0.1215589  0.38338893
+## [2,] -0.49841726  0.6432060 -0.3599069  0.34707557
+## [3,] -0.05935318 -0.4572834  0.3068994  0.71230782
+## [4,]  0.21446701  0.1106773  0.1323330 -0.47417231
+## [5,] -0.10255904  0.4679480  0.8625492  0.01815668</code></pre>
+<p>The first latent factors are now more interesting. Note that the fourth singular value is essentially zero. When we center the ratings matrix we potentially reduce the rank by one, because the columns now add to 0.</p>
+</div>
+</div>
+<div id="principal-component-analysis" class="section level2 hasAnchor" number="6.5">
+<h2><span class="header-section-number">6.5</span> Principal Component Analysis<a href="svd-and-pca.html#principal-component-analysis" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Principal Component Analysis begins with the <em>covariance matrix</em> for a data set. We saw this matrix briefly in Section <a href="regression.html#CorSec">5.4</a>.</p>
+<p>Suppose we have the following height-weight data for 5 individuals.</p>
+<table>
+<thead>
+<tr class="header">
+<th align="center">ht (cm)</th>
+<th align="center">wt (kg)</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="center">150</td>
+<td align="center">50</td>
+</tr>
+<tr class="even">
+<td align="center">154</td>
+<td align="center">56</td>
+</tr>
+<tr class="odd">
+<td align="center">165</td>
+<td align="center">64</td>
+</tr>
+<tr class="even">
+<td align="center">183</td>
+<td align="center">82</td>
+</tr>
+<tr class="odd">
+<td align="center">178</td>
+<td align="center">98</td>
+</tr>
+</tbody>
+</table>
+<p>The average height is 166 cm, while the average weight is 70 kg. When we subtract the column means and put them in a matrix, we get something called <em>mean-deviation form</em>.</p>
+<p><span class="math display">\[\mathbf{B}=\begin{bmatrix}(150-166) &amp; (50-70)\\(154-166) &amp; (56-70)\\(165-166) &amp; (64-70)\\(183-166) &amp; (82-70)\\(178-166) &amp; (98-70)\end{bmatrix}=\left[\begin{array}{rr} -16 &amp; -20\\-12 &amp; -14\\-1 &amp; -6\\ 17 &amp; 12\\12 &amp; 28\end{array}\right].\]</span></p>
+<div class="notebox">
+<p>Note: many discussions of PCA have the transpose of this matrix. We are using this orientation to be consistent with R’s use of columns to represent variables. The sample covariance matrix will end up being the same.</p>
+</div>
+<p>Once we have our data in the matrix <span class="math inline">\(\mathbf{B}\)</span> in mean-deviation form, we can find the <em>sample covariance matrix</em> <span class="math inline">\(\mathbf{S}:\)</span></p>
+<p><span class="math display">\[\mathbf{S}=\frac{1}{n-1}\mathbf{B}^T\mathbf{B},\]</span></p>
+<p>where <span class="math inline">\(n\)</span> is the sample size. In our example</p>
+<p><span class="math display">\[\mathbf{S}=\frac{1}{5-1}\begin{bmatrix} -16 &amp; -12 &amp; -1 &amp; 17 &amp; 12\\-20 &amp; -14 &amp; -6 &amp; 12 &amp; 28\end{bmatrix}\left[\begin{array}{rr} -16 &amp; -20\\-12 &amp; -14\\-1 &amp; -6\\ 17 &amp; 12\\12 &amp; 28\end{array}\right]=\begin{bmatrix}208.5 &amp; 258.5\\258.5 &amp; 390\end{bmatrix}.\]</span></p>
+<p>The numbers along the diagonal are the <em>sample variances</em> of the heights (208.5 cm<sup>2</sup>) and weights (390 kg<sup>2</sup>). The value <span class="math inline">\(s_{12}=s_{21}=258.5 \text{ cm}\cdot\text{kg}\)</span> is the <em>sample covariance</em> between height and weight. We get the correlation between these two by dividing by the product of their standard deviations (the square roots of the variances).</p>
+<p><span class="math display">\[r=\frac{258.5}{\sqrt{208.5\cdot 390}}\approx 0.9065.\]</span></p>
+<p>In general, when we have <span class="math inline">\(n\)</span> observations of <span class="math inline">\(p\)</span> variables, we put the data in an <span class="math inline">\(n\times p\)</span> matrix, subtract off the mean from each column to get it into mean-deviation form <span class="math inline">\(\mathbf{B},\)</span> and then find the <span class="math inline">\(p\times p\)</span> covariance matrix</p>
+<p><span class="math display">\[\mathbf{S}=\frac{1}{n-1}\mathbf{B}^T\mathbf{B}.\]</span></p>
+<p>The diagonal entries of <span class="math inline">\(\mathbf{S},\)</span> <span class="math inline">\(s_{ii}\)</span>, will be the individual variable variances. An off-diagonal entry <span class="math inline">\(s_{ij}\)</span> will be the covariance between variable <span class="math inline">\(i\)</span> and variable <span class="math inline">\(j\)</span>. The trace of <span class="math inline">\(\mathbf{S}\)</span> will be the sum of the variances, called the <em>total variance</em> of the data.</p>
+<p>Since the matrix <span class="math inline">\(\mathbf{S}=\frac{1}{n-1}\mathbf{B}^T\mathbf{B}\)</span> is symmetric, it can be orthogonally diagonalized</p>
+<p><span class="math display">\[\mathbf{S}=\mathbf{P}\mathbf{D}\mathbf{P}^T,\]</span></p>
+<p>where</p>
+<p><span class="math display">\[\mathbf{D}=\begin{bmatrix} \lambda_1 &amp; &amp;&amp;\\  &amp; \lambda_2 &amp;&amp;\\
+&amp;&amp;\ddots &amp;\\
+&amp;&amp;&amp; \lambda_p\end{bmatrix},\]</span></p>
+<p>with <span class="math inline">\(\lambda_1\geq \lambda_2 \geq \cdots \geq \lambda_p\geq 0\)</span>. (This is because <span class="math inline">\(\mathbf{S}\)</span> is a positive multiple of <span class="math inline">\(\mathbf{B}^T\mathbf{B}\)</span>, and we saw with the singular value decomposition that matrices of this form had nonnegative eigenvalues.)</p>
+<p>The <em>principal components</em> of the original data matrix are the columns of <span class="math inline">\(\mathbf{P},\)</span> <span class="math inline">\(\{\mathbf{u}_1,\dots, \mathbf{u}_p\}\)</span>. The <span class="math inline">\(i\)</span>th principal component is the eigenvector corresponding to <span class="math inline">\(\lambda_i\)</span>, the <span class="math inline">\(i\)</span>th largest eigenvalue.</p>
+<p>We have taken our original set of <span class="math inline">\(p\)</span> centered variables <span class="math inline">\(\{x_1,\dots,x_p\}\)</span> and created from them, via a change of variables, a new set of variables <span class="math inline">\(\{y_1,\dots,y_p\}\)</span>, where</p>
+<p><span class="math display">\[\begin{bmatrix}x_1\\ \vdots \\ x_p\end{bmatrix}=\mathbf{P}\begin{bmatrix} y_1\\ \vdots \\ y_p\end{bmatrix}.\]</span></p>
+<p>We can write</p>
+<p><span class="math display">\[\begin{bmatrix} y_1\\ \vdots \\ y_p\end{bmatrix}=\mathbf{P}^T\begin{bmatrix}x_1\\ \vdots \\ x_p\end{bmatrix}=\begin{bmatrix} \mathbf{u}_1^T\\ \vdots \\ \mathbf{u}_p^T\end{bmatrix}\begin{bmatrix}x_1\\ \vdots \\ x_p\end{bmatrix}.\]</span></p>
+<p>If the components of <span class="math inline">\(\mathbf{u}_1\)</span> are <span class="math inline">\(c_1,\dots,c_p\)</span>, then <span class="math inline">\(y_1=c_1x_1+c_2x_2+\cdots+c_px_p\)</span>. That is, the components of <span class="math inline">\(\mathbf{u}_1\)</span> tell us how to write the new variable <span class="math inline">\(y_1\)</span> as a linear combination of <span class="math inline">\(x_1,\dots,x_p\)</span>. Similarly, the components of <span class="math inline">\(\mathbf{u}_i\)</span> tell us how to write <span class="math inline">\(y_i\)</span> in terms of <span class="math inline">\(x_1,\dots,x_p\)</span>.</p>
+<p>The most important part is that the diagonal matrix <span class="math inline">\(\mathbf{D}=\mathbf{P}^T\mathbf{S}\mathbf{P}\)</span> is the covariance matrix for our new variables, which means that our new variables are uncorrelated!</p>
+<p>Two more things:</p>
+<ol style="list-style-type: decimal">
+<li><p>The eigenvalue <span class="math inline">\(\lambda_i\)</span> is the variance of <span class="math inline">\(y_i\)</span>, so of all the new variables, <span class="math inline">\(y_1\)</span> has the greatest variance, <span class="math inline">\(y_2\)</span> has the second greatest, and so on.</p></li>
+<li><p>Recall that the trace of <span class="math inline">\(\mathbf{S}\)</span> was the total variance, and it is also the sum of the eigenvalues. The matrix <span class="math inline">\(\mathbf{D}\)</span> has the same total variance.</p></li>
+</ol>
+<p>Our height-weight example had the covariance matrix</p>
+<p><span class="math display">\[\mathbf{S}=\begin{bmatrix} 208.5 &amp; 258.5\\258.5 &amp; 390\end{bmatrix}.\]</span></p>
+<p>Its eigenvalues are (rounded) <span class="math inline">\(\lambda_1=573.2\)</span> and <span class="math inline">\(\lambda_2=25.3\)</span>, and corresponding unit eigenvectors are
+<span class="math display">\[\mathbf{u}_1=\begin{bmatrix}0.578 \\0.816\end{bmatrix} \text{ and } \mathbf{u}_2=\begin{bmatrix} -0.816\\0.578\end{bmatrix}.\]</span></p>
+<p>If we call <span class="math inline">\(\hat{h}\)</span> and <span class="math inline">\(\hat{w}\)</span> the centered height and weight, respectively, then our new variables are</p>
+<p><span class="math display">\[y_1=0.578\hat{h}+0.816\hat{w} \text{ and }y_2=-0.816\hat{h}+0.578\hat{w}.\]</span></p>
+<p>For example, the <span class="math inline">\((h,w)=(150,50)\leadsto (\hat{h},\hat{w})=(-16,-20)\)</span> individual will have</p>
+<p><span class="math display">\[y_1=0.578(-16)+0.816(-20)=-25.568\]</span></p>
+<p>and</p>
+<p><span class="math display">\[y_2=-0.816(-16)+0.578(-20)=1.496.\]</span></p>
+<p>The eigenvalues again were <span class="math inline">\(\lambda_1=573.2\)</span> and <span class="math inline">\(\lambda_2=25.3\)</span>. These correspond to the variance of the <span class="math inline">\(y_1\)</span> and <span class="math inline">\(y_2\)</span> variables, respectively. That means that</p>
+<p><span class="math display">\[\frac{573.2}{573.2+25.3}\cdot 100\%=95.77\%\]</span></p>
+<p>of the total variance comes from <span class="math inline">\(y_1\)</span>, with the remaining 4.23% coming from <span class="math inline">\(y_2\)</span>.</p>
+<div id="pca-in-r" class="section level3 unnumbered hasAnchor">
+<h3>PCA in R<a href="svd-and-pca.html#pca-in-r" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>There are two base R functions that will run PCA on a matrix or data frame: <code>prcomp</code> and <code>princomp</code>. The output is slightly different, and <code>princomp</code> divides <span class="math inline">\(\mathbf{B}^T\mathbf{B}\)</span> by <span class="math inline">\(n\)</span> instead of <span class="math inline">\(n-1\)</span>. (This is the population covariance matrix.) This doesn’t change the eigenvectors, but it does scale the variances. We will look at the output from <code>prcomp</code>. There are other technical differences that we won’t discuss.</p>
+<div class="sourceCode" id="cb172"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb172-1"><a href="svd-and-pca.html#cb172-1" tabindex="-1"></a>h <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">150</span>,<span class="dv">154</span>,<span class="dv">165</span>,<span class="dv">183</span>,<span class="dv">178</span>)</span>
+<span id="cb172-2"><a href="svd-and-pca.html#cb172-2" tabindex="-1"></a>w <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">50</span>,<span class="dv">56</span>,<span class="dv">64</span>,<span class="dv">82</span>,<span class="dv">98</span>)</span>
+<span id="cb172-3"><a href="svd-and-pca.html#cb172-3" tabindex="-1"></a></span>
+<span id="cb172-4"><a href="svd-and-pca.html#cb172-4" tabindex="-1"></a>hw <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(h,w)</span>
+<span id="cb172-5"><a href="svd-and-pca.html#cb172-5" tabindex="-1"></a>hw.pca <span class="ot">&lt;-</span> <span class="fu">prcomp</span>(hw)</span>
+<span id="cb172-6"><a href="svd-and-pca.html#cb172-6" tabindex="-1"></a></span>
+<span id="cb172-7"><a href="svd-and-pca.html#cb172-7" tabindex="-1"></a>hw.pca</span></code></pre></div>
+<pre><code>## Standard deviations (1, .., p=2):
+## [1] 23.941947  5.028239
+## 
+## Rotation (n x k) = (2 x 2):
+##         PC1        PC2
+## h 0.5782541  0.8158568
+## w 0.8158568 -0.5782541</code></pre>
+<p>Here we have the standard deviations of the new variables (square roots of the variances) and the eigenvectors or <em>rotations</em>, which is what <code>prcomp</code> calls the principal components. The <code>princomp</code> function calls them <em>loadings</em>. The <code>summary</code> function will give the proportion of the total variance for each variable. The <code>plot</code> function will produce a <em>scree plot</em> of the variances (Fig. <a href="svd-and-pca.html#fig:scree">6.6</a>).</p>
+<div class="sourceCode" id="cb174"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb174-1"><a href="svd-and-pca.html#cb174-1" tabindex="-1"></a><span class="fu">summary</span>(hw.pca)</span></code></pre></div>
+<pre><code>## Importance of components:
+##                            PC1     PC2
+## Standard deviation     23.9419 5.02824
+## Proportion of Variance  0.9578 0.04224
+## Cumulative Proportion   0.9578 1.00000</code></pre>
+<div class="sourceCode" id="cb176"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb176-1"><a href="svd-and-pca.html#cb176-1" tabindex="-1"></a><span class="fu">plot</span>(hw.pca)</span></code></pre></div>
+<div class="figure" style="text-align: center"><span style="display:block;" id="fig:scree"></span>
+<img src="_main_files/figure-html/scree-1.png" alt="A (bar) scree plot. They can also be line plots." width="75%" />
+<p class="caption">
+Figure 6.6: A (bar) scree plot. They can also be line plots.
+</p>
+</div>
+<p>When we calculated the <span class="math inline">\(y_1\)</span> and <span class="math inline">\(y_2\)</span> values for the 150-cm,50-kg individual, we calculated the <em>scores</em> for that individual. For <code>prcomp</code> output, the scores are in the <code>$x</code> variable.</p>
+<div class="sourceCode" id="cb177"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb177-1"><a href="svd-and-pca.html#cb177-1" tabindex="-1"></a>hw.pca<span class="sc">$</span>x</span></code></pre></div>
+<pre><code>##             PC1       PC2
+## [1,] -25.569200 -1.488627
+## [2,] -18.361043 -1.694724
+## [3,]  -5.473395  2.653668
+## [4,]  19.620600  6.930516
+## [5,]  29.783038 -6.400832</code></pre>
+<p>The covariance matrix with these new scores shows us that the new variables are uncorrelated. (The covariances are essentially zero.)</p>
+<div class="sourceCode" id="cb179"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb179-1"><a href="svd-and-pca.html#cb179-1" tabindex="-1"></a><span class="fu">cov</span>(hw.pca<span class="sc">$</span>x)</span></code></pre></div>
+<pre><code>##               PC1           PC2
+## PC1  5.732168e+02 -1.768828e-13
+## PC2 -1.768828e-13  2.528319e+01</code></pre>
+</div>
+<div id="biplots" class="section level3 unnumbered hasAnchor">
+<h3>Biplots<a href="svd-and-pca.html#biplots" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>We can represent the results of our Principal component analysis two dimensionally in what is known as a <em>biplot</em>. A biplot combines the new scores for the first two principal components along with vector representations of the original variables. There are different ways to do this.</p>
+<div class="sourceCode" id="cb181"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb181-1"><a href="svd-and-pca.html#cb181-1" tabindex="-1"></a><span class="fu">biplot</span>(hw.pca, <span class="at">scale =</span> <span class="dv">0</span>)</span></code></pre></div>
+<div class="figure" style="text-align: center"><span style="display:block;" id="fig:biplot1"></span>
+<img src="_main_files/figure-html/biplot1-1.png" alt="A biplot with scale = 0" width="75%" />
+<p class="caption">
+Figure 6.7: A biplot with scale = 0
+</p>
+</div>
+<p>In Figure <a href="svd-and-pca.html#fig:biplot1">6.7</a>, the left and bottom scales give the PC1 and PC2 scores for the observations. The top and right scales give the PC1 and PC2 rotations for the original variables, represented as vectors.</p>
+<div class="sourceCode" id="cb182"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb182-1"><a href="svd-and-pca.html#cb182-1" tabindex="-1"></a><span class="fu">biplot</span>(hw.pca, <span class="at">scale =</span> <span class="dv">1</span>)</span></code></pre></div>
+<div class="figure" style="text-align: center"><span style="display:block;" id="fig:biplot2"></span>
+<img src="_main_files/figure-html/biplot2-1.png" alt="A biplot with scale = 1" width="75%" />
+<p class="caption">
+Figure 6.8: A biplot with scale = 1
+</p>
+</div>
+<p>When <code>scale = 1</code> (the default), the observations and variable vectors are scaled. The main effect of the scaling is that we see how much each variable contributes to the first two principal components. In Figure <a href="svd-and-pca.html#fig:biplot2">6.8</a>, we see that the two original variables are pointing in similar directions, implying some degree of correlation. The weight contributes more, especially towards PC1. This is primarily due to the fact that weight has a higher variance than height in the data.</p>
+<div class="examplebox">
+<div class="example">
+<p><span id="exm:unlabeled-div-129" class="example"><strong>Example 6.8  </strong></span>The <code>iris</code> data frame that comes with R has 4 measurements on 150 iris flowers, 50 each from 3 species.</p>
+<div class="sourceCode" id="cb183"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb183-1"><a href="svd-and-pca.html#cb183-1" tabindex="-1"></a><span class="co"># The fifth column of iris contains the species names</span></span>
+<span id="cb183-2"><a href="svd-and-pca.html#cb183-2" tabindex="-1"></a>iris.pca <span class="ot">&lt;-</span> <span class="fu">prcomp</span>(iris[,<span class="sc">-</span><span class="dv">5</span>])</span>
+<span id="cb183-3"><a href="svd-and-pca.html#cb183-3" tabindex="-1"></a>iris.pca</span></code></pre></div>
+<pre><code>## Standard deviations (1, .., p=4):
+## [1] 2.0562689 0.4926162 0.2796596 0.1543862
+## 
+## Rotation (n x k) = (4 x 4):
+##                      PC1         PC2         PC3        PC4
+## Sepal.Length  0.36138659 -0.65658877  0.58202985  0.3154872
+## Sepal.Width  -0.08452251 -0.73016143 -0.59791083 -0.3197231
+## Petal.Length  0.85667061  0.17337266 -0.07623608 -0.4798390
+## Petal.Width   0.35828920  0.07548102 -0.54583143  0.7536574</code></pre>
+<div class="sourceCode" id="cb185"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb185-1"><a href="svd-and-pca.html#cb185-1" tabindex="-1"></a><span class="fu">summary</span>(iris.pca)</span></code></pre></div>
+<pre><code>## Importance of components:
+##                           PC1     PC2    PC3     PC4
+## Standard deviation     2.0563 0.49262 0.2797 0.15439
+## Proportion of Variance 0.9246 0.05307 0.0171 0.00521
+## Cumulative Proportion  0.9246 0.97769 0.9948 1.00000</code></pre>
+<p>The summary tells us that the first two principal components account for more than 97% of the total variance. Also see the scree plot (Fig. <a href="svd-and-pca.html#fig:irisscree">6.9</a>).</p>
+</div>
+</div>
+<div class="sourceCode" id="cb187"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb187-1"><a href="svd-and-pca.html#cb187-1" tabindex="-1"></a><span class="co"># Changing to a line plot for this scree plot.</span></span>
+<span id="cb187-2"><a href="svd-and-pca.html#cb187-2" tabindex="-1"></a><span class="fu">plot</span>(iris.pca, <span class="at">type=</span><span class="st">&quot;l&quot;</span>)</span></code></pre></div>
+<div class="figure" style="text-align: center"><span style="display:block;" id="fig:irisscree"></span>
+<img src="_main_files/figure-html/irisscree-1.png" alt="The scree plot for the iris data" width="75%" />
+<p class="caption">
+Figure 6.9: The scree plot for the iris data
+</p>
+</div>
+<p>The <code>ggfortify</code> package has an <code>autoplot</code> function that will produce a biplot from PCA output.</p>
+<div class="sourceCode" id="cb188"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb188-1"><a href="svd-and-pca.html#cb188-1" tabindex="-1"></a><span class="fu">library</span>(ggfortify)</span>
+<span id="cb188-2"><a href="svd-and-pca.html#cb188-2" tabindex="-1"></a><span class="fu">autoplot</span>(iris.pca, <span class="at">loadings =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb188-3"><a href="svd-and-pca.html#cb188-3" tabindex="-1"></a>          <span class="at">loadings.label =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb188-4"><a href="svd-and-pca.html#cb188-4" tabindex="-1"></a>          <span class="at">data =</span> iris,</span>
+<span id="cb188-5"><a href="svd-and-pca.html#cb188-5" tabindex="-1"></a>          <span class="at">color=</span><span class="st">&quot;Species&quot;</span>)</span></code></pre></div>
+<div class="figure" style="text-align: center"><span style="display:block;" id="fig:ggfortify1"></span>
+<img src="_main_files/figure-html/ggfortify1-1.png" alt="A biplot using ggfortify" width="75%" />
+<p class="caption">
+Figure 6.10: A biplot using ggfortify
+</p>
+</div>
+<p>The biplot in Figure <a href="svd-and-pca.html#fig:ggfortify1">6.10</a> shows us a few things.</p>
+<ol style="list-style-type: decimal">
+<li><p>The first two principal components do a good job of separating the three species.</p></li>
+<li><p>Petal width and petal length are strongly correlated.</p></li>
+<li><p>Sepal width has a very weak correlation with the petal measurements, at least as far as PCA1 and PCA2 are concerned.</p></li>
+</ol>
+<p>We can use the <code>frame = TRUE</code> setting to draw polygons around the species, again showing that there is good separation (Fig. <a href="svd-and-pca.html#fig:ggf2">6.11</a>).</p>
+<div class="sourceCode" id="cb189"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb189-1"><a href="svd-and-pca.html#cb189-1" tabindex="-1"></a><span class="fu">autoplot</span>(iris.pca, <span class="at">loadings =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb189-2"><a href="svd-and-pca.html#cb189-2" tabindex="-1"></a>          <span class="at">loadings.label =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb189-3"><a href="svd-and-pca.html#cb189-3" tabindex="-1"></a>          <span class="at">data =</span> iris,</span>
+<span id="cb189-4"><a href="svd-and-pca.html#cb189-4" tabindex="-1"></a>          <span class="at">color=</span><span class="st">&quot;Species&quot;</span>,</span>
+<span id="cb189-5"><a href="svd-and-pca.html#cb189-5" tabindex="-1"></a>          <span class="at">frame =</span> <span class="cn">TRUE</span>,)</span></code></pre></div>
+<div class="figure" style="text-align: center"><span style="display:block;" id="fig:ggf2"></span>
+<img src="_main_files/figure-html/ggf2-1.png" alt="A biplot with framing polygons" width="75%" />
+<p class="caption">
+Figure 6.11: A biplot with framing polygons
+</p>
+</div>
+</div>
+<div id="scaling" class="section level3 unnumbered hasAnchor">
+<h3>Scaling<a href="svd-and-pca.html#scaling" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>When we perform PCA on the <code>mtcars</code> data frame with the <code>am</code> transmission type variable removed, we get the following summary.</p>
+<div class="sourceCode" id="cb190"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb190-1"><a href="svd-and-pca.html#cb190-1" tabindex="-1"></a>mt.pca <span class="ot">&lt;-</span> <span class="fu">prcomp</span>(mtcars[,<span class="sc">-</span><span class="dv">9</span>])</span>
+<span id="cb190-2"><a href="svd-and-pca.html#cb190-2" tabindex="-1"></a><span class="fu">summary</span>(mt.pca)</span></code></pre></div>
+<pre><code>## Importance of components:
+##                            PC1      PC2     PC3     PC4     PC5     PC6    PC7
+## Standard deviation     136.533 38.14744 3.06645 1.29508 0.90482 0.65061 0.3055
+## Proportion of Variance   0.927  0.07237 0.00047 0.00008 0.00004 0.00002 0.0000
+## Cumulative Proportion    0.927  0.99937 0.99984 0.99992 0.99997 0.99999 1.0000
+##                           PC8    PC9 PC10
+## Standard deviation     0.2859 0.2328 0.21
+## Proportion of Variance 0.0000 0.0000 0.00
+## Cumulative Proportion  1.0000 1.0000 1.00</code></pre>
+<p>Even with ten original variables, the first two principal components account for a whopping 99.9% of the total variance. The biplot (Fig. <a href="svd-and-pca.html#fig:unsbip">6.12</a>) is revealing.</p>
+<div class="sourceCode" id="cb192"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb192-1"><a href="svd-and-pca.html#cb192-1" tabindex="-1"></a><span class="fu">autoplot</span>(mt.pca, <span class="at">labels =</span> <span class="cn">FALSE</span>,</span>
+<span id="cb192-2"><a href="svd-and-pca.html#cb192-2" tabindex="-1"></a>          <span class="at">loadings =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb192-3"><a href="svd-and-pca.html#cb192-3" tabindex="-1"></a>          <span class="at">loadings.label =</span> <span class="cn">TRUE</span>)</span></code></pre></div>
+<div class="figure" style="text-align: center"><span style="display:block;" id="fig:unsbip"></span>
+<img src="_main_files/figure-html/unsbip-1.png" alt="PCA on the unscaled mtcars data frame" width="75%" />
+<p class="caption">
+Figure 6.12: PCA on the unscaled mtcars data frame
+</p>
+</div>
+<p>The engine displacement (<code>disp</code>) and horsepower (<code>hp</code>) variables dominate the first two principal components. Why? Look at the variances.</p>
+<div class="sourceCode" id="cb193"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb193-1"><a href="svd-and-pca.html#cb193-1" tabindex="-1"></a><span class="fu">apply</span>(mtcars, <span class="at">MARGIN =</span> <span class="dv">2</span>, <span class="at">FUN =</span> var)</span></code></pre></div>
+<pre><code>##          mpg          cyl         disp           hp         drat           wt 
+## 3.632410e+01 3.189516e+00 1.536080e+04 4.700867e+03 2.858814e-01 9.573790e-01 
+##         qsec           vs           am         gear         carb 
+## 3.193166e+00 2.540323e-01 2.489919e-01 5.443548e-01 2.608871e+00</code></pre>
+<p>If we look at all of the variables, those two have by far the highest variances, so it is not surprising that they would dominate the first two principal components.</p>
+<div class="notebox">
+<p>If you’re going to use PCA for dimension reduction or any prediction purposes, you should <em>scale</em> your variables so that the ones that take on larger values don’t have an outsized impact on the results. The <code>scale = TRUE</code> setting scales the variables by subtracting the mean and dividing by the standard deviation. When we do that, we get more useful, though less dramatic results.</p>
+</div>
+<div class="sourceCode" id="cb195"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb195-1"><a href="svd-and-pca.html#cb195-1" tabindex="-1"></a>mt.pca2 <span class="ot">&lt;-</span> <span class="fu">prcomp</span>(mtcars[,<span class="sc">-</span><span class="dv">9</span>], <span class="at">scale =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb195-2"><a href="svd-and-pca.html#cb195-2" tabindex="-1"></a><span class="fu">summary</span>(mt.pca2)</span></code></pre></div>
+<pre><code>## Importance of components:
+##                           PC1    PC2     PC3     PC4     PC5     PC6    PC7
+## Standard deviation     2.5087 1.4696 0.77481 0.51912 0.47244 0.41776 0.3507
+## Proportion of Variance 0.6293 0.2160 0.06003 0.02695 0.02232 0.01745 0.0123
+## Cumulative Proportion  0.6293 0.8453 0.90536 0.93231 0.95463 0.97208 0.9844
+##                            PC8     PC9    PC10
+## Standard deviation     0.27812 0.23803 0.14896
+## Proportion of Variance 0.00773 0.00567 0.00222
+## Cumulative Proportion  0.99212 0.99778 1.00000</code></pre>
+<p>It now takes the first 5 principal components before we get above 95% of the total variance. We left out the <code>am</code> variable so we could see how well we can predict that value using PCA on the other variables.</p>
+<div class="sourceCode" id="cb197"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb197-1"><a href="svd-and-pca.html#cb197-1" tabindex="-1"></a>mtcars2 <span class="ot">&lt;-</span> mtcars</span>
+<span id="cb197-2"><a href="svd-and-pca.html#cb197-2" tabindex="-1"></a>mtcars2<span class="sc">$</span>am <span class="ot">&lt;-</span> <span class="fu">as.factor</span>(mtcars2<span class="sc">$</span>am)</span>
+<span id="cb197-3"><a href="svd-and-pca.html#cb197-3" tabindex="-1"></a><span class="fu">autoplot</span>(mt.pca2, <span class="at">loadings =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb197-4"><a href="svd-and-pca.html#cb197-4" tabindex="-1"></a>          <span class="at">loadings.label =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb197-5"><a href="svd-and-pca.html#cb197-5" tabindex="-1"></a>          <span class="at">data =</span> mtcars2,</span>
+<span id="cb197-6"><a href="svd-and-pca.html#cb197-6" tabindex="-1"></a>          <span class="at">color=</span><span class="st">&quot;am&quot;</span>,</span>
+<span id="cb197-7"><a href="svd-and-pca.html#cb197-7" tabindex="-1"></a>          <span class="at">frame =</span> <span class="cn">TRUE</span>,)</span></code></pre></div>
+<div class="figure" style="text-align: center"><span style="display:block;" id="fig:pcasplit"></span>
+<img src="_main_files/figure-html/pcasplit-1.png" alt="Using PCA to guess transmission type" width="75%" />
+<p class="caption">
+Figure 6.13: Using PCA to guess transmission type
+</p>
+</div>
+<p>As we see in Figure <a href="svd-and-pca.html#fig:pcasplit">6.13</a>, it only takes two principal components to separate the two transmission types completely.</p>
+<p>Again, it is generally a good idea to scale your variables when you perform PCA on your data so that individual variables don’t have excessive influence on the results.</p>
+</div>
+</div>
+<div id="exercises-5" class="section level2 hasAnchor" number="6.6">
+<h2><span class="header-section-number">6.6</span> Exercises<a href="svd-and-pca.html#exercises-5" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<ol style="list-style-type: decimal">
+<li><p>Diagonalize <span class="math inline">\(\mathbf{A}=\begin{bmatrix}5 &amp; -6\\4 &amp; -5\end{bmatrix}.\)</span></p></li>
+<li><p>Diagonalize <span class="math inline">\(\mathbf{B}=\begin{bmatrix}4 &amp; -1\\6 &amp; -1\end{bmatrix}.\)</span></p></li>
+<li><p>Use your answer to Problem 1 to find <span class="math inline">\(\mathbf{A}^4.\)</span></p></li>
+<li><p>Use your answer to Problem 2 to find <span class="math inline">\(\mathbf{B}^4.\)</span></p></li>
+<li><p>Diagonalize <span class="math inline">\(\mathbf{A}=\begin{bmatrix}0 &amp; 2\\2 &amp; 0\end{bmatrix}.\)</span> Verify that <span class="math inline">\(\mathbf{A}\)</span> is orthogonally diagonalizable.</p></li>
+<li><p>Diagonalize <span class="math inline">\(\mathbf{B}=\begin{bmatrix}-7 &amp; 24\\24 &amp; 7\end{bmatrix}.\)</span> Verify that <span class="math inline">\(\mathbf{B}\)</span> is orthogonally diagonalizable.</p></li>
+<li><p>Let <span class="math inline">\(\mathbf{A}=\begin{bmatrix}5&amp;2\\2&amp;4\end{bmatrix}.\)</span></p>
+<ol style="list-style-type: lower-alpha">
+<li>Let <span class="math inline">\(Q(\mathbf{x})=\mathbf{x}^T\mathbf{A}\mathbf{x}.\)</span> Write <span class="math inline">\(Q(\mathbf{x})\)</span> as a function of <span class="math inline">\(x_1\)</span> and <span class="math inline">\(x_2.\)</span></li>
+<li>Find the maximum and minimum values of <span class="math inline">\(Q(\mathbf{x})\)</span> on the circle <span class="math inline">\(\mathbf{x}^T\mathbf{x}=1.\)</span></li>
+</ol></li>
+<li><p>Let <span class="math inline">\(\mathbf{A}=\begin{bmatrix}3&amp;1\\1&amp;4\end{bmatrix}.\)</span></p>
+<ol style="list-style-type: lower-alpha">
+<li>Let <span class="math inline">\(Q(\mathbf{x})=\mathbf{x}^T\mathbf{A}\mathbf{x}.\)</span> Write <span class="math inline">\(Q(\mathbf{x})\)</span> as a function of <span class="math inline">\(x_1\)</span> and <span class="math inline">\(x_2.\)</span></li>
+<li>Find the maximum and minimum values of <span class="math inline">\(Q(\mathbf{x})\)</span> on the circle <span class="math inline">\(\mathbf{x}^T\mathbf{x}=1.\)</span></li>
+</ol></li>
+<li><p>Let <span class="math inline">\(Q(x_1,x_2)=2x_1^2-3x_1x_2+4x_2^2.\)</span></p>
+<ol style="list-style-type: lower-alpha">
+<li>Find a matrix <span class="math inline">\(\mathbf{A}\)</span> such that <span class="math inline">\(Q(\mathbf{x})=\mathbf{x}^T\mathbf{A}\mathbf{x}.\)</span></li>
+<li>Find the maximum and minimum values of <span class="math inline">\(Q(\mathbf{x})\)</span> on the circle <span class="math inline">\(\mathbf{x}^T\mathbf{x}=1.\)</span></li>
+<li>Classify <span class="math inline">\(Q\)</span> as a quadratic form. That is, is it positive definite, negative definite, indefinite, or something else?</li>
+</ol></li>
+<li><p>Let <span class="math inline">\(Q(x_1,x_2)=2x_1^2-3x_1x_2+4x_2^2.\)</span></p>
+<ol style="list-style-type: lower-alpha">
+<li>Find a matrix <span class="math inline">\(\mathbf{A}\)</span> such that <span class="math inline">\(Q(\mathbf{x})=\mathbf{x}^T\mathbf{A}\mathbf{x}.\)</span></li>
+<li>Find the maximum and minimum values of <span class="math inline">\(Q(\mathbf{x})\)</span> on the circle <span class="math inline">\(\mathbf{x}^T\mathbf{x}=1.\)</span></li>
+<li>Classify <span class="math inline">\(Q\)</span> as a quadratic form. That is, is it positive definite, negative definite, indefinite, or something else?</li>
+</ol></li>
+<li><p>Let <span class="math inline">\(Q(x_1,x_2,x_3)=2x_1^2+3x_2^2-3x_3^2+4x_1x_2-2x_1x_3+6x_2x_3.\)</span></p>
+<ol style="list-style-type: lower-alpha">
+<li>Find a matrix <span class="math inline">\(\mathbf{A}\)</span> such that <span class="math inline">\(Q(\mathbf{x})=\mathbf{x}^T\mathbf{A}\mathbf{x}.\)</span></li>
+<li>Find the maximum and minimum values of <span class="math inline">\(Q(\mathbf{x})\)</span> on the circle <span class="math inline">\(\mathbf{x}^T\mathbf{x}=1.\)</span></li>
+<li>Classify <span class="math inline">\(Q\)</span> as a quadratic form. That is, is it positive definite, negative definite, indefinite, or something else?</li>
+</ol></li>
+<li><p>Let <span class="math inline">\(Q(x_1,x_2,x_3)=4x_1^2-3x_2^2-5x_3^2-2x_1x_2+6x_1x_3+8x_2x_3.\)</span></p>
+<ol style="list-style-type: lower-alpha">
+<li>Find a matrix <span class="math inline">\(\mathbf{A}\)</span> such that <span class="math inline">\(Q(\mathbf{x})=\mathbf{x}^T\mathbf{A}\mathbf{x}.\)</span></li>
+<li>Find the maximum and minimum values of <span class="math inline">\(Q(\mathbf{x})\)</span> on the circle <span class="math inline">\(\mathbf{x}^T\mathbf{x}=1.\)</span></li>
+<li>Classify <span class="math inline">\(Q\)</span> as a quadratic form. That is, is it positive definite, negative definite, indefinite, or something else?</li>
+</ol></li>
+<li><p>Let <span class="math inline">\(\mathbf{A}=\begin{bmatrix}2 &amp; 2\\-2 &amp; -2\end{bmatrix}.\)</span> Find the singular value decomposition of <span class="math inline">\(\mathbf{A}\)</span> by hand.</p></li>
+<li><p>Let <span class="math inline">\(\mathbf{B}=\begin{bmatrix}1 &amp; 3\\-3 &amp; 1\end{bmatrix}.\)</span> Find the singular value decomposition of <span class="math inline">\(\mathbf{B}\)</span> by hand.</p></li>
+<li><p>Let <span class="math inline">\(\mathbf{A}=\begin{bmatrix}2 &amp; 4 &amp; 0\\-4 &amp; -2 &amp; 0\end{bmatrix}.\)</span> Find the singular value decomposition of <span class="math inline">\(\mathbf{A}\)</span> without using a singular value decomposition function.</p></li>
+<li><p>Let <span class="math inline">\(\mathbf{B}=\begin{bmatrix}11 &amp; 10 &amp; -2\\-2 &amp; 5 &amp; 14\end{bmatrix}.\)</span> Find the singular value decomposition of <span class="math inline">\(\mathbf{B}\)</span> without using a singular value decomposition function.</p></li>
+<li><p>The table below contains ratings of four movies from six reviewers<span class="citation">[<a href="#ref-recommenderlab">22</a>]</span>. Enter the scores in a <span class="math inline">\(6\times 4\)</span> matrix, and apply the <code>svd</code> function to the <em>centered</em> values.</p>
+<ol style="list-style-type: lower-alpha">
+<li>The columns of <span class="math inline">\(\mathbf{U}\)</span> represent the user latent factors. Which users have the most different values with respect to the first latent factor?</li>
+<li>Which users have the most different values with respect to the second latent factor?</li>
+</ol></li>
+</ol>
+<table>
+<colgroup>
+<col width="6%" />
+<col width="26%" />
+<col width="19%" />
+<col width="23%" />
+<col width="24%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th align="left">User</th>
+<th align="left">American Beauty (1999)</th>
+<th align="left">Apollo 13 (1995)</th>
+<th align="left">Forrest Gump (1994)</th>
+<th align="left">Jurassic Park (1993)</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left"><strong>1</strong></td>
+<td align="left">4.00</td>
+<td align="left">3.50</td>
+<td align="left">5.00</td>
+<td align="left">4.50</td>
+</tr>
+<tr class="even">
+<td align="left"><strong>2</strong></td>
+<td align="left">5.00</td>
+<td align="left">3.00</td>
+<td align="left">3.50</td>
+<td align="left">3.50</td>
+</tr>
+<tr class="odd">
+<td align="left"><strong>3</strong></td>
+<td align="left">4.00</td>
+<td align="left">5.00</td>
+<td align="left">4.00</td>
+<td align="left">4.00</td>
+</tr>
+<tr class="even">
+<td align="left"><strong>4</strong></td>
+<td align="left">4.00</td>
+<td align="left">4.00</td>
+<td align="left">5.00</td>
+<td align="left">3.50</td>
+</tr>
+<tr class="odd">
+<td align="left"><strong>5</strong></td>
+<td align="left">5.00</td>
+<td align="left">2.50</td>
+<td align="left">5.00</td>
+<td align="left">3.50</td>
+</tr>
+<tr class="even">
+<td align="left"><strong>6</strong></td>
+<td align="left">4.00</td>
+<td align="left">3.00</td>
+<td align="left">5.00</td>
+<td align="left">4.50</td>
+</tr>
+</tbody>
+</table>
+<ol start="18" style="list-style-type: decimal">
+<li>In the <code>svd</code> output from Problem 17, the columns of <span class="math inline">\(\mathbf{V}\)</span> represent the item or movie latent factors.
+<ol style="list-style-type: lower-alpha">
+<li>For latent factor 1, which two movies have the most different values?</li>
+<li>For latent factor 2, which two movies have the most different values?</li>
+</ol></li>
+<li>The <code>imager</code> package for R has some image processing features and comes with some nice features. <em>Warning: installation of the package can sometimes be an issue</em>. One image that comes with the package is called <code>boats</code>. It’s grayscale matrix is 256 x 384.
+<ol style="list-style-type: lower-alpha">
+<li>How many numbers are in a 256 x 384 matrix?</li>
+<li>If you use the first 75 singular values to compress the image, how many numbers are involved?</li>
+<li>Use the code below to create and plot that image that uses the first 75 singular values. If you can’t get <code>imager</code> to work on your device, the code should work at <a href="https://rdrr.io/snippets">https://rdrr.io/snippets</a>.</li>
+</ol></li>
+</ol>
+<div class="sourceCode" id="cb198"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb198-1"><a href="svd-and-pca.html#cb198-1" tabindex="-1"></a><span class="fu">library</span>(imager)</span>
+<span id="cb198-2"><a href="svd-and-pca.html#cb198-2" tabindex="-1"></a>pic <span class="ot">&lt;-</span> <span class="fu">grayscale</span>(boats) <span class="co">#creates a grayscale cimg from original</span></span>
+<span id="cb198-3"><a href="svd-and-pca.html#cb198-3" tabindex="-1"></a>pic.m <span class="ot">&lt;-</span> <span class="fu">as.matrix</span>(pic) <span class="co">#extracts the matrix portion</span></span>
+<span id="cb198-4"><a href="svd-and-pca.html#cb198-4" tabindex="-1"></a>pic.svd <span class="ot">&lt;-</span> <span class="fu">svd</span>(pic.m) <span class="co">#calculates the SVD</span></span>
+<span id="cb198-5"><a href="svd-and-pca.html#cb198-5" tabindex="-1"></a>k <span class="ot">&lt;-</span> <span class="dv">75</span> <span class="co">#the number of singular values used</span></span>
+<span id="cb198-6"><a href="svd-and-pca.html#cb198-6" tabindex="-1"></a></span>
+<span id="cb198-7"><a href="svd-and-pca.html#cb198-7" tabindex="-1"></a><span class="co">#The next code produces the rank-k image matrix&quot;</span></span>
+<span id="cb198-8"><a href="svd-and-pca.html#cb198-8" tabindex="-1"></a>compressed <span class="ot">&lt;-</span> pic.svd<span class="sc">$</span>u[, <span class="dv">1</span><span class="sc">:</span>k] <span class="sc">%*%</span> <span class="fu">diag</span>(pic.svd<span class="sc">$</span>d[<span class="dv">1</span><span class="sc">:</span>k]) <span class="sc">%*%</span> <span class="fu">t</span>(pic.svd<span class="sc">$</span>v[, <span class="dv">1</span><span class="sc">:</span>k])</span>
+<span id="cb198-9"><a href="svd-and-pca.html#cb198-9" tabindex="-1"></a></span>
+<span id="cb198-10"><a href="svd-and-pca.html#cb198-10" tabindex="-1"></a><span class="fu">plot</span>(<span class="fu">as.cimg</span>(compressed),<span class="at">axes=</span>F)</span>
+<span id="cb198-11"><a href="svd-and-pca.html#cb198-11" tabindex="-1"></a></span>
+<span id="cb198-12"><a href="svd-and-pca.html#cb198-12" tabindex="-1"></a><span class="co"># One note: the plot produced by default will be a PNG file, so  </span></span>
+<span id="cb198-13"><a href="svd-and-pca.html#cb198-13" tabindex="-1"></a><span class="co"># the size of the &quot;compressed&quot; image might actually be larger  </span></span>
+<span id="cb198-14"><a href="svd-and-pca.html#cb198-14" tabindex="-1"></a><span class="co"># than the original.</span></span></code></pre></div>
+<ol start="20" style="list-style-type: decimal">
+<li>Another image available through <code>imager</code> is called <code>coins</code>. You can access it by executing the command <code>pic &lt;- load.example("coins")</code>. Modify the code in Problem 19 to complete the following.
+<ol style="list-style-type: lower-alpha">
+<li>Once you have created the grayscale matrix, apply the <code>str</code> function to it to determine the dimensions of the matrix. How many numbers are stored in the matrix?</li>
+<li>If you use the first 75 singular values to compress the image, how many numbers are involved?</li>
+<li>Create and plot the image that uses the first 75 singular values.</li>
+</ol></li>
+<li>For the movie ratings data below, with the movies as variables, find the following. Do not scale or center the data.
+<ol style="list-style-type: lower-alpha">
+<li>The covariance matrix.</li>
+<li>Use R’s <code>eigen</code> function to find the eigenvalues of the covariance matrix.</li>
+<li>What fraction of the total variance comes from the first principal component?</li>
+<li>Find the scores for User 1. (Try to do this without using the <code>prcomp</code> function.)</li>
+</ol></li>
+</ol>
+<table>
+<thead>
+<tr class="header">
+<th align="left">User</th>
+<th align="left">American Beauty (1999)</th>
+<th align="left">Apollo 13 (1995)</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left"><strong>1</strong></td>
+<td align="left">4.00</td>
+<td align="left">3.50</td>
+</tr>
+<tr class="even">
+<td align="left"><strong>2</strong></td>
+<td align="left">5.00</td>
+<td align="left">3.00</td>
+</tr>
+<tr class="odd">
+<td align="left"><strong>3</strong></td>
+<td align="left">4.00</td>
+<td align="left">5.00</td>
+</tr>
+<tr class="even">
+<td align="left"><strong>4</strong></td>
+<td align="left">4.00</td>
+<td align="left">4.00</td>
+</tr>
+<tr class="odd">
+<td align="left"><strong>5</strong></td>
+<td align="left">5.00</td>
+<td align="left">2.50</td>
+</tr>
+</tbody>
+</table>
+<ol start="22" style="list-style-type: decimal">
+<li>For the movie ratings data below, with the movies as variables, find the following. Do not scale or center the data.
+<ol style="list-style-type: lower-alpha">
+<li>The covariance matrix.</li>
+<li>Use R’s <code>eigen</code> function to find the eigenvalues and eigenvectors of the covariance matrix.</li>
+<li>What fraction of the total variance comes from the first principal component?</li>
+<li>Find the scores for User 1. (Try to do this without using the <code>prcomp</code> function.)</li>
+</ol></li>
+</ol>
+<table>
+<thead>
+<tr class="header">
+<th align="left">User</th>
+<th align="left">Forrest Gump (1994)</th>
+<th align="left">Jurassic Park (1993)</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left"><strong>1</strong></td>
+<td align="left">5.00</td>
+<td align="left">4.50</td>
+</tr>
+<tr class="even">
+<td align="left"><strong>2</strong></td>
+<td align="left">3.50</td>
+<td align="left">3.50</td>
+</tr>
+<tr class="odd">
+<td align="left"><strong>3</strong></td>
+<td align="left">4.00</td>
+<td align="left">4.00</td>
+</tr>
+<tr class="even">
+<td align="left"><strong>4</strong></td>
+<td align="left">5.00</td>
+<td align="left">3.50</td>
+</tr>
+<tr class="odd">
+<td align="left"><strong>5</strong></td>
+<td align="left">5.00</td>
+<td align="left">3.50</td>
+</tr>
+</tbody>
+</table>
+<ol start="23" style="list-style-type: decimal">
+<li>The <code>MASS</code> package has the <code>Pima.tr</code> data frame that we used in Chapter 5. The 8th column is the <code>type</code> factor variable. Use the <code>prcomp</code> function on the data without the <code>type</code> variable. <em>Make sure you scale the data</em>.
+<ol style="list-style-type: lower-alpha">
+<li>How many principal components are needed to get the cumulative variance above 95% of the total?</li>
+<li>Use the <code>autoplot</code> function from the <code>ggfortify</code> package to create a biplot with framing polygons colored by <code>type</code>.</li>
+</ol></li>
+<li>The state.x77 data set has data from the 50 U.S. states published by the U.S. Census Bureau in 1977. To get the data set in to data frame format, evaluate <code>states &lt;- data.frame(state.x77)</code>. Use the <code>prcomp</code> function on the data. <em>Make sure you scale the data</em>.
+<ol style="list-style-type: lower-alpha">
+<li>How many principal components are needed to get the cumulative variance above 95% of the total?</li>
+<li>Add the region variable to the data frame by evaluating <code>states$region &lt;- state.region</code>. Use the <code>autoplot</code> function from the <code>ggfortify</code> package to create a biplot with framing polygons colored by <code>region</code>.</li>
+</ol></li>
+</ol>
+
+</div>
+</div>
+<h3>References<a href="references.html#references" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<div id="refs" class="references csl-bib-body" entry-spacing="0">
+<div id="ref-LLM" class="csl-entry">
+<div class="csl-left-margin">5. </div><div class="csl-right-inline">Lay DC, Lay SR, McDonald JJ (2015) Linear algebra and its applications, Pearson Education.</div>
+</div>
+<div id="ref-Strang" class="csl-entry">
+<div class="csl-left-margin">20. </div><div class="csl-right-inline">Strang G (2022) Introduction to linear algebra, 6th ed., Wellesley Cambridge Press.</div>
+</div>
+<div id="ref-EYM" class="csl-entry">
+<div class="csl-left-margin">21. </div><div class="csl-right-inline">Eckart C, Young G (1936) The approximation of one matrix by another of lower rank. <em>Psychometrika</em> 1: 211–218.</div>
+</div>
+<div id="ref-recommenderlab" class="csl-entry">
+<div class="csl-left-margin">22. </div><div class="csl-right-inline">Hahsler M (2022) <a href="https://doi.org/10.48550/ARXIV.2205.12371">Recommenderlab: An r framework for developing and testing recommendation algorithms</a>.</div>
+</div>
+</div>
+<div class="footnotes">
+<hr />
+<ol start="3">
+<li id="fn3"><p>Another option is finding eigenvectors of <span class="math inline">\(\mathbf{A}\mathbf{A}^T\)</span> corresponding to the eigenvalue 0. In fact, some sources <span class="citation">[<a href="#ref-Strang">20</a>]</span> get the left singular vectors from <span class="math inline">\(\mathbf{A}\mathbf{A}^T\)</span> and use them to find <span class="math inline">\(r\)</span> right singular vectors.<a href="svd-and-pca.html#fnref3" class="footnote-back">↩︎</a></p></li>
+</ol>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="regression.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="additional-topics.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"whatsapp": false,
+"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": "https://github.com/USERNAME/REPO/edit/BRANCH/06-Symmetric.Rmd",
+"text": "Edit"
+},
+"history": {
+"link": null,
+"text": null
+},
+"view": {
+"link": null,
+"text": null
+},
+"download": ["_main.pdf", "_main.epub"],
+"search": {
+"engine": "fuse",
+"options": null
+},
+"toc": {
+"collapse": "subsection"
+},
+"split_bib": false
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.9/latest.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>

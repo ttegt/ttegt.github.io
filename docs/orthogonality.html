@@ -1,0 +1,1116 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>Chapter 4 Orthogonality | Linear Algebra for Data Science</title>
+  <meta name="description" content="<p>This is a minimal example of using the bookdown package to write a book.
+The HTML output format for this example is bookdown::gitbook,
+set in the _output.yml file.</p>" />
+  <meta name="generator" content="bookdown 0.39 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="Chapter 4 Orthogonality | Linear Algebra for Data Science" />
+  <meta property="og:type" content="book" />
+  <meta property="og:image" content="/images/mfdscover.png" />
+  <meta property="og:description" content="<p>This is a minimal example of using the bookdown package to write a book.
+The HTML output format for this example is bookdown::gitbook,
+set in the _output.yml file.</p>" />
+  
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Chapter 4 Orthogonality | Linear Algebra for Data Science" />
+  
+  <meta name="twitter:description" content="<p>This is a minimal example of using the bookdown package to write a book.
+The HTML output format for this example is bookdown::gitbook,
+set in the _output.yml file.</p>" />
+  <meta name="twitter:image" content="/images/mfdscover.png" />
+
+<meta name="author" content="Tom Tegtmeyer" />
+
+
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="eigenvalues-and-eigenvectors.html"/>
+<link rel="next" href="regression.html"/>
+<script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+<link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
+<link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
+<script src="libs/kePrint-0.0.1/kePrint.js"></script>
+<link href="libs/lightable-0.0.1/lightable.css" rel="stylesheet" />
+
+
+<style type="text/css">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { color: #008000; } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { color: #008000; font-weight: bold; } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+<style type="text/css">
+  
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+</style>
+<style type="text/css">
+/* Used with Pandoc 2.11+ new --citeproc when CSL is used */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+  margin-bottom: 0em;
+}
+.hanging div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}
+</style>
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">Linear Algebra for Data Science</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Preface</a></li>
+<li class="chapter" data-level="1" data-path="matrices-and-systems-of-equations.html"><a href="matrices-and-systems-of-equations.html"><i class="fa fa-check"></i><b>1</b> Matrices and Systems of Equations</a>
+<ul>
+<li class="chapter" data-level="1.1" data-path="matrices-and-systems-of-equations.html"><a href="matrices-and-systems-of-equations.html#systems-of-equations"><i class="fa fa-check"></i><b>1.1</b> Systems of Equations</a>
+<ul>
+<li class="chapter" data-level="" data-path="matrices-and-systems-of-equations.html"><a href="matrices-and-systems-of-equations.html#the-geometry"><i class="fa fa-check"></i>The geometry</a></li>
+<li class="chapter" data-level="" data-path="matrices-and-systems-of-equations.html"><a href="matrices-and-systems-of-equations.html#the-three-cases"><i class="fa fa-check"></i>The three cases</a></li>
+</ul></li>
+<li class="chapter" data-level="1.2" data-path="matrices-and-systems-of-equations.html"><a href="matrices-and-systems-of-equations.html#GE"><i class="fa fa-check"></i><b>1.2</b> Method of Solution: Gaussian Elimination</a>
+<ul>
+<li class="chapter" data-level="" data-path="matrices-and-systems-of-equations.html"><a href="matrices-and-systems-of-equations.html#parameters"><i class="fa fa-check"></i>Parameters</a></li>
+<li class="chapter" data-level="" data-path="matrices-and-systems-of-equations.html"><a href="matrices-and-systems-of-equations.html#more-equations-more-variables"><i class="fa fa-check"></i>More equations, more variables</a></li>
+<li class="chapter" data-level="" data-path="matrices-and-systems-of-equations.html"><a href="matrices-and-systems-of-equations.html#overdetermined-and-underdetermined-systems"><i class="fa fa-check"></i>Overdetermined and underdetermined systems</a></li>
+</ul></li>
+<li class="chapter" data-level="1.3" data-path="matrices-and-systems-of-equations.html"><a href="matrices-and-systems-of-equations.html#matrices"><i class="fa fa-check"></i><b>1.3</b> Matrices</a>
+<ul>
+<li class="chapter" data-level="" data-path="matrices-and-systems-of-equations.html"><a href="matrices-and-systems-of-equations.html#elementary-row-operations"><i class="fa fa-check"></i>Elementary row operations</a></li>
+<li class="chapter" data-level="" data-path="matrices-and-systems-of-equations.html"><a href="matrices-and-systems-of-equations.html#row-echelon-form"><i class="fa fa-check"></i>Row echelon form</a></li>
+<li class="chapter" data-level="" data-path="matrices-and-systems-of-equations.html"><a href="matrices-and-systems-of-equations.html#reduced-row-echelon-form"><i class="fa fa-check"></i>Reduced row echelon form</a></li>
+<li class="chapter" data-level="" data-path="matrices-and-systems-of-equations.html"><a href="matrices-and-systems-of-equations.html#TM"><i class="fa fa-check"></i>Matrices with Technology</a></li>
+</ul></li>
+<li class="chapter" data-level="1.4" data-path="matrices-and-systems-of-equations.html"><a href="matrices-and-systems-of-equations.html#BMO"><i class="fa fa-check"></i><b>1.4</b> Basic Matrix Operations</a>
+<ul>
+<li class="chapter" data-level="" data-path="matrices-and-systems-of-equations.html"><a href="matrices-and-systems-of-equations.html#row-and-column-vectors"><i class="fa fa-check"></i>Row and column vectors</a></li>
+<li class="chapter" data-level="" data-path="matrices-and-systems-of-equations.html"><a href="matrices-and-systems-of-equations.html#matrix-addition"><i class="fa fa-check"></i>Matrix addition</a></li>
+<li class="chapter" data-level="" data-path="matrices-and-systems-of-equations.html"><a href="matrices-and-systems-of-equations.html#scalar-multiplication"><i class="fa fa-check"></i>Scalar Multiplication</a></li>
+<li class="chapter" data-level="" data-path="matrices-and-systems-of-equations.html"><a href="matrices-and-systems-of-equations.html#matrix-multiplication"><i class="fa fa-check"></i>Matrix multiplication</a></li>
+<li class="chapter" data-level="" data-path="matrices-and-systems-of-equations.html"><a href="matrices-and-systems-of-equations.html#multiplying-two-matrices"><i class="fa fa-check"></i>Multiplying two matrices</a></li>
+<li class="chapter" data-level="" data-path="matrices-and-systems-of-equations.html"><a href="matrices-and-systems-of-equations.html#identity-matrices"><i class="fa fa-check"></i>Identity Matrices</a></li>
+<li class="chapter" data-level="" data-path="matrices-and-systems-of-equations.html"><a href="matrices-and-systems-of-equations.html#technology"><i class="fa fa-check"></i>Technology</a></li>
+<li class="chapter" data-level="" data-path="matrices-and-systems-of-equations.html"><a href="matrices-and-systems-of-equations.html#the-transpose-of-a-matrix"><i class="fa fa-check"></i>The transpose of a matrix</a></li>
+</ul></li>
+<li class="chapter" data-level="1.5" data-path="matrices-and-systems-of-equations.html"><a href="matrices-and-systems-of-equations.html#Inverses"><i class="fa fa-check"></i><b>1.5</b> Matrix Inverses</a>
+<ul>
+<li class="chapter" data-level="" data-path="matrices-and-systems-of-equations.html"><a href="matrices-and-systems-of-equations.html#finding-inverses"><i class="fa fa-check"></i>Finding inverses</a></li>
+<li class="chapter" data-level="" data-path="matrices-and-systems-of-equations.html"><a href="matrices-and-systems-of-equations.html#a-formula-for-2-x-2-matrices"><i class="fa fa-check"></i>A formula for 2 x 2 matrices</a></li>
+</ul></li>
+<li class="chapter" data-level="1.6" data-path="matrices-and-systems-of-equations.html"><a href="matrices-and-systems-of-equations.html#dets"><i class="fa fa-check"></i><b>1.6</b> Determinants</a>
+<ul>
+<li class="chapter" data-level="" data-path="matrices-and-systems-of-equations.html"><a href="matrices-and-systems-of-equations.html#triangular-and-diagonal-matrices"><i class="fa fa-check"></i>Triangular and diagonal matrices</a></li>
+<li class="chapter" data-level="" data-path="matrices-and-systems-of-equations.html"><a href="matrices-and-systems-of-equations.html#upper-and-lower-triangular-matrices"><i class="fa fa-check"></i>Upper and lower triangular matrices</a></li>
+</ul></li>
+<li class="chapter" data-level="1.7" data-path="matrices-and-systems-of-equations.html"><a href="matrices-and-systems-of-equations.html#systems-of-linear-equations-as-matrix-equations"><i class="fa fa-check"></i><b>1.7</b> Systems of Linear Equations as Matrix Equations</a>
+<ul>
+<li class="chapter" data-level="" data-path="matrices-and-systems-of-equations.html"><a href="matrices-and-systems-of-equations.html#how-does-row-reduction-work"><i class="fa fa-check"></i>How does row reduction work?</a></li>
+</ul></li>
+<li class="chapter" data-level="1.8" data-path="matrices-and-systems-of-equations.html"><a href="matrices-and-systems-of-equations.html#Colley"><i class="fa fa-check"></i><b>1.8</b> Application: The Colley Matrix Method</a>
+<ul>
+<li class="chapter" data-level="" data-path="matrices-and-systems-of-equations.html"><a href="matrices-and-systems-of-equations.html#ratings-and-rankings"><i class="fa fa-check"></i>Ratings and Rankings</a></li>
+<li class="chapter" data-level="" data-path="matrices-and-systems-of-equations.html"><a href="matrices-and-systems-of-equations.html#the-bcs-and-wes-colley"><i class="fa fa-check"></i>The BCS and Wes Colley</a></li>
+<li class="chapter" data-level="" data-path="matrices-and-systems-of-equations.html"><a href="matrices-and-systems-of-equations.html#the-colley-matrix"><i class="fa fa-check"></i>The Colley Matrix</a></li>
+</ul></li>
+<li class="chapter" data-level="1.9" data-path="matrices-and-systems-of-equations.html"><a href="matrices-and-systems-of-equations.html#exercises"><i class="fa fa-check"></i><b>1.9</b> Exercises</a></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="vector-spaces.html"><a href="vector-spaces.html"><i class="fa fa-check"></i><b>2</b> Vector Spaces</a>
+<ul>
+<li class="chapter" data-level="2.1" data-path="vector-spaces.html"><a href="vector-spaces.html#artoo"><i class="fa fa-check"></i><b>2.1</b> The Vector Space <span class="math inline">\(\mathbb{R}^n\)</span></a>
+<ul>
+<li class="chapter" data-level="" data-path="vector-spaces.html"><a href="vector-spaces.html#vector-addition-and-scalar-multiplication"><i class="fa fa-check"></i>Vector addition and scalar multiplication</a></li>
+<li class="chapter" data-level="" data-path="vector-spaces.html"><a href="vector-spaces.html#linear-dependence-and-independence"><i class="fa fa-check"></i>Linear dependence and independence</a></li>
+<li class="chapter" data-level="" data-path="vector-spaces.html"><a href="vector-spaces.html#linear-combinations"><i class="fa fa-check"></i>Linear Combinations</a></li>
+<li class="chapter" data-level="" data-path="vector-spaces.html"><a href="vector-spaces.html#mathbbr3-and-mathbbrn"><i class="fa fa-check"></i><span class="math inline">\(\mathbb{R}^3\)</span> and <span class="math inline">\(\mathbb{R}^n\)</span></a></li>
+</ul></li>
+<li class="chapter" data-level="2.2" data-path="vector-spaces.html"><a href="vector-spaces.html#subspaces"><i class="fa fa-check"></i><b>2.2</b> Subspaces</a></li>
+<li class="chapter" data-level="2.3" data-path="vector-spaces.html"><a href="vector-spaces.html#linear-dependence-and-independence-1"><i class="fa fa-check"></i><b>2.3</b> Linear Dependence and Independence</a>
+<ul>
+<li class="chapter" data-level="" data-path="vector-spaces.html"><a href="vector-spaces.html#linear-dependence-revisited"><i class="fa fa-check"></i>Linear dependence revisited</a></li>
+</ul></li>
+<li class="chapter" data-level="2.4" data-path="vector-spaces.html"><a href="vector-spaces.html#basis-and-dimension"><i class="fa fa-check"></i><b>2.4</b> Basis and Dimension</a>
+<ul>
+<li class="chapter" data-level="" data-path="vector-spaces.html"><a href="vector-spaces.html#the-standard-basis-for-mathbbrn"><i class="fa fa-check"></i>The standard basis for <span class="math inline">\(\mathbb{R}^n\)</span></a></li>
+<li class="chapter" data-level="" data-path="vector-spaces.html"><a href="vector-spaces.html#the-dimension-of-a-subspace"><i class="fa fa-check"></i>The dimension of a subspace</a></li>
+<li class="chapter" data-level="" data-path="vector-spaces.html"><a href="vector-spaces.html#the-dimension-of-the-nullspace"><i class="fa fa-check"></i>The dimension of the Nullspace</a></li>
+<li class="chapter" data-level="" data-path="vector-spaces.html"><a href="vector-spaces.html#the-column-space-of-a-matrix"><i class="fa fa-check"></i>The column space of a matrix</a></li>
+<li class="chapter" data-level="" data-path="vector-spaces.html"><a href="vector-spaces.html#the-row-space"><i class="fa fa-check"></i>The row space</a></li>
+</ul></li>
+<li class="chapter" data-level="2.5" data-path="vector-spaces.html"><a href="vector-spaces.html#exercises-1"><i class="fa fa-check"></i><b>2.5</b> Exercises</a></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="eigenvalues-and-eigenvectors.html"><a href="eigenvalues-and-eigenvectors.html"><i class="fa fa-check"></i><b>3</b> Eigenvalues and Eigenvectors</a>
+<ul>
+<li class="chapter" data-level="3.1" data-path="eigenvalues-and-eigenvectors.html"><a href="eigenvalues-and-eigenvectors.html#eigenvalues-and-eigenvectors-1"><i class="fa fa-check"></i><b>3.1</b> Eigenvalues and Eigenvectors</a>
+<ul>
+<li class="chapter" data-level="" data-path="eigenvalues-and-eigenvectors.html"><a href="eigenvalues-and-eigenvectors.html#eigenvalues-and-eigenvectors-in-r"><i class="fa fa-check"></i>Eigenvalues and Eigenvectors in R</a></li>
+<li class="chapter" data-level="" data-path="eigenvalues-and-eigenvectors.html"><a href="eigenvalues-and-eigenvectors.html#higher-dimensional-matrices"><i class="fa fa-check"></i>Higher dimensional matrices</a></li>
+</ul></li>
+<li class="chapter" data-level="3.2" data-path="eigenvalues-and-eigenvectors.html"><a href="eigenvalues-and-eigenvectors.html#special-cases-and-complications"><i class="fa fa-check"></i><b>3.2</b> Special Cases and Complications</a>
+<ul>
+<li class="chapter" data-level="" data-path="eigenvalues-and-eigenvectors.html"><a href="eigenvalues-and-eigenvectors.html#diagonal-and-triangular-matrices"><i class="fa fa-check"></i>Diagonal and triangular matrices</a></li>
+<li class="chapter" data-level="" data-path="eigenvalues-and-eigenvectors.html"><a href="eigenvalues-and-eigenvectors.html#the-trace"><i class="fa fa-check"></i>The trace</a></li>
+<li class="chapter" data-level="" data-path="eigenvalues-and-eigenvectors.html"><a href="eigenvalues-and-eigenvectors.html#complications"><i class="fa fa-check"></i>Complications</a></li>
+<li class="chapter" data-level="" data-path="eigenvalues-and-eigenvectors.html"><a href="eigenvalues-and-eigenvectors.html#eigenvalues-of-a-transpose"><i class="fa fa-check"></i>Eigenvalues of a transpose</a></li>
+<li class="chapter" data-level="" data-path="eigenvalues-and-eigenvectors.html"><a href="eigenvalues-and-eigenvectors.html#matrix-powers"><i class="fa fa-check"></i>Matrix powers</a></li>
+</ul></li>
+<li class="chapter" data-level="3.3" data-path="eigenvalues-and-eigenvectors.html"><a href="eigenvalues-and-eigenvectors.html#application-the-leslie-matrix"><i class="fa fa-check"></i><b>3.3</b> Application: The Leslie Matrix</a></li>
+<li class="chapter" data-level="3.4" data-path="eigenvalues-and-eigenvectors.html"><a href="eigenvalues-and-eigenvectors.html#graphs-and-adjacency-matrices"><i class="fa fa-check"></i><b>3.4</b> Graphs and Adjacency Matrices</a>
+<ul>
+<li class="chapter" data-level="" data-path="eigenvalues-and-eigenvectors.html"><a href="eigenvalues-and-eigenvectors.html#adjacency-matrices"><i class="fa fa-check"></i>Adjacency matrices</a></li>
+<li class="chapter" data-level="" data-path="eigenvalues-and-eigenvectors.html"><a href="eigenvalues-and-eigenvectors.html#directed-adjacency-matrices"><i class="fa fa-check"></i>Directed adjacency matrices</a></li>
+<li class="chapter" data-level="" data-path="eigenvalues-and-eigenvectors.html"><a href="eigenvalues-and-eigenvectors.html#the-directed-graph-of-a-tournament"><i class="fa fa-check"></i>The directed graph of a tournament</a></li>
+</ul></li>
+<li class="chapter" data-level="3.5" data-path="eigenvalues-and-eigenvectors.html"><a href="eigenvalues-and-eigenvectors.html#random-surfers-and-stochastic-matrices"><i class="fa fa-check"></i><b>3.5</b> Random surfers and Stochastic Matrices</a>
+<ul>
+<li class="chapter" data-level="" data-path="eigenvalues-and-eigenvectors.html"><a href="eigenvalues-and-eigenvectors.html#stochastic-matrices"><i class="fa fa-check"></i>Stochastic matrices</a></li>
+<li class="chapter" data-level="" data-path="eigenvalues-and-eigenvectors.html"><a href="eigenvalues-and-eigenvectors.html#markov-chains"><i class="fa fa-check"></i>Markov Chains</a></li>
+<li class="chapter" data-level="" data-path="eigenvalues-and-eigenvectors.html"><a href="eigenvalues-and-eigenvectors.html#why-is-1-always-an-eigenvalue"><i class="fa fa-check"></i>Why is 1 always an eigenvalue?</a></li>
+</ul></li>
+<li class="chapter" data-level="3.6" data-path="eigenvalues-and-eigenvectors.html"><a href="eigenvalues-and-eigenvectors.html#the-markov-and-oracle-ranking-methods"><i class="fa fa-check"></i><b>3.6</b> The Markov and Oracle Ranking Methods</a>
+<ul>
+<li class="chapter" data-level="" data-path="eigenvalues-and-eigenvectors.html"><a href="eigenvalues-and-eigenvectors.html#the-markov-method"><i class="fa fa-check"></i>The Markov method</a></li>
+<li class="chapter" data-level="" data-path="eigenvalues-and-eigenvectors.html"><a href="eigenvalues-and-eigenvectors.html#the-oracle-method"><i class="fa fa-check"></i>The Oracle method</a></li>
+<li class="chapter" data-level="" data-path="eigenvalues-and-eigenvectors.html"><a href="eigenvalues-and-eigenvectors.html#modifications"><i class="fa fa-check"></i>Modifications</a></li>
+</ul></li>
+<li class="chapter" data-level="3.7" data-path="eigenvalues-and-eigenvectors.html"><a href="eigenvalues-and-eigenvectors.html#exercises-2"><i class="fa fa-check"></i><b>3.7</b> Exercises</a></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="orthogonality.html"><a href="orthogonality.html"><i class="fa fa-check"></i><b>4</b> Orthogonality</a>
+<ul>
+<li class="chapter" data-level="4.1" data-path="orthogonality.html"><a href="orthogonality.html#ILO"><i class="fa fa-check"></i><b>4.1</b> Inner Product, Length, and Orthogonality</a>
+<ul>
+<li class="chapter" data-level="" data-path="orthogonality.html"><a href="orthogonality.html#distance-in-mathbbrn"><i class="fa fa-check"></i>Distance in <span class="math inline">\(\mathbb{R}^n\)</span></a></li>
+</ul></li>
+<li class="chapter" data-level="4.2" data-path="orthogonality.html"><a href="orthogonality.html#orthogonal-subspaces"><i class="fa fa-check"></i><b>4.2</b> Orthogonal Subspaces</a>
+<ul>
+<li class="chapter" data-level="" data-path="orthogonality.html"><a href="orthogonality.html#the-row-space-and-nullspace-of-a-matrix"><i class="fa fa-check"></i>The row space and nullspace of a matrix</a></li>
+</ul></li>
+<li class="chapter" data-level="4.3" data-path="orthogonality.html"><a href="orthogonality.html#orthogonal-and-orthonormal-sets"><i class="fa fa-check"></i><b>4.3</b> Orthogonal and Orthonormal Sets</a>
+<ul>
+<li class="chapter" data-level="" data-path="orthogonality.html"><a href="orthogonality.html#orthogonal-projections"><i class="fa fa-check"></i>Orthogonal projections</a></li>
+<li class="chapter" data-level="" data-path="orthogonality.html"><a href="orthogonality.html#orthogonal-matrices"><i class="fa fa-check"></i>Orthogonal matrices</a></li>
+</ul></li>
+<li class="chapter" data-level="4.4" data-path="orthogonality.html"><a href="orthogonality.html#OProj"><i class="fa fa-check"></i><b>4.4</b> Orthogonal Projections</a></li>
+<li class="chapter" data-level="4.5" data-path="orthogonality.html"><a href="orthogonality.html#orthogonalization"><i class="fa fa-check"></i><b>4.5</b> Orthogonalization</a>
+<ul>
+<li class="chapter" data-level="" data-path="orthogonality.html"><a href="orthogonality.html#qr-factorization"><i class="fa fa-check"></i>QR-factorization</a></li>
+</ul></li>
+<li class="chapter" data-level="4.6" data-path="orthogonality.html"><a href="orthogonality.html#exercises-3"><i class="fa fa-check"></i><b>4.6</b> Exercises</a></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="regression.html"><a href="regression.html"><i class="fa fa-check"></i><b>5</b> Regression</a>
+<ul>
+<li class="chapter" data-level="5.1" data-path="regression.html"><a href="regression.html#LSQP"><i class="fa fa-check"></i><b>5.1</b> Least Squares Problems</a>
+<ul>
+<li class="chapter" data-level="" data-path="regression.html"><a href="regression.html#least-squares-error"><i class="fa fa-check"></i>Least squares error</a></li>
+<li class="chapter" data-level="" data-path="regression.html"><a href="regression.html#least-squares-and-the-qr-factorization"><i class="fa fa-check"></i>Least squares and the QR-factorization</a></li>
+</ul></li>
+<li class="chapter" data-level="5.2" data-path="regression.html"><a href="regression.html#application-the-massey-method"><i class="fa fa-check"></i><b>5.2</b> Application: The Massey Method</a>
+<ul>
+<li class="chapter" data-level="" data-path="regression.html"><a href="regression.html#adjustments"><i class="fa fa-check"></i>Adjustments</a></li>
+<li class="chapter" data-level="" data-path="regression.html"><a href="regression.html#offensive-and-defensive-ratings"><i class="fa fa-check"></i>Offensive and defensive ratings</a></li>
+</ul></li>
+<li class="chapter" data-level="5.3" data-path="regression.html"><a href="regression.html#LSRSec"><i class="fa fa-check"></i><b>5.3</b> Least Squares Regression</a>
+<ul>
+<li class="chapter" data-level="" data-path="regression.html"><a href="regression.html#multilinear-regression"><i class="fa fa-check"></i>Multilinear regression</a></li>
+</ul></li>
+<li class="chapter" data-level="5.4" data-path="regression.html"><a href="regression.html#CorSec"><i class="fa fa-check"></i><b>5.4</b> Correlation</a>
+<ul>
+<li class="chapter" data-level="" data-path="regression.html"><a href="regression.html#some-notation-and-a-formula"><i class="fa fa-check"></i>Some notation and a formula</a></li>
+<li class="chapter" data-level="" data-path="regression.html"><a href="regression.html#correlation-in-r"><i class="fa fa-check"></i>Correlation in R</a></li>
+</ul></li>
+<li class="chapter" data-level="5.5" data-path="regression.html"><a href="regression.html#formulas-for-least-squares-regression"><i class="fa fa-check"></i><b>5.5</b> Formulas for Least Squares Regression</a>
+<ul>
+<li class="chapter" data-level="" data-path="regression.html"><a href="regression.html#the-coefficient-of-determination"><i class="fa fa-check"></i>The coefficient of determination</a></li>
+</ul></li>
+<li class="chapter" data-level="5.6" data-path="regression.html"><a href="regression.html#uncertainty-in-least-squares"><i class="fa fa-check"></i><b>5.6</b> Uncertainty in Least Squares</a>
+<ul>
+<li class="chapter" data-level="" data-path="regression.html"><a href="regression.html#confidence-and-prediction-intervals-for-responses"><i class="fa fa-check"></i>Confidence and prediction intervals for responses</a></li>
+<li class="chapter" data-level="" data-path="regression.html"><a href="regression.html#checking-assumptions"><i class="fa fa-check"></i>Checking assumptions</a></li>
+</ul></li>
+<li class="chapter" data-level="5.7" data-path="regression.html"><a href="regression.html#multilinear-regression-1"><i class="fa fa-check"></i><b>5.7</b> Multilinear Regression</a>
+<ul>
+<li class="chapter" data-level="" data-path="regression.html"><a href="regression.html#r-and-multilinear-regression"><i class="fa fa-check"></i>R and multilinear regression</a></li>
+<li class="chapter" data-level="" data-path="regression.html"><a href="regression.html#indicator-variables"><i class="fa fa-check"></i>Indicator variables</a></li>
+<li class="chapter" data-level="" data-path="regression.html"><a href="regression.html#fitting-polynomials"><i class="fa fa-check"></i>Fitting polynomials</a></li>
+<li class="chapter" data-level="" data-path="regression.html"><a href="regression.html#interactions"><i class="fa fa-check"></i>Interactions</a></li>
+</ul></li>
+<li class="chapter" data-level="5.8" data-path="regression.html"><a href="regression.html#model-selection"><i class="fa fa-check"></i><b>5.8</b> Model Selection</a>
+<ul>
+<li class="chapter" data-level="" data-path="regression.html"><a href="regression.html#best-subsets-regression"><i class="fa fa-check"></i>Best subsets regression</a></li>
+<li class="chapter" data-level="" data-path="regression.html"><a href="regression.html#stepwise-regression"><i class="fa fa-check"></i>Stepwise regression</a></li>
+<li class="chapter" data-level="" data-path="regression.html"><a href="regression.html#some-warnings"><i class="fa fa-check"></i>Some warnings</a></li>
+</ul></li>
+<li class="chapter" data-level="5.9" data-path="regression.html"><a href="regression.html#Logistic"><i class="fa fa-check"></i><b>5.9</b> Logistic Regression</a>
+<ul>
+<li class="chapter" data-level="" data-path="regression.html"><a href="regression.html#logistic-regression-with-multiple-independent-variables"><i class="fa fa-check"></i>Logistic regression with multiple independent variables</a></li>
+<li class="chapter" data-level="" data-path="regression.html"><a href="regression.html#likelihood-and-deviance"><i class="fa fa-check"></i>Likelihood and deviance</a></li>
+</ul></li>
+<li class="chapter" data-level="5.10" data-path="regression.html"><a href="regression.html#GDA"><i class="fa fa-check"></i><b>5.10</b> Gradient Descent</a>
+<ul>
+<li class="chapter" data-level="" data-path="regression.html"><a href="regression.html#functions-of-several-variables"><i class="fa fa-check"></i>Functions of several variables</a></li>
+<li class="chapter" data-level="" data-path="regression.html"><a href="regression.html#optimizing-parameters"><i class="fa fa-check"></i>Optimizing parameters</a></li>
+</ul></li>
+<li class="chapter" data-level="5.11" data-path="regression.html"><a href="regression.html#exercises-4"><i class="fa fa-check"></i><b>5.11</b> Exercises</a></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="svd-and-pca.html"><a href="svd-and-pca.html"><i class="fa fa-check"></i><b>6</b> SVD and PCA</a>
+<ul>
+<li class="chapter" data-level="6.1" data-path="svd-and-pca.html"><a href="svd-and-pca.html#DSM"><i class="fa fa-check"></i><b>6.1</b> Diagonalizable and Symmetric Matrices</a>
+<ul>
+<li class="chapter" data-level="" data-path="svd-and-pca.html"><a href="svd-and-pca.html#diagonalizable-matrices"><i class="fa fa-check"></i>Diagonalizable matrices</a></li>
+<li class="chapter" data-level="" data-path="svd-and-pca.html"><a href="svd-and-pca.html#symmetric-matrices"><i class="fa fa-check"></i>Symmetric matrices</a></li>
+<li class="chapter" data-level="" data-path="svd-and-pca.html"><a href="svd-and-pca.html#eigenvalues-and-eigenvectors-of-symmetric-matrices"><i class="fa fa-check"></i>Eigenvalues and eigenvectors of symmetric matrices</a></li>
+<li class="chapter" data-level="" data-path="svd-and-pca.html"><a href="svd-and-pca.html#orthogonal-diagonalization"><i class="fa fa-check"></i>Orthogonal diagonalization</a></li>
+</ul></li>
+<li class="chapter" data-level="6.2" data-path="svd-and-pca.html"><a href="svd-and-pca.html#quadratic-forms-and-constrained-optimization"><i class="fa fa-check"></i><b>6.2</b> Quadratic Forms and Constrained Optimization</a>
+<ul>
+<li class="chapter" data-level="" data-path="svd-and-pca.html"><a href="svd-and-pca.html#change-of-variables"><i class="fa fa-check"></i>Change of variables</a></li>
+<li class="chapter" data-level="" data-path="svd-and-pca.html"><a href="svd-and-pca.html#classifying-quadratic-forms"><i class="fa fa-check"></i>Classifying quadratic forms</a></li>
+<li class="chapter" data-level="" data-path="svd-and-pca.html"><a href="svd-and-pca.html#constrained-optimization"><i class="fa fa-check"></i>Constrained optimization</a></li>
+</ul></li>
+<li class="chapter" data-level="6.3" data-path="svd-and-pca.html"><a href="svd-and-pca.html#SVD"><i class="fa fa-check"></i><b>6.3</b> The Singular Value Decomposition</a>
+<ul>
+<li class="chapter" data-level="" data-path="svd-and-pca.html"><a href="svd-and-pca.html#singular-values"><i class="fa fa-check"></i>Singular values</a></li>
+<li class="chapter" data-level="" data-path="svd-and-pca.html"><a href="svd-and-pca.html#svd-with-r"><i class="fa fa-check"></i>SVD with R</a></li>
+</ul></li>
+<li class="chapter" data-level="6.4" data-path="svd-and-pca.html"><a href="svd-and-pca.html#applications-of-the-svd"><i class="fa fa-check"></i><b>6.4</b> Applications of the SVD</a>
+<ul>
+<li class="chapter" data-level="" data-path="svd-and-pca.html"><a href="svd-and-pca.html#movie-reviews-and-latent-factors"><i class="fa fa-check"></i>Movie reviews and latent factors</a></li>
+</ul></li>
+<li class="chapter" data-level="6.5" data-path="svd-and-pca.html"><a href="svd-and-pca.html#principal-component-analysis"><i class="fa fa-check"></i><b>6.5</b> Principal Component Analysis</a>
+<ul>
+<li class="chapter" data-level="" data-path="svd-and-pca.html"><a href="svd-and-pca.html#pca-in-r"><i class="fa fa-check"></i>PCA in R</a></li>
+<li class="chapter" data-level="" data-path="svd-and-pca.html"><a href="svd-and-pca.html#biplots"><i class="fa fa-check"></i>Biplots</a></li>
+<li class="chapter" data-level="" data-path="svd-and-pca.html"><a href="svd-and-pca.html#scaling"><i class="fa fa-check"></i>Scaling</a></li>
+</ul></li>
+<li class="chapter" data-level="6.6" data-path="svd-and-pca.html"><a href="svd-and-pca.html#exercises-5"><i class="fa fa-check"></i><b>6.6</b> Exercises</a></li>
+</ul></li>
+<li class="chapter" data-level="7" data-path="additional-topics.html"><a href="additional-topics.html"><i class="fa fa-check"></i><b>7</b> Additional Topics</a>
+<ul>
+<li class="chapter" data-level="7.1" data-path="additional-topics.html"><a href="additional-topics.html#k-means-clustering"><i class="fa fa-check"></i><b>7.1</b> <span class="math inline">\(k\)</span>-means Clustering</a>
+<ul>
+<li class="chapter" data-level="" data-path="additional-topics.html"><a href="additional-topics.html#k-means-clustering-1"><i class="fa fa-check"></i><span class="math inline">\(k\)</span>-means clustering</a></li>
+<li class="chapter" data-level="" data-path="additional-topics.html"><a href="additional-topics.html#cluster-optimization"><i class="fa fa-check"></i>Cluster optimization</a></li>
+<li class="chapter" data-level="" data-path="additional-topics.html"><a href="additional-topics.html#clustering-for-classification"><i class="fa fa-check"></i>Clustering for classification</a></li>
+</ul></li>
+<li class="chapter" data-level="7.2" data-path="additional-topics.html"><a href="additional-topics.html#collaborative-filtering"><i class="fa fa-check"></i><b>7.2</b> Collaborative Filtering</a>
+<ul>
+<li class="chapter" data-level="" data-path="additional-topics.html"><a href="additional-topics.html#similarity-measures"><i class="fa fa-check"></i>Similarity measures</a></li>
+<li class="chapter" data-level="" data-path="additional-topics.html"><a href="additional-topics.html#collaborative-filtering-with-recommenderlab"><i class="fa fa-check"></i>Collaborative filtering with recommenderlab</a></li>
+</ul></li>
+<li class="chapter" data-level="7.3" data-path="additional-topics.html"><a href="additional-topics.html#decision-tree-classification"><i class="fa fa-check"></i><b>7.3</b> Decision Tree Classification</a>
+<ul>
+<li class="chapter" data-level="" data-path="additional-topics.html"><a href="additional-topics.html#decision-trees-with-r"><i class="fa fa-check"></i>Decision trees with R</a></li>
+<li class="chapter" data-level="" data-path="additional-topics.html"><a href="additional-topics.html#random-forests"><i class="fa fa-check"></i>Random Forests</a></li>
+</ul></li>
+<li class="chapter" data-level="7.4" data-path="additional-topics.html"><a href="additional-topics.html#support-vector-machines"><i class="fa fa-check"></i><b>7.4</b> Support Vector Machines</a>
+<ul>
+<li class="chapter" data-level="" data-path="additional-topics.html"><a href="additional-topics.html#support-vector-machines-in-r"><i class="fa fa-check"></i>Support vector machines in R</a></li>
+</ul></li>
+<li class="chapter" data-level="7.5" data-path="additional-topics.html"><a href="additional-topics.html#exercises-6"><i class="fa fa-check"></i><b>7.5</b> Exercises</a></li>
+</ul></li>
+<li class="appendix"><span><b>Appendices</b></span></li>
+<li class="chapter" data-level="A" data-path="MVCA.html"><a href="MVCA.html"><i class="fa fa-check"></i><b>A</b> An Introduction to Multivariable Calculus</a>
+<ul>
+<li class="chapter" data-level="A.1" data-path="MVCA.html"><a href="MVCA.html#functions-of-several-variables-1"><i class="fa fa-check"></i><b>A.1</b> Functions of several variables</a>
+<ul>
+<li class="chapter" data-level="" data-path="MVCA.html"><a href="MVCA.html#minima-and-maxima"><i class="fa fa-check"></i>Minima and maxima</a></li>
+<li class="chapter" data-level="" data-path="MVCA.html"><a href="MVCA.html#limits-and-continuity"><i class="fa fa-check"></i>Limits and continuity</a></li>
+</ul></li>
+<li class="chapter" data-level="A.2" data-path="MVCA.html"><a href="MVCA.html#partial-derivatives"><i class="fa fa-check"></i><b>A.2</b> Partial Derivatives</a>
+<ul>
+<li class="chapter" data-level="" data-path="MVCA.html"><a href="MVCA.html#higher-order-partial-derivatives"><i class="fa fa-check"></i>Higher order partial derivatives</a></li>
+</ul></li>
+<li class="chapter" data-level="A.3" data-path="MVCA.html"><a href="MVCA.html#directional-derivatives"><i class="fa fa-check"></i><b>A.3</b> Directional Derivatives</a>
+<ul>
+<li class="chapter" data-level="" data-path="MVCA.html"><a href="MVCA.html#the-gradient-vector"><i class="fa fa-check"></i>The gradient vector</a></li>
+</ul></li>
+<li class="chapter" data-level="A.4" data-path="MVCA.html"><a href="MVCA.html#optimization"><i class="fa fa-check"></i><b>A.4</b> Optimization</a>
+<ul>
+<li class="chapter" data-level="" data-path="MVCA.html"><a href="MVCA.html#classifying-critical-points"><i class="fa fa-check"></i>Classifying critical points</a></li>
+</ul></li>
+<li class="chapter" data-level="A.5" data-path="MVCA.html"><a href="MVCA.html#exercises-7"><i class="fa fa-check"></i><b>A.5</b> Exercises</a></li>
+</ul></li>
+<li class="chapter" data-level="B" data-path="the-igraph-and-ggally-packages.html"><a href="the-igraph-and-ggally-packages.html"><i class="fa fa-check"></i><b>B</b> The iGraph and GGally Packages</a>
+<ul>
+<li class="chapter" data-level="" data-path="the-igraph-and-ggally-packages.html"><a href="the-igraph-and-ggally-packages.html#ggally"><i class="fa fa-check"></i>GGally</a></li>
+</ul></li>
+<li class="chapter" data-level="C" data-path="packages.html"><a href="packages.html"><i class="fa fa-check"></i><b>C</b> Packages</a></li>
+<li class="chapter" data-level="" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i>References</a></li>
+<li class="divider"></li>
+<li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Linear Algebra for Data Science</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="orthogonality" class="section level1 hasAnchor" number="4">
+<h1><span class="header-section-number">Chapter 4</span> Orthogonality<a href="orthogonality.html#orthogonality" class="anchor-section" aria-label="Anchor link to header"></a></h1>
+<p>Several of our future topics will rely heavily on a property called <em>orthogonality</em>. These topics include least squares, the singular value decomposition, and principal component analysis. In this chapter, we will lay the groundwork for those discussions.</p>
+<div id="ILO" class="section level2 hasAnchor" number="4.1">
+<h2><span class="header-section-number">4.1</span> Inner Product, Length, and Orthogonality<a href="orthogonality.html#ILO" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Now we want to define the <em>inner product</em> of two vectors.</p>
+<div class="defbox">
+<div class="definition">
+<p><span id="def:unlabeled-div-65" class="definition"><strong>Definition 4.1  </strong></span>Let <span class="math inline">\(\mathbf{u}\)</span> and <span class="math inline">\(\mathbf{v}\)</span> be vectors in <span class="math inline">\(\mathbb{R}^n\)</span>, with</p>
+<p><span class="math display">\[\mathbf{u}=\begin{bmatrix}u_1\\u_2\\\vdots\\u_n\end{bmatrix},\mathbf{v}=\begin{bmatrix}v_1\\v_2\\\vdots\\v_n\end{bmatrix}.\]</span></p>
+<p>Then the <strong>inner</strong> or <strong>dot product</strong> of <span class="math inline">\(\mathbf{u}\)</span> and <span class="math inline">\(\mathbf{v}\)</span>, denoted <span class="math inline">\(\mathbf{u}\cdot\mathbf{v}\)</span> is</p>
+<p><span class="math display">\[\mathbf{u}\cdot\mathbf{v}=\mathbf{u}^T\mathbf{v}=\begin{bmatrix}u_1 &amp; u_2 &amp; \cdots &amp; u_n\end{bmatrix}\begin{bmatrix}v_1\\v_2\\\vdots\\v_n\end{bmatrix}=u_1v_1+u_2v_2+\cdots+u_nv_n.\]</span></p>
+</div>
+</div>
+<p>We’ve already mentioned the dot product when we defined matrix multiplication, but now we are going to see a few more of its properties. The ability to write it as a matrix product involving the transpose of one of the vectors is particularly useful.</p>
+<div style="page-break-after: always;"></div>
+<div class="examplebox">
+<div class="example">
+<p><span id="exm:unlabeled-div-66" class="example"><strong>Example 4.1  </strong></span>With</p>
+<p><span class="math display">\[\mathbf{u}=\begin{bmatrix}1\\-2\\3\end{bmatrix},\mathbf{v}=\begin{bmatrix}4\\7\\5\end{bmatrix},\]</span></p>
+<p>we have</p>
+<p><span class="math display">\[\mathbf{u}\cdot\mathbf{v}=(1)(4)+(-2)(7)+(3)(5)=5.\]</span></p>
+</div>
+</div>
+<p>Note that by commutativity of multiplication, <span class="math inline">\(\mathbf{u}\cdot \mathbf{v}=\mathbf{v}\cdot\mathbf{u}\)</span>. Here is a larger list of the properties.</p>
+<div class="theorembox">
+<div class="theorem">
+<p><span id="thm:unlabeled-div-67" class="theorem"><strong>Theorem 4.1  </strong></span>Let <span class="math inline">\(\mathbf{u}, \mathbf{v},\)</span> and <span class="math inline">\(\mathbf{w}\)</span> be vectors in <span class="math inline">\(\mathbb{R}^n\)</span>, and let <span class="math inline">\(c\)</span> be a scalar. Then</p>
+<ol style="list-style-type: decimal">
+<li><p><span class="math inline">\(\mathbf{u}\cdot \mathbf{v}=\mathbf{v}\cdot \mathbf{u}\)</span></p></li>
+<li><p><span class="math inline">\((\mathbf{u}+\mathbf{v})\cdot \mathbf{w}=\mathbf{u}\cdot \mathbf{w}+\mathbf{v}\cdot \mathbf{w}\)</span></p></li>
+<li><p><span class="math inline">\((c\mathbf{u})\cdot \mathbf{v}=c(\mathbf{u}\cdot \mathbf{v})=\mathbf{u}\cdot(c\mathbf{v})\)</span></p></li>
+<li><p><span class="math inline">\(\mathbf{u}\cdot \mathbf{u}\geq 0\)</span>, and <span class="math inline">\(\mathbf{u}\cdot\mathbf{u}=0\)</span> if and only if <span class="math inline">\(\mathbf{u}=\mathbf{0}.\)</span></p></li>
+</ol>
+</div>
+</div>
+<p>The last property holds because if <span class="math inline">\(\mathbf{u}=(u_1,u_2,\dots,u_n)\)</span>, then</p>
+<p><span class="math display">\[\mathbf{u}\cdot \mathbf{u}=u_1u_1+u_2u_2+\cdots+u_nu_n=u_1^2+u_2^2+\cdots+u_n^2,\]</span></p>
+<p>which is never negative, and can only be zero if all the <span class="math inline">\(u_i\)</span> are zero. You should recognize <span class="math inline">\(\mathbf{u}\cdot \mathbf{u}\)</span> as the magnitude of <span class="math inline">\(\mathbf{u}\)</span> squared.</p>
+<div class="theorembox">
+<div class="theorem">
+<p><span id="thm:unlabeled-div-68" class="theorem"><strong>Theorem 4.2  </strong></span>Let <span class="math inline">\(\mathbf{v}\)</span> be a vector in <span class="math inline">\(\mathbb{R}^n\)</span>. The magnitude or <em>norm</em> of <span class="math inline">\(\mathbf{v}\)</span> is</p>
+<p><span class="math display">\[|\mathbf{v}|=\sqrt{\mathbf{v}\cdot \mathbf{v}}=\sqrt{v_1^2+v_2^2+\cdots+v_n^2},\]</span></p>
+<p>and</p>
+<p><span class="math display">\[\mathbf{v}\cdot \mathbf{v}=\mathbf{v}^T\mathbf{v}=|\mathbf{v}|^2.\]</span></p>
+</div>
+</div>
+<p>If we multiply a vector by a constant <span class="math inline">\(c\)</span>, how does its length change?</p>
+<p><span class="math display">\[|c\mathbf{v}|=\sqrt{c^2v_1^2+c^2v_2^2+\cdots+c^2v_n^2}=\sqrt{c^2(v_1^2+v_2^2+\cdots +v_n^2)}=|c||\mathbf{v}|.\]</span></p>
+<p>A <em>unit vector</em> is a vector whose length is 1. They are handy things to have. If <span class="math inline">\(\mathbf{v}\)</span> is a nonzero vector, then</p>
+<p><span class="math display">\[\mathbf{u}=\frac{1}{|\mathbf{v}|}\mathbf{v}\]</span></p>
+<p>is a unit vector in the direction of <span class="math inline">\(\mathbf{v}\)</span>.</p>
+<div class="examplebox">
+<div class="example">
+<p><span id="exm:unlabeled-div-69" class="example"><strong>Example 4.2  </strong></span>Let <span class="math inline">\(\mathbf{v}=(2,-1,3).\)</span> Find a unit vector in the direction of <span class="math inline">\(\mathbf{v}.\)</span></p>
+<p>With <span class="math inline">\(|\mathbf{v}|=\sqrt{2^2+(-1)^2+3^2}=\sqrt{4+1+9}=\sqrt{14}\)</span>, we have</p>
+<p><span class="math display">\[\mathbf{u}=\frac{1}{\sqrt{14}}(2,-1,3)=\left(\frac{2}{\sqrt{14}},-\frac{1}{\sqrt{14}},\frac{3}{\sqrt{14}}\right).\]</span></p>
+<p>Let’s check:</p>
+<p><span class="math display">\[|\mathbf{u}|^2=\frac{4}{14}+\frac{1}{14}+\frac{9}{14}=1,\]</span></p>
+<p>so <span class="math inline">\(|\mathbf{u}|=1\)</span>.</p>
+</div>
+</div>
+<div id="distance-in-mathbbrn" class="section level3 unnumbered hasAnchor">
+<h3>Distance in <span class="math inline">\(\mathbb{R}^n\)</span><a href="orthogonality.html#distance-in-mathbbrn" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Let <span class="math inline">\(\mathbf{u}=(u_1,u_2,\dots,u_n)\)</span> and <span class="math inline">\(\mathbf{v}=(v_1,v_2,\dots,v_n)\)</span> be vectors in <span class="math inline">\(\mathbb{R}^n\)</span>. Then the distance between (the tips of) <span class="math inline">\(\mathbf{u}\)</span> and <span class="math inline">\(\mathbf{v}\)</span> is given by the distance formula:</p>
+<p><span class="math display">\[\begin{align*}
+\text{dist}(\mathbf{u},\mathbf{v})&amp;=\sqrt{(u_1-v_1)^2+(u_2-v_2)^2+\cdots+(u_n-v_n)^2}\\
+&amp;=\sqrt{(\mathbf{u}-\mathbf{v})\cdot (\mathbf{u}-\mathbf{v})}\\
+&amp;=|\mathbf{u}-\mathbf{v}|.
+\end{align*}\]</span></p>
+<p>The inner product between two vectors tells us something about their relationship. The following theorem gives us that relationship.</p>
+<div class="theorembox">
+<div class="theorem">
+<p><span id="thm:unlabeled-div-70" class="theorem"><strong>Theorem 4.3  </strong></span>Let <span class="math inline">\(\mathbf{u}\)</span> and <span class="math inline">\(\mathbf{v}\)</span> be two vectors in <span class="math inline">\(\mathbb{R}^n\)</span>. Then</p>
+<p><span class="math display" id="eq:lawofcosines">\[\begin{equation}
+\mathbf{u}\cdot\mathbf{v}=|\mathbf{u}||\mathbf{v}|\cos\theta,
+\tag{4.1}
+\end{equation}\]</span></p>
+<p>where <span class="math inline">\(\theta\)</span> is the angle between <span class="math inline">\(\mathbf{u}\)</span> and <span class="math inline">\(\mathbf{v}.\)</span></p>
+</div>
+</div>
+<p>Equation <a href="orthogonality.html#eq:lawofcosines">(4.1)</a> is often called the <em>Law of Cosines</em>, and you can derive it from that trigonometric equation. Note that if <span class="math inline">\(\mathbf{u}\)</span> and <span class="math inline">\(\mathbf{v}\)</span> are perpendicular, then <span class="math inline">\(\theta=90^\circ, \cos\theta=0,\)</span> and <span class="math inline">\(\mathbf{u}\cdot \mathbf{v}=0.\)</span> Similarly, if <span class="math inline">\(\mathbf{u}\)</span> and <span class="math inline">\(\mathbf{v}\)</span> are nonzero vectors and <span class="math inline">\(\theta\neq 90^\circ,\)</span> then <span class="math inline">\(\mathbf{u}\cdot \mathbf{v}\neq 0\)</span>.</p>
+<div class="defbox">
+<div class="definition">
+<p><span id="def:unlabeled-div-71" class="definition"><strong>Definition 4.2  </strong></span>Two vectors <span class="math inline">\(\mathbf{u}\)</span> and <span class="math inline">\(\mathbf{v}\)</span> are <strong>orthogonal</strong> if <span class="math inline">\(\mathbf{u}\cdot\mathbf{v}=0.\)</span></p>
+</div>
+</div>
+<p>Here are some examples.</p>
+<ul>
+<li>Let <span class="math inline">\(\mathbf{u}=(1,3,2)\)</span> and <span class="math inline">\(\mathbf{v}=(2,4,1)\)</span>. Then</li>
+</ul>
+<p><span class="math display">\[\mathbf{u}\cdot \mathbf{v}=2+12+2=16,\]</span></p>
+<p>so <span class="math inline">\(\mathbf{u}\)</span> and <span class="math inline">\(\mathbf{v}\)</span> are not orthogonal.</p>
+<ul>
+<li>Let <span class="math inline">\(\mathbf{u}=(1,3,2)\)</span> and <span class="math inline">\(\mathbf{v}=(2,4,-7)\)</span>. Then</li>
+</ul>
+<p><span class="math display">\[\mathbf{u}\cdot \mathbf{v}=2+12-14=0\]</span></p>
+<p>and <span class="math inline">\(\mathbf{u}\)</span> and <span class="math inline">\(\mathbf{v}\)</span> are orthogonal.</p>
+<ul>
+<li>Note that <span class="math inline">\(\mathbf{v}\cdot\mathbf{0}=0\)</span> for any vector <span class="math inline">\(\mathbf{v}\)</span>, so the zero vector is orthogonal to every vector.</li>
+</ul>
+</div>
+</div>
+<div id="orthogonal-subspaces" class="section level2 hasAnchor" number="4.2">
+<h2><span class="header-section-number">4.2</span> Orthogonal Subspaces<a href="orthogonality.html#orthogonal-subspaces" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Remember subspaces? Important examples included the column, row, and null space of a matrix <span class="math inline">\(\mathbf{A}\)</span>. We can consider vectors that are <em>orthogonal</em> to these subspaces.</p>
+<div class="defbox">
+<div class="definition">
+<p><span id="def:unlabeled-div-72" class="definition"><strong>Definition 4.3  </strong></span>Let <span class="math inline">\(W\)</span> be a subspace of <span class="math inline">\(\mathbb{R}^n\)</span> and let <span class="math inline">\(\mathbf{v}\)</span> be a vector in <span class="math inline">\(\mathbb{R}^n\)</span>. We say that <span class="math inline">\(\mathbf{v}\)</span> is <strong>orthogonal</strong> to <span class="math inline">\(W\)</span> if
+<span class="math inline">\(\mathbf{v}\)</span> is orthogonal to every vector in <span class="math inline">\(W\)</span>. The <em>orthogonal complement</em> of <span class="math inline">\(W\)</span> is the collection of all vectors orthogonal to <span class="math inline">\(W\)</span>, and is denoted <span class="math inline">\(W^{\perp}\)</span> (read as “<span class="math inline">\(W\)</span>-perp”).</p>
+</div>
+</div>
+<p>The following theorems are useful.</p>
+<div class="theorembox">
+<div class="theorem">
+<p><span id="thm:unlabeled-div-73" class="theorem"><strong>Theorem 4.4  </strong></span>Let <span class="math inline">\(W\)</span> be a subspace of <span class="math inline">\(\mathbb{R}^n\)</span>. A vector <span class="math inline">\(\mathbf{x}\)</span> is in <span class="math inline">\(W^\perp\)</span> if and only if <span class="math inline">\(\mathbf{x}\)</span> is orthogonal to every vector in a set that spans <span class="math inline">\(W\)</span>.</p>
+</div>
+</div>
+<p>This means we can check it against a basis or any convenient spanning set. The next one tells us the structure of <span class="math inline">\(W^{\perp}.\)</span></p>
+<div class="theorembox">
+<div class="theorem">
+<p><span id="thm:unlabeled-div-74" class="theorem"><strong>Theorem 4.5  </strong></span>Let <span class="math inline">\(W\)</span> be a subspace of <span class="math inline">\(\mathbb{R}^n\)</span>. Then <span class="math inline">\(W^\perp\)</span> is a subspace of <span class="math inline">\(\mathbb{R}^n\)</span>.</p>
+</div>
+</div>
+<div id="the-row-space-and-nullspace-of-a-matrix" class="section level3 unnumbered hasAnchor">
+<h3>The row space and nullspace of a matrix<a href="orthogonality.html#the-row-space-and-nullspace-of-a-matrix" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>We can actually write <span class="math inline">\(\mathbb{R}^n\)</span> in terms of some special orthogonal subspaces. Recall that the row space of an <span class="math inline">\(m\times n\)</span> matrix <span class="math inline">\(\mathbf{A}\)</span> is the span of its row vectors, while the nullspace of <span class="math inline">\(\mathbf{A}\)</span> is the set of all vectors <span class="math inline">\(\mathbf{v}\)</span> such that <span class="math inline">\(\mathbf{A}\mathbf{v}=\mathbf{0}\)</span>.</p>
+<p>Suppose <span class="math inline">\(\mathbf{v}=(v_1,v_2,\dots,v_n)\)</span> is in <span class="math inline">\(\text{Null}(\mathbf{A})\)</span>. Then, focusing on the second row of <span class="math inline">\(\mathbf{A}\)</span> as an example,</p>
+<p><span class="math display">\[\mathbf{A}\mathbf{v}=\begin{bmatrix} &amp;  &amp;  &amp; \\a_{21} &amp; a_{22} &amp; \cdots &amp; a_{2n}\\
+&amp;&amp;&amp;\\ &amp;  &amp;  &amp; \end{bmatrix}\begin{bmatrix}v_1\\v_2\\\vdots \\v_n\end{bmatrix}=\begin{bmatrix}0\\\mathbf{0}\\ \vdots \\ 0\end{bmatrix}.\]</span></p>
+<p>The <span class="math inline">\(i\)</span>th entry in the product is the product of the <span class="math inline">\(i\)</span>th row of <span class="math inline">\(\mathbf{A}\)</span> with <span class="math inline">\(\mathbf{v}\)</span>. This means that <span class="math inline">\(\mathbf{v}\)</span> is orthogonal to each row vector of <span class="math inline">\(\mathbf{A}\)</span>. Since the rows of <span class="math inline">\(\mathbf{A}\)</span> span the row space of <span class="math inline">\(\mathbf{A}\)</span>, every vector in <span class="math inline">\(\text{Null}(\mathbf{A})\)</span> is in <span class="math inline">\(\text{Row}(\mathbf{A})^{\perp}\)</span>.</p>
+<p>We get the following theorem.</p>
+<div class="theorembox">
+<div class="theorem">
+<p><span id="thm:MatSubspaces" class="theorem"><strong>Theorem 4.6  </strong></span>Let <span class="math inline">\(\mathbf{A}\)</span> be an <span class="math inline">\(m\times n\)</span> matrix. Then</p>
+<p><span class="math display">\[(\textrm{Row}(\mathbf{A}))^\perp=\textrm{Null}(\mathbf{A})\]</span></p>
+<p>and</p>
+<p><span class="math display">\[(\textrm{Col}(\mathbf{A}))^{\perp}=\textrm{Null}(\mathbf{A}^T).\]</span></p>
+</div>
+</div>
+<p>The second statement is true because the columns of <span class="math inline">\(\mathbf{A}\)</span> become the rows of <span class="math inline">\(\mathbf{A}^T\)</span>. These theorems seem a little abstract now, but they will come in handy in the future.</p>
+</div>
+</div>
+<div id="orthogonal-and-orthonormal-sets" class="section level2 hasAnchor" number="4.3">
+<h2><span class="header-section-number">4.3</span> Orthogonal and Orthonormal Sets<a href="orthogonality.html#orthogonal-and-orthonormal-sets" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>In Section <a href="orthogonality.html#ILO">4.1</a>, we defined what it meant for two vectors to be orthogonal. In this section, we’re going to talk about sets of mutually orthogonal vectors. First, a definition.</p>
+<div class="defbox">
+<div class="definition">
+<p><span id="def:unlabeled-div-75" class="definition"><strong>Definition 4.4  </strong></span>A set of vectors <span class="math inline">\(\{\mathbf{u}_1,\mathbf{u}_2,\dots,\mathbf{u}_p\}\)</span> in <span class="math inline">\(\mathbb{R}^n\)</span> is said to be an <strong>orthogonal set</strong> if each pair of distinct vectors from the set is orthogonal, that is, if <span class="math inline">\(\mathbf{u}_i\cdot\mathbf{u}_j=0\)</span> whenever <span class="math inline">\(i\neq j\)</span>.</p>
+</div>
+</div>
+<div class="examplebox">
+<div class="example">
+<p><span id="exm:orthoset" class="example"><strong>Example 4.3  </strong></span>If</p>
+<p><span class="math display">\[\mathbf{u}_1=\begin{bmatrix}3\\1\\1\end{bmatrix},\mathbf{u}_2=\begin{bmatrix}-1\\2\\1\end{bmatrix},\text{ and }\mathbf{u}_3=\begin{bmatrix}-1\\-4\\7\end{bmatrix},\]</span></p>
+<p>we have</p>
+<p><span class="math display">\[\mathbf{u}_1\cdot \mathbf{u}_2=(3)(-1)+(1)(2)+(1)(1)=0,\]</span></p>
+<p><span class="math display">\[\mathbf{u}_1\cdot\mathbf{u}_3=(3)(-1)+(1)(-4)+(1)(7)=0,\]</span></p>
+<p>and</p>
+<p><span class="math display">\[\mathbf{u}_2\cdot \mathbf{u}_3=(-1)(-1)+(2)(-4)+(1)(7)=0.\]</span></p>
+</div>
+</div>
+<p>It shouldn’t be surprising that orthogonal sets are linearly independent. Here’s a theorem.</p>
+<div class="theorembox">
+<div class="theorem">
+<p><span id="thm:unlabeled-div-76" class="theorem"><strong>Theorem 4.7  </strong></span>If <span class="math inline">\(S=\{\mathbf{u}_1,\mathbf{u}_2,\cdots,\mathbf{u}_p\}\)</span> is an orthogonal set of nonzero vectors in <span class="math inline">\(\mathbb{R}^n\)</span>, then <span class="math inline">\(S\)</span> is linearly independent and hence is a basis for the subspace spanned by <span class="math inline">\(S\)</span>.</p>
+</div>
+</div>
+<div class="proof">
+<p><span id="unlabeled-div-77" class="proof"><em>Proof</em>. </span>We want to show that any linear combination that yields the zero vector is trivial. Suppose that</p>
+<p><span class="math display">\[\mathbf{0}=c_1\mathbf{u}_1+c_2\mathbf{u}_2+\cdots+c_p\mathbf{u}_p.\]</span></p>
+<p>Then</p>
+<p><span class="math display">\[\begin{align*}
+0=\mathbf{u}_1\cdot \mathbf{0}&amp;=\mathbf{u}_1\cdot(c_1\mathbf{u}_1+c_2\mathbf{u}_2+\cdots+c_p\mathbf{u}_p)\\
+&amp;=c_1\mathbf{u}_1\cdot\mathbf{u}_1+c_2\mathbf{u}_1\cdot\mathbf{u}_2+\cdots+c_p\mathbf{u}_1\cdot\mathbf{u}_p\\
+&amp;=c_1|\mathbf{u}_1|^2+0+\cdots+0\\
+&amp;=c_1|\mathbf{u}_1|^2.
+\end{align*}\]</span></p>
+<p>Since <span class="math inline">\(\mathbf{u}_1\)</span> is nonzero, its length is not zero, so <span class="math inline">\(c_1=0\)</span>. Similarly, <span class="math inline">\(c_2=c_3=\cdots=c_p=0.\)</span> The only linear combination of the orthogonal set that yields the zero vector is indeed the trivial one, meaning <span class="math inline">\(S\)</span> is linearly independent. Because <span class="math inline">\(S\)</span> is linearly independent, it forms a basis for its span.</p>
+</div>
+<p>Orthogonal <em>bases</em> are nice things to have.</p>
+<div class="defbox">
+<div class="definition">
+<p><span id="def:unlabeled-div-78" class="definition"><strong>Definition 4.5  </strong></span>An <strong>orthogonal basis</strong> for a subspace <span class="math inline">\(W\)</span> of <span class="math inline">\(\mathbb{R}^n\)</span> is a basis for <span class="math inline">\(W\)</span> that is also an orthogonal set.</p>
+</div>
+</div>
+<p>Note that the standard basis</p>
+<p><span class="math display">\[\mathbf{e}_1=\begin{bmatrix}1\\0\\0\\\vdots\\0\end{bmatrix},\mathbf{e}_2=\begin{bmatrix}0 \\1\\0\\\vdots\\0\end{bmatrix},\cdots,\mathbf{e}_n=\begin{bmatrix}0\\0\\0\\\vdots\\1\end{bmatrix}\]</span></p>
+<p>is an orthogonal basis for <span class="math inline">\(\mathbb{R}^n\)</span>.</p>
+<p>When a basis is orthogonal, it’s easy to find a linear combination of the basis vectors that yields any vector.</p>
+<div class="theorembox">
+<div class="theorem">
+<p><span id="thm:orthobasis" class="theorem"><strong>Theorem 4.8  </strong></span>Let <span class="math inline">\(\{\mathbf{u}_1,\cdots,\mathbf{u}_p\}\)</span> be an orthogonal basis for a subspace <span class="math inline">\(W\)</span> of <span class="math inline">\(\mathbb{R}^n\)</span>. For each <span class="math inline">\(\mathbf{y}\)</span> in <span class="math inline">\(W\)</span>, the weights (coefficients) in the linear combination</p>
+<p><span class="math display">\[\mathbf{y}=c_1\mathbf{u}_1+\cdots+c_p\mathbf{u}_p\]</span></p>
+<p>are given by</p>
+<p><span class="math display">\[c_j=\frac{\mathbf{y}\cdot \mathbf{u}_j}{\mathbf{u}_j\cdot \mathbf{u}_j},j=1\dots p.\]</span></p>
+</div>
+</div>
+<p>The proof is similar to the last proof. The dot product of <span class="math inline">\(\mathbf{y}\)</span> with each <span class="math inline">\(\mathbf{u}_j\)</span> will tell you what each <span class="math inline">\(c_j\)</span> has to be.</p>
+<div class="examplebox">
+<div class="example">
+<p><span id="exm:unlabeled-div-79" class="example"><strong>Example 4.4  </strong></span>In Example <a href="orthogonality.html#exm:orthoset">4.3</a>,</p>
+<p><span class="math display">\[S=\{\mathbf{u}_1,\mathbf{u}_2,\mathbf{u}_3\}=\left\{\begin{bmatrix}3\\1\\1\end{bmatrix},\begin{bmatrix}-1\\2\\1\end{bmatrix},\begin{bmatrix}-1\\-4\\7\end{bmatrix}\right\}\]</span></p>
+<p>is an orthogonal basis for <span class="math inline">\(\mathbb{R}^3\)</span>. If <span class="math inline">\(\mathbf{y}=(1,2,3)\)</span>,</p>
+<p><span class="math display">\[\mathbf{y}\cdot \mathbf{u}_1=8,\mathbf{y}\cdot \mathbf{u}_2=6, \text{ and } \mathbf{y}\cdot \mathbf{u}_3=12,\]</span></p>
+<p>while</p>
+<p><span class="math display">\[\mathbf{u}_1\cdot \mathbf{u}_1=11,\mathbf{u}_2\cdot\mathbf{u}_2=6,\text{ and }\mathbf{u}_3\cdot\mathbf{u}_3=66.\]</span></p>
+<p>After simplifying fractions, we get</p>
+<p><span class="math display">\[\mathbf{y}=\frac{8}{11}\mathbf{u}_1+\mathbf{u}_2+\frac{2}{11}\mathbf{u}_3.\]</span></p>
+</div>
+</div>
+<div id="orthogonal-projections" class="section level3 unnumbered hasAnchor">
+<h3>Orthogonal projections<a href="orthogonality.html#orthogonal-projections" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Given a vector <span class="math inline">\(\mathbf{y}\)</span> and another vector <span class="math inline">\(\mathbf{u}\)</span>, we’d like to be able to write</p>
+<p><span class="math display">\[\mathbf{y}=\hat{\mathbf{y}}+\mathbf{z},\]</span></p>
+<p>where <span class="math inline">\(\hat{\mathbf{y}}\)</span> is a vector in the same direction as <span class="math inline">\(\mathbf{u}\)</span>, and <span class="math inline">\(\mathbf{z}\)</span> is a vector that is orthogonal to <span class="math inline">\(\mathbf{u}\)</span> (Fig. <a href="orthogonality.html#fig:vproj">4.1</a>).</p>
+<div class="figure" style="text-align: center"><span style="display:block;" id="fig:vproj"></span>
+<img src="images/vproj1.png" alt="A vector projection" width="50%" />
+<p class="caption">
+Figure 4.1: A vector projection
+</p>
+</div>
+<p>Our projection <span class="math inline">\(\hat{\mathbf{y}}\)</span> will be some scalar multiple of <span class="math inline">\(\mathbf{u}\)</span>, say <span class="math inline">\(\hat{\mathbf{y}}=\alpha \mathbf{u}\)</span>. Then, since <span class="math inline">\(\mathbf{z}=\mathbf{y}-\hat{\mathbf{y}}=\mathbf{y}-\alpha\mathbf{u}\)</span> should be orthogonal to <span class="math inline">\(\mathbf{u}\)</span>, we have</p>
+<p><span class="math display">\[0=(\mathbf{y}-\alpha\mathbf{u})\cdot\mathbf{u}=\mathbf{y}\cdot\mathbf{u}-\alpha\mathbf{u}\cdot \mathbf{u}.\]</span></p>
+<p>Solving for <span class="math inline">\(\alpha\)</span> gives us our formula:</p>
+<p><span class="math display" id="eq:vproj">\[\begin{equation}
+\hat{\mathbf{y}}=\text{proj}_L\mathbf{y}=\frac{\mathbf{y}\cdot\mathbf{u}}{\mathbf{u}\cdot \mathbf{u}}\mathbf{u},\tag{4.2}
+\end{equation}\]</span></p>
+<p>where <span class="math inline">\(\text{proj}_L\mathbf{y}\)</span> refers to the projection of <span class="math inline">\(\mathbf{y}\)</span> onto the line <span class="math inline">\(L\)</span> spanned by <span class="math inline">\(\mathbf{u}\)</span>.</p>
+<div class="examplebox">
+<div class="example">
+<p><span id="exm:unlabeled-div-80" class="example"><strong>Example 4.5  </strong></span>Let <span class="math inline">\(\mathbf{u}=\begin{bmatrix}1\\3\end{bmatrix}\)</span> and <span class="math inline">\(\mathbf{y}=\begin{bmatrix}4\\4\end{bmatrix}\)</span>. Then</p>
+<p><span class="math display">\[\hat{\mathbf{y}}=\frac{(4,4)\cdot (1,3)}{(1,3)\cdot(1,3)}\begin{bmatrix}1\\3\end{bmatrix}=\frac{16}{10}\begin{bmatrix}1\\3\end{bmatrix}=\begin{bmatrix}8/5\\24/5\end{bmatrix}.\]</span></p>
+<p>Also, we have</p>
+<p><span class="math display">\[\mathbf{z}=\mathbf{y}-\hat{\mathbf{y}}=\begin{bmatrix}4\\4\end{bmatrix}-\begin{bmatrix}8/5\\24/5\end{bmatrix}=\begin{bmatrix}12/5\\-4/5\end{bmatrix}.\]</span></p>
+<p>A quick check shows that <span class="math inline">\(\mathbf{z}\perp \mathbf{u}\)</span>.</p>
+</div>
+</div>
+<p>A couple of notes.</p>
+<ol style="list-style-type: decimal">
+<li><p>The point <span class="math inline">\(\hat{\mathbf{y}}\)</span> is the closest point on the line to <span class="math inline">\(\mathbf{y}\)</span>. That’s important for future things.</p></li>
+<li><p>The distance from <span class="math inline">\(\mathbf{y}\)</span> to <span class="math inline">\(\hat{\mathbf{y}}\)</span> is equal to the magnitude of <span class="math inline">\(\mathbf{z}\)</span>. This is also important.</p></li>
+</ol>
+<p>Orthogonal sets are nice, but <em>orthonormal</em> sets are better.</p>
+<div class="defbox">
+<div class="definition">
+<p><span id="def:unlabeled-div-81" class="definition"><strong>Definition 4.6  </strong></span>A set <span class="math inline">\(\{\mathbf{u}_1,\dots,\mathbf{u}_p\}\)</span> is an <strong>orthonormal set</strong> if it is an orthogonal set and if <span class="math inline">\(|\mathbf{u}_i|=1\)</span> for <span class="math inline">\(i=1,\dots,p\)</span>.</p>
+</div>
+</div>
+<p>For an orthonormal set, since <span class="math inline">\(\mathbf{u}_i\cdot\mathbf{u}_i=|\mathbf{u}_i|^2=1^2=1,\)</span> the projection formula <a href="orthogonality.html#eq:vproj">(4.2)</a> and the earlier weight formula (Theorem <a href="orthogonality.html#thm:orthobasis">4.8</a>) are much nicer. An orthonormal set makes for a very nice basis.</p>
+<div class="defbox">
+<div class="definition">
+<p><span id="def:unlabeled-div-82" class="definition"><strong>Definition 4.7  </strong></span>An <strong>orthonormal basis</strong> for a subspace <span class="math inline">\(W\)</span> is a orthogonal basis for <span class="math inline">\(W\)</span> whose basis vectors all have unit length.</p>
+</div>
+</div>
+<p>Note that the standard basis is an orthonormal basis for <span class="math inline">\(\mathbb{R}^n\)</span>, but it’s not always the most useful one.</p>
+<div class="examplebox">
+<div class="example">
+<p><span id="exm:unlabeled-div-83" class="example"><strong>Example 4.6  </strong></span>We can always turn an orthogonal basis into an orthonormal basis. From Example <a href="orthogonality.html#exm:orthoset">4.3</a>,</p>
+<p><span class="math display">\[S=\{\mathbf{u}_1,\mathbf{u}_2,\mathbf{u}_3\}=\left\{\begin{bmatrix}3\\1\\1\end{bmatrix},\begin{bmatrix}-1\\2\\1\end{bmatrix},\begin{bmatrix}-1\\-4\\7\end{bmatrix}\right\}\]</span></p>
+<p>we have <span class="math inline">\(|\mathbf{u}_1|=\sqrt{11},|\mathbf{u}_2|=\sqrt{6},\)</span> and <span class="math inline">\(|\mathbf{u}_3|=\sqrt{66}\)</span>, so</p>
+<p><span class="math display">\[\mathbf{v}_1=\begin{bmatrix}3/\sqrt{11}\\1/\sqrt{11}\\1/\sqrt{11}\end{bmatrix},\mathbf{v}_2=\begin{bmatrix}-1/\sqrt{6}\\2/\sqrt{6}\\1/\sqrt{6}\end{bmatrix},\mathbf{v}_3=\begin{bmatrix}-1/\sqrt{66}\\-4/\sqrt{66}\\7/\sqrt{66}\end{bmatrix}\]</span></p>
+<p>is an orthonormal basis for <span class="math inline">\(\mathbb{R}^3\)</span>.</p>
+</div>
+</div>
+</div>
+<div id="orthogonal-matrices" class="section level3 unnumbered hasAnchor">
+<h3>Orthogonal matrices<a href="orthogonality.html#orthogonal-matrices" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Matrices whose columns are orthonormal vectors have some nice properties. Consider the matrix <span class="math inline">\(\mathbf{U}\)</span> whose columns are the orthonormal vectors from our last example.</p>
+<p><span class="math display">\[\mathbf{U}=\begin{bmatrix} 3/\sqrt{11} &amp; -1/\sqrt{6} &amp; -1/\sqrt{66}\\1/\sqrt{11} &amp; 2/\sqrt{6} &amp; -4/\sqrt{66}\\1/\sqrt{11}&amp;1/\sqrt{6}&amp;7/\sqrt{66}\end{bmatrix}.\]</span></p>
+<p>If we consider the product <span class="math inline">\(\mathbf{U}^T\mathbf{U}\)</span>, we have</p>
+<p><span class="math display">\[\begin{bmatrix}3/\sqrt{11} &amp; 1/\sqrt{11} &amp; 1/\sqrt{11}\\
+-1/\sqrt{6} &amp; 2/\sqrt{6} &amp; 1/\sqrt{6}\\-1/\sqrt{66} &amp; -4/\sqrt{66} &amp; 7/\sqrt{66}\end{bmatrix}\begin{bmatrix} 3/\sqrt{11} &amp; -1/\sqrt{6} &amp; -1/\sqrt{66}\\1/\sqrt{11} &amp; 2/\sqrt{6} &amp; -4/\sqrt{66}\\1/\sqrt{11}&amp;1/\sqrt{6}&amp;7/\sqrt{66}\end{bmatrix}=\begin{bmatrix}1 &amp; 0 &amp; 0\\0 &amp; 1 &amp;0\\0 &amp; 0 &amp; 1\end{bmatrix}\]</span></p>
+<p>Since</p>
+<p><span class="math display">\[\mathbf{u}_i^T\mathbf{u}_j=\begin{cases} 1, &amp; i=j\\0, &amp; i\neq j\end{cases},\]</span></p>
+<p>we get ones on the diagonal and zeros off of it. This can be a quick way to identify an orthonormal set of vectors using technology.</p>
+<div class="theorembox">
+<div class="theorem">
+<p><span id="thm:OM" class="theorem"><strong>Theorem 4.9  </strong></span>An <span class="math inline">\(m\times n\)</span> matrix <span class="math inline">\(\mathbf{U}\)</span> has orthonormal columns if and only if <span class="math inline">\(\mathbf{U}^T\mathbf{U}=\mathbf{I}\)</span>.</p>
+</div>
+</div>
+<p>An <span class="math inline">\(n\times n\)</span> matrix <span class="math inline">\(\mathbf{U}\)</span> with <em>orthonormal</em> columns is called an <em>orthogonal matrix</em> (Don’t ask why it’s not called orthonormal.) They’re nice matrices. In particular, thanks to Theorem <a href="orthogonality.html#thm:OM">4.9</a>, if <span class="math inline">\(\mathbf{U}\)</span> is an orthogonal matrix, then <span class="math inline">\(\mathbf{U}^{-1}=\mathbf{U}^T.\)</span> In general, Matrices with orthonormal columns have some useful properties, collected in the following theorem.</p>
+<div class="theorembox">
+<div class="theorem">
+<p><span id="thm:unlabeled-div-84" class="theorem"><strong>Theorem 4.10  </strong></span>Let <span class="math inline">\(\mathbf{U}\)</span> be an <span class="math inline">\(m\times n\)</span> matrix with orthonormal columns, and let <span class="math inline">\(\mathbf{x}\)</span> and <span class="math inline">\(\mathbf{y}\)</span> be vectors in <span class="math inline">\(\mathbb{R}^n\)</span>. Then</p>
+<ol style="list-style-type: decimal">
+<li><p><span class="math inline">\(|\mathbf{U}\mathbf{x}|=|\mathbf{x}|\)</span>. (Multiplication by <span class="math inline">\(\mathbf{U}\)</span> preserves lengths.)</p></li>
+<li><p><span class="math inline">\((\mathbf{U}\mathbf{x})\cdot(\mathbf{U}\mathbf{y})=\mathbf{x}\cdot\mathbf{y}\)</span>. (Multiplication of two vectors by <span class="math inline">\(\mathbf{U}\)</span> preserves inner products and angles.)</p></li>
+<li><p><span class="math inline">\((\mathbf{U}\mathbf{x})\cdot(\mathbf{U}\mathbf{y})=0\)</span> if and only if <span class="math inline">\(\mathbf{x}\cdot\mathbf{y}=0\)</span>. (Multiplication by <span class="math inline">\(\mathbf{U}\)</span> preserves orthogonality.</p></li>
+</ol>
+</div>
+</div>
+<div class="proof">
+<p><span id="unlabeled-div-85" class="proof"><em>Proof</em>. </span>The proofs of all three parts are simple and share the same flavor. For 1, note that</p>
+<p><span class="math display">\[|\mathbf{U}\mathbf{x}|^2=(\mathbf{U}\mathbf{x})^T(\mathbf{U}\mathbf{x})=\mathbf{x}^T\underbrace{\mathbf{U}^T\mathbf{U}}_{\mathbf{I}}\mathbf{x}=\mathbf{x}^T\mathbf{x}=|\mathbf{x}|^2.\]</span></p>
+<p>For 2,</p>
+<p><span class="math display">\[(\mathbf{U}\mathbf{x})\cdot(\mathbf{U}\mathbf{y})=(\mathbf{U}\mathbf{x})^T(\mathbf{U}\mathbf{y})=\mathbf{x}^T\mathbf{U}^T\mathbf{U}\mathbf{y}=\mathbf{x}^T\mathbf{y}=\mathbf{x}\cdot\mathbf{y}.\]</span></p>
+<p>Property 3 is a simple consequence of 2.</p>
+</div>
+<p>This is one of many instances where the realization of a dot product of two vectors as a matrix product of the transpose of one with the other comes in handy.</p>
+<div class="examplebox">
+<div class="example">
+<p><span id="exm:unlabeled-div-86" class="example"><strong>Example 4.7  </strong></span>Let
+<span class="math inline">\(\mathbf{U}=\begin{bmatrix}\frac{3}{5}&amp;\frac{4}{5}\\\frac{4}{5}&amp;-\frac{3}{5}\end{bmatrix},\)</span>
+and let <span class="math inline">\(\mathbf{x}=\begin{bmatrix}5\\12\end{bmatrix}\)</span>.</p>
+<p>It’s easy to see that the columns of <span class="math inline">\(\mathbf{U}\)</span> are orthonormal. Also, <span class="math inline">\(|\mathbf{x}|=\sqrt{5^2+12^2}=\sqrt{169}=13\)</span>. When we multiply, we get</p>
+<p><span class="math display">\[\mathbf{U}\mathbf{x}=\begin{bmatrix}\frac{3}{5}&amp;\frac{4}{5}\\\frac{4}{5}&amp;-\frac{3}{5}\end{bmatrix}\begin{bmatrix}5\\12\end{bmatrix}=\begin{bmatrix}63/5\\-16/5\end{bmatrix},\]</span></p>
+<p>and <span class="math inline">\(|\mathbf{U}\mathbf{x}|=\sqrt{(63/5)^2+(-16/5)^2}=\sqrt{4225/25}=\sqrt{169}=13.\)</span></p>
+</div>
+</div>
+</div>
+</div>
+<div id="OProj" class="section level2 hasAnchor" number="4.4">
+<h2><span class="header-section-number">4.4</span> Orthogonal Projections<a href="orthogonality.html#OProj" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>In the last section, we learned how to project a vector onto the line spanned by another vector. In this section, we want to learn how to project a vector onto a more general subspace.</p>
+<div class="figure" style="text-align: center"><span style="display:block;" id="fig:oproj"></span>
+<img src="images/lsqvec.png" alt="A vector projection onto a subspace" width="50%" />
+<p class="caption">
+Figure 4.2: A vector projection onto a subspace
+</p>
+</div>
+<p>Suppose we have a basis for <span class="math inline">\(\mathbb{R}^n\)</span>, like <span class="math inline">\(\{\mathbf{u}_1,\mathbf{u}_2,\dots,\mathbf{u}_n\}\)</span>. Then for any vector <span class="math inline">\(\mathbf{y}\)</span> in <span class="math inline">\(\mathbb{R}^n\)</span>, we can write <span class="math inline">\(\mathbf{y}=\mathbf{z}_1+\mathbf{z}_2\)</span>, where <span class="math inline">\(\mathbf{z}_1\)</span> is in the span of some of the <span class="math inline">\(\mathbf{u}_i\)</span>, while <span class="math inline">\(\mathbf{z}_2\)</span> is what’s left over. For example, suppose that <span class="math inline">\(\{\mathbf{u}_1,\mathbf{u}_2,\dots,\mathbf{u}_5\}\)</span> is an orthogonal basis for <span class="math inline">\(\mathbb{R}^5\)</span>, and <span class="math inline">\(W\)</span> is the subspace spanned by <span class="math inline">\(\mathbf{u}_1\)</span> and <span class="math inline">\(\mathbf{u}_2\)</span>. Then</p>
+<p><span class="math display">\[\mathbf{y}=\underbrace{c_1\mathbf{u}_1+c_2\mathbf{u}_2}_{\mathbf{z}_1}+\underbrace{c_3\mathbf{u}_3+c_4\mathbf{u}_4+c_5\mathbf{u}_5}_{\mathbf{z}_2}.\]</span></p>
+<p>Note that <span class="math inline">\(\mathbf{z}_1\)</span> is in the span of <span class="math inline">\(\mathbf{u}_1\)</span> and <span class="math inline">\(\mathbf{u}_2\)</span>, so it is in <span class="math inline">\(W\)</span>. It should be clear that <span class="math inline">\(\mathbf{z}_2\)</span> is in <span class="math inline">\(W^\perp\)</span>, since <span class="math inline">\(\mathbf{u}_3,\mathbf{u}_4,\)</span> and <span class="math inline">\(\mathbf{u}_5\)</span> are orthogonal to <span class="math inline">\(\mathbf{u}_1\)</span> and <span class="math inline">\(\mathbf{u}_2\)</span>.</p>
+<p>This decomposition of a vector into a sum of one vector from a subspace <span class="math inline">\(W\)</span> and another one from <span class="math inline">\(W^\perp\)</span> can always be done.</p>
+<div class="theorembox">
+<div class="theorem">
+<p><span id="thm:unlabeled-div-87" class="theorem"><strong>Theorem 4.11  </strong></span>Let <span class="math inline">\(W\)</span> be a subspace of <span class="math inline">\(\mathbb{R}^n\)</span>. Then each <span class="math inline">\(\mathbf{y}\)</span> in <span class="math inline">\(\mathbb{R}^n\)</span> can be written uniquely in the form</p>
+<p><span class="math display">\[\mathbf{y}=\hat{\mathbf{y}}+\mathbf{z},\]</span></p>
+<p>where <span class="math inline">\(\hat{\mathbf{y}}\)</span> is in <span class="math inline">\(W\)</span> and <span class="math inline">\(\mathbf{z}\)</span> is in <span class="math inline">\(W^\perp\)</span>. In fact, if <span class="math inline">\(\{\mathbf{u}_1,\dots \mathbf{u}_p\}\)</span> is any orthogonal basis for <span class="math inline">\(W\)</span>, then</p>
+<p><span class="math display">\[\hat{\mathbf{y}}=\frac{\mathbf{y}\cdot\mathbf{u}_1}{\mathbf{u}_1\cdot \mathbf{u}_1}\mathbf{u}_1+\cdots+\frac{\mathbf{y}\cdot \mathbf{u}_p}{\mathbf{u}_p\cdot \mathbf{u}_p}\mathbf{u}_p,\]</span></p>
+<p>and <span class="math inline">\(\mathbf{z}=\mathbf{y}-\hat{\mathbf{y}}\)</span>.</p>
+</div>
+</div>
+<p>The vector <span class="math inline">\(\hat{\mathbf{y}}\)</span> is the <em>orthogonal projection</em> of <span class="math inline">\(\mathbf{y}\)</span> onto the subspace <span class="math inline">\(W\)</span>, denoted <span class="math inline">\(\text{proj}_W\mathbf{y}.\)</span></p>
+<div class="examplebox">
+<div class="example">
+<p><span id="exm:unlabeled-div-88" class="example"><strong>Example 4.8  </strong></span>Let</p>
+<p><span class="math display">\[\mathbf{u}_1=\begin{bmatrix}3\\1\\1\end{bmatrix},\text{ and } \mathbf{u}_2=\begin{bmatrix}-1\\2\\1\end{bmatrix}.\]</span></p>
+<p>If <span class="math inline">\(\mathbf{y}=(1,2,3)\)</span>, find the projection of <span class="math inline">\(\mathbf{y}\)</span> onto the subspace <span class="math inline">\(W\)</span> spanned by <span class="math inline">\(\mathbf{u}_1\)</span> and <span class="math inline">\(\mathbf{u}_2\)</span>. (Note that <span class="math inline">\(\mathbf{u}_1\)</span> and <span class="math inline">\(\mathbf{u}_2\)</span> are orthogonal.) We have</p>
+<p><span class="math display">\[\begin{align*}
+\hat{\mathbf{y}}&amp;=\frac{\mathbf{y}\cdot\mathbf{u}_1}{\mathbf{u}_1\cdot \mathbf{u}_1}\mathbf{u}_1+\frac{\mathbf{y}\cdot\mathbf{u}_2}{\mathbf{u}_2\cdot \mathbf{u}_2}\mathbf{u}_2\\
+&amp;=\frac{8}{11}\begin{bmatrix}3\\1\\1\end{bmatrix}+\frac{6}{6}\begin{bmatrix}-1\\2\\1\end{bmatrix}=\begin{bmatrix}13/11\\30/11\\19/11\end{bmatrix}.
+\end{align*}\]</span></p>
+<p>We should see if <span class="math inline">\(\mathbf{z}=\mathbf{y}-\hat{\mathbf{y}}\)</span> is in <span class="math inline">\(W^\perp\)</span>. We have</p>
+<p><span class="math display">\[\mathbf{z}=\begin{bmatrix}1\\2\\3\end{bmatrix}-\begin{bmatrix}13/11\\30/11\\19/11\end{bmatrix}=\begin{bmatrix}-2/11\\-8/11\\14/11\end{bmatrix}.\]</span></p>
+<p>Since</p>
+<p><span class="math display">\[\mathbf{z}\cdot \mathbf{u}_1=\begin{bmatrix}-2/11\\-8/11\\14/11\end{bmatrix}\cdot\begin{bmatrix}3\\1\\1\end{bmatrix}=0,\text{ and }\mathbf{z}\cdot \mathbf{u}_2=\begin{bmatrix}-2/11\\-8/11\\14/11\end{bmatrix}\cdot\begin{bmatrix}-1\\2\\1\end{bmatrix}=0,\]</span></p>
+<p>we see that <span class="math inline">\(\mathbf{z}\)</span> is in <span class="math inline">\(W^\perp\)</span>.</p>
+</div>
+</div>
+<p>We mentioned in the last section that the projection of a vector <span class="math inline">\(\mathbf{y}\)</span> onto a line spanned by another vector is the closest point on that line to <span class="math inline">\(\mathbf{y}\)</span>. The analogous result is true for projections onto more general subspaces.</p>
+<div class="theorembox">
+<div class="theorem">
+<p><span id="thm:lsp" class="theorem"><strong>Theorem 4.12  </strong></span>Let <span class="math inline">\(W\)</span> be a subspace of <span class="math inline">\(\mathbb{R}^n\)</span>, let <span class="math inline">\(\mathbf{y}\)</span> be any vector in <span class="math inline">\(\mathbb{R}^n\)</span>, and let <span class="math inline">\(\hat{\mathbf{y}}\)</span> be the orthogonal projection of <span class="math inline">\(\mathbf{y}\)</span> onto <span class="math inline">\(W\)</span>. Then <span class="math inline">\(\hat{\mathbf{y}}\)</span> is the closest point in <span class="math inline">\(W\)</span> to <span class="math inline">\(\mathbf{y}\)</span> in the sense that</p>
+<p><span class="math display">\[|\mathbf{y}-\hat{\mathbf{y}}|&lt; |\mathbf{y}-\mathbf{v}|\]</span></p>
+<p>for all <span class="math inline">\(\mathbf{v}\)</span> in <span class="math inline">\(W\)</span> distinct from <span class="math inline">\(\hat{\mathbf{y}}\)</span>.</p>
+</div>
+</div>
+<div class="proof">
+<p><span id="unlabeled-div-89" class="proof"><em>Proof</em>. </span>We can write <span class="math inline">\(\mathbf{y}-\mathbf{v}=(\mathbf{y}-\hat{\mathbf{y}})+(\hat{\mathbf{y}}-\mathbf{v})\)</span>. Since <span class="math inline">\(\mathbf{v}\)</span> is in <span class="math inline">\(W\)</span>, <span class="math inline">\(\hat{\mathbf{y}}-\mathbf{v}\)</span> is too, and it is orthogonal to <span class="math inline">\(\mathbf{z}=\mathbf{y}-\hat{\mathbf{y}},\)</span> so we can use the Pythagorean Theorem with <span class="math inline">\(\mathbf{y}-\mathbf{v}\)</span> as the hypotenuse (see Fig. <a href="orthogonality.html#fig:yhat">4.3</a>):</p>
+<p><span class="math display">\[|\mathbf{y}-\mathbf{v}|^2=|\mathbf{y}-\hat{\mathbf{y}}|^2+|\hat{\mathbf{y}}-\mathbf{v}|^2.\]</span></p>
+<p>Since <span class="math inline">\(\hat{\mathbf{y}}\)</span> and <span class="math inline">\(\mathbf{v}\)</span> are distinct, <span class="math inline">\(|\hat{\mathbf{y}}-\mathbf{v}|^2&gt;0\)</span> and <span class="math inline">\(|\mathbf{y}-\mathbf{v}|^2&gt;|\mathbf{y}-\hat{\mathbf{y}}|^2.\)</span></p>
+<div class="figure" style="text-align: center"><span style="display:block;" id="fig:yhat"></span>
+<img src="images/yhat.png" alt="Projection onto a subspace" width="60%" />
+<p class="caption">
+Figure 4.3: Projection onto a subspace
+</p>
+</div>
+</div>
+<p>Things are again cleaner if we are working with an orthonormal basis.</p>
+<div class="theorembox">
+<div class="theorem">
+<p><span id="thm:Oproj" class="theorem"><strong>Theorem 4.13  </strong></span>If <span class="math inline">\(\{\mathbf{u}_1,\dots,\mathbf{u}_p\}\)</span> is an orthonormal basis for a subspace <span class="math inline">\(W\)</span> of <span class="math inline">\(\mathbb{R}^n\)</span>, then</p>
+<p><span class="math display">\[\text{proj}_W\mathbf{y}=(\mathbf{y}\cdot\mathbf{u}_1)\mathbf{u}_1+\cdots+(\mathbf{y}\cdot\mathbf{u}_p)\mathbf{u}_p.\]</span></p>
+<p>If <span class="math inline">\(\mathbf{U}=\begin{bmatrix}\mathbf{u}_1 &amp; \mathbf{u}_2 &amp; \cdots &amp; \mathbf{u}_p\end{bmatrix}\)</span>, then</p>
+<p><span class="math display">\[\text{proj}_W\mathbf{y}=\mathbf{U}\mathbf{U}^T\mathbf{y}\]</span></p>
+<p>for all <span class="math inline">\(\mathbf{y}\)</span> in <span class="math inline">\(\mathbb{R}^n\)</span>.</p>
+</div>
+</div>
+<p>The first part of this theorem is just the previous projection theorem with <span class="math inline">\(\mathbf{u}_i\cdot\mathbf{u}_i=1\)</span> for all <span class="math inline">\(i\)</span>. The second part comes from the fact that the weights are <span class="math inline">\(\mathbf{u}_1^T\mathbf{y},\mathbf{u}_2^T\mathbf{y},\dots \mathbf{u}_p^T\mathbf{y}\)</span> and can be written in a vector as <span class="math inline">\(\mathbf{U}^T\mathbf{y}\)</span>, which, when multiplied by <span class="math inline">\(\mathbf{U}\)</span> on the left gives us the desired linear combination.</p>
+<div class="examplebox">
+<div class="example">
+<p><span id="exm:unlabeled-div-90" class="example"><strong>Example 4.9  </strong></span>Let <span class="math inline">\(W\)</span> be the subspace of <span class="math inline">\(\mathbb{R}^3\)</span> spanned by the orthonormal vectors</p>
+<p><span class="math display">\[\{\mathbf{u}_1,\mathbf{u}_2\}=\left\{\begin{bmatrix}1/3\\2/3\\2/3\end{bmatrix},\begin{bmatrix} 2/3\\ 1/3\\-2/3\end{bmatrix}\right\}.\]</span></p>
+<p>Find the projection matrix <span class="math inline">\(\mathbf{U}\mathbf{U}^T\)</span> and use it to project the vector <span class="math inline">\(\mathbf{y}=(1,2,3)\)</span> onto <span class="math inline">\(W\)</span>. With</p>
+<p><span class="math display">\[\mathbf{U}=\begin{bmatrix} 1/3 &amp; 2/3 \\ 2/3 &amp; 1/3\\ 2/3 &amp; -2/3\end{bmatrix},\]</span></p>
+<p>we have</p>
+<p><span class="math display">\[\mathbf{U}\mathbf{U}^T=\begin{bmatrix} 1/3 &amp; 2/3 \\ 2/3 &amp; 1/3\\ 2/3 &amp; -2/3\end{bmatrix}\begin{bmatrix} 1/3 &amp; 2/3 &amp; 2/3\\2/3 &amp; 1/3 &amp; -2/3\end{bmatrix} =\begin{bmatrix} 5/9 &amp; 4/9 &amp; -2/9\\ 4/9 &amp; 5/9 &amp; 2/9\\ -2/9 &amp; 2/9 &amp; 8/9\end{bmatrix}.\]</span></p>
+<p>(Remember that <span class="math inline">\(\mathbf{U}^T\mathbf{U}=\mathbf{I}\)</span>, the <span class="math inline">\(2\times 2\)</span> identity matrix.) This gives us</p>
+<p><span class="math display">\[\begin{align*}
+\hat{\mathbf{y}}&amp;=\mathbf{U}\mathbf{U}^T\mathbf{y}\\
+&amp;=\begin{bmatrix} 5/9 &amp; 4/9 &amp; -2/9\\ 4/9 &amp; 5/9 &amp; 2/9\\ -2/9 &amp; 2/9 &amp; 8/9\end{bmatrix}\begin{bmatrix}1\\2\\3\end{bmatrix}\\
+&amp;=\begin{bmatrix}7/9\\20/9\\26/9\end{bmatrix}.
+\end{align*}\]</span></p>
+<p>You can check to see that <span class="math inline">\(\mathbf{z}=\mathbf{y}-\hat{\mathbf{y}}=(2/9,-2/9,1/9)\)</span> is orthogonal to <span class="math inline">\(\mathbf{u}_1\)</span> and <span class="math inline">\(\mathbf{u}_2\)</span>.</p>
+</div>
+</div>
+</div>
+<div id="orthogonalization" class="section level2 hasAnchor" number="4.5">
+<h2><span class="header-section-number">4.5</span> Orthogonalization<a href="orthogonality.html#orthogonalization" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>We don’t always start out with an orthogonal basis for a subspace. There is a process for taking any basis and turning it into an orthogonal one, called the <em>Gram-Schmidt</em> process. Here’s how we do it.</p>
+<p>Suppose <span class="math inline">\(\{\mathbf{x}_1,\mathbf{x}_2,\dots,\mathbf{x}_p\}\)</span> is a basis for a subspace <span class="math inline">\(W\)</span> of <span class="math inline">\(\mathbb{R}^n\)</span>. Define</p>
+<p><span class="math display" id="eq:gs">\[\begin{align}
+    \mathbf{v}_1&amp;=\mathbf{x}_1\\ \nonumber
+    \mathbf{v}_2&amp;=\mathbf{x}_2-\frac{\mathbf{x}_2\cdot \mathbf{v}_1}{\mathbf{v}_1\cdot\mathbf{v}_1}\mathbf{v}_1\\ \nonumber
+    \mathbf{v}_3&amp;=\mathbf{x}_3-\frac{\mathbf{x}_3\cdot \mathbf{v}_1}{\mathbf{v}_1\cdot\mathbf{v}_1}\mathbf{v}_1-\frac{\mathbf{x}_3\cdot \mathbf{v}_2}{\mathbf{v}_2\cdot \mathbf{v}_2}\mathbf{v}_2\\ \nonumber
+    &amp;\vdots\\ \nonumber
+    \mathbf{v}_p&amp;=\mathbf{x}_p-\frac{\mathbf{x}_p\cdot \mathbf{v}_1}{\mathbf{v}_1\cdot\mathbf{v}_1}\mathbf{v}_1-\frac{\mathbf{x}_p\cdot \mathbf{v}_2}{\mathbf{v}_2\cdot \mathbf{v}_2}\mathbf{v}_2-\cdots -\frac{\mathbf{x}_p\cdot \mathbf{v}_{p-1}}{\mathbf{v}_{p-1}\cdot \mathbf{v}_{p-1}}\mathbf{v}_{p-1}.
+    \tag{4.3}
+\end{align}\]</span></p>
+<p>Then <span class="math inline">\(\{\mathbf{v}_1,\mathbf{v}_2,\dots,\mathbf{v}_p\}\)</span> is an orthogonal basis for <span class="math inline">\(W\)</span>. We can then get an orthonormal basis <span class="math inline">\(\{\mathbf{u}_1,\dots,\mathbf{u}_p\}\)</span> for <span class="math inline">\(W\)</span> with <span class="math inline">\(\mathbf{u}_i=\mathbf{v}_i/|\mathbf{v}_i|\)</span> for <span class="math inline">\(i=1,\dots,p.\)</span></p>
+<p><strong>How it works:</strong> At each step, we’re removing the part of the vector that is in the span of the previous ones, leaving us with a vector that is orthogonal to its predecessors. In practice, this can be tedious, and we can use technology to perform the process.
+We will see a small example.</p>
+<div class="examplebox">
+<div class="example">
+<p><span id="exm:GS" class="example"><strong>Example 4.10  </strong></span>Let <span class="math inline">\(\mathbf{x}_1=\begin{bmatrix}1\\1\end{bmatrix}\)</span> and let <span class="math inline">\(\mathbf{x}_2=\begin{bmatrix}1\\2\end{bmatrix}\)</span>. Note that <span class="math inline">\(\mathbf{x}_1\)</span> and <span class="math inline">\(\mathbf{x}_2\)</span> are linearly independent, so they span <span class="math inline">\(\mathbb{R}^2\)</span>. The first step is simple:</p>
+<p><span class="math display">\[\mathbf{v}_1=\mathbf{x}_1=\begin{bmatrix}1\\1\end{bmatrix}.\]</span></p>
+<p>Then</p>
+<p><span class="math display">\[\begin{align*}
+\mathbf{v}_2&amp;=\mathbf{x}_2-\frac{\mathbf{x}_2\cdot \mathbf{v}_1}{\mathbf{v}_1\cdot\mathbf{v}_1}\mathbf{v}_1\\
+&amp;=\begin{bmatrix}1\\2\end{bmatrix}-\frac{(1,2)\cdot(1,1)}{(1,1)\cdot(1,1)}\begin{bmatrix}1\\1\end{bmatrix}\\
+&amp;=\begin{bmatrix}1\\2\end{bmatrix}-\frac{3}{2}\begin{bmatrix}1\\1\end{bmatrix}\\
+&amp;=\begin{bmatrix}-1/2\\1/2\end{bmatrix}.
+\end{align*}\]</span></p>
+<p>Now that we have an orthogonal basis, we can turn it into an orthonormal basis:</p>
+<p><span class="math display">\[\{\mathbf{u}_1,\mathbf{u}_2\}=\left\{\frac{1}{|\mathbf{v}_1|}\mathbf{v}_1,\frac{1}{|\mathbf{v}_2|}\mathbf{v}_2\right\}.\]</span></p>
+<p>With <span class="math inline">\(|\mathbf{v}_1|=\sqrt{1^2+1^2}=\sqrt{2}\)</span> and
+<span class="math inline">\(|\mathbf{v}_2|=\sqrt{(-1/2)^2+(1/2)^2}=\sqrt{1/2}=1/\sqrt{2}\)</span>, we have
+<span class="math display">\[\{\mathbf{u}_1,\mathbf{u}_2\}=\left\{\begin{bmatrix}1/\sqrt{2}\\1/\sqrt{2}\end{bmatrix},\begin{bmatrix}-1/\sqrt{2}\\1/\sqrt{2}\end{bmatrix}\right\}.\]</span></p>
+</div>
+</div>
+<div id="qr-factorization" class="section level3 unnumbered hasAnchor">
+<h3>QR-factorization<a href="orthogonality.html#qr-factorization" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>One bonus feature of the Gram-Schmidt orthonormalization procedure is that it leads to an important <em>factorization</em> for certain matrices. Suppose that <span class="math inline">\(\mathbf{A}\)</span> is an <span class="math inline">\(m\times n\)</span> matrix with independent columns <span class="math inline">\(\{\mathbf{x}_1,\mathbf{x}_2,\dots,\mathbf{x}_n\}\)</span> (so we must have <span class="math inline">\(n\leq m\)</span>). By the Gram-Schmidt process, we can create an orthonormal collection of vectors using the columns of <span class="math inline">\(\mathbf{A}\)</span>, <span class="math inline">\(\{\mathbf{u}_1 ,\mathbf{u}_2 ,\dots , \mathbf{u}_n\}.\)</span> Let <span class="math inline">\(\mathbf{Q}=\begin{bmatrix}\mathbf{u}_1 &amp; \mathbf{u}_2 &amp; \cdots &amp; \mathbf{u}_n\end{bmatrix}\)</span> be the <span class="math inline">\(m\times n\)</span> matrix created using this orthonormal basis as the columns. For <span class="math inline">\(j=1\dots n,\mathbf{x}_j\)</span> is in <span class="math inline">\(\text{span}(\mathbf{x}_1,\dots,\mathbf{x}_j)\)</span>, which is the same as <span class="math inline">\(\text{span}(\mathbf{u}_1,\cdots \mathbf{u}_j)\)</span>, so we can write</p>
+<p><span class="math display">\[\mathbf{x}_j=r_{1j}\mathbf{u}_1+\cdots+r_{jj}\mathbf{u}_j+0\mathbf{u}_{j+1}+\cdots+0\mathbf{u}_n.\]</span></p>
+<p>We can store these weights in the <span class="math inline">\(n\)</span>-dimensional vector</p>
+<p><span class="math display">\[\mathbf{r}_j=\begin{bmatrix}r_{1j}\\r_{2j}\\ \vdots \\r_{jj}\\0\\ \vdots\\0\end{bmatrix},\]</span></p>
+<p>and <span class="math inline">\(\mathbf{x}_j=\mathbf{Q}\mathbf{r}_j\)</span>, for <span class="math inline">\(j=1\dots n\)</span>. If we define <span class="math inline">\(\mathbf{R}=\begin{bmatrix}\mathbf{r}_1 &amp; \cdots &amp; \mathbf{r}_n\end{bmatrix}\)</span>, then</p>
+<p><span class="math display">\[\mathbf{A}=\begin{bmatrix}\mathbf{x}_1 &amp; \cdots &amp; \mathbf{x}_n\end{bmatrix}=\mathbf{Q}\mathbf{R}.\]</span></p>
+<p>What we’ve just shown is that any <span class="math inline">\(m\times n\)</span> matrix <span class="math inline">\(\mathbf{A}\)</span> with linearly independent columns can be written as</p>
+<p><span class="math display">\[\mathbf{A}=\mathbf{Q}\mathbf{R},\]</span></p>
+<p>where <span class="math inline">\(\mathbf{Q}\)</span> is an <span class="math inline">\(m\times n\)</span> matrix with orthonormal columns that form a basis for the column space of <span class="math inline">\(\mathbf{A},\)</span> and <span class="math inline">\(\mathbf{R}\)</span> is an upper triangular matrix. This is the QR-factorization of <span class="math inline">\(\mathbf{A}.\)</span></p>
+<p>Note that <span class="math inline">\(\mathbf{Q}\)</span> comes from the Gram-Schmidt procedure, and we can calculate <span class="math inline">\(\mathbf{R}\)</span> using the fact that</p>
+<p><span class="math display">\[\mathbf{Q}^T\mathbf{A}=\mathbf{Q}^T\mathbf{Q}\mathbf{R}=\mathbf{I}\mathbf{R}=\mathbf{R},\]</span></p>
+<p>so <span class="math inline">\(\mathbf{R}=\mathbf{Q}^T\mathbf{A}\)</span>.</p>
+<div class="examplebox">
+<div class="example">
+<p><span id="exm:unlabeled-div-91" class="example"><strong>Example 4.11  </strong></span>Let’s use our work in Example <a href="orthogonality.html#exm:GS">4.10</a> to find a QR-factorization. Let</p>
+<p><span class="math display">\[\mathbf{A}=\begin{bmatrix}1 &amp; 1\\1 &amp; 2\end{bmatrix},\]</span></p>
+<p>the matrix whose columns are <span class="math inline">\(\mathbf{x}_1\)</span> and <span class="math inline">\(\mathbf{x}_2\)</span> from before. Our <span class="math inline">\(\mathbf{Q}\)</span> matrix will be</p>
+<p><span class="math display">\[\mathbf{Q}=\begin{bmatrix}1/\sqrt{2}&amp;-1/\sqrt{2}\\1/\sqrt{2} &amp; 1/\sqrt{2}\end{bmatrix}\]</span></p>
+<p>and we can calculate <span class="math inline">\(\mathbf{R}:\)</span></p>
+<p><span class="math display">\[\mathbf{R}=\mathbf{Q}^T\mathbf{A}=\begin{bmatrix}1/\sqrt{2} &amp;1/\sqrt{2}\\-1/\sqrt{2} &amp; 1/\sqrt{2}\end{bmatrix}\begin{bmatrix}1 &amp; 1\\1 &amp; 2\end{bmatrix}=\begin{bmatrix}\sqrt{2} &amp; 3/\sqrt{2}\\0 &amp; 1/\sqrt{2}\end{bmatrix}.\]</span></p>
+<p>Lets check:</p>
+<p><span class="math display">\[\mathbf{Q}\mathbf{R}=\begin{bmatrix}1/\sqrt{2}&amp;-1/\sqrt{2}\\1/\sqrt{2} &amp; 1/\sqrt{2}\end{bmatrix}\begin{bmatrix}\sqrt{2} &amp; 3/\sqrt{2}\\0 &amp; 1/\sqrt{2}\end{bmatrix}=\begin{bmatrix}1 &amp; 1\\1 &amp; 2\end{bmatrix}\checkmark.\]</span></p>
+</div>
+</div>
+<p>Why is this factorization useful? Suppose we are trying to solve <span class="math inline">\(\mathbf{A}\mathbf{x}=\mathbf{y}\)</span>, and we have the QR-factorization for <span class="math inline">\(\mathbf{A}\)</span>. Then</p>
+<p><span class="math display">\[\begin{align*}
+\mathbf{A}\mathbf{x}&amp;=\mathbf{y}\\
+\mathbf{Q}\mathbf{R}\mathbf{x}&amp;=\mathbf{y}\\
+\mathbf{Q}^T\mathbf{Q}\mathbf{R}\mathbf{x}&amp;=\mathbf{Q}^T\mathbf{y}\\
+\mathbf{R}\mathbf{x}&amp;=\mathbf{Q}^T\mathbf{y}
+\end{align*}\]</span></p>
+<p>Finding a matrix inverse, especially for a large matrix, can be numerically challenging. Since <span class="math inline">\(\mathbf{Q}\)</span> is orthogonal, its inverse is just its transpose, which is a simple computational task. Since <span class="math inline">\(\mathbf{R}\)</span> is upper triangular, we can solve the remaining problem by back substitution, which is also fairly computationally easy.</p>
+<p>The R package <code>pracma</code> has a <code>gramSchmidt</code> function that will find the QR-factorization of a matrix. The columns of <span class="math inline">\(\mathbf{Q}\)</span> will have the Gram-Schmidt orthonormal basis for the column space of the original matrix.</p>
+<div class="sourceCode" id="cb76"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb76-1"><a href="orthogonality.html#cb76-1" tabindex="-1"></a><span class="fu">library</span>(pracma)</span>
+<span id="cb76-2"><a href="orthogonality.html#cb76-2" tabindex="-1"></a>A <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">3</span>,<span class="dv">4</span>,<span class="dv">5</span>,<span class="dv">6</span>), <span class="at">nrow =</span> <span class="dv">3</span>)</span>
+<span id="cb76-3"><a href="orthogonality.html#cb76-3" tabindex="-1"></a>A</span></code></pre></div>
+<pre><code>##      [,1] [,2]
+## [1,]    1    4
+## [2,]    2    5
+## [3,]    3    6</code></pre>
+<div class="sourceCode" id="cb78"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb78-1"><a href="orthogonality.html#cb78-1" tabindex="-1"></a><span class="fu">gramSchmidt</span>(A)</span></code></pre></div>
+<pre><code>## $Q
+##           [,1]       [,2]
+## [1,] 0.2672612  0.8728716
+## [2,] 0.5345225  0.2182179
+## [3,] 0.8017837 -0.4364358
+## 
+## $R
+##          [,1]     [,2]
+## [1,] 3.741657 8.552360
+## [2,] 0.000000 1.963961</code></pre>
+<p>If the columns of the matrix are dependent, we will get an error.</p>
+<div class="sourceCode" id="cb80"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb80-1"><a href="orthogonality.html#cb80-1" tabindex="-1"></a>B <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">3</span>,<span class="dv">2</span>,<span class="dv">4</span>,<span class="dv">6</span>), <span class="at">nrow =</span> <span class="dv">3</span>)</span>
+<span id="cb80-2"><a href="orthogonality.html#cb80-2" tabindex="-1"></a>B</span></code></pre></div>
+<pre><code>##      [,1] [,2]
+## [1,]    1    2
+## [2,]    2    4
+## [3,]    3    6</code></pre>
+<div class="sourceCode" id="cb82"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb82-1"><a href="orthogonality.html#cb82-1" tabindex="-1"></a><span class="fu">gramSchmidt</span>(B)</span></code></pre></div>
+<pre><code>## Error in gramSchmidt(B): Matrix &#39;A&#39; does not have full rank.</code></pre>
+</div>
+</div>
+<div id="exercises-3" class="section level2 hasAnchor" number="4.6">
+<h2><span class="header-section-number">4.6</span> Exercises<a href="orthogonality.html#exercises-3" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<ol style="list-style-type: decimal">
+<li><p>Let <span class="math inline">\(\mathbf{v}=\begin{bmatrix}1\\5\\-2\end{bmatrix}.\)</span></p>
+<ol style="list-style-type: lower-alpha">
+<li>Find a unit vector in the direction of <span class="math inline">\(\mathbf{v}\)</span>.</li>
+<li>Find two independent vectors that are orthogonal to <span class="math inline">\(\mathbf{v}.\)</span></li>
+</ol></li>
+<li><p>Let <span class="math inline">\(\mathbf{v}=\begin{bmatrix}1\\-4\\6\end{bmatrix}.\)</span></p>
+<ol style="list-style-type: lower-alpha">
+<li>Find a unit vector in the direction of <span class="math inline">\(\mathbf{v}\)</span>.</li>
+<li>Find two independent vectors that are orthogonal to <span class="math inline">\(\mathbf{v}.\)</span></li>
+</ol></li>
+<li><p>Let <span class="math inline">\(\mathbf{a}_1=\begin{bmatrix}1\\3\\4\end{bmatrix}\)</span> and <span class="math inline">\(\mathbf{a}_2=\begin{bmatrix} 2\\2\\-2\end{bmatrix}.\)</span></p>
+<ol style="list-style-type: lower-alpha">
+<li>Show that <span class="math inline">\(\mathbf{a}_1\)</span> and <span class="math inline">\(\mathbf{a}_2\)</span> are orthogonal.</li>
+<li>Find a third nonzero vector <span class="math inline">\(\mathbf{a}_3\)</span> that is orthogonal to both <span class="math inline">\(\mathbf{a}_1\)</span> and <span class="math inline">\(\mathbf{a}_2.\)</span> Use the following method: let <span class="math inline">\(\mathbf{a}_1\)</span> and <span class="math inline">\(\mathbf{a}_2\)</span> be the rows of a matrix. A vector orthogonal to the rows would be in what space?</li>
+</ol></li>
+<li><p>Let <span class="math inline">\(\mathbf{a}_1=\begin{bmatrix}1\\2\\6\end{bmatrix}\)</span> and <span class="math inline">\(\mathbf{a}_2=\begin{bmatrix} 2\\2\\-1\end{bmatrix}.\)</span></p>
+<ol style="list-style-type: lower-alpha">
+<li>Show that <span class="math inline">\(\mathbf{a}_1\)</span> and <span class="math inline">\(\mathbf{a}_2\)</span> are orthogonal.</li>
+<li>Find a third nonzero vector <span class="math inline">\(\mathbf{a}_3\)</span> that is orthogonal to both <span class="math inline">\(\mathbf{a}_1\)</span> and <span class="math inline">\(\mathbf{a}_2.\)</span></li>
+</ol></li>
+<li><p>Let <span class="math inline">\(\mathbf{v}_1=\begin{bmatrix}1\\1\\1\end{bmatrix},\mathbf{v}_2=\begin{bmatrix} 3\\1\\-4\end{bmatrix},\)</span> and <span class="math inline">\(\mathbf{v}_3=\begin{bmatrix}5\\-7\\2\end{bmatrix}.\)</span></p>
+<ol style="list-style-type: lower-alpha">
+<li>Show that <span class="math inline">\(\{\mathbf{v}_1,\mathbf{v}_2,\mathbf{v}_3\}\)</span> is an orthogonal set.</li>
+<li>Write <span class="math inline">\(\mathbf{y}=\begin{bmatrix} 2\\3\\4\end{bmatrix}\)</span> as a linear combination of <span class="math inline">\(\mathbf{v}_1,\mathbf{v}_2,\)</span> and <span class="math inline">\(\mathbf{v}_3.\)</span></li>
+</ol></li>
+<li><p>Let <span class="math inline">\(\mathbf{v}_1=\begin{bmatrix}1\\2\\1\end{bmatrix},\mathbf{v}_2=\begin{bmatrix} 2\\0\\-2\end{bmatrix},\)</span> and <span class="math inline">\(\mathbf{v}_3=\begin{bmatrix}1\\-1\\1\end{bmatrix}.\)</span></p>
+<ol style="list-style-type: lower-alpha">
+<li>Show that <span class="math inline">\(\{\mathbf{v}_1,\mathbf{v}_2,\mathbf{v}_3\}\)</span> is an orthogonal set.</li>
+<li>Write <span class="math inline">\(\mathbf{y}=\begin{bmatrix} 4\\3\\2\end{bmatrix}\)</span> as a linear combination of <span class="math inline">\(\mathbf{v}_1,\mathbf{v}_2,\)</span> and <span class="math inline">\(\mathbf{v}_3.\)</span></li>
+</ol></li>
+<li><p>Let <span class="math inline">\(\mathbf{u}=\begin{bmatrix}1\\2\\-3\end{bmatrix}\)</span> and <span class="math inline">\(\mathbf{y}=\begin{bmatrix}1\\2\\3\end{bmatrix}.\)</span></p>
+<ol style="list-style-type: lower-alpha">
+<li>Find <span class="math inline">\(\hat{\mathbf{y}}=\text{proj}_\mathbf{u}\mathbf{y}.\)</span></li>
+<li>Show that <span class="math inline">\(\mathbf{z}=\mathbf{y}-\hat{\mathbf{y}}\)</span> is orthogonal to <span class="math inline">\(\mathbf{u}.\)</span></li>
+</ol></li>
+<li><p>Let <span class="math inline">\(\mathbf{u}=\begin{bmatrix}6\\0\\8\end{bmatrix}\)</span> and <span class="math inline">\(\mathbf{y}=\begin{bmatrix}2\\1\\0\end{bmatrix}.\)</span></p>
+<ol style="list-style-type: lower-alpha">
+<li>Find <span class="math inline">\(\hat{\mathbf{y}}=\text{proj}_\mathbf{u}\mathbf{y}.\)</span></li>
+<li>Show that <span class="math inline">\(\mathbf{z}=\mathbf{y}-\hat{\mathbf{y}}\)</span> is orthogonal to <span class="math inline">\(\mathbf{u}.\)</span></li>
+</ol></li>
+<li><p>Turn <span class="math inline">\(\{\mathbf{v}_1,\mathbf{v}_2,\mathbf{v}_3\}\)</span> from Problem 5 into an orthonormal set.</p></li>
+<li><p>Turn <span class="math inline">\(\{\mathbf{v}_1,\mathbf{v}_2,\mathbf{v}_3\}\)</span> from Problem 6 into an orthonormal set.</p></li>
+<li><p>Let <span class="math inline">\(W\)</span> be the subspace of <span class="math inline">\(\mathbb{R}^3\)</span> spanned by the orthonormal vectors
+<span class="math display">\[\{\mathbf{u}_1,\mathbf{u}_2\}=\left\{\begin{bmatrix}3/7\\6/7\\-2/7\end{bmatrix},\begin{bmatrix}-2/7\\3/7\\6/7\end{bmatrix}\right\}.\]</span></p>
+<ol style="list-style-type: lower-alpha">
+<li>Let <span class="math inline">\(\mathbf{U}=\begin{bmatrix} \mathbf{u}_1 &amp; \mathbf{u}_2\end{bmatrix}.\)</span> Find the projection matrix <span class="math inline">\(\mathbf{U}\mathbf{U}^T.\)</span></li>
+<li>Project <span class="math inline">\(\mathbf{y}=\begin{bmatrix}1\\1\\1\end{bmatrix}\)</span> onto the subspace spanned by <span class="math inline">\(\mathbf{u}_1\)</span> and <span class="math inline">\(\mathbf{u}_2.\)</span></li>
+</ol></li>
+<li><p>Let <span class="math inline">\(W\)</span> be the subspace of <span class="math inline">\(\mathbb{R}^3\)</span> spanned by the orthonormal vectors
+<span class="math display">\[\{\mathbf{u}_1,\mathbf{u}_2\}=\left\{\begin{bmatrix}3/13\\12/13\\-4/13\end{bmatrix},\begin{bmatrix}4/13\\3/13\\12/13\end{bmatrix}\right\}.\]</span></p>
+<ol style="list-style-type: lower-alpha">
+<li>Let <span class="math inline">\(\mathbf{U}=\begin{bmatrix} \mathbf{u}_1 &amp; \mathbf{u}_2\end{bmatrix}.\)</span> Find the projection matrix <span class="math inline">\(\mathbf{U}\mathbf{U}^T.\)</span></li>
+<li>Project <span class="math inline">\(\mathbf{y}=\begin{bmatrix}1\\1\\1\end{bmatrix}\)</span> onto the subspace spanned by <span class="math inline">\(\mathbf{u}_1\)</span> and <span class="math inline">\(\mathbf{u}_2.\)</span></li>
+</ol></li>
+<li><p>Let
+<span class="math display">\[\mathbf{A}=\begin{bmatrix}1 &amp; 1 &amp; 0\\1 &amp; 1 &amp; 1\\0 &amp; 1 &amp; 1\end{bmatrix}.\]</span></p>
+<ol style="list-style-type: lower-alpha">
+<li>Perform the Gram-Schmidt orthonormalization procedure on the columns of <span class="math inline">\(\mathbf{A}\)</span> by hand.</li>
+<li>Find the QR-factorization of <span class="math inline">\(\mathbf{A}\)</span></li>
+</ol></li>
+<li><p>Let
+<span class="math display">\[\mathbf{A}=\begin{bmatrix}0 &amp; 1 &amp; 1\\1 &amp; 1 &amp; 1\\1 &amp; 1 &amp; 0\end{bmatrix}.\]</span></p>
+<ol style="list-style-type: lower-alpha">
+<li>Perform the Gram-Schmidt orthonormalization procedure on the columns of <span class="math inline">\(\mathbf{A}\)</span> by hand.</li>
+<li>Find the QR-factorization of <span class="math inline">\(\mathbf{A}\)</span></li>
+</ol></li>
+<li><p>Use the Gram-Schmidt procedure to find a third vector that is orthogonal to the two vectors given in Problem 3. Hint: <span class="math inline">\(\mathbf{e}_1,\)</span> the first standard basis vector is not in the span of <span class="math inline">\(\mathbf{a}_1\)</span> and <span class="math inline">\(\mathbf{a}_2\)</span>.</p></li>
+<li><p>Use the Gram-Schmidt procedure to find a third vector that is orthogonal to the two vectors given in Problem 4. Hint: <span class="math inline">\(\mathbf{e}_1,\)</span> the first standard basis vector is not in the span of <span class="math inline">\(\mathbf{a}_1\)</span> and <span class="math inline">\(\mathbf{a}_2\)</span>.</p></li>
+</ol>
+
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="eigenvalues-and-eigenvectors.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="regression.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"whatsapp": false,
+"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": "https://github.com/USERNAME/REPO/edit/BRANCH/04-Orthogonality.Rmd",
+"text": "Edit"
+},
+"history": {
+"link": null,
+"text": null
+},
+"view": {
+"link": null,
+"text": null
+},
+"download": ["_main.pdf", "_main.epub"],
+"search": {
+"engine": "fuse",
+"options": null
+},
+"toc": {
+"collapse": "subsection"
+},
+"split_bib": false
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.9/latest.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>

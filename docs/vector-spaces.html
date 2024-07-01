@@ -1,0 +1,1114 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>Chapter 2 Vector Spaces | Linear Algebra for Data Science</title>
+  <meta name="description" content="<p>This is a minimal example of using the bookdown package to write a book.
+The HTML output format for this example is bookdown::gitbook,
+set in the _output.yml file.</p>" />
+  <meta name="generator" content="bookdown 0.39 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="Chapter 2 Vector Spaces | Linear Algebra for Data Science" />
+  <meta property="og:type" content="book" />
+  <meta property="og:image" content="/images/mfdscover.png" />
+  <meta property="og:description" content="<p>This is a minimal example of using the bookdown package to write a book.
+The HTML output format for this example is bookdown::gitbook,
+set in the _output.yml file.</p>" />
+  
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Chapter 2 Vector Spaces | Linear Algebra for Data Science" />
+  
+  <meta name="twitter:description" content="<p>This is a minimal example of using the bookdown package to write a book.
+The HTML output format for this example is bookdown::gitbook,
+set in the _output.yml file.</p>" />
+  <meta name="twitter:image" content="/images/mfdscover.png" />
+
+<meta name="author" content="Tom Tegtmeyer" />
+
+
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="matrices-and-systems-of-equations.html"/>
+<link rel="next" href="eigenvalues-and-eigenvectors.html"/>
+<script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+<link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
+<link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
+<script src="libs/kePrint-0.0.1/kePrint.js"></script>
+<link href="libs/lightable-0.0.1/lightable.css" rel="stylesheet" />
+
+
+<style type="text/css">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { color: #008000; } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { color: #008000; font-weight: bold; } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+<style type="text/css">
+  
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+</style>
+<style type="text/css">
+/* Used with Pandoc 2.11+ new --citeproc when CSL is used */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+  margin-bottom: 0em;
+}
+.hanging div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}
+</style>
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">Linear Algebra for Data Science</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Preface</a></li>
+<li class="chapter" data-level="1" data-path="matrices-and-systems-of-equations.html"><a href="matrices-and-systems-of-equations.html"><i class="fa fa-check"></i><b>1</b> Matrices and Systems of Equations</a>
+<ul>
+<li class="chapter" data-level="1.1" data-path="matrices-and-systems-of-equations.html"><a href="matrices-and-systems-of-equations.html#systems-of-equations"><i class="fa fa-check"></i><b>1.1</b> Systems of Equations</a>
+<ul>
+<li class="chapter" data-level="" data-path="matrices-and-systems-of-equations.html"><a href="matrices-and-systems-of-equations.html#the-geometry"><i class="fa fa-check"></i>The geometry</a></li>
+<li class="chapter" data-level="" data-path="matrices-and-systems-of-equations.html"><a href="matrices-and-systems-of-equations.html#the-three-cases"><i class="fa fa-check"></i>The three cases</a></li>
+</ul></li>
+<li class="chapter" data-level="1.2" data-path="matrices-and-systems-of-equations.html"><a href="matrices-and-systems-of-equations.html#GE"><i class="fa fa-check"></i><b>1.2</b> Method of Solution: Gaussian Elimination</a>
+<ul>
+<li class="chapter" data-level="" data-path="matrices-and-systems-of-equations.html"><a href="matrices-and-systems-of-equations.html#parameters"><i class="fa fa-check"></i>Parameters</a></li>
+<li class="chapter" data-level="" data-path="matrices-and-systems-of-equations.html"><a href="matrices-and-systems-of-equations.html#more-equations-more-variables"><i class="fa fa-check"></i>More equations, more variables</a></li>
+<li class="chapter" data-level="" data-path="matrices-and-systems-of-equations.html"><a href="matrices-and-systems-of-equations.html#overdetermined-and-underdetermined-systems"><i class="fa fa-check"></i>Overdetermined and underdetermined systems</a></li>
+</ul></li>
+<li class="chapter" data-level="1.3" data-path="matrices-and-systems-of-equations.html"><a href="matrices-and-systems-of-equations.html#matrices"><i class="fa fa-check"></i><b>1.3</b> Matrices</a>
+<ul>
+<li class="chapter" data-level="" data-path="matrices-and-systems-of-equations.html"><a href="matrices-and-systems-of-equations.html#elementary-row-operations"><i class="fa fa-check"></i>Elementary row operations</a></li>
+<li class="chapter" data-level="" data-path="matrices-and-systems-of-equations.html"><a href="matrices-and-systems-of-equations.html#row-echelon-form"><i class="fa fa-check"></i>Row echelon form</a></li>
+<li class="chapter" data-level="" data-path="matrices-and-systems-of-equations.html"><a href="matrices-and-systems-of-equations.html#reduced-row-echelon-form"><i class="fa fa-check"></i>Reduced row echelon form</a></li>
+<li class="chapter" data-level="" data-path="matrices-and-systems-of-equations.html"><a href="matrices-and-systems-of-equations.html#TM"><i class="fa fa-check"></i>Matrices with Technology</a></li>
+</ul></li>
+<li class="chapter" data-level="1.4" data-path="matrices-and-systems-of-equations.html"><a href="matrices-and-systems-of-equations.html#BMO"><i class="fa fa-check"></i><b>1.4</b> Basic Matrix Operations</a>
+<ul>
+<li class="chapter" data-level="" data-path="matrices-and-systems-of-equations.html"><a href="matrices-and-systems-of-equations.html#row-and-column-vectors"><i class="fa fa-check"></i>Row and column vectors</a></li>
+<li class="chapter" data-level="" data-path="matrices-and-systems-of-equations.html"><a href="matrices-and-systems-of-equations.html#matrix-addition"><i class="fa fa-check"></i>Matrix addition</a></li>
+<li class="chapter" data-level="" data-path="matrices-and-systems-of-equations.html"><a href="matrices-and-systems-of-equations.html#scalar-multiplication"><i class="fa fa-check"></i>Scalar Multiplication</a></li>
+<li class="chapter" data-level="" data-path="matrices-and-systems-of-equations.html"><a href="matrices-and-systems-of-equations.html#matrix-multiplication"><i class="fa fa-check"></i>Matrix multiplication</a></li>
+<li class="chapter" data-level="" data-path="matrices-and-systems-of-equations.html"><a href="matrices-and-systems-of-equations.html#multiplying-two-matrices"><i class="fa fa-check"></i>Multiplying two matrices</a></li>
+<li class="chapter" data-level="" data-path="matrices-and-systems-of-equations.html"><a href="matrices-and-systems-of-equations.html#identity-matrices"><i class="fa fa-check"></i>Identity Matrices</a></li>
+<li class="chapter" data-level="" data-path="matrices-and-systems-of-equations.html"><a href="matrices-and-systems-of-equations.html#technology"><i class="fa fa-check"></i>Technology</a></li>
+<li class="chapter" data-level="" data-path="matrices-and-systems-of-equations.html"><a href="matrices-and-systems-of-equations.html#the-transpose-of-a-matrix"><i class="fa fa-check"></i>The transpose of a matrix</a></li>
+</ul></li>
+<li class="chapter" data-level="1.5" data-path="matrices-and-systems-of-equations.html"><a href="matrices-and-systems-of-equations.html#Inverses"><i class="fa fa-check"></i><b>1.5</b> Matrix Inverses</a>
+<ul>
+<li class="chapter" data-level="" data-path="matrices-and-systems-of-equations.html"><a href="matrices-and-systems-of-equations.html#finding-inverses"><i class="fa fa-check"></i>Finding inverses</a></li>
+<li class="chapter" data-level="" data-path="matrices-and-systems-of-equations.html"><a href="matrices-and-systems-of-equations.html#a-formula-for-2-x-2-matrices"><i class="fa fa-check"></i>A formula for 2 x 2 matrices</a></li>
+</ul></li>
+<li class="chapter" data-level="1.6" data-path="matrices-and-systems-of-equations.html"><a href="matrices-and-systems-of-equations.html#dets"><i class="fa fa-check"></i><b>1.6</b> Determinants</a>
+<ul>
+<li class="chapter" data-level="" data-path="matrices-and-systems-of-equations.html"><a href="matrices-and-systems-of-equations.html#triangular-and-diagonal-matrices"><i class="fa fa-check"></i>Triangular and diagonal matrices</a></li>
+<li class="chapter" data-level="" data-path="matrices-and-systems-of-equations.html"><a href="matrices-and-systems-of-equations.html#upper-and-lower-triangular-matrices"><i class="fa fa-check"></i>Upper and lower triangular matrices</a></li>
+</ul></li>
+<li class="chapter" data-level="1.7" data-path="matrices-and-systems-of-equations.html"><a href="matrices-and-systems-of-equations.html#systems-of-linear-equations-as-matrix-equations"><i class="fa fa-check"></i><b>1.7</b> Systems of Linear Equations as Matrix Equations</a>
+<ul>
+<li class="chapter" data-level="" data-path="matrices-and-systems-of-equations.html"><a href="matrices-and-systems-of-equations.html#how-does-row-reduction-work"><i class="fa fa-check"></i>How does row reduction work?</a></li>
+</ul></li>
+<li class="chapter" data-level="1.8" data-path="matrices-and-systems-of-equations.html"><a href="matrices-and-systems-of-equations.html#Colley"><i class="fa fa-check"></i><b>1.8</b> Application: The Colley Matrix Method</a>
+<ul>
+<li class="chapter" data-level="" data-path="matrices-and-systems-of-equations.html"><a href="matrices-and-systems-of-equations.html#ratings-and-rankings"><i class="fa fa-check"></i>Ratings and Rankings</a></li>
+<li class="chapter" data-level="" data-path="matrices-and-systems-of-equations.html"><a href="matrices-and-systems-of-equations.html#the-bcs-and-wes-colley"><i class="fa fa-check"></i>The BCS and Wes Colley</a></li>
+<li class="chapter" data-level="" data-path="matrices-and-systems-of-equations.html"><a href="matrices-and-systems-of-equations.html#the-colley-matrix"><i class="fa fa-check"></i>The Colley Matrix</a></li>
+</ul></li>
+<li class="chapter" data-level="1.9" data-path="matrices-and-systems-of-equations.html"><a href="matrices-and-systems-of-equations.html#exercises"><i class="fa fa-check"></i><b>1.9</b> Exercises</a></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="vector-spaces.html"><a href="vector-spaces.html"><i class="fa fa-check"></i><b>2</b> Vector Spaces</a>
+<ul>
+<li class="chapter" data-level="2.1" data-path="vector-spaces.html"><a href="vector-spaces.html#artoo"><i class="fa fa-check"></i><b>2.1</b> The Vector Space <span class="math inline">\(\mathbb{R}^n\)</span></a>
+<ul>
+<li class="chapter" data-level="" data-path="vector-spaces.html"><a href="vector-spaces.html#vector-addition-and-scalar-multiplication"><i class="fa fa-check"></i>Vector addition and scalar multiplication</a></li>
+<li class="chapter" data-level="" data-path="vector-spaces.html"><a href="vector-spaces.html#linear-dependence-and-independence"><i class="fa fa-check"></i>Linear dependence and independence</a></li>
+<li class="chapter" data-level="" data-path="vector-spaces.html"><a href="vector-spaces.html#linear-combinations"><i class="fa fa-check"></i>Linear Combinations</a></li>
+<li class="chapter" data-level="" data-path="vector-spaces.html"><a href="vector-spaces.html#mathbbr3-and-mathbbrn"><i class="fa fa-check"></i><span class="math inline">\(\mathbb{R}^3\)</span> and <span class="math inline">\(\mathbb{R}^n\)</span></a></li>
+</ul></li>
+<li class="chapter" data-level="2.2" data-path="vector-spaces.html"><a href="vector-spaces.html#subspaces"><i class="fa fa-check"></i><b>2.2</b> Subspaces</a></li>
+<li class="chapter" data-level="2.3" data-path="vector-spaces.html"><a href="vector-spaces.html#linear-dependence-and-independence-1"><i class="fa fa-check"></i><b>2.3</b> Linear Dependence and Independence</a>
+<ul>
+<li class="chapter" data-level="" data-path="vector-spaces.html"><a href="vector-spaces.html#linear-dependence-revisited"><i class="fa fa-check"></i>Linear dependence revisited</a></li>
+</ul></li>
+<li class="chapter" data-level="2.4" data-path="vector-spaces.html"><a href="vector-spaces.html#basis-and-dimension"><i class="fa fa-check"></i><b>2.4</b> Basis and Dimension</a>
+<ul>
+<li class="chapter" data-level="" data-path="vector-spaces.html"><a href="vector-spaces.html#the-standard-basis-for-mathbbrn"><i class="fa fa-check"></i>The standard basis for <span class="math inline">\(\mathbb{R}^n\)</span></a></li>
+<li class="chapter" data-level="" data-path="vector-spaces.html"><a href="vector-spaces.html#the-dimension-of-a-subspace"><i class="fa fa-check"></i>The dimension of a subspace</a></li>
+<li class="chapter" data-level="" data-path="vector-spaces.html"><a href="vector-spaces.html#the-dimension-of-the-nullspace"><i class="fa fa-check"></i>The dimension of the Nullspace</a></li>
+<li class="chapter" data-level="" data-path="vector-spaces.html"><a href="vector-spaces.html#the-column-space-of-a-matrix"><i class="fa fa-check"></i>The column space of a matrix</a></li>
+<li class="chapter" data-level="" data-path="vector-spaces.html"><a href="vector-spaces.html#the-row-space"><i class="fa fa-check"></i>The row space</a></li>
+</ul></li>
+<li class="chapter" data-level="2.5" data-path="vector-spaces.html"><a href="vector-spaces.html#exercises-1"><i class="fa fa-check"></i><b>2.5</b> Exercises</a></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="eigenvalues-and-eigenvectors.html"><a href="eigenvalues-and-eigenvectors.html"><i class="fa fa-check"></i><b>3</b> Eigenvalues and Eigenvectors</a>
+<ul>
+<li class="chapter" data-level="3.1" data-path="eigenvalues-and-eigenvectors.html"><a href="eigenvalues-and-eigenvectors.html#eigenvalues-and-eigenvectors-1"><i class="fa fa-check"></i><b>3.1</b> Eigenvalues and Eigenvectors</a>
+<ul>
+<li class="chapter" data-level="" data-path="eigenvalues-and-eigenvectors.html"><a href="eigenvalues-and-eigenvectors.html#eigenvalues-and-eigenvectors-in-r"><i class="fa fa-check"></i>Eigenvalues and Eigenvectors in R</a></li>
+<li class="chapter" data-level="" data-path="eigenvalues-and-eigenvectors.html"><a href="eigenvalues-and-eigenvectors.html#higher-dimensional-matrices"><i class="fa fa-check"></i>Higher dimensional matrices</a></li>
+</ul></li>
+<li class="chapter" data-level="3.2" data-path="eigenvalues-and-eigenvectors.html"><a href="eigenvalues-and-eigenvectors.html#special-cases-and-complications"><i class="fa fa-check"></i><b>3.2</b> Special Cases and Complications</a>
+<ul>
+<li class="chapter" data-level="" data-path="eigenvalues-and-eigenvectors.html"><a href="eigenvalues-and-eigenvectors.html#diagonal-and-triangular-matrices"><i class="fa fa-check"></i>Diagonal and triangular matrices</a></li>
+<li class="chapter" data-level="" data-path="eigenvalues-and-eigenvectors.html"><a href="eigenvalues-and-eigenvectors.html#the-trace"><i class="fa fa-check"></i>The trace</a></li>
+<li class="chapter" data-level="" data-path="eigenvalues-and-eigenvectors.html"><a href="eigenvalues-and-eigenvectors.html#complications"><i class="fa fa-check"></i>Complications</a></li>
+<li class="chapter" data-level="" data-path="eigenvalues-and-eigenvectors.html"><a href="eigenvalues-and-eigenvectors.html#eigenvalues-of-a-transpose"><i class="fa fa-check"></i>Eigenvalues of a transpose</a></li>
+<li class="chapter" data-level="" data-path="eigenvalues-and-eigenvectors.html"><a href="eigenvalues-and-eigenvectors.html#matrix-powers"><i class="fa fa-check"></i>Matrix powers</a></li>
+</ul></li>
+<li class="chapter" data-level="3.3" data-path="eigenvalues-and-eigenvectors.html"><a href="eigenvalues-and-eigenvectors.html#application-the-leslie-matrix"><i class="fa fa-check"></i><b>3.3</b> Application: The Leslie Matrix</a></li>
+<li class="chapter" data-level="3.4" data-path="eigenvalues-and-eigenvectors.html"><a href="eigenvalues-and-eigenvectors.html#graphs-and-adjacency-matrices"><i class="fa fa-check"></i><b>3.4</b> Graphs and Adjacency Matrices</a>
+<ul>
+<li class="chapter" data-level="" data-path="eigenvalues-and-eigenvectors.html"><a href="eigenvalues-and-eigenvectors.html#adjacency-matrices"><i class="fa fa-check"></i>Adjacency matrices</a></li>
+<li class="chapter" data-level="" data-path="eigenvalues-and-eigenvectors.html"><a href="eigenvalues-and-eigenvectors.html#directed-adjacency-matrices"><i class="fa fa-check"></i>Directed adjacency matrices</a></li>
+<li class="chapter" data-level="" data-path="eigenvalues-and-eigenvectors.html"><a href="eigenvalues-and-eigenvectors.html#the-directed-graph-of-a-tournament"><i class="fa fa-check"></i>The directed graph of a tournament</a></li>
+</ul></li>
+<li class="chapter" data-level="3.5" data-path="eigenvalues-and-eigenvectors.html"><a href="eigenvalues-and-eigenvectors.html#random-surfers-and-stochastic-matrices"><i class="fa fa-check"></i><b>3.5</b> Random surfers and Stochastic Matrices</a>
+<ul>
+<li class="chapter" data-level="" data-path="eigenvalues-and-eigenvectors.html"><a href="eigenvalues-and-eigenvectors.html#stochastic-matrices"><i class="fa fa-check"></i>Stochastic matrices</a></li>
+<li class="chapter" data-level="" data-path="eigenvalues-and-eigenvectors.html"><a href="eigenvalues-and-eigenvectors.html#markov-chains"><i class="fa fa-check"></i>Markov Chains</a></li>
+<li class="chapter" data-level="" data-path="eigenvalues-and-eigenvectors.html"><a href="eigenvalues-and-eigenvectors.html#why-is-1-always-an-eigenvalue"><i class="fa fa-check"></i>Why is 1 always an eigenvalue?</a></li>
+</ul></li>
+<li class="chapter" data-level="3.6" data-path="eigenvalues-and-eigenvectors.html"><a href="eigenvalues-and-eigenvectors.html#the-markov-and-oracle-ranking-methods"><i class="fa fa-check"></i><b>3.6</b> The Markov and Oracle Ranking Methods</a>
+<ul>
+<li class="chapter" data-level="" data-path="eigenvalues-and-eigenvectors.html"><a href="eigenvalues-and-eigenvectors.html#the-markov-method"><i class="fa fa-check"></i>The Markov method</a></li>
+<li class="chapter" data-level="" data-path="eigenvalues-and-eigenvectors.html"><a href="eigenvalues-and-eigenvectors.html#the-oracle-method"><i class="fa fa-check"></i>The Oracle method</a></li>
+<li class="chapter" data-level="" data-path="eigenvalues-and-eigenvectors.html"><a href="eigenvalues-and-eigenvectors.html#modifications"><i class="fa fa-check"></i>Modifications</a></li>
+</ul></li>
+<li class="chapter" data-level="3.7" data-path="eigenvalues-and-eigenvectors.html"><a href="eigenvalues-and-eigenvectors.html#exercises-2"><i class="fa fa-check"></i><b>3.7</b> Exercises</a></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="orthogonality.html"><a href="orthogonality.html"><i class="fa fa-check"></i><b>4</b> Orthogonality</a>
+<ul>
+<li class="chapter" data-level="4.1" data-path="orthogonality.html"><a href="orthogonality.html#ILO"><i class="fa fa-check"></i><b>4.1</b> Inner Product, Length, and Orthogonality</a>
+<ul>
+<li class="chapter" data-level="" data-path="orthogonality.html"><a href="orthogonality.html#distance-in-mathbbrn"><i class="fa fa-check"></i>Distance in <span class="math inline">\(\mathbb{R}^n\)</span></a></li>
+</ul></li>
+<li class="chapter" data-level="4.2" data-path="orthogonality.html"><a href="orthogonality.html#orthogonal-subspaces"><i class="fa fa-check"></i><b>4.2</b> Orthogonal Subspaces</a>
+<ul>
+<li class="chapter" data-level="" data-path="orthogonality.html"><a href="orthogonality.html#the-row-space-and-nullspace-of-a-matrix"><i class="fa fa-check"></i>The row space and nullspace of a matrix</a></li>
+</ul></li>
+<li class="chapter" data-level="4.3" data-path="orthogonality.html"><a href="orthogonality.html#orthogonal-and-orthonormal-sets"><i class="fa fa-check"></i><b>4.3</b> Orthogonal and Orthonormal Sets</a>
+<ul>
+<li class="chapter" data-level="" data-path="orthogonality.html"><a href="orthogonality.html#orthogonal-projections"><i class="fa fa-check"></i>Orthogonal projections</a></li>
+<li class="chapter" data-level="" data-path="orthogonality.html"><a href="orthogonality.html#orthogonal-matrices"><i class="fa fa-check"></i>Orthogonal matrices</a></li>
+</ul></li>
+<li class="chapter" data-level="4.4" data-path="orthogonality.html"><a href="orthogonality.html#OProj"><i class="fa fa-check"></i><b>4.4</b> Orthogonal Projections</a></li>
+<li class="chapter" data-level="4.5" data-path="orthogonality.html"><a href="orthogonality.html#orthogonalization"><i class="fa fa-check"></i><b>4.5</b> Orthogonalization</a>
+<ul>
+<li class="chapter" data-level="" data-path="orthogonality.html"><a href="orthogonality.html#qr-factorization"><i class="fa fa-check"></i>QR-factorization</a></li>
+</ul></li>
+<li class="chapter" data-level="4.6" data-path="orthogonality.html"><a href="orthogonality.html#exercises-3"><i class="fa fa-check"></i><b>4.6</b> Exercises</a></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="regression.html"><a href="regression.html"><i class="fa fa-check"></i><b>5</b> Regression</a>
+<ul>
+<li class="chapter" data-level="5.1" data-path="regression.html"><a href="regression.html#LSQP"><i class="fa fa-check"></i><b>5.1</b> Least Squares Problems</a>
+<ul>
+<li class="chapter" data-level="" data-path="regression.html"><a href="regression.html#least-squares-error"><i class="fa fa-check"></i>Least squares error</a></li>
+<li class="chapter" data-level="" data-path="regression.html"><a href="regression.html#least-squares-and-the-qr-factorization"><i class="fa fa-check"></i>Least squares and the QR-factorization</a></li>
+</ul></li>
+<li class="chapter" data-level="5.2" data-path="regression.html"><a href="regression.html#application-the-massey-method"><i class="fa fa-check"></i><b>5.2</b> Application: The Massey Method</a>
+<ul>
+<li class="chapter" data-level="" data-path="regression.html"><a href="regression.html#adjustments"><i class="fa fa-check"></i>Adjustments</a></li>
+<li class="chapter" data-level="" data-path="regression.html"><a href="regression.html#offensive-and-defensive-ratings"><i class="fa fa-check"></i>Offensive and defensive ratings</a></li>
+</ul></li>
+<li class="chapter" data-level="5.3" data-path="regression.html"><a href="regression.html#LSRSec"><i class="fa fa-check"></i><b>5.3</b> Least Squares Regression</a>
+<ul>
+<li class="chapter" data-level="" data-path="regression.html"><a href="regression.html#multilinear-regression"><i class="fa fa-check"></i>Multilinear regression</a></li>
+</ul></li>
+<li class="chapter" data-level="5.4" data-path="regression.html"><a href="regression.html#CorSec"><i class="fa fa-check"></i><b>5.4</b> Correlation</a>
+<ul>
+<li class="chapter" data-level="" data-path="regression.html"><a href="regression.html#some-notation-and-a-formula"><i class="fa fa-check"></i>Some notation and a formula</a></li>
+<li class="chapter" data-level="" data-path="regression.html"><a href="regression.html#correlation-in-r"><i class="fa fa-check"></i>Correlation in R</a></li>
+</ul></li>
+<li class="chapter" data-level="5.5" data-path="regression.html"><a href="regression.html#formulas-for-least-squares-regression"><i class="fa fa-check"></i><b>5.5</b> Formulas for Least Squares Regression</a>
+<ul>
+<li class="chapter" data-level="" data-path="regression.html"><a href="regression.html#the-coefficient-of-determination"><i class="fa fa-check"></i>The coefficient of determination</a></li>
+</ul></li>
+<li class="chapter" data-level="5.6" data-path="regression.html"><a href="regression.html#uncertainty-in-least-squares"><i class="fa fa-check"></i><b>5.6</b> Uncertainty in Least Squares</a>
+<ul>
+<li class="chapter" data-level="" data-path="regression.html"><a href="regression.html#confidence-and-prediction-intervals-for-responses"><i class="fa fa-check"></i>Confidence and prediction intervals for responses</a></li>
+<li class="chapter" data-level="" data-path="regression.html"><a href="regression.html#checking-assumptions"><i class="fa fa-check"></i>Checking assumptions</a></li>
+</ul></li>
+<li class="chapter" data-level="5.7" data-path="regression.html"><a href="regression.html#multilinear-regression-1"><i class="fa fa-check"></i><b>5.7</b> Multilinear Regression</a>
+<ul>
+<li class="chapter" data-level="" data-path="regression.html"><a href="regression.html#r-and-multilinear-regression"><i class="fa fa-check"></i>R and multilinear regression</a></li>
+<li class="chapter" data-level="" data-path="regression.html"><a href="regression.html#indicator-variables"><i class="fa fa-check"></i>Indicator variables</a></li>
+<li class="chapter" data-level="" data-path="regression.html"><a href="regression.html#fitting-polynomials"><i class="fa fa-check"></i>Fitting polynomials</a></li>
+<li class="chapter" data-level="" data-path="regression.html"><a href="regression.html#interactions"><i class="fa fa-check"></i>Interactions</a></li>
+</ul></li>
+<li class="chapter" data-level="5.8" data-path="regression.html"><a href="regression.html#model-selection"><i class="fa fa-check"></i><b>5.8</b> Model Selection</a>
+<ul>
+<li class="chapter" data-level="" data-path="regression.html"><a href="regression.html#best-subsets-regression"><i class="fa fa-check"></i>Best subsets regression</a></li>
+<li class="chapter" data-level="" data-path="regression.html"><a href="regression.html#stepwise-regression"><i class="fa fa-check"></i>Stepwise regression</a></li>
+<li class="chapter" data-level="" data-path="regression.html"><a href="regression.html#some-warnings"><i class="fa fa-check"></i>Some warnings</a></li>
+</ul></li>
+<li class="chapter" data-level="5.9" data-path="regression.html"><a href="regression.html#Logistic"><i class="fa fa-check"></i><b>5.9</b> Logistic Regression</a>
+<ul>
+<li class="chapter" data-level="" data-path="regression.html"><a href="regression.html#logistic-regression-with-multiple-independent-variables"><i class="fa fa-check"></i>Logistic regression with multiple independent variables</a></li>
+<li class="chapter" data-level="" data-path="regression.html"><a href="regression.html#likelihood-and-deviance"><i class="fa fa-check"></i>Likelihood and deviance</a></li>
+</ul></li>
+<li class="chapter" data-level="5.10" data-path="regression.html"><a href="regression.html#GDA"><i class="fa fa-check"></i><b>5.10</b> Gradient Descent</a>
+<ul>
+<li class="chapter" data-level="" data-path="regression.html"><a href="regression.html#functions-of-several-variables"><i class="fa fa-check"></i>Functions of several variables</a></li>
+<li class="chapter" data-level="" data-path="regression.html"><a href="regression.html#optimizing-parameters"><i class="fa fa-check"></i>Optimizing parameters</a></li>
+</ul></li>
+<li class="chapter" data-level="5.11" data-path="regression.html"><a href="regression.html#exercises-4"><i class="fa fa-check"></i><b>5.11</b> Exercises</a></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="svd-and-pca.html"><a href="svd-and-pca.html"><i class="fa fa-check"></i><b>6</b> SVD and PCA</a>
+<ul>
+<li class="chapter" data-level="6.1" data-path="svd-and-pca.html"><a href="svd-and-pca.html#DSM"><i class="fa fa-check"></i><b>6.1</b> Diagonalizable and Symmetric Matrices</a>
+<ul>
+<li class="chapter" data-level="" data-path="svd-and-pca.html"><a href="svd-and-pca.html#diagonalizable-matrices"><i class="fa fa-check"></i>Diagonalizable matrices</a></li>
+<li class="chapter" data-level="" data-path="svd-and-pca.html"><a href="svd-and-pca.html#symmetric-matrices"><i class="fa fa-check"></i>Symmetric matrices</a></li>
+<li class="chapter" data-level="" data-path="svd-and-pca.html"><a href="svd-and-pca.html#eigenvalues-and-eigenvectors-of-symmetric-matrices"><i class="fa fa-check"></i>Eigenvalues and eigenvectors of symmetric matrices</a></li>
+<li class="chapter" data-level="" data-path="svd-and-pca.html"><a href="svd-and-pca.html#orthogonal-diagonalization"><i class="fa fa-check"></i>Orthogonal diagonalization</a></li>
+</ul></li>
+<li class="chapter" data-level="6.2" data-path="svd-and-pca.html"><a href="svd-and-pca.html#quadratic-forms-and-constrained-optimization"><i class="fa fa-check"></i><b>6.2</b> Quadratic Forms and Constrained Optimization</a>
+<ul>
+<li class="chapter" data-level="" data-path="svd-and-pca.html"><a href="svd-and-pca.html#change-of-variables"><i class="fa fa-check"></i>Change of variables</a></li>
+<li class="chapter" data-level="" data-path="svd-and-pca.html"><a href="svd-and-pca.html#classifying-quadratic-forms"><i class="fa fa-check"></i>Classifying quadratic forms</a></li>
+<li class="chapter" data-level="" data-path="svd-and-pca.html"><a href="svd-and-pca.html#constrained-optimization"><i class="fa fa-check"></i>Constrained optimization</a></li>
+</ul></li>
+<li class="chapter" data-level="6.3" data-path="svd-and-pca.html"><a href="svd-and-pca.html#SVD"><i class="fa fa-check"></i><b>6.3</b> The Singular Value Decomposition</a>
+<ul>
+<li class="chapter" data-level="" data-path="svd-and-pca.html"><a href="svd-and-pca.html#singular-values"><i class="fa fa-check"></i>Singular values</a></li>
+<li class="chapter" data-level="" data-path="svd-and-pca.html"><a href="svd-and-pca.html#svd-with-r"><i class="fa fa-check"></i>SVD with R</a></li>
+</ul></li>
+<li class="chapter" data-level="6.4" data-path="svd-and-pca.html"><a href="svd-and-pca.html#applications-of-the-svd"><i class="fa fa-check"></i><b>6.4</b> Applications of the SVD</a>
+<ul>
+<li class="chapter" data-level="" data-path="svd-and-pca.html"><a href="svd-and-pca.html#movie-reviews-and-latent-factors"><i class="fa fa-check"></i>Movie reviews and latent factors</a></li>
+</ul></li>
+<li class="chapter" data-level="6.5" data-path="svd-and-pca.html"><a href="svd-and-pca.html#principal-component-analysis"><i class="fa fa-check"></i><b>6.5</b> Principal Component Analysis</a>
+<ul>
+<li class="chapter" data-level="" data-path="svd-and-pca.html"><a href="svd-and-pca.html#pca-in-r"><i class="fa fa-check"></i>PCA in R</a></li>
+<li class="chapter" data-level="" data-path="svd-and-pca.html"><a href="svd-and-pca.html#biplots"><i class="fa fa-check"></i>Biplots</a></li>
+<li class="chapter" data-level="" data-path="svd-and-pca.html"><a href="svd-and-pca.html#scaling"><i class="fa fa-check"></i>Scaling</a></li>
+</ul></li>
+<li class="chapter" data-level="6.6" data-path="svd-and-pca.html"><a href="svd-and-pca.html#exercises-5"><i class="fa fa-check"></i><b>6.6</b> Exercises</a></li>
+</ul></li>
+<li class="chapter" data-level="7" data-path="additional-topics.html"><a href="additional-topics.html"><i class="fa fa-check"></i><b>7</b> Additional Topics</a>
+<ul>
+<li class="chapter" data-level="7.1" data-path="additional-topics.html"><a href="additional-topics.html#k-means-clustering"><i class="fa fa-check"></i><b>7.1</b> <span class="math inline">\(k\)</span>-means Clustering</a>
+<ul>
+<li class="chapter" data-level="" data-path="additional-topics.html"><a href="additional-topics.html#k-means-clustering-1"><i class="fa fa-check"></i><span class="math inline">\(k\)</span>-means clustering</a></li>
+<li class="chapter" data-level="" data-path="additional-topics.html"><a href="additional-topics.html#cluster-optimization"><i class="fa fa-check"></i>Cluster optimization</a></li>
+<li class="chapter" data-level="" data-path="additional-topics.html"><a href="additional-topics.html#clustering-for-classification"><i class="fa fa-check"></i>Clustering for classification</a></li>
+</ul></li>
+<li class="chapter" data-level="7.2" data-path="additional-topics.html"><a href="additional-topics.html#collaborative-filtering"><i class="fa fa-check"></i><b>7.2</b> Collaborative Filtering</a>
+<ul>
+<li class="chapter" data-level="" data-path="additional-topics.html"><a href="additional-topics.html#similarity-measures"><i class="fa fa-check"></i>Similarity measures</a></li>
+<li class="chapter" data-level="" data-path="additional-topics.html"><a href="additional-topics.html#collaborative-filtering-with-recommenderlab"><i class="fa fa-check"></i>Collaborative filtering with recommenderlab</a></li>
+</ul></li>
+<li class="chapter" data-level="7.3" data-path="additional-topics.html"><a href="additional-topics.html#decision-tree-classification"><i class="fa fa-check"></i><b>7.3</b> Decision Tree Classification</a>
+<ul>
+<li class="chapter" data-level="" data-path="additional-topics.html"><a href="additional-topics.html#decision-trees-with-r"><i class="fa fa-check"></i>Decision trees with R</a></li>
+<li class="chapter" data-level="" data-path="additional-topics.html"><a href="additional-topics.html#random-forests"><i class="fa fa-check"></i>Random Forests</a></li>
+</ul></li>
+<li class="chapter" data-level="7.4" data-path="additional-topics.html"><a href="additional-topics.html#support-vector-machines"><i class="fa fa-check"></i><b>7.4</b> Support Vector Machines</a>
+<ul>
+<li class="chapter" data-level="" data-path="additional-topics.html"><a href="additional-topics.html#support-vector-machines-in-r"><i class="fa fa-check"></i>Support vector machines in R</a></li>
+</ul></li>
+<li class="chapter" data-level="7.5" data-path="additional-topics.html"><a href="additional-topics.html#exercises-6"><i class="fa fa-check"></i><b>7.5</b> Exercises</a></li>
+</ul></li>
+<li class="appendix"><span><b>Appendices</b></span></li>
+<li class="chapter" data-level="A" data-path="MVCA.html"><a href="MVCA.html"><i class="fa fa-check"></i><b>A</b> An Introduction to Multivariable Calculus</a>
+<ul>
+<li class="chapter" data-level="A.1" data-path="MVCA.html"><a href="MVCA.html#functions-of-several-variables-1"><i class="fa fa-check"></i><b>A.1</b> Functions of several variables</a>
+<ul>
+<li class="chapter" data-level="" data-path="MVCA.html"><a href="MVCA.html#minima-and-maxima"><i class="fa fa-check"></i>Minima and maxima</a></li>
+<li class="chapter" data-level="" data-path="MVCA.html"><a href="MVCA.html#limits-and-continuity"><i class="fa fa-check"></i>Limits and continuity</a></li>
+</ul></li>
+<li class="chapter" data-level="A.2" data-path="MVCA.html"><a href="MVCA.html#partial-derivatives"><i class="fa fa-check"></i><b>A.2</b> Partial Derivatives</a>
+<ul>
+<li class="chapter" data-level="" data-path="MVCA.html"><a href="MVCA.html#higher-order-partial-derivatives"><i class="fa fa-check"></i>Higher order partial derivatives</a></li>
+</ul></li>
+<li class="chapter" data-level="A.3" data-path="MVCA.html"><a href="MVCA.html#directional-derivatives"><i class="fa fa-check"></i><b>A.3</b> Directional Derivatives</a>
+<ul>
+<li class="chapter" data-level="" data-path="MVCA.html"><a href="MVCA.html#the-gradient-vector"><i class="fa fa-check"></i>The gradient vector</a></li>
+</ul></li>
+<li class="chapter" data-level="A.4" data-path="MVCA.html"><a href="MVCA.html#optimization"><i class="fa fa-check"></i><b>A.4</b> Optimization</a>
+<ul>
+<li class="chapter" data-level="" data-path="MVCA.html"><a href="MVCA.html#classifying-critical-points"><i class="fa fa-check"></i>Classifying critical points</a></li>
+</ul></li>
+<li class="chapter" data-level="A.5" data-path="MVCA.html"><a href="MVCA.html#exercises-7"><i class="fa fa-check"></i><b>A.5</b> Exercises</a></li>
+</ul></li>
+<li class="chapter" data-level="B" data-path="the-igraph-and-ggally-packages.html"><a href="the-igraph-and-ggally-packages.html"><i class="fa fa-check"></i><b>B</b> The iGraph and GGally Packages</a>
+<ul>
+<li class="chapter" data-level="" data-path="the-igraph-and-ggally-packages.html"><a href="the-igraph-and-ggally-packages.html#ggally"><i class="fa fa-check"></i>GGally</a></li>
+</ul></li>
+<li class="chapter" data-level="C" data-path="packages.html"><a href="packages.html"><i class="fa fa-check"></i><b>C</b> Packages</a></li>
+<li class="chapter" data-level="" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i>References</a></li>
+<li class="divider"></li>
+<li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Linear Algebra for Data Science</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="vector-spaces" class="section level1 hasAnchor" number="2">
+<h1><span class="header-section-number">Chapter 2</span> Vector Spaces<a href="vector-spaces.html#vector-spaces" class="anchor-section" aria-label="Anchor link to header"></a></h1>
+<div id="artoo" class="section level2 hasAnchor" number="2.1">
+<h2><span class="header-section-number">2.1</span> The Vector Space <span class="math inline">\(\mathbb{R}^n\)</span><a href="vector-spaces.html#artoo" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>We’re used to thinking of <span class="math inline">\(\mathbb{R}^2\)</span> as the set of all points in the plane (Fig. <a href="vector-spaces.html#fig:ptinr2">2.1</a>).</p>
+<p><span class="math display">\[\mathbb{R}^2=\{(x_1,x_2): x_1,x_2\in \mathbb{R}\}.\]</span></p>
+<div class="figure" style="text-align: center"><span style="display:block;" id="fig:ptinr2"></span>
+<img src="images/vg0.png" alt="A point in the plane" width="50%" />
+<p class="caption">
+Figure 2.1: A point in the plane
+</p>
+</div>
+<p>It’s also helpful to think of <span class="math inline">\(\mathbb{R}^2\)</span> as a collection of vectors. If we place a vector with its tail at the origin, its tip is at a point <span class="math inline">\((x_1,x_2)\)</span>. We name the vector by this point. This picture represents the (column) vector
+<span class="math inline">\(\mathbf{v}=\begin{bmatrix}x_1\\x_2 \end{bmatrix}\)</span>. (Fig. <a href="vector-spaces.html#fig:vecinr2">2.2</a>)</p>
+<div class="figure" style="text-align: center"><span style="display:block;" id="fig:vecinr2"></span>
+<img src="images/vg1.png" alt="A vector in $\mathbb{R}^2$" width="50%" />
+<p class="caption">
+Figure 2.2: A vector in <span class="math inline">\(\mathbb{R}^2\)</span>
+</p>
+</div>
+<div id="vector-addition-and-scalar-multiplication" class="section level3 unnumbered hasAnchor">
+<h3>Vector addition and scalar multiplication<a href="vector-spaces.html#vector-addition-and-scalar-multiplication" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>We know how to add vectors because we know how to add matrices. If <span class="math inline">\(\mathbf{u}=\begin{bmatrix}u_1\\u_2\end{bmatrix}\)</span> and <span class="math inline">\(\mathbf{v}=\begin{bmatrix}v_1\\v_2\end{bmatrix}\)</span>, then</p>
+<p><span class="math display">\[\mathbf{u}+\mathbf{v}=\begin{bmatrix}u_1+v_1\\u_2+v_2\end{bmatrix}.\]</span></p>
+<p>We also know how to multiply a vector by a scalar:</p>
+<p><span class="math display">\[r\mathbf{u}=\begin{bmatrix} ru_1\\ru_2\end{bmatrix}.\]</span></p>
+<p>For example, if <span class="math inline">\(\mathbf{u}=\begin{bmatrix}3\\5\end{bmatrix}\)</span> and <span class="math inline">\(\mathbf{v}=\begin{bmatrix}2\\-1\end{bmatrix}\)</span>, then</p>
+<p><span class="math display">\[\mathbf{u}+\mathbf{v}=\begin{bmatrix}3+2\\5+(-1)\end{bmatrix}=\begin{bmatrix}5\\4\end{bmatrix}.\]</span></p>
+<p>Also,</p>
+<p><span class="math display">\[2\mathbf{u}=\begin{bmatrix}2\cdot 3\\2\cdot 5\end{bmatrix}=\begin{bmatrix}6\\10\end{bmatrix},\]</span></p>
+<p>while</p>
+<p><span class="math display">\[-2\mathbf{u}=\begin{bmatrix}-2\cdot 3\\-2\cdot 5\end{bmatrix}=\begin{bmatrix}-6\\-10\end{bmatrix}.\]</span></p>
+<p>Vector addition and scalar multiplication have nice geometric interpretations (Figures <a href="vector-spaces.html#fig:vecadd">2.3</a>,<a href="vector-spaces.html#fig:scmult">2.4</a>).</p>
+<div class="figure" style="text-align: center"><span style="display:block;" id="fig:vecadd"></span>
+<img src="images/vg2.png" alt="Vector Addition" width="50%" />
+<p class="caption">
+Figure 2.3: Vector Addition
+</p>
+</div>
+<div class="figure" style="text-align: center"><span style="display:block;" id="fig:scmult"></span>
+<img src="images/vg3.png" alt="Scalar Multiplication" width="50%" />
+<p class="caption">
+Figure 2.4: Scalar Multiplication
+</p>
+</div>
+<p>We can’t forget the special vector</p>
+<p><span class="math display">\[\mathbf{0}=\begin{bmatrix}0\\0\end{bmatrix}.\]</span></p>
+<p>Unlike the others, the zero vector has 0 magnitude and has no well-defined direction.</p>
+<p>Speaking of magnitude, the <em>magnitude</em> of a vector <span class="math inline">\(\mathbf{x}\)</span>, denoted <span class="math inline">\(|\mathbf{x}|\)</span> (or frequently <span class="math inline">\(\Vert \mathbf{x}\Vert\)</span>) is the distance from its tail to its tip. Using the Pythagorean theorem, if</p>
+<p><span class="math display">\[\mathbf{x}=\begin{bmatrix}x_1\\x_2\end{bmatrix},\]</span></p>
+<p>then</p>
+<p><span class="math display">\[|\mathbf{x}|=\sqrt{x_1^2+x_2^2}.\]</span></p>
+<p>For instance, if <span class="math inline">\(\mathbf{x}=\begin{bmatrix}2\\3\end{bmatrix}\)</span>, then <span class="math inline">\(|\mathbf{x}|=\sqrt{2^2+3^2}=\sqrt{13}\approx 3.6\)</span>.</p>
+<p>With vector addition and scalar multiplication defined as above, we see that the following properties hold:</p>
+<ol style="list-style-type: decimal">
+<li><p>If <span class="math inline">\(\mathbf{u}\)</span> and <span class="math inline">\(\mathbf{v}\)</span> are vectors in <span class="math inline">\(\mathbb{R}^2\)</span>, then <span class="math inline">\(\mathbf{u}+\mathbf{v}\)</span> is also a vector in <span class="math inline">\(\mathbb{R}^2\)</span>. This property is called <em>closure under addition</em>.</p></li>
+<li><p>If <span class="math inline">\(\mathbf{u}\)</span> is a vector in <span class="math inline">\(\mathbb{R}^2\)</span> and <span class="math inline">\(r\)</span> is any real number, then <span class="math inline">\(r\mathbf{u}\)</span> is also in <span class="math inline">\(\mathbb{R}^2\)</span>. This property is called <em>closure under scalar multiplication</em>.</p></li>
+</ol>
+<p>Sets of things that satisfy these properties (and some others that we won’t get into) are called <em>vector spaces</em>.</p>
+</div>
+<div id="linear-dependence-and-independence" class="section level3 unnumbered hasAnchor">
+<h3>Linear dependence and independence<a href="vector-spaces.html#linear-dependence-and-independence" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Two vectors in <span class="math inline">\(\mathbb{R}^2\)</span> are <em>linearly dependent</em> if one is a constant multiple of the other. Otherwise, they are <em>linearly independent</em>. For example,</p>
+<ol style="list-style-type: decimal">
+<li><p><span class="math inline">\(\mathbf{u}=\begin{bmatrix}2\\-3\end{bmatrix}\)</span> and <span class="math inline">\(\mathbf{v}=\begin{bmatrix}-6\\9\end{bmatrix}\)</span> are linearly dependent, since <span class="math inline">\(\mathbf{v}=-3\mathbf{u}\)</span>.</p></li>
+<li><p><span class="math inline">\(\mathbf{u}=\begin{bmatrix}2\\-3\end{bmatrix}\)</span> and <span class="math inline">\(\mathbf{v}=\begin{bmatrix}6\\9\end{bmatrix}\)</span> are linearly independent, since <span class="math inline">\(v_1=3u_1\)</span>, but <span class="math inline">\(v_2=-3u_2\)</span>.</p></li>
+<li><p>The zero vector <span class="math inline">\(\mathbf{0}\)</span> is linearly dependent with every vector since <span class="math inline">\(0\mathbf{u}=\mathbf{0}\)</span>.</p></li>
+</ol>
+<p>Here’s an alternative definition of linear dependence that we will be able to extend to larger collections of vectors.</p>
+<div class="defbox">
+<div class="definition">
+<p><span id="def:linind" class="definition"><strong>Definition 2.1  </strong></span>Two vectors <span class="math inline">\(\mathbf{u}\)</span> and <span class="math inline">\(\mathbf{v}\)</span> are <strong>linearly dependent</strong> if there exist scalars <span class="math inline">\(a\)</span> and <span class="math inline">\(b\)</span>, <em>not both zero</em>, such that</p>
+<p><span class="math display">\[a\mathbf{u}+b\mathbf{v}=\mathbf{0}.\]</span></p>
+<p>If <span class="math inline">\(\mathbf{u}\)</span> and <span class="math inline">\(\mathbf{v}\)</span> are not linearly dependent, then they are <strong>linearly independent</strong>.</p>
+</div>
+</div>
+<p>For example, <span class="math inline">\(\mathbf{u}=\begin{bmatrix}2\\-3\end{bmatrix}\)</span> and <span class="math inline">\(\mathbf{v}=\begin{bmatrix}-6\\9\end{bmatrix}\)</span> are linearly dependent, since <span class="math inline">\(3\mathbf{u}+1\mathbf{v}=\mathbf{0}.\)</span></p>
+</div>
+<div id="linear-combinations" class="section level3 unnumbered hasAnchor">
+<h3>Linear Combinations<a href="vector-spaces.html#linear-combinations" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Any sum of the form</p>
+<p><span class="math display">\[a\mathbf{u}+b\mathbf{v}\]</span></p>
+<p>is called a <em>linear combination</em> of <span class="math inline">\(\mathbf{u}\)</span> and <span class="math inline">\(\mathbf{v}\)</span>. An alternative way of stating Definition <a href="vector-spaces.html#def:linind">2.1</a> is that <em>two vectors are linearly dependent if there is a nontrivial linear combination that results in the zero vector</em>. (<em>Trivial</em> in this context means that all coefficients are 0.)</p>
+</div>
+<div id="mathbbr3-and-mathbbrn" class="section level3 unnumbered hasAnchor">
+<h3><span class="math inline">\(\mathbb{R}^3\)</span> and <span class="math inline">\(\mathbb{R}^n\)</span><a href="vector-spaces.html#mathbbr3-and-mathbbrn" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>We can think of <span class="math inline">\(\mathbb{R}^3\)</span> as a vector space, as well.</p>
+<p><span class="math display">\[\mathbb{R}^3=\left\{\mathbf{x}=\begin{bmatrix}x_1\\x_2\\x_3\end{bmatrix}:x_1,x_2,x_3\in\mathbb{R}\right\}.\]</span></p>
+<p>And, while we can’t easily visualize higher dimensional vectors,
+we can define <span class="math inline">\(\mathbb{R}^n\)</span> for any positive integer <span class="math inline">\(n\)</span> as a vector space:</p>
+<p><span class="math display">\[\mathbb{R}^n=\left\{\mathbf{x}=\begin{bmatrix}x_1\\x_2\\ \vdots \\x_n\end{bmatrix}: x_1,x_2,\dots, x_n\in\mathbb{R}\right\}.\]</span></p>
+<p>(Note: you can write these vectors horizontally: <span class="math inline">\((x_1,x_2,\dots,x_n)\)</span> if necessary, to save space.)</p>
+<p>The properties for vectors in <span class="math inline">\(\mathbb{R}^2\)</span> have analogous properties in <span class="math inline">\(\mathbb{R}^n\)</span>. The magnitude of a vector is defined this way: if</p>
+<p><span class="math display">\[\mathbf{x}=\begin{bmatrix}x_1\\x_2\\ \vdots \\x_n\end{bmatrix},\]</span></p>
+<p>then</p>
+<p><span class="math display">\[|\mathbf{x}|=\sqrt{x_1^2+x_2^2+\cdots+x_n^2}.\]</span></p>
+</div>
+</div>
+<div id="subspaces" class="section level2 hasAnchor" number="2.2">
+<h2><span class="header-section-number">2.2</span> Subspaces<a href="vector-spaces.html#subspaces" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>For what we will be doing in the future, <em>subspaces</em> will be very important to us. Here’s the definition.</p>
+<div class="defbox">
+<div class="definition">
+<p><span id="def:SubspaceDef" class="definition"><strong>Definition 2.2  </strong></span>Let <span class="math inline">\(W\)</span> be a nonempty subset of a vector space <span class="math inline">\(V\)</span>. Then <span class="math inline">\(W\)</span> is a <em>subspace</em> of <span class="math inline">\(V\)</span> if</p>
+<ol style="list-style-type: decimal">
+<li><p>For all vectors <span class="math inline">\(\mathbf{w}_1\)</span> and <span class="math inline">\(\mathbf{w}_2\)</span> in <span class="math inline">\(W\)</span>, <span class="math inline">\(\mathbf{w}_1+\mathbf{w}_2\)</span> is also in <span class="math inline">\(W\)</span> (i.e. <span class="math inline">\(W\)</span> is closed under addition), and</p></li>
+<li><p>For vectors <span class="math inline">\(\mathbf{w}\)</span> in <span class="math inline">\(W\)</span> and all scalars <span class="math inline">\(r\)</span>, <span class="math inline">\(r\mathbf{w}\)</span> is also in <span class="math inline">\(W\)</span> (i.e. <span class="math inline">\(W\)</span> is closed under scalar multiplication).</p></li>
+</ol>
+<p>These two can be combined into a single condition: a subset of a vector space is a subspace if all linear combinations of vectors from the subset are also in the subset.</p>
+</div>
+</div>
+<p>Essentially, a subspace is a subset of vector space that is itself a vector space.</p>
+<div class="examplebox">
+<div class="example">
+<p><span id="exm:unlabeled-div-24" class="example"><strong>Example 2.1  </strong></span>Let <span class="math inline">\(W\)</span> be the set of all vectors in <span class="math inline">\(\mathbb{R}^3\)</span> of the form</p>
+<p><span class="math display">\[\mathbf{w}=\begin{bmatrix}w_1\\w_2\\w_3\end{bmatrix}\]</span></p>
+<p>such that <span class="math inline">\(w_1+w_2+w_3=0\)</span>.</p>
+<p>For instance, <span class="math inline">\(\mathbf{w}=\begin{bmatrix} 1\\2\\-3\end{bmatrix}\)</span> is in <span class="math inline">\(W\)</span>, since <span class="math inline">\(1+2+(-3)=0\)</span>, but <span class="math inline">\(\mathbf{v}=\begin{bmatrix} 1\\2\\-4\end{bmatrix}\)</span> is not in <span class="math inline">\(W\)</span>, since <span class="math inline">\(1+2+(-4)=-1\neq 0\)</span>. Is <span class="math inline">\(W\)</span> a subspace of <span class="math inline">\(\mathbb{R}^3\)</span>? We need to check closure under addition and closure under scalar multiplication.</p>
+<p><strong>Closure under addition</strong>: let <span class="math inline">\(\mathbf{w}=(w_1,w_2,w_3)\)</span> and let <span class="math inline">\(\mathbf{v}=(v_1,v_2,v_3)\)</span> be any two vectors in <span class="math inline">\(W\)</span>. (This means that <span class="math inline">\(w_1+w_2+w_3=0\)</span> and <span class="math inline">\(v_1+v_2+v_3=0\)</span>.) Then <span class="math inline">\(\mathbf{w}+\mathbf{v}=(w_1+v_1,w_2+v_2,w_3+v_3)\)</span>.</p>
+<p>We need to show that <span class="math inline">\(\mathbf{w}+\mathbf{v}\)</span> is in <span class="math inline">\(W\)</span>, which means showing that the sum of the components of <span class="math inline">\(\mathbf{w}+\mathbf{v}\)</span> is 0. We have</p>
+<p><span class="math display">\[\begin{align*}
+    (w_1+v_1)+(w_2+v_2)+(w_3+v_3)&amp;=(w_1+w_2+w_3)+(v_1+v_2+v_3)\\
+    &amp;=0+0 \text{ since $\mathbf{w}$ and $\mathbf{v}$ are in $W$}\\
+    &amp;=0.\checkmark
+\end{align*}\]</span></p>
+<p>The sum of two vectors in <span class="math inline">\(W\)</span> is also in <span class="math inline">\(W\)</span>.</p>
+<p><strong>Closure under scalar multiplication</strong>: Let <span class="math inline">\(\mathbf{w}=(w_1,w_2,w_3)\)</span> be a vector in <span class="math inline">\(W\)</span>, and let <span class="math inline">\(r\)</span> be any real number. Then <span class="math inline">\(r\mathbf{w}=(rw_1,rw_2,rw_3)\)</span>, and</p>
+<p><span class="math display">\[rw_1+rw_2+rw_3=r(w_1+w_2+w_3)=r\cdot 0=0.\checkmark\]</span></p>
+<p>Since <span class="math inline">\(W\)</span> is closed under addition and scalar multiplication, it is a subspace of <span class="math inline">\(\mathbb{R}^3\)</span>.</p>
+</div>
+</div>
+<div class="examplebox">
+<div class="example">
+<p><span id="exm:unlabeled-div-25" class="example"><strong>Example 2.2  </strong></span>Let <span class="math inline">\(W\)</span> be the set of all vectors in <span class="math inline">\(\mathbb{R}^2\)</span> of the form
+<span class="math inline">\(\mathbf{w}=(w_1,1)\)</span>. (All vectors with a second component of 1.)
+Is this <span class="math inline">\(W\)</span> a subspace?</p>
+<p>Nope. If <span class="math inline">\(\mathbf{w}=(w_1,1)\)</span>, then <span class="math inline">\(2\mathbf{w}=(2w_1,2)\)</span>, which is not in <span class="math inline">\(W\)</span>. Since <span class="math inline">\(W\)</span> is not closed under scalar multiplication, it is not a subspace of <span class="math inline">\(\mathbb{R}^2\)</span>. It’s also easy to show that <span class="math inline">\(W\)</span> is not closed under addition.</p>
+</div>
+</div>
+<p>Suppose that <span class="math inline">\(W\)</span> is a subspace, and let <span class="math inline">\(\mathbf{w}\)</span> be any vector in <span class="math inline">\(W\)</span>. Then the scalar product <span class="math inline">\(0\mathbf{w}=\mathbf{0}\)</span> must also be in <span class="math inline">\(W\)</span>. In other words, any subspace (and any vector space, for that matter) must contain a zero vector. If a subset of a vector space does not contain the zero vector, it cannot be a subspace.
+In our last example, <span class="math inline">\(W\)</span> did not contain the zero vector, since <span class="math inline">\(\mathbf{0}=(0,0)\)</span> is not of the form <span class="math inline">\((w_1,1)\)</span>. We could have immediately determined that <span class="math inline">\(W\)</span> was not a subspace.</p>
+<p>Let’s state this fact about the zero vector as a theorem.</p>
+<div class="theorembox">
+<div class="theorem">
+<p><span id="thm:zerovector" class="theorem"><strong>Theorem 2.1  </strong></span>Let <span class="math inline">\(W\)</span> be a subspace of a vector space <span class="math inline">\(V\)</span>. Then <span class="math inline">\(\mathbf{0}\in W.\)</span></p>
+</div>
+</div>
+<p>Here is one last example to close out the section.</p>
+<div class="examplebox">
+<div class="example">
+<p><span id="exm:Nullspace" class="example"><strong>Example 2.3  </strong></span>Let <span class="math inline">\(\mathbf{A}\)</span> be an <span class="math inline">\(m\times n\)</span> matrix, and let <span class="math inline">\(W\)</span> be the set of all vectors <span class="math inline">\(\mathbf{x}\)</span> in <span class="math inline">\(\mathbb{R}^n\)</span> such that <span class="math inline">\(\mathbf{A}\mathbf{x}=\mathbf{0}\)</span>. Is <span class="math inline">\(W\)</span> a subspace of <span class="math inline">\(\mathbb{R}^n\)</span>?</p>
+<p><strong>Closure under addition</strong>: let <span class="math inline">\(\mathbf{x}\)</span> and <span class="math inline">\(\mathbf{y}\)</span> be two vectors in <span class="math inline">\(W\)</span>. Then</p>
+<p><span class="math display">\[\begin{align*}
+\mathbf{A}\left(\mathbf{x}+\mathbf{y}\right)&amp;=\mathbf{A}\mathbf{x}+\mathbf{A}\mathbf{y}\\
+&amp;=\mathbf{0}+\mathbf{0}=\mathbf{0}.\checkmark
+\end{align*}\]</span></p>
+<p><strong>Closure under scalar multiplication</strong>: if <span class="math inline">\(\mathbf{x}\)</span> is in <span class="math inline">\(W\)</span> and <span class="math inline">\(r\)</span> is any real number, then</p>
+<p><span class="math display">\[\mathbf{A}(r\mathbf{x})=r(\mathbf{A}\mathbf{x})=r\mathbf{0}=\mathbf{0}.\checkmark\]</span></p>
+<p>So <span class="math inline">\(W\)</span> is a subspace of <span class="math inline">\(\mathbb{R}^n\)</span>, and an important one, called the <em>nullspace</em> of <span class="math inline">\(\mathbf{A}\)</span>. We’ll see more of it in the future.</p>
+</div>
+</div>
+</div>
+<div id="linear-dependence-and-independence-1" class="section level2 hasAnchor" number="2.3">
+<h2><span class="header-section-number">2.3</span> Linear Dependence and Independence<a href="vector-spaces.html#linear-dependence-and-independence-1" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>In Section <a href="vector-spaces.html#artoo">2.1</a>, we talked about a linear combination of two vectors. Let’s generalize the notion.</p>
+<div class="defbox">
+<div class="definition">
+<p><span id="def:LinComb" class="definition"><strong>Definition 2.3  </strong></span>Let <span class="math inline">\(\{\mathbf{v}_1,\mathbf{v}_2,\dots,\mathbf{v}_r\}\)</span>
+be a collection of vectors in a vector space <span class="math inline">\(V\)</span>. A <strong>linear combination</strong> of <span class="math inline">\(\{\mathbf{v}_1,\mathbf{v}_2,\dots,\mathbf{v}_r\}\)</span> is a vector</p>
+<p><span class="math display">\[\mathbf{v}=c_1\mathbf{v}_1+c_2\mathbf{v}_2+\cdots+c_r\mathbf{v}_r,\]</span></p>
+<p>where <span class="math inline">\(c_1,c_2,\dots,c_r\)</span> are real numbers.</p>
+</div>
+</div>
+<div class="examplebox">
+<div class="example">
+<p><span id="exm:unlabeled-div-26" class="example"><strong>Example 2.4  </strong></span>Let</p>
+<p><span class="math display">\[\mathbf{v}_1=\begin{bmatrix} 1\\2\\1\end{bmatrix},\mathbf{v}_2=\begin{bmatrix} 2\\3\\-1\end{bmatrix}, \text{ and }\mathbf{v}_3=\begin{bmatrix}4\\1\\2\end{bmatrix}.\]</span></p>
+<p>Then <span class="math inline">\(\mathbf{v}=2\mathbf{v}_1+\mathbf{v}_2-3\mathbf{v}_3\)</span> is
+<span class="math display">\[\begin{align*}\mathbf{v}=2\begin{bmatrix} 1\\2\\1\end{bmatrix}+1\begin{bmatrix} 2\\3\\-1\end{bmatrix}-3\begin{bmatrix}4\\1\\2\end{bmatrix}&amp;=\begin{bmatrix}2\cdot 1+1\cdot 2-3\cdot 4\\2\cdot 2+1\cdot 3-3\cdot 1\\2\cdot 1+1\cdot(-1)-3\cdot 2\end{bmatrix}\\
+&amp;=\begin{bmatrix}-8\\4\\-5\end{bmatrix}.
+\end{align*}\]</span></p>
+</div>
+</div>
+<p>This type of calculation might seem familiar. Consider the matrix-vector product <span class="math inline">\(\mathbf{A}\mathbf{x}\)</span>:</p>
+<p><span class="math display">\[\mathbf{A}\mathbf{x}=\begin{bmatrix}1 &amp; 2 &amp; 4\\2 &amp; 3 &amp; 1\\1 &amp; -1 &amp; 2\end{bmatrix}\begin{bmatrix}2\\1\\-3\end{bmatrix}=\begin{bmatrix}-8\\4\\-5\end{bmatrix}.\]</span></p>
+<p>Note that the columns of <span class="math inline">\(\mathbf{A}\)</span> are the vectors <span class="math inline">\(\mathbf{v}_1,\mathbf{v}_2,\)</span> and <span class="math inline">\(\mathbf{v}_3\)</span> from the last example, while the entries in <span class="math inline">\(\mathbf{x}\)</span> are the coefficients in the linear combination from the example. When you multiply a vector by a matrix, you’re really just taking a linear combination of the columns of the matrix! This is an important and useful idea.</p>
+<p>Here it is in more general form:</p>
+<p><span class="math display">\[\begin{bmatrix}a_{11} &amp; a_{12} &amp;\cdots &amp; a_{1n}\\
+a_{21} &amp; a_{22} &amp; \cdots &amp; a_{2n}\\
+\vdots &amp; \vdots &amp; \ddots &amp; \vdots \\
+a_{m1} &amp; a_{m2} &amp; \cdots &amp; a_{mn}\end{bmatrix}
+\begin{bmatrix} c_1\\c_2\\ \vdots\\c_n\end{bmatrix}=
+c_1\mathbf{a}_1+c_2\mathbf{a}_2+\cdots+c_n\mathbf{a}_n,\]</span>
+where <span class="math inline">\(\mathbf{a}_i\)</span> is the <span class="math inline">\(i\)</span>th column vector.</p>
+<p>(Here is some useful notation: the matrix with columns <span class="math inline">\(\mathbf{a}_1,\mathbf{a}_2,\dots,\mathbf{a}_n\)</span> is often written <span class="math inline">\(\begin{bmatrix}\mathbf{a}_1&amp;\mathbf{a}_2&amp;\cdots&amp;\mathbf{a}_n\end{bmatrix}\)</span>. Note the bold typeface indicating vectors.)</p>
+<p>One important result of this is that the equation <span class="math inline">\(\mathbf{A}\mathbf{x}=\mathbf{b}\)</span> has a solution if and only if <span class="math inline">\(\mathbf{b}\)</span> can be written as a linear combination of the columns of <span class="math inline">\(\mathbf{A}\)</span>.</p>
+<div class="examplebox">
+<div class="example">
+<p><span id="exm:unlabeled-div-27" class="example"><strong>Example 2.5  </strong></span>Can <span class="math inline">\(\mathbf{b}=\begin{bmatrix}2\\5\end{bmatrix}\)</span> be written as a linear combination of <span class="math inline">\(\mathbf{a}_1=\begin{bmatrix}1\\2\end{bmatrix}\)</span> and <span class="math inline">\(\mathbf{a}_2=\begin{bmatrix}4\\7\end{bmatrix}\)</span>? This is equivalent to solving <span class="math inline">\(\begin{bmatrix}\mathbf{a}_1 &amp; \mathbf{a}_2\end{bmatrix}\begin{bmatrix}c_1\\c_2\end{bmatrix}=\mathbf{b}\)</span></p>
+<p>To solve this, we’ll create the matrix <span class="math inline">\(\mathbf{A}\)</span> with <span class="math inline">\(\mathbf{a}_1\)</span> and <span class="math inline">\(\mathbf{a}_2\)</span> as its columns, augment it with <span class="math inline">\(\mathbf{b}\)</span>, and reduce:<a href="#fn1" class="footnote-ref" id="fnref1"><sup>1</sup></a></p>
+<p><span class="math display">\[\left[ \begin{array}{ll|l} 1 &amp; 4 &amp; 2\\2 &amp; 7 &amp; 5\end{array}\right]\leadsto \left[ \begin{array}{ll|l} 1 &amp; 0 &amp; 6\\0 &amp; 1 &amp; -1\end{array}\right]\]</span></p>
+<p>The answer is yes, with the combination <span class="math inline">\(\mathbf{b}=6\mathbf{a}_1-\mathbf{a}_2\)</span>. To verify this, we have</p>
+<p><span class="math display">\[6\mathbf{a}_1-\mathbf{a}_2=6\begin{bmatrix}1\\2\end{bmatrix}-\begin{bmatrix}4\\7\end{bmatrix}=\begin{bmatrix}6\cdot 1-1\cdot 4\\6\cdot 2-1\cdot 7\end{bmatrix}=\begin{bmatrix}2\\5\end{bmatrix}=\mathbf{b}.\]</span></p>
+</div>
+</div>
+<p>The <em>span</em> of a set of vectors is an important concept.</p>
+<div class="defbox">
+<div class="definition">
+<p><span id="def:span" class="definition"><strong>Definition 2.4  </strong></span>Let <span class="math inline">\(\{\mathbf{v}_1,\mathbf{v}_2,\dots,\mathbf{v}_r\}\)</span> be a set of vectors in a vector space <span class="math inline">\(V\)</span>. The <strong>span</strong> of the set,
+<span class="math inline">\(\text{span}(\mathbf{v}_1,\mathbf{v}_2,\dots,\mathbf{v}_r)\)</span>,
+is the set of all possible linear combinations of the vectors.</p>
+</div>
+</div>
+<p>The following theorem is important and easy to prove.</p>
+<div class="theorembox">
+<div class="theorem">
+<p><span id="thm:unlabeled-div-28" class="theorem"><strong>Theorem 2.2  </strong></span>Let <span class="math inline">\(\{\mathbf{v}_1,\mathbf{v}_2,\dots,\mathbf{v}_r\}\)</span> be a set of vectors in a vector space <span class="math inline">\(V\)</span>. Then <span class="math inline">\(W=\textrm{span}(\mathbf{v}_1,\mathbf{v}_2,\dots,\mathbf{v}_r)\)</span> is a subspace of <span class="math inline">\(V\)</span>.</p>
+</div>
+</div>
+<div class="proof">
+<p><span id="unlabeled-div-29" class="proof"><em>Proof</em>. </span>Let <span class="math inline">\(\mathbf{u}\)</span> and <span class="math inline">\(\mathbf{w}\)</span> be in <span class="math inline">\(W\)</span>. There exist constants <span class="math inline">\(a_1,\dots,a_r\)</span> and <span class="math inline">\(b_1,\dots,b_r\)</span> such that <span class="math inline">\(\mathbf{u}=a_1\mathbf{v}_1+\cdots + a_r\mathbf{v}_r\)</span> and <span class="math inline">\(\mathbf{w}=b_1\mathbf{v}_1+\cdots + b_r\mathbf{v}_r.\)</span> Then <span class="math inline">\(\mathbf{u}+\mathbf{w}=(a_1+b_1)\mathbf{v}_1+\cdots+(a_r+b_r)\mathbf{v}_r\)</span>, which is another linear combination of <span class="math inline">\(\mathbf{v}_1\dots,\mathbf{v}_r,\)</span> so it is in <span class="math inline">\(W\)</span>.</p>
+<p>Similarly, for any scalar <span class="math inline">\(c,c\mathbf{u}=ca_1\mathbf{v}_1+\cdots+ca_r\mathbf{v}_r.\)</span> Since <span class="math inline">\(W\)</span> is closed under addition and scalar multiplication, it is a subspace of <span class="math inline">\(V\)</span>.</p>
+</div>
+<div id="linear-dependence-revisited" class="section level3 unnumbered hasAnchor">
+<h3>Linear dependence revisited<a href="vector-spaces.html#linear-dependence-revisited" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Let’s now generalize the definitions of linear dependence and independence.</p>
+<div class="defbox">
+<div class="definition">
+<p><span id="def:unlabeled-div-30" class="definition"><strong>Definition 2.5  </strong></span>Let <span class="math inline">\(\mathbf{v}_1,\mathbf{v}_2,\dots,\mathbf{v}_r\)</span> be vectors in a vector space <span class="math inline">\(V\)</span>. The vectors are <strong>linearly dependent</strong> if there exist constants <span class="math inline">\(c_1,c_2,\dots,c_r\)</span>, not all zero, such that</p>
+<p><span class="math display">\[c_1\mathbf{v}_1+c_2\mathbf{v}_2+\cdots+c_r\mathbf{v}_r=\mathbf{0}.\]</span></p>
+<p>If the set is not linearly dependent, then it is <strong>linearly independent</strong>.</p>
+</div>
+</div>
+<p>Note that any collection that includes the zero vector will be linearly dependent. Why? Suppose <span class="math inline">\(\{\mathbf{v}_1,\dots \mathbf{v}_r, \mathbf{0}\}\)</span> is the set in question. Then</p>
+<p><span class="math display">\[0\mathbf{v}_1+\cdots+0\mathbf{v}_r+1\cdot \mathbf{0}=\mathbf{0},\]</span></p>
+<p>a nontrivial linear combination yielding the zero vector.</p>
+<p>Also note that if a collection of vectors is linearly dependent, than at least one can be written as a linear combination of the others.</p>
+<div class="examplebox">
+<div class="example">
+<p><span id="exm:ldepex1" class="example"><strong>Example 2.6  </strong></span>Let <span class="math inline">\(\mathbf{v}_1=(1,2,-1),\mathbf{v}_2=(2,-1,4)\)</span>, and <span class="math inline">\(\mathbf{v}_3=(3,-4,9)\)</span>. Are these vectors dependent or independent?</p>
+<p>To answer this question, we can put the vectors as columns in a matrix <span class="math inline">\(\mathbf{A}\)</span> and see if the equation <span class="math inline">\(\mathbf{A}\mathbf{c}=\mathbf{0}\)</span> has a nontrivial solution. (Again, remember that <span class="math inline">\(\mathbf{A}\mathbf{c}\)</span> is a linear combination of the columns of <span class="math inline">\(\mathbf{A}\)</span>.)</p>
+<p><span class="math display">\[\left[\begin{array}{rrr|r}1 &amp; 2 &amp; 3 &amp; 0\\2 &amp; -1 &amp; -4 &amp; 0\\-1 &amp; 4 &amp; 9 &amp; 0\end{array}\right]\leadsto
+\left[\begin{array}{rrr|r} 1 &amp; 0 &amp; -1 &amp; 0\\0 &amp; 1 &amp; 2 &amp; 0\\0 &amp; 0 &amp; 0 &amp; 0\end{array}\right]\]</span></p>
+<p>Since the reduced row echelon form of the coefficient matrix has a free variable, there will actually be infinitely many solutions. If we let <span class="math inline">\(c_3=t\)</span>, then <span class="math inline">\(c_1-t=0\)</span> or <span class="math inline">\(c_1=t\)</span>, and <span class="math inline">\(c_2+2t=0\)</span> or <span class="math inline">\(c_2=-2t\)</span>. In particular, if <span class="math inline">\(t=1\)</span>, then <span class="math inline">\(c_1=1,c_2=-2,\)</span> and <span class="math inline">\(c_3=1\)</span> will work. Let’s check.</p>
+<p><span class="math display">\[1\begin{bmatrix}1\\2\\-1\end{bmatrix}+-2\begin{bmatrix}2\\-1\\4\end{bmatrix}+1\begin{bmatrix}3\\-4\\9\end{bmatrix}=\begin{bmatrix}0\\0\\0\end{bmatrix}\checkmark.\]</span></p>
+<p>Since we’ve found a nontrivial linear combination adding up to the zero vector, the three vectors are linearly dependent.</p>
+</div>
+</div>
+<div class="examplebox">
+<div class="example">
+<p><span id="exm:lindex2" class="example"><strong>Example 2.7  </strong></span>Let <span class="math inline">\(\mathbf{v}_1=(1,2,-1),\mathbf{v}_2=(2,3,4)\)</span>, and <span class="math inline">\(\mathbf{v}_3=(3,5,4)\)</span>. Are these vectors linearly dependent or independent?</p>
+<p><span class="math display">\[\left[\begin{array}{rrr|r}1 &amp; 2 &amp; 3 &amp; 0\\2 &amp; 3 &amp; 5 &amp; 0\\-1 &amp; 4 &amp; 4 &amp; 0\end{array}\right]\leadsto \left[\begin{array}{rrr|r}1 &amp; 0 &amp; 0 &amp; 0\\0 &amp; 1 &amp; 0 &amp; 0\\0 &amp; 0 &amp; 1 &amp; 0\end{array}\right]\]</span></p>
+<p>In this case, the only solution is the trivial one: <span class="math inline">\(c_1=c_2=c_3=0\)</span>. The vectors are linearly independent.</p>
+</div>
+</div>
+<p>In both of these examples, we were dealing with three vectors in <span class="math inline">\(\mathbb{R}^3\)</span>. The process will still work with any number of vectors in any dimension of vector space, but there is a nice connection when the number of vectors is equal to the dimension of the vector space. First, a quick definition.</p>
+<div class="defbox">
+<div class="definition">
+<p><span id="def:unlabeled-div-31" class="definition"><strong>Definition 2.6  </strong></span>Two <span class="math inline">\(m\times n\)</span> matrices are <strong>row equivalent</strong> if one can be transformed into the other via a sequence of elementary row operations.</p>
+</div>
+</div>
+<p>Note that since row operations are reversible, if you can transform <span class="math inline">\(\mathbf{A}\)</span> to <span class="math inline">\(\mathbf{B}\)</span>, you can transform <span class="math inline">\(\mathbf{B}\)</span> to <span class="math inline">\(\mathbf{A}\)</span> by reversing the steps.</p>
+<p>In Example <a href="vector-spaces.html#exm:ldepex1">2.6</a>, when we reduced the matrix, we had a row of zeros at the bottom. In that case, the vectors were dependent. In Example <a href="vector-spaces.html#exm:lindex2">2.7</a>, the coefficient matrix reduced to the identity matrix. Here’s a theorem.</p>
+<div class="theorembox">
+<div class="theorem">
+<p><span id="thm:unlabeled-div-32" class="theorem"><strong>Theorem 2.3  </strong></span>Let <span class="math inline">\(\left\{\mathbf{v}_1,\mathbf{v}_2,\dots\mathbf{v}_n\right\}\)</span> be a collection of <span class="math inline">\(n\)</span> vectors in <span class="math inline">\(\mathbb{R}^n\)</span>. Let <span class="math inline">\(\mathbf{A}\)</span> be the matrix whose columns are <span class="math inline">\(\mathbf{v}_1,\mathbf{v}_2,\dots\mathbf{v}_n\)</span>. Then <span class="math inline">\(\left\{\mathbf{v}_1,\mathbf{v}_2,\dots\mathbf{v}_n\right\}\)</span> are linearly <em>independent</em> if and only if <span class="math inline">\(\mathbf{A}\)</span> is row equivalent to the identity matrix.</p>
+<p>Equivalently, <span class="math inline">\(\left\{\mathbf{v}_1,\mathbf{v}_2,\dots\mathbf{v}_n\right\}\)</span> are linearly <em>dependent</em> if and only if <span class="math inline">\(\det\mathbf{A}=0\)</span> if and only if <span class="math inline">\(\mathbf{A}\)</span> is invertible.</p>
+</div>
+</div>
+<p>The key thing here is that the number of vectors matches the dimension. There are only zeros to the right of the augmentation bar, and when you perform any row operations, there will still be only zeros there. If the coefficient part reduces to the identity matrix, you will have only the trivial solution. Otherwise, there will be a free variable and infinitely many solutions.</p>
+<p>Note that if <span class="math inline">\(\left\{\mathbf{v}_1,\mathbf{v}_2,\dots,\mathbf{v}_n\right\}\)</span> is a linearly independent collection of vectors in <span class="math inline">\(\mathbb{R}^n\)</span> and <span class="math inline">\(\mathbf{v}\)</span> is any vector in <span class="math inline">\(\mathbb{R}^n\)</span>, then we can write <span class="math inline">\(\mathbf{v}\)</span> as a linear combination of <span class="math inline">\(\mathbf{v}_1,\mathbf{v}_2,\dots,\mathbf{v}_n\)</span>. Why? Since</p>
+<p><span class="math display">\[\mathbf{A}=\begin{bmatrix} \mathbf{v}_1 &amp; \mathbf{v}_2 &amp; \cdots &amp; \mathbf{v}_n\end{bmatrix}\]</span></p>
+<p>is invertible,</p>
+<p><span class="math display">\[\mathbf{A}\mathbf{x}=\mathbf{v}\]</span></p>
+<p>has a solution, and the entries in <span class="math inline">\(\mathbf{x}\)</span> give us the coefficients in the linear combination. We say that a linearly independent collection of <span class="math inline">\(n\)</span> vectors in <span class="math inline">\(\mathbb{R}^n\)</span> <em>spans</em> <span class="math inline">\(\mathbb{R}^n\)</span>.</p>
+<p>What happens when you have more than <span class="math inline">\(n\)</span> vectors in <span class="math inline">\(\mathbb{R}^n\)</span>? Here’s a quick example with 3 vectors in <span class="math inline">\(\mathbb{R}^2\)</span>. (We’ll put them in the columns.)</p>
+<p><span class="math display">\[\left[\begin{array}{rrr|r} 1 &amp; 2 &amp; 3 &amp; 0\\ 2 &amp; 4 &amp; 1 &amp; 0\end{array}\right]\leadsto \left[\begin{array}{rrr|r}1 &amp; 2 &amp; 0 &amp; 0\\0 &amp; 0 &amp; 1 &amp; 0\end{array}\right]\]</span></p>
+<p>Since there’s a free variable, <span class="math inline">\(c_2\)</span> (the second coefficient) in this case, there will be infinitely many solutions. Whenever there are more columns than rows in the coefficient matrix there will be a free variable.
+If the number of vectors is greater than the dimension of the vector space, the set will always be linearly dependent. Let’s make that a theorem.</p>
+<div class="theorembox">
+<div class="theorem">
+<p><span id="thm:unlabeled-div-33" class="theorem"><strong>Theorem 2.4  </strong></span>Let <span class="math inline">\(\left\{\mathbf{v}_1,\dots,\mathbf{v}_n\right\}\)</span> be a set of <span class="math inline">\(n\)</span> vectors in <span class="math inline">\(\mathbb{R}^m\)</span>, with <span class="math inline">\(n&gt;m\)</span>. Then <span class="math inline">\(\left\{\mathbf{v}_1,\dots,\mathbf{v}_n\right\}\)</span> is a linearly dependent set.</p>
+</div>
+</div>
+</div>
+</div>
+<div id="basis-and-dimension" class="section level2 hasAnchor" number="2.4">
+<h2><span class="header-section-number">2.4</span> Basis and Dimension<a href="vector-spaces.html#basis-and-dimension" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Let <span class="math inline">\(\mathbf{u}=\begin{bmatrix}u_1\\u_2\end{bmatrix}\)</span> be any vector in <span class="math inline">\(\mathbb{R}^2\)</span>, and let <span class="math inline">\(\mathbf{e}_1=\begin{bmatrix}1\\0\end{bmatrix}\)</span> and <span class="math inline">\(\mathbf{e}_2=\begin{bmatrix}0\\1\end{bmatrix}\)</span>.</p>
+<p>(You may have seen <span class="math inline">\(\mathbf{e}_1\)</span> and <span class="math inline">\(\mathbf{e}_2\)</span> called <span class="math inline">\(\mathbf{i}\)</span> and <span class="math inline">\(\mathbf{j},\)</span> respectively, but we will be generalizing them soon, and we run out of letters quickly.)</p>
+<p>The key observation is that <span class="math inline">\(\mathbf{u}\)</span> can be written as a linear combination of <span class="math inline">\(\mathbf{e}_1\)</span> and <span class="math inline">\(\mathbf{e}_2\)</span> this way:</p>
+<p><span class="math display">\[\mathbf{u}=\begin{bmatrix}u_1\\u_2\end{bmatrix}=\begin{bmatrix}u_1\\0\end{bmatrix}+\begin{bmatrix}0\\u_2\end{bmatrix}=u_1\begin{bmatrix}1\\0\end{bmatrix}+u_2\begin{bmatrix}0\\1\end{bmatrix}=u_1\mathbf{e}_1+u_2\mathbf{e}_2.\]</span></p>
+<p>The geometry of this linear combination looks like this (Fig. <a href="vector-spaces.html#fig:stdbasispic">2.5</a>).</p>
+<div class="figure" style="text-align: center"><span style="display:block;" id="fig:stdbasispic"></span>
+<img src="images/sbv.png" alt="Writing a vector in terms of $\mathbf{e}_1$ and $\mathbf{e}_2$" width="50%" />
+<p class="caption">
+Figure 2.5: Writing a vector in terms of <span class="math inline">\(\mathbf{e}_1\)</span> and <span class="math inline">\(\mathbf{e}_2\)</span>
+</p>
+</div>
+<p>The vectors <span class="math inline">\(\mathbf{e}_1\)</span> and <span class="math inline">\(\mathbf{e}_2\)</span> have the following properties:</p>
+<ol style="list-style-type: decimal">
+<li><p><span class="math inline">\(\mathbf{e}_1\)</span> and <span class="math inline">\(\mathbf{e}_2\)</span> are linearly independent.</p></li>
+<li><p>Any vector in <span class="math inline">\(\mathbb{R}^2\)</span> can be written as a linear combination of <span class="math inline">\(\mathbf{e}_1\)</span> and <span class="math inline">\(\mathbf{e}_2\)</span>. That is, they span <span class="math inline">\(\mathbb{R}^2\)</span>.</p></li>
+</ol>
+<p>These properties define a <em>basis</em> for a vector space.</p>
+<div class="defbox">
+<div class="definition">
+<p><span id="def:unlabeled-div-34" class="definition"><strong>Definition 2.7  </strong></span>A <strong>basis</strong> for a vector space <span class="math inline">\(V\)</span> is a collection of linearly independent vectors <span class="math inline">\(\{\mathbf{v}_1,\mathbf{v}_2,\dots,\mathbf{v}_r\}\)</span>
+whose span is all of <span class="math inline">\(V\)</span>.</p>
+</div>
+</div>
+<p>While <span class="math inline">\(\{\mathbf{e}_1,\mathbf{e}_2\}\)</span> is a basis for <span class="math inline">\(\mathbb{R}^2\)</span>, it is not the only one. In fact, as we learned in the last section, any linearly independent pair of vectors in <span class="math inline">\(\mathbb{R}^2\)</span> will span <span class="math inline">\(\mathbb{R}^2\)</span>. We do, however, have the following fact about bases which we won’t prove.</p>
+<div class="theorembox">
+<div class="theorem">
+<p><span id="thm:unlabeled-div-35" class="theorem"><strong>Theorem 2.5  </strong></span>Let <span class="math inline">\(\{\mathbf{u}_1,\mathbf{u}_2,\dots,\mathbf{u}_r\}\)</span> and <span class="math inline">\(\{\mathbf{v}_1,\mathbf{v}_2\dots,\mathbf{v}_s\}\)</span> be two bases for a vector space <span class="math inline">\(V\)</span>. Then <span class="math inline">\(r=s\)</span>. This common value is the <strong>dimension</strong> of <span class="math inline">\(V\)</span>.</p>
+</div>
+</div>
+<p>Note: there are such things as infinite dimensional vector spaces, but we won’t be dealing with them in this book.</p>
+<div id="the-standard-basis-for-mathbbrn" class="section level3 unnumbered hasAnchor">
+<h3>The standard basis for <span class="math inline">\(\mathbb{R}^n\)</span><a href="vector-spaces.html#the-standard-basis-for-mathbbrn" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>The <em>standard basis</em> for <span class="math inline">\(\mathbb{R}^3\)</span> is</p>
+<p><span class="math display">\[\mathbf{e}_1=\begin{bmatrix} 1\\0\\0\end{bmatrix},\mathbf{e}_2=\begin{bmatrix}0\\1\\0\end{bmatrix},\mathbf{e}_3=\begin{bmatrix}0\\0\\1\end{bmatrix}.\]</span></p>
+<p>(You might know them better as <span class="math inline">\(\mathbf{i},\)</span> <span class="math inline">\(\mathbf{j},\)</span> and <span class="math inline">\(\mathbf{k}.\)</span>)</p>
+<p>The standard basis for <span class="math inline">\(\mathbb{R}^n\)</span> is the set of vectors <span class="math inline">\(\{\mathbf{e}_i,i=1\dots n\}\)</span>, where <span class="math inline">\(\mathbf{e}_i\)</span> is the <span class="math inline">\(n\)</span>-dimensional vector with a 1 in the <span class="math inline">\(i\)</span>th entry, and zeros everywhere else.</p>
+<p>Remember that any collection of <span class="math inline">\(n\)</span> linearly independent vectors in <span class="math inline">\(\mathbb{R}^n\)</span> will span <span class="math inline">\(\mathbb{R}^n\)</span> and, thus, form a basis for it.</p>
+</div>
+<div id="the-dimension-of-a-subspace" class="section level3 unnumbered hasAnchor">
+<h3>The dimension of a subspace<a href="vector-spaces.html#the-dimension-of-a-subspace" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Since a subspace of a finite dimensional vector space is a vector space in its own right, it will have its own dimension. If we can find a basis, we will know its dimension.</p>
+</div>
+<div id="the-dimension-of-the-nullspace" class="section level3 unnumbered hasAnchor">
+<h3>The dimension of the Nullspace<a href="vector-spaces.html#the-dimension-of-the-nullspace" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>We talked about the nullspace of an <span class="math inline">\(m\times n\)</span> matrix <span class="math inline">\(\mathbf{A}\)</span> in Example <a href="vector-spaces.html#exm:Nullspace">2.3</a> . It’s the set of all vectors <span class="math inline">\(\mathbf{x}\)</span> in <span class="math inline">\(\mathbb{R}^n\)</span> such that <span class="math inline">\(\mathbf{A}\mathbf{x}=\mathbf{0}.\)</span> Let’s call it <span class="math inline">\(\text{Null}(\mathbf{A})\)</span>. If we can find a basis for <span class="math inline">\(\text{Null}(\mathbf{A})\)</span>, we can find its dimension as a subspace of <span class="math inline">\(\mathbb{R}^n\)</span>.</p>
+<div class="examplebox">
+<div class="example">
+<p><span id="exm:unlabeled-div-36" class="example"><strong>Example 2.8  </strong></span>Find a basis for <span class="math inline">\(\text{Null}(\mathbf{A})\)</span>, where</p>
+<p><span class="math display">\[\mathbf{A}=\begin{bmatrix}5 &amp; 2 &amp; -15 &amp; 8\\2 &amp; 1 &amp; -6 &amp; 3\\-3 &amp; -1 &amp; 9 &amp; -5\end{bmatrix}.\]</span></p>
+<p>To solve <span class="math inline">\(\mathbf{A}\mathbf{x}=\mathbf{0}\)</span>, we augment <span class="math inline">\(\mathbf{A}\)</span> with the zero vector and put in reduced row echelon form.</p>
+<p><span class="math display">\[\left[\begin{array}{rrrr|r}5 &amp; 2 &amp; -15 &amp; 8 &amp; 0\\2 &amp; 1 &amp; -6 &amp; 3&amp; 0\\-3 &amp; -1 &amp; 9 &amp; -5&amp; 0\end{array}\right]\leadsto \left[\begin{array}{rrrr|r} 1 &amp; 0 &amp; -3 &amp; 2 &amp; 0\\0 &amp; 1 &amp; 0 &amp; -1 &amp; 0\\0 &amp; 0 &amp; 0 &amp; 0 &amp; 0\end{array}\right]\]</span></p>
+<p>With the columns representing <span class="math inline">\(x_1,x_2,x_3,\)</span> and <span class="math inline">\(x_4\)</span>, we have <span class="math inline">\(x_3\)</span> and <span class="math inline">\(x_4\)</span> as free variables. If we let <span class="math inline">\(s=x_3\)</span> and <span class="math inline">\(t=x_4\)</span>, then <span class="math inline">\(x_1=3s-2t\)</span> and <span class="math inline">\(x_2=t\)</span>.</p>
+<p>We can write the solution to <span class="math inline">\(\mathbf{A}\mathbf{x}=\mathbf{0}\)</span> in parametric form as</p>
+<p><span class="math display">\[\begin{bmatrix}x_1\\x_2\\x_3\\x_4\end{bmatrix}=\begin{bmatrix}3s-2t\\t\\s\\t\end{bmatrix}=s\begin{bmatrix}3\\0\\1\\0\end{bmatrix}+t\begin{bmatrix}-2\\1\\0\\1\end{bmatrix}.\]</span></p>
+<p>The vectors</p>
+<p><span class="math display">\[\mathbf{v}_1=\begin{bmatrix}3\\0\\1\\0\end{bmatrix} \text{ and } \mathbf{v}_2=\begin{bmatrix}-2\\1\\0\\1\end{bmatrix}\]</span></p>
+<p>form our basis for <span class="math inline">\(\text{Null}(\mathbf{A})\)</span>, which is a 2-dimensional subspace of <span class="math inline">\(\mathbb{R}^4\)</span>. Note that the dimension corresponds to the number of free variables in the reduced row echelon form of <span class="math inline">\(\mathbf{A}.\)</span> This number is sometimes called the <em>nullity</em> of <span class="math inline">\(\mathbf{A}.\)</span> As a check, note that</p>
+<p><span class="math display">\[\mathbf{A}\mathbf{v}_1=\begin{bmatrix}5 &amp; 2 &amp; -15 &amp; 8\\2 &amp; 1 &amp; -6 &amp; 3\\-3 &amp; -1 &amp; 9 &amp; -5\end{bmatrix}\begin{bmatrix}3\\0\\1\\0\end{bmatrix}=3\begin{bmatrix}5\\2\\-3\end{bmatrix}+\begin{bmatrix}-15\\-6\\9\end{bmatrix}=\begin{bmatrix}0\\0\\0\end{bmatrix}=\mathbf{0}.\]</span></p>
+<p>This calculation shows that <span class="math inline">\(\mathbf{v}_1\)</span> is in the nullspace of <span class="math inline">\(\mathbf{A}\)</span>. A similar calculation will show that <span class="math inline">\(\mathbf{v}_2\)</span> is also in it.</p>
+</div>
+</div>
+<p>One last note: if <span class="math inline">\(\mathbf{A}\mathbf{x}=\mathbf{0}\)</span> has only the trivial solution <span class="math inline">\(\mathbf{x}=\mathbf{0}\)</span>, then <span class="math inline">\(\text{Null}(\mathbf{A})\)</span> is said to have dimension 0.</p>
+</div>
+<div id="the-column-space-of-a-matrix" class="section level3 unnumbered hasAnchor">
+<h3>The column space of a matrix<a href="vector-spaces.html#the-column-space-of-a-matrix" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<div class="defbox">
+<div class="definition">
+<p><span id="def:unlabeled-div-37" class="definition"><strong>Definition 2.8  </strong></span>Let <span class="math inline">\(\mathbf{A}=\begin{bmatrix}\mathbf{a}_1 &amp; \mathbf{a}_2&amp;\cdots &amp; \mathbf{a}_n\end{bmatrix}\)</span> be an <span class="math inline">\(m\times n\)</span> matrix. (Recall that the columns of <span class="math inline">\(\mathbf{A},\)</span> <span class="math inline">\(\{\mathbf{a}_1,\mathbf{a}_2,\dots,\mathbf{a}_n\}\)</span> are vectors in <span class="math inline">\(\mathbb{R}^m\)</span>.)
+The <strong>column space</strong> of <span class="math inline">\(\mathbf{A},\)</span> denoted <span class="math inline">\(\text{Col}(\mathbf{A})\)</span>, is the span of <span class="math inline">\(\{\mathbf{a}_1,\mathbf{a}_2,\dots,\mathbf{a}_n\}\)</span>.
+Note that <span class="math inline">\(\text{Col}(\mathbf{A})\)</span> is a subspace of <span class="math inline">\(\mathbb{R}^m\)</span>.</p>
+</div>
+</div>
+<p>Recall that the equation <span class="math inline">\(\mathbf{A}\mathbf{x}=\mathbf{b}\)</span> has a solution if and only if <span class="math inline">\(\mathbf{b}\)</span> is a linear combination of the columns of <span class="math inline">\(\mathbf{A},\)</span> which means that <span class="math inline">\(\mathbf{b}\)</span> has to be in the column space of <span class="math inline">\(\mathbf{A}.\)</span></p>
+<div class="theorembox">
+<div class="theorem">
+<p><span id="thm:unlabeled-div-38" class="theorem"><strong>Theorem 2.6  </strong></span>Let <span class="math inline">\(\mathbf{A}\)</span> be an <span class="math inline">\(m\times n\)</span> matrix, and let <span class="math inline">\(\mathbf{b}\)</span> be a vector in <span class="math inline">\(\mathbb{R}^m\)</span>. Then the equation <span class="math inline">\(\mathbf{A}\mathbf{x}=\mathbf{b}\)</span> has a solution if and only if <span class="math inline">\(\mathbf{b}\)</span> is in the column space of <span class="math inline">\(\mathbf{A}.\)</span></p>
+</div>
+</div>
+<div class="examplebox">
+<div class="example">
+<p><span id="exm:colspex" class="example"><strong>Example 2.9  </strong></span>It turns out, that the process of finding a basis for the nullspace of <span class="math inline">\(\mathbf{A}\)</span> will also give you the basis for the column space. The reasoning is a bit tricky, but the process is simple. Recall the last example we did, leaving off the augmented vector.</p>
+<p><span class="math display">\[\mathbf{A}=\begin{bmatrix}5 &amp; 2 &amp; -15 &amp; 8 \\2 &amp; 1 &amp; -6 &amp; 3\\-3 &amp; -1 &amp; 9 &amp; -5\end{bmatrix}\leadsto \begin{bmatrix} 1 &amp; 0 &amp; -3 &amp; 2 \\0 &amp; 1 &amp; 0 &amp; -1 \\0 &amp; 0 &amp; 0 &amp; 0 \end{bmatrix}\]</span></p>
+<p>The reduced row echelon form of <span class="math inline">\(\mathbf{A}\)</span> has two pivot columns (columns with leading 1’s): column 1 and column 2. The corresponding columns of <span class="math inline">\(\mathbf{A}\)</span> will form a basis for <span class="math inline">\(\text{Col}(\mathbf{A})\)</span>. Our basis is</p>
+<p><span class="math display">\[\left\{\left[\begin{array}{rrr}5\\2\\-3\end{array}\right],\left[\begin{array}{rrr} 2\\1\\-1\end{array}\right]\right\}.\]</span></p>
+</div>
+</div>
+<p>This is the procedure for identifying a basis for the column space of a matrix <span class="math inline">\(\mathbf{A}\)</span>.</p>
+<ol style="list-style-type: decimal">
+<li><p>Put <span class="math inline">\(\mathbf{A}\)</span> in to reduced row echelon form, call it <span class="math inline">\(\mathbf{R}.\)</span> (Actually, just row echelon form is sufficient.)</p></li>
+<li><p>Identify the pivot columns of <span class="math inline">\(\mathbf{R}.\)</span> These are the columns with leading ones.</p></li>
+<li><p>The columns of <span class="math inline">\(\mathbf{A}\)</span> corresponding to the pivot columns of <span class="math inline">\(\mathbf{R}\)</span> form a basis for <span class="math inline">\(\text{Col}(\mathbf{A}).\)</span></p></li>
+</ol>
+<p>Basically, elementary row operations preserve column dependencies, though they do not preserve the column space itself. The pivot columns of <span class="math inline">\(\mathbf{R}\)</span> form a basis for its column space, so the corresponding columns of <span class="math inline">\(\mathbf{A}\)</span> form a basis for its column space.</p>
+<p>Now that we know how to find a basis for the column space of a matrix, we know what the dimension of the space is.</p>
+<div class="defbox">
+<div class="definition">
+<p><span id="def:unlabeled-div-39" class="definition"><strong>Definition 2.9  </strong></span>Let <span class="math inline">\(\mathbf{A}\)</span> be an <span class="math inline">\(m\times n\)</span> matrix. The <strong>column rank</strong> of <span class="math inline">\(\mathbf{A}\)</span> is the dimension of the column space of <span class="math inline">\(\mathbf{A}.\)</span></p>
+</div>
+</div>
+<p>In Example <a href="vector-spaces.html#exm:colspex">2.9</a>, the column rank is 2, since the column space has two basis vectors.</p>
+<p>Note that the column rank of a matrix is equal to the number of pivot columns. The nullity of a matrix is equal to the number of free variables, which is the number of columns that aren’t pivot columns. When you add these two numbers together, you get the total number of columns in the matrix. This leads to the following result.</p>
+<div class="theorembox">
+<div class="theorem">
+<p><span id="thm:unlabeled-div-40" class="theorem"><strong>Theorem 2.7  </strong></span>Let <span class="math inline">\(\mathbf{A}\)</span> be an <span class="math inline">\(m\times n\)</span> matrix. Then</p>
+<p><span class="math display">\[\text{dim}\, \text{Col}(\mathbf{A)}+\text{dim}\, \text{Null}(\mathbf{A})=n.\]</span></p>
+</div>
+</div>
+<p>For example, if <span class="math inline">\(\mathbf{A}\)</span> is a <span class="math inline">\(3\times 5\)</span> matrix with a nullity of 2, then the column rank is <span class="math inline">\(5-2=3\)</span>.</p>
+</div>
+<div id="the-row-space" class="section level3 unnumbered hasAnchor">
+<h3>The row space<a href="vector-spaces.html#the-row-space" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>The <em>row space</em> of a matrix <span class="math inline">\(\mathbf{A}\)</span>, denoted <span class="math inline">\(\text{Row}(\mathbf{A}),\)</span> is the span of the row vectors of <span class="math inline">\(\mathbf{A}.\)</span> It turns out that we can find a basis for the row space at the same time we’re finding a basis for the column space and the nullspace. Again, we row reduce.</p>
+<div class="theorembox">
+<div class="theorem">
+<p><span id="thm:unlabeled-div-41" class="theorem"><strong>Theorem 2.8  </strong></span>The nonzero rows of the row reduced coefficient matrix form a basis for the row space.</p>
+</div>
+</div>
+<p>Let’s go back to our example.</p>
+<p><span class="math display">\[\mathbf{A}=\begin{bmatrix}5 &amp; 2 &amp; -15 &amp; 8 \\2 &amp; 1 &amp; -6 &amp; 3\\-3 &amp; -1 &amp; 9 &amp; -5\end{bmatrix}\leadsto \begin{bmatrix} 1 &amp; 0 &amp; -3 &amp; 2 \\0 &amp; 1 &amp; 0 &amp; -1 \\0 &amp; 0 &amp; 0 &amp; 0 \end{bmatrix}\]</span></p>
+<p>Our basis is</p>
+<p><span class="math display">\[\left\{\begin{bmatrix}1 &amp;0 &amp; -3 &amp; 2\end{bmatrix},\begin{bmatrix}0 &amp; 1 &amp; 0 &amp; -1\end{bmatrix}\right\}.\]</span></p>
+<p>This one is easier to explain. Elementary row operations at most produce vectors that are still in the row space.</p>
+<ol style="list-style-type: decimal">
+<li><p>Adding a multiple of one row to another: <span class="math inline">\(c\mathbf{r}_i+\mathbf{r}_j\)</span> is in <span class="math inline">\(\text{Row}(\mathbf{A}).\)</span></p></li>
+<li><p>Multiplying a row by a nonzero constant: <span class="math inline">\(c\mathbf{r}_i\)</span> is in <span class="math inline">\(\text{Row}(\mathbf{A}).\)</span></p></li>
+<li><p>Interchanging two rows just rearranges the vectors.</p></li>
+</ol>
+<p>This means that the rows of the reduced matrix, call it <span class="math inline">\(\mathbf{R},\)</span> are in the span of the rows of <span class="math inline">\(\mathbf{A}.\)</span></p>
+<p>Since row operations are reversible, the rows of <span class="math inline">\(\mathbf{A}\)</span> are also linear combinations of the rows of <span class="math inline">\(\mathbf{R}.\)</span> Moreover, the nonzero rows of a row echelon matrix are always independent. (Think about why this is true.) They are a linearly independent set of vectors that span the row space of <span class="math inline">\(\mathbf{A}\)</span> so they form a basis for it.</p>
+<p>A word of warning: for the column space, we take our basis vectors from the original matrix. It would be tempting to do that for the row space basis too, but issues can arise.</p>
+<div class="examplebox">
+<div class="example">
+<p><span id="exm:unlabeled-div-42" class="example"><strong>Example 2.10  </strong></span>Consider the following matrix and its reduced form.</p>
+<p><span class="math display">\[\mathbf{A}=\begin{bmatrix} 1 &amp; 2 &amp; 3\\2 &amp; 4 &amp; 6\\1 &amp; 5 &amp; 9\end{bmatrix}\leadsto \begin{bmatrix}1 &amp; 0 &amp; -1\\0 &amp; 1 &amp; 2\\0 &amp; 0 &amp; 0\end{bmatrix}\]</span></p>
+<p>The first two rows of the reduced matrix are our basis:</p>
+<p><span class="math display">\[\left\{\begin{bmatrix}1 &amp; 0 &amp; -1\end{bmatrix},\begin{bmatrix}0 &amp; 1 &amp; 2\end{bmatrix}\right\}.\]</span></p>
+<p>Note that the second row of <span class="math inline">\(\mathbf{A}\)</span> are multiples of each other, so they can’t form a basis for <span class="math inline">\(\text{Row}(\mathbf{A}).\)</span></p>
+</div>
+</div>
+<p>The <em>row rank</em> of a matrix is the dimension of its row space. Since it’s the number of nonzero rows in the reduced form of the matrix, it’s the number of rows with leading ones. But hey, the number of rows with leading ones is the same as the number of columns with leading ones in them, which is the column rank.</p>
+<div class="theorembox">
+<div class="theorem">
+<p><span id="thm:unlabeled-div-43" class="theorem"><strong>Theorem 2.9  </strong></span>Let <span class="math inline">\(\mathbf{A}\)</span> be an <span class="math inline">\(m\times n\)</span> matrix. Then</p>
+<p><span class="math display">\[\text{dim}\,\text{Col}(\mathbf{A})=\text{dim}\,\text{Row}(\mathbf{A})\overset{\text{def}}{=}\text{rank} (\mathbf{A}).\]</span>
+That is, the <strong>rank</strong> of a matrix is the row rank <em>and</em> the column rank, which are always the same number.</p>
+</div>
+</div>
+<p>Note that the column rank can’t exceed the number of columns, while the row rank can’t exceed the number of rows. Thus, for an <span class="math inline">\(m\times n\)</span> matrix <span class="math inline">\(\mathbf{A},\)</span></p>
+<p><span class="math display">\[\text{rank}(\mathbf{A})\leq \min\{m,n\}.\]</span></p>
+<p>For example, a <span class="math inline">\(3\times 5\)</span> matrix and a <span class="math inline">\(5\times 3\)</span> matrix both can have a maximum rank of 3.</p>
+<p>If a matrix has the maximum rank possible for its size, it is called <em>full rank</em>. Otherwise, it is <em>rank deficient</em>.</p>
+<div class="examplebox">
+<div class="example">
+<p><span id="exm:unlabeled-div-44" class="example"><strong>Example 2.11  </strong></span>Let’s take another matrix and find the bases for all the subspaces we’ve seen. Since the augmented column is just a bunch of zeros, we’ll leave it off.</p>
+<p><span class="math display">\[\mathbf{A}=\begin{bmatrix}2 &amp; -1 &amp; 1 &amp; 5\\-4 &amp; -4 &amp; -4 &amp; -12\\6 &amp; -15 &amp; -1 &amp; 11\\0 &amp; -24 &amp; -8 &amp; -8\end{bmatrix}\leadsto \begin{bmatrix}1&amp;0 &amp; 2/3 &amp; 8/3\\0 &amp; 1 &amp; 1/3 &amp; 1/3\\0 &amp; 0 &amp; 0 &amp; 0 \\0 &amp; 0 &amp; 0 &amp; 0\end{bmatrix}.\]</span></p>
+<p>From this, we can read off the following.</p>
+<ul>
+<li><p>A basis for <span class="math inline">\(\text{Col}(\mathbf{A})\)</span> is <span class="math inline">\(\{(2,-4,6,0),(-1,-4,-15,-24)\}\)</span>.</p></li>
+<li><p>A basis for <span class="math inline">\(\text{Row}(\mathbf{A})\)</span> is <span class="math inline">\(\{(1,0,2/3,8/3),(0,1,1/3,1/3)\}\)</span>.</p></li>
+<li><p>The rank is 2.</p></li>
+</ul>
+<p>The reduced row echelon form of the matrix is</p>
+<p><span class="math display">\[\begin{bmatrix}1&amp;0 &amp; 2/3 &amp; 8/3\\0 &amp; 1 &amp; 1/3 &amp; 1/3\\0 &amp; 0 &amp; 0 &amp; 0 \\0 &amp; 0 &amp; 0 &amp; 0\end{bmatrix}.\]</span></p>
+<p>We’ll assign parameters to the free variables: <span class="math inline">\(x_3=s,x_4=t\)</span>. Then</p>
+<p><span class="math display">\[x_1+\frac{2}{3}s+\frac{8}{3}t=0\to x_1=-\frac{2}{3}s-\frac{8}{3}t\]</span></p>
+<p>and</p>
+<p><span class="math display">\[x_2+\frac13s+\frac13t=0\to x_2=x_2=-\frac13s-\frac13t.\]</span></p>
+<p>so</p>
+<p><span class="math display">\[\begin{bmatrix}x_1\\x_2\\x_3\\x_4\end{bmatrix}=\begin{bmatrix}-\frac{2}{3}s-\frac{8}{3}t\\-\frac13s-\frac13t\\s\\t\end{bmatrix}=s\begin{bmatrix}-\frac23\\-\frac13\\1\\0\end{bmatrix}+t\begin{bmatrix}-\frac83\\-\frac13\\0\\1\end{bmatrix}.\]</span></p>
+<p>Our basis for <span class="math inline">\(\text{Null}(\mathbf{A})\)</span> is</p>
+<p><span class="math display">\[\left\{\begin{bmatrix}-\frac23\\-\frac13\\1\\0\end{bmatrix},\begin{bmatrix}-\frac83\\-\frac13\\0\\1\end{bmatrix}\right\}.\]</span></p>
+<p>Note: we can multiply both vectors by 3 to get rid of the fractions.</p>
+</div>
+</div>
+</div>
+</div>
+<div id="exercises-1" class="section level2 hasAnchor" number="2.5">
+<h2><span class="header-section-number">2.5</span> Exercises<a href="vector-spaces.html#exercises-1" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<ol style="list-style-type: decimal">
+<li><p>Let
+<span class="math display">\[\mathbf{u}=\begin{bmatrix} 2\\4\end{bmatrix}, \mathbf{v}=\begin{bmatrix} 3\\-1\end{bmatrix}.\]</span>
+Find and graph the following.</p>
+<ol style="list-style-type: lower-alpha">
+<li><span class="math inline">\(3\mathbf{u}\)</span></li>
+<li><span class="math inline">\(-2\mathbf{v}\)</span></li>
+<li><span class="math inline">\(2\mathbf{u}+3\mathbf{v}\)</span></li>
+<li><span class="math inline">\(2\mathbf{u}-3\mathbf{v}\)</span></li>
+</ol></li>
+<li><p>Let
+<span class="math display">\[\mathbf{u}=\begin{bmatrix} 3\\1\end{bmatrix}, \mathbf{v}=\begin{bmatrix} 4\\-2\end{bmatrix}.\]</span>
+Find and graph the following.</p>
+<ol style="list-style-type: lower-alpha">
+<li><span class="math inline">\(2\mathbf{u}\)</span></li>
+<li><span class="math inline">\(-\mathbf{v}\)</span></li>
+<li><span class="math inline">\(3\mathbf{u}+2\mathbf{v}\)</span></li>
+<li><span class="math inline">\(3\mathbf{u}-2\mathbf{v}\)</span></li>
+</ol></li>
+<li><p>For <span class="math inline">\(\mathbf{u}\)</span> and <span class="math inline">\(\mathbf{v}\)</span> from Problem 1, find <span class="math inline">\(|\mathbf{u}|\)</span> and <span class="math inline">\(|\mathbf{v}|.\)</span></p></li>
+<li><p>Find <span class="math inline">\(|\mathbf{u}|\)</span> if</p></li>
+</ol>
+<p><span class="math display">\[\mathbf{u}=\begin{bmatrix} 1\\-1\\2\end{bmatrix}.\]</span></p>
+<ol start="5" style="list-style-type: decimal">
+<li>Let</li>
+</ol>
+<p><span class="math display">\[\mathbf{u}=\begin{bmatrix} 2\\1\end{bmatrix}, \mathbf{v}=\begin{bmatrix} 4\\ d \end{bmatrix}.\]</span></p>
+<p>Find <span class="math inline">\(d\)</span> so that <span class="math inline">\(\mathbf{u}\)</span> and <span class="math inline">\(\mathbf{v}\)</span> are linearly dependent.</p>
+<ol start="6" style="list-style-type: decimal">
+<li>Let</li>
+</ol>
+<p><span class="math display">\[\mathbf{u}=\begin{bmatrix} 3\\2\end{bmatrix}, \mathbf{v}=\begin{bmatrix} -4\\ d \end{bmatrix}.\]</span></p>
+<p>Find <span class="math inline">\(d\)</span> so that <span class="math inline">\(\mathbf{u}\)</span> and <span class="math inline">\(\mathbf{v}\)</span> are linearly dependent.</p>
+<ol start="7" style="list-style-type: decimal">
+<li><p>Let <span class="math inline">\(W\)</span> be the set of all solutions to the equation
+<span class="math display">\[\begin{bmatrix} 3 &amp; -1\\2 &amp; 5\end{bmatrix}\mathbf{w}=\begin{bmatrix}1\\1\end{bmatrix}.\]</span>
+Is <span class="math inline">\(W\)</span> a subspace of <span class="math inline">\(\mathbb{R}^2\)</span>?</p></li>
+<li><p>Let <span class="math inline">\(W\)</span> be the set of all solutions to the equation
+<span class="math display">\[\begin{bmatrix} 2 &amp; -2\\1 &amp; 4\end{bmatrix}\mathbf{w}=\begin{bmatrix}2\\8\end{bmatrix}.\]</span>
+Is <span class="math inline">\(W\)</span> a subspace of <span class="math inline">\(\mathbb{R}^2\)</span>?</p></li>
+<li><p>Let <span class="math inline">\(W\)</span> be the set of all vectors <span class="math inline">\(\mathbf{w}\)</span> of the form <span class="math inline">\(\mathbf{w}=\begin{bmatrix}w\\w^2\end{bmatrix}, w\in \mathbb{R}.\)</span> Is <span class="math inline">\(W\)</span> a subspace of <span class="math inline">\(\mathbb{R}^2\)</span>?</p></li>
+<li><p>Let <span class="math inline">\(W\)</span> be the set of all vectors <span class="math inline">\(\mathbf{w}\)</span> of the form <span class="math inline">\(\mathbf{w}=\begin{bmatrix}w\\w^2\\w^3\end{bmatrix}, w\in \mathbb{R}.\)</span> Is <span class="math inline">\(W\)</span> a subspace of <span class="math inline">\(\mathbb{R}^3\)</span>?</p></li>
+<li><p>Let <span class="math inline">\(W\)</span> be the set of all vectors <span class="math inline">\(\mathbf{w}\)</span> of the form
+<span class="math display">\[\mathbf{w}=\begin{bmatrix}w_1\\w_2\\w_3\end{bmatrix}\]</span>
+that satisfy the equation <span class="math inline">\(w_1+2w_2+3w_3=0.\)</span> is <span class="math inline">\(W\)</span> a subspace of <span class="math inline">\(\mathbb{R}^3?\)</span></p></li>
+<li><p>Let <span class="math inline">\(W\)</span> be the set of all vectors <span class="math inline">\(\mathbf{w}\)</span> of the form
+<span class="math display">\[\mathbf{w}=\begin{bmatrix}w_1\\w_2\\w_3\end{bmatrix}\]</span>
+that satisfy the equation <span class="math inline">\(4w_1+5w_2-2w_3=0.\)</span> is <span class="math inline">\(W\)</span> a subspace of <span class="math inline">\(\mathbb{R}^3?\)</span></p></li>
+<li><p>Write the following product as a linear combination of vectors. Do not simplify.
+<span class="math display">\[\begin{bmatrix} 1 &amp; 3 &amp; -2 \\2 &amp; 4 &amp; 5\\8&amp; 1 &amp; 2\end{bmatrix} \begin{bmatrix} 2\\-1\\4\end{bmatrix}\]</span></p></li>
+<li><p>Write the following product as a linear combination of vectors. Do not simplify.
+<span class="math display">\[\begin{bmatrix} 2 &amp; 1 &amp; -4 \\-1 &amp; 3 &amp; 2\\ 6 &amp; 2 &amp; 3\end{bmatrix} \begin{bmatrix} 1\\-4\\2\end{bmatrix}\]</span></p></li>
+<li><p>Write the linear combination
+<span class="math display">\[3\begin{bmatrix} 2\\-1\end{bmatrix}+(-2)\begin{bmatrix}1\\4\end{bmatrix}\]</span>
+as a product of a matrix and a vector.</p></li>
+<li><p>Write the linear combination
+<span class="math display">\[9\begin{bmatrix} 3\\-3\end{bmatrix}+(-5)\begin{bmatrix}2\\3\end{bmatrix}\]</span>
+as a product of a matrix and a vector.</p></li>
+<li><p>Can the vector <span class="math inline">\(\mathbf{b}=\begin{bmatrix}1\\4\end{bmatrix}\)</span> be written as a linear combination of <span class="math inline">\(\mathbf{a}_1=\begin{bmatrix}2\\-3\end{bmatrix}\)</span> and <span class="math inline">\(\mathbf{a}_2=\begin{bmatrix}5\\1\end{bmatrix}?\)</span> If so, find the coefficients.</p></li>
+<li><p>Can the vector <span class="math inline">\(\mathbf{b}=\begin{bmatrix}9\\4\end{bmatrix}\)</span> be written as a linear combination of <span class="math inline">\(\mathbf{a}_1=\begin{bmatrix}2\\5\end{bmatrix}\)</span> and <span class="math inline">\(\mathbf{a}_2=\begin{bmatrix}6\\1\end{bmatrix}?\)</span> If so, find the coefficients.</p></li>
+<li><p>Can the vector <span class="math inline">\(\mathbf{b}=\begin{bmatrix}1\\4\\3\end{bmatrix}\)</span> be written as a linear combination of <span class="math inline">\(\mathbf{a}_1=\begin{bmatrix}2\\-3\\5\end{bmatrix}\)</span> and <span class="math inline">\(\mathbf{a}_2=\begin{bmatrix}5\\1\\2\end{bmatrix}?\)</span> If so, find the coefficients.</p></li>
+<li><p>Can the vector <span class="math inline">\(\mathbf{b}=\begin{bmatrix}1\\1\\5\end{bmatrix}\)</span> be written as a linear combination of <span class="math inline">\(\mathbf{a}_1=\begin{bmatrix}1\\2\\3\end{bmatrix}\)</span> and <span class="math inline">\(\mathbf{a}_2=\begin{bmatrix}1\\4\\-1\end{bmatrix}?\)</span> If so, find the coefficients.</p></li>
+<li><p>Let
+<span class="math inline">\(\mathbf{a}_1=\begin{bmatrix}2\\1\\3\end{bmatrix},\mathbf{a}_2=\begin{bmatrix}2\\-1\\4\end{bmatrix},\)</span> and <span class="math inline">\(\mathbf{a}_3=\begin{bmatrix} 4\\0\\7\end{bmatrix}.\)</span> Are <span class="math inline">\(\mathbf{a}_1,\mathbf{a}_2,\)</span> and <span class="math inline">\(\mathbf{a}_3\)</span> linearly independent or linearly dependent?</p></li>
+<li><p>Let
+<span class="math inline">\(\mathbf{a}_1=\begin{bmatrix}5\\2\\1\end{bmatrix},\mathbf{a}_2=\begin{bmatrix}-1\\5\\3\end{bmatrix},\)</span> and <span class="math inline">\(\mathbf{a}_3=\begin{bmatrix} 2\\5\\2\end{bmatrix}.\)</span> Are <span class="math inline">\(\mathbf{a}_1,\mathbf{a}_2,\)</span> and <span class="math inline">\(\mathbf{a}_3\)</span> linearly independent or linearly dependent?</p></li>
+<li><p>Write the standard basis vector <span class="math inline">\(\mathbf{e}_1=\begin{bmatrix}1\\0\end{bmatrix}\)</span> as a linear combination of vectors in the basis <span class="math inline">\(\left\{\begin{bmatrix}1\\3\end{bmatrix},\begin{bmatrix}1\\4\end{bmatrix}\right\}.\)</span></p></li>
+<li><p>Write the standard basis vector <span class="math inline">\(\mathbf{e}_2=\begin{bmatrix}0\\1\end{bmatrix}\)</span> as a linear combination of vectors in the basis <span class="math inline">\(\left\{\begin{bmatrix}2\\7\end{bmatrix},\begin{bmatrix}1\\4\end{bmatrix}\right\}.\)</span></p></li>
+<li><p>The set of all <span class="math inline">\(2\times 2\)</span> matrices is a vector space. Find its dimension by finding a basis.</p></li>
+<li><p>The set of all <span class="math inline">\(2\times 3\)</span> matrices is a vector space. Find its dimension by finding a basis.</p></li>
+<li><p>Show that the set of all <span class="math inline">\(2\times 2\)</span> upper triangular matrices is a subspace of the vector space of all <span class="math inline">\(2\times 2\)</span> matrices. Find its dimension by finding a basis.</p></li>
+<li><p>Show that the set of all <span class="math inline">\(3\times 3\)</span> diagonal matrices is a subspace of the vector space of all <span class="math inline">\(2\times 2\)</span> matrices. Find its dimension by finding a basis.</p></li>
+<li><p>Let
+<span class="math display">\[\mathbf{A}=\begin{bmatrix}1 &amp; 3 &amp; 1 &amp; 2\\2 &amp; 1 &amp; 2 &amp; 3\\1 &amp; 2 &amp; 1 &amp; 4\end{bmatrix}.\]</span>
+Find</p>
+<ol style="list-style-type: lower-alpha">
+<li>A basis for <span class="math inline">\(\text{Col}(\mathbf{A}).\)</span></li>
+<li>A basis for <span class="math inline">\(\text{Row}(\mathbf{A}).\)</span></li>
+<li>A basis for <span class="math inline">\(\text{Null}(\mathbf{A}).\)</span></li>
+<li>The rank of <span class="math inline">\(\mathbf{A}.\)</span></li>
+</ol></li>
+<li><p>Let
+<span class="math display">\[\mathbf{A}=\begin{bmatrix}1 &amp; 2 &amp; 2 &amp; 1\\3 &amp; 3 &amp; 6 &amp; 1\\1 &amp; 2 &amp; 2 &amp; 4\end{bmatrix}.\]</span>
+Find</p>
+<ol style="list-style-type: lower-alpha">
+<li>A basis for <span class="math inline">\(\text{Col}(\mathbf{A}).\)</span></li>
+<li>A basis for <span class="math inline">\(\text{Row}(\mathbf{A}).\)</span></li>
+<li>A basis for <span class="math inline">\(\text{Null}(\mathbf{A}).\)</span></li>
+<li>The rank of <span class="math inline">\(\mathbf{A}.\)</span></li>
+</ol></li>
+<li><p>Let <span class="math inline">\(\mathbf{A}=\begin{bmatrix} 1 &amp; 3 &amp; -4\end{bmatrix}.\)</span> Find a basis for the nullspace of <span class="math inline">\(\mathbf{A}.\)</span></p></li>
+<li><p>Let <span class="math inline">\(\mathbf{A}=\begin{bmatrix} 2 &amp; 4 &amp; 1\end{bmatrix}.\)</span> Find a basis for the nullspace of <span class="math inline">\(\mathbf{A}.\)</span></p></li>
+<li><p>Let <span class="math inline">\(\mathbf{A}\)</span> be an <span class="math inline">\(m\times n\)</span> matrix and <span class="math inline">\(\mathbf{b}\)</span> be a vector in <span class="math inline">\(\mathbb{R}^m.\)</span> Let <span class="math inline">\(\mathbf{x}_1\)</span> and <span class="math inline">\(\mathbf{x}_2\)</span> be two solutions to <span class="math inline">\(\mathbf{A}\mathbf{x}=\mathbf{b}.\)</span> Show that <span class="math inline">\(\mathbf{x}_1-\mathbf{x}_2\)</span> is in the nullspace of <span class="math inline">\(\mathbf{A}.\)</span></p></li>
+</ol>
+
+</div>
+</div>
+<div class="footnotes">
+<hr />
+<ol start="1">
+<li id="fn1"><p>Of course, we could also use inverses or technology.<a href="vector-spaces.html#fnref1" class="footnote-back">↩︎</a></p></li>
+</ol>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="matrices-and-systems-of-equations.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="eigenvalues-and-eigenvectors.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"whatsapp": false,
+"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": "https://github.com/USERNAME/REPO/edit/BRANCH/02-VectorSpaces.Rmd",
+"text": "Edit"
+},
+"history": {
+"link": null,
+"text": null
+},
+"view": {
+"link": null,
+"text": null
+},
+"download": ["_main.pdf", "_main.epub"],
+"search": {
+"engine": "fuse",
+"options": null
+},
+"toc": {
+"collapse": "subsection"
+},
+"split_bib": false
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.9/latest.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>

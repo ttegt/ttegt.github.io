@@ -1,0 +1,2075 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>Chapter 3 Eigenvalues and Eigenvectors | Linear Algebra for Data Science</title>
+  <meta name="description" content="<p>This is a minimal example of using the bookdown package to write a book.
+The HTML output format for this example is bookdown::gitbook,
+set in the _output.yml file.</p>" />
+  <meta name="generator" content="bookdown 0.39 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="Chapter 3 Eigenvalues and Eigenvectors | Linear Algebra for Data Science" />
+  <meta property="og:type" content="book" />
+  <meta property="og:image" content="/images/mfdscover.png" />
+  <meta property="og:description" content="<p>This is a minimal example of using the bookdown package to write a book.
+The HTML output format for this example is bookdown::gitbook,
+set in the _output.yml file.</p>" />
+  
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Chapter 3 Eigenvalues and Eigenvectors | Linear Algebra for Data Science" />
+  
+  <meta name="twitter:description" content="<p>This is a minimal example of using the bookdown package to write a book.
+The HTML output format for this example is bookdown::gitbook,
+set in the _output.yml file.</p>" />
+  <meta name="twitter:image" content="/images/mfdscover.png" />
+
+<meta name="author" content="Tom Tegtmeyer" />
+
+
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="vector-spaces.html"/>
+<link rel="next" href="orthogonality.html"/>
+<script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+<link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
+<link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
+<script src="libs/kePrint-0.0.1/kePrint.js"></script>
+<link href="libs/lightable-0.0.1/lightable.css" rel="stylesheet" />
+
+
+<style type="text/css">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { color: #008000; } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { color: #008000; font-weight: bold; } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+<style type="text/css">
+  
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+</style>
+<style type="text/css">
+/* Used with Pandoc 2.11+ new --citeproc when CSL is used */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+  margin-bottom: 0em;
+}
+.hanging div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}
+</style>
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">Linear Algebra for Data Science</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Preface</a></li>
+<li class="chapter" data-level="1" data-path="matrices-and-systems-of-equations.html"><a href="matrices-and-systems-of-equations.html"><i class="fa fa-check"></i><b>1</b> Matrices and Systems of Equations</a>
+<ul>
+<li class="chapter" data-level="1.1" data-path="matrices-and-systems-of-equations.html"><a href="matrices-and-systems-of-equations.html#systems-of-equations"><i class="fa fa-check"></i><b>1.1</b> Systems of Equations</a>
+<ul>
+<li class="chapter" data-level="" data-path="matrices-and-systems-of-equations.html"><a href="matrices-and-systems-of-equations.html#the-geometry"><i class="fa fa-check"></i>The geometry</a></li>
+<li class="chapter" data-level="" data-path="matrices-and-systems-of-equations.html"><a href="matrices-and-systems-of-equations.html#the-three-cases"><i class="fa fa-check"></i>The three cases</a></li>
+</ul></li>
+<li class="chapter" data-level="1.2" data-path="matrices-and-systems-of-equations.html"><a href="matrices-and-systems-of-equations.html#GE"><i class="fa fa-check"></i><b>1.2</b> Method of Solution: Gaussian Elimination</a>
+<ul>
+<li class="chapter" data-level="" data-path="matrices-and-systems-of-equations.html"><a href="matrices-and-systems-of-equations.html#parameters"><i class="fa fa-check"></i>Parameters</a></li>
+<li class="chapter" data-level="" data-path="matrices-and-systems-of-equations.html"><a href="matrices-and-systems-of-equations.html#more-equations-more-variables"><i class="fa fa-check"></i>More equations, more variables</a></li>
+<li class="chapter" data-level="" data-path="matrices-and-systems-of-equations.html"><a href="matrices-and-systems-of-equations.html#overdetermined-and-underdetermined-systems"><i class="fa fa-check"></i>Overdetermined and underdetermined systems</a></li>
+</ul></li>
+<li class="chapter" data-level="1.3" data-path="matrices-and-systems-of-equations.html"><a href="matrices-and-systems-of-equations.html#matrices"><i class="fa fa-check"></i><b>1.3</b> Matrices</a>
+<ul>
+<li class="chapter" data-level="" data-path="matrices-and-systems-of-equations.html"><a href="matrices-and-systems-of-equations.html#elementary-row-operations"><i class="fa fa-check"></i>Elementary row operations</a></li>
+<li class="chapter" data-level="" data-path="matrices-and-systems-of-equations.html"><a href="matrices-and-systems-of-equations.html#row-echelon-form"><i class="fa fa-check"></i>Row echelon form</a></li>
+<li class="chapter" data-level="" data-path="matrices-and-systems-of-equations.html"><a href="matrices-and-systems-of-equations.html#reduced-row-echelon-form"><i class="fa fa-check"></i>Reduced row echelon form</a></li>
+<li class="chapter" data-level="" data-path="matrices-and-systems-of-equations.html"><a href="matrices-and-systems-of-equations.html#TM"><i class="fa fa-check"></i>Matrices with Technology</a></li>
+</ul></li>
+<li class="chapter" data-level="1.4" data-path="matrices-and-systems-of-equations.html"><a href="matrices-and-systems-of-equations.html#BMO"><i class="fa fa-check"></i><b>1.4</b> Basic Matrix Operations</a>
+<ul>
+<li class="chapter" data-level="" data-path="matrices-and-systems-of-equations.html"><a href="matrices-and-systems-of-equations.html#row-and-column-vectors"><i class="fa fa-check"></i>Row and column vectors</a></li>
+<li class="chapter" data-level="" data-path="matrices-and-systems-of-equations.html"><a href="matrices-and-systems-of-equations.html#matrix-addition"><i class="fa fa-check"></i>Matrix addition</a></li>
+<li class="chapter" data-level="" data-path="matrices-and-systems-of-equations.html"><a href="matrices-and-systems-of-equations.html#scalar-multiplication"><i class="fa fa-check"></i>Scalar Multiplication</a></li>
+<li class="chapter" data-level="" data-path="matrices-and-systems-of-equations.html"><a href="matrices-and-systems-of-equations.html#matrix-multiplication"><i class="fa fa-check"></i>Matrix multiplication</a></li>
+<li class="chapter" data-level="" data-path="matrices-and-systems-of-equations.html"><a href="matrices-and-systems-of-equations.html#multiplying-two-matrices"><i class="fa fa-check"></i>Multiplying two matrices</a></li>
+<li class="chapter" data-level="" data-path="matrices-and-systems-of-equations.html"><a href="matrices-and-systems-of-equations.html#identity-matrices"><i class="fa fa-check"></i>Identity Matrices</a></li>
+<li class="chapter" data-level="" data-path="matrices-and-systems-of-equations.html"><a href="matrices-and-systems-of-equations.html#technology"><i class="fa fa-check"></i>Technology</a></li>
+<li class="chapter" data-level="" data-path="matrices-and-systems-of-equations.html"><a href="matrices-and-systems-of-equations.html#the-transpose-of-a-matrix"><i class="fa fa-check"></i>The transpose of a matrix</a></li>
+</ul></li>
+<li class="chapter" data-level="1.5" data-path="matrices-and-systems-of-equations.html"><a href="matrices-and-systems-of-equations.html#Inverses"><i class="fa fa-check"></i><b>1.5</b> Matrix Inverses</a>
+<ul>
+<li class="chapter" data-level="" data-path="matrices-and-systems-of-equations.html"><a href="matrices-and-systems-of-equations.html#finding-inverses"><i class="fa fa-check"></i>Finding inverses</a></li>
+<li class="chapter" data-level="" data-path="matrices-and-systems-of-equations.html"><a href="matrices-and-systems-of-equations.html#a-formula-for-2-x-2-matrices"><i class="fa fa-check"></i>A formula for 2 x 2 matrices</a></li>
+</ul></li>
+<li class="chapter" data-level="1.6" data-path="matrices-and-systems-of-equations.html"><a href="matrices-and-systems-of-equations.html#dets"><i class="fa fa-check"></i><b>1.6</b> Determinants</a>
+<ul>
+<li class="chapter" data-level="" data-path="matrices-and-systems-of-equations.html"><a href="matrices-and-systems-of-equations.html#triangular-and-diagonal-matrices"><i class="fa fa-check"></i>Triangular and diagonal matrices</a></li>
+<li class="chapter" data-level="" data-path="matrices-and-systems-of-equations.html"><a href="matrices-and-systems-of-equations.html#upper-and-lower-triangular-matrices"><i class="fa fa-check"></i>Upper and lower triangular matrices</a></li>
+</ul></li>
+<li class="chapter" data-level="1.7" data-path="matrices-and-systems-of-equations.html"><a href="matrices-and-systems-of-equations.html#systems-of-linear-equations-as-matrix-equations"><i class="fa fa-check"></i><b>1.7</b> Systems of Linear Equations as Matrix Equations</a>
+<ul>
+<li class="chapter" data-level="" data-path="matrices-and-systems-of-equations.html"><a href="matrices-and-systems-of-equations.html#how-does-row-reduction-work"><i class="fa fa-check"></i>How does row reduction work?</a></li>
+</ul></li>
+<li class="chapter" data-level="1.8" data-path="matrices-and-systems-of-equations.html"><a href="matrices-and-systems-of-equations.html#Colley"><i class="fa fa-check"></i><b>1.8</b> Application: The Colley Matrix Method</a>
+<ul>
+<li class="chapter" data-level="" data-path="matrices-and-systems-of-equations.html"><a href="matrices-and-systems-of-equations.html#ratings-and-rankings"><i class="fa fa-check"></i>Ratings and Rankings</a></li>
+<li class="chapter" data-level="" data-path="matrices-and-systems-of-equations.html"><a href="matrices-and-systems-of-equations.html#the-bcs-and-wes-colley"><i class="fa fa-check"></i>The BCS and Wes Colley</a></li>
+<li class="chapter" data-level="" data-path="matrices-and-systems-of-equations.html"><a href="matrices-and-systems-of-equations.html#the-colley-matrix"><i class="fa fa-check"></i>The Colley Matrix</a></li>
+</ul></li>
+<li class="chapter" data-level="1.9" data-path="matrices-and-systems-of-equations.html"><a href="matrices-and-systems-of-equations.html#exercises"><i class="fa fa-check"></i><b>1.9</b> Exercises</a></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="vector-spaces.html"><a href="vector-spaces.html"><i class="fa fa-check"></i><b>2</b> Vector Spaces</a>
+<ul>
+<li class="chapter" data-level="2.1" data-path="vector-spaces.html"><a href="vector-spaces.html#artoo"><i class="fa fa-check"></i><b>2.1</b> The Vector Space <span class="math inline">\(\mathbb{R}^n\)</span></a>
+<ul>
+<li class="chapter" data-level="" data-path="vector-spaces.html"><a href="vector-spaces.html#vector-addition-and-scalar-multiplication"><i class="fa fa-check"></i>Vector addition and scalar multiplication</a></li>
+<li class="chapter" data-level="" data-path="vector-spaces.html"><a href="vector-spaces.html#linear-dependence-and-independence"><i class="fa fa-check"></i>Linear dependence and independence</a></li>
+<li class="chapter" data-level="" data-path="vector-spaces.html"><a href="vector-spaces.html#linear-combinations"><i class="fa fa-check"></i>Linear Combinations</a></li>
+<li class="chapter" data-level="" data-path="vector-spaces.html"><a href="vector-spaces.html#mathbbr3-and-mathbbrn"><i class="fa fa-check"></i><span class="math inline">\(\mathbb{R}^3\)</span> and <span class="math inline">\(\mathbb{R}^n\)</span></a></li>
+</ul></li>
+<li class="chapter" data-level="2.2" data-path="vector-spaces.html"><a href="vector-spaces.html#subspaces"><i class="fa fa-check"></i><b>2.2</b> Subspaces</a></li>
+<li class="chapter" data-level="2.3" data-path="vector-spaces.html"><a href="vector-spaces.html#linear-dependence-and-independence-1"><i class="fa fa-check"></i><b>2.3</b> Linear Dependence and Independence</a>
+<ul>
+<li class="chapter" data-level="" data-path="vector-spaces.html"><a href="vector-spaces.html#linear-dependence-revisited"><i class="fa fa-check"></i>Linear dependence revisited</a></li>
+</ul></li>
+<li class="chapter" data-level="2.4" data-path="vector-spaces.html"><a href="vector-spaces.html#basis-and-dimension"><i class="fa fa-check"></i><b>2.4</b> Basis and Dimension</a>
+<ul>
+<li class="chapter" data-level="" data-path="vector-spaces.html"><a href="vector-spaces.html#the-standard-basis-for-mathbbrn"><i class="fa fa-check"></i>The standard basis for <span class="math inline">\(\mathbb{R}^n\)</span></a></li>
+<li class="chapter" data-level="" data-path="vector-spaces.html"><a href="vector-spaces.html#the-dimension-of-a-subspace"><i class="fa fa-check"></i>The dimension of a subspace</a></li>
+<li class="chapter" data-level="" data-path="vector-spaces.html"><a href="vector-spaces.html#the-dimension-of-the-nullspace"><i class="fa fa-check"></i>The dimension of the Nullspace</a></li>
+<li class="chapter" data-level="" data-path="vector-spaces.html"><a href="vector-spaces.html#the-column-space-of-a-matrix"><i class="fa fa-check"></i>The column space of a matrix</a></li>
+<li class="chapter" data-level="" data-path="vector-spaces.html"><a href="vector-spaces.html#the-row-space"><i class="fa fa-check"></i>The row space</a></li>
+</ul></li>
+<li class="chapter" data-level="2.5" data-path="vector-spaces.html"><a href="vector-spaces.html#exercises-1"><i class="fa fa-check"></i><b>2.5</b> Exercises</a></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="eigenvalues-and-eigenvectors.html"><a href="eigenvalues-and-eigenvectors.html"><i class="fa fa-check"></i><b>3</b> Eigenvalues and Eigenvectors</a>
+<ul>
+<li class="chapter" data-level="3.1" data-path="eigenvalues-and-eigenvectors.html"><a href="eigenvalues-and-eigenvectors.html#eigenvalues-and-eigenvectors-1"><i class="fa fa-check"></i><b>3.1</b> Eigenvalues and Eigenvectors</a>
+<ul>
+<li class="chapter" data-level="" data-path="eigenvalues-and-eigenvectors.html"><a href="eigenvalues-and-eigenvectors.html#eigenvalues-and-eigenvectors-in-r"><i class="fa fa-check"></i>Eigenvalues and Eigenvectors in R</a></li>
+<li class="chapter" data-level="" data-path="eigenvalues-and-eigenvectors.html"><a href="eigenvalues-and-eigenvectors.html#higher-dimensional-matrices"><i class="fa fa-check"></i>Higher dimensional matrices</a></li>
+</ul></li>
+<li class="chapter" data-level="3.2" data-path="eigenvalues-and-eigenvectors.html"><a href="eigenvalues-and-eigenvectors.html#special-cases-and-complications"><i class="fa fa-check"></i><b>3.2</b> Special Cases and Complications</a>
+<ul>
+<li class="chapter" data-level="" data-path="eigenvalues-and-eigenvectors.html"><a href="eigenvalues-and-eigenvectors.html#diagonal-and-triangular-matrices"><i class="fa fa-check"></i>Diagonal and triangular matrices</a></li>
+<li class="chapter" data-level="" data-path="eigenvalues-and-eigenvectors.html"><a href="eigenvalues-and-eigenvectors.html#the-trace"><i class="fa fa-check"></i>The trace</a></li>
+<li class="chapter" data-level="" data-path="eigenvalues-and-eigenvectors.html"><a href="eigenvalues-and-eigenvectors.html#complications"><i class="fa fa-check"></i>Complications</a></li>
+<li class="chapter" data-level="" data-path="eigenvalues-and-eigenvectors.html"><a href="eigenvalues-and-eigenvectors.html#eigenvalues-of-a-transpose"><i class="fa fa-check"></i>Eigenvalues of a transpose</a></li>
+<li class="chapter" data-level="" data-path="eigenvalues-and-eigenvectors.html"><a href="eigenvalues-and-eigenvectors.html#matrix-powers"><i class="fa fa-check"></i>Matrix powers</a></li>
+</ul></li>
+<li class="chapter" data-level="3.3" data-path="eigenvalues-and-eigenvectors.html"><a href="eigenvalues-and-eigenvectors.html#application-the-leslie-matrix"><i class="fa fa-check"></i><b>3.3</b> Application: The Leslie Matrix</a></li>
+<li class="chapter" data-level="3.4" data-path="eigenvalues-and-eigenvectors.html"><a href="eigenvalues-and-eigenvectors.html#graphs-and-adjacency-matrices"><i class="fa fa-check"></i><b>3.4</b> Graphs and Adjacency Matrices</a>
+<ul>
+<li class="chapter" data-level="" data-path="eigenvalues-and-eigenvectors.html"><a href="eigenvalues-and-eigenvectors.html#adjacency-matrices"><i class="fa fa-check"></i>Adjacency matrices</a></li>
+<li class="chapter" data-level="" data-path="eigenvalues-and-eigenvectors.html"><a href="eigenvalues-and-eigenvectors.html#directed-adjacency-matrices"><i class="fa fa-check"></i>Directed adjacency matrices</a></li>
+<li class="chapter" data-level="" data-path="eigenvalues-and-eigenvectors.html"><a href="eigenvalues-and-eigenvectors.html#the-directed-graph-of-a-tournament"><i class="fa fa-check"></i>The directed graph of a tournament</a></li>
+</ul></li>
+<li class="chapter" data-level="3.5" data-path="eigenvalues-and-eigenvectors.html"><a href="eigenvalues-and-eigenvectors.html#random-surfers-and-stochastic-matrices"><i class="fa fa-check"></i><b>3.5</b> Random surfers and Stochastic Matrices</a>
+<ul>
+<li class="chapter" data-level="" data-path="eigenvalues-and-eigenvectors.html"><a href="eigenvalues-and-eigenvectors.html#stochastic-matrices"><i class="fa fa-check"></i>Stochastic matrices</a></li>
+<li class="chapter" data-level="" data-path="eigenvalues-and-eigenvectors.html"><a href="eigenvalues-and-eigenvectors.html#markov-chains"><i class="fa fa-check"></i>Markov Chains</a></li>
+<li class="chapter" data-level="" data-path="eigenvalues-and-eigenvectors.html"><a href="eigenvalues-and-eigenvectors.html#why-is-1-always-an-eigenvalue"><i class="fa fa-check"></i>Why is 1 always an eigenvalue?</a></li>
+</ul></li>
+<li class="chapter" data-level="3.6" data-path="eigenvalues-and-eigenvectors.html"><a href="eigenvalues-and-eigenvectors.html#the-markov-and-oracle-ranking-methods"><i class="fa fa-check"></i><b>3.6</b> The Markov and Oracle Ranking Methods</a>
+<ul>
+<li class="chapter" data-level="" data-path="eigenvalues-and-eigenvectors.html"><a href="eigenvalues-and-eigenvectors.html#the-markov-method"><i class="fa fa-check"></i>The Markov method</a></li>
+<li class="chapter" data-level="" data-path="eigenvalues-and-eigenvectors.html"><a href="eigenvalues-and-eigenvectors.html#the-oracle-method"><i class="fa fa-check"></i>The Oracle method</a></li>
+<li class="chapter" data-level="" data-path="eigenvalues-and-eigenvectors.html"><a href="eigenvalues-and-eigenvectors.html#modifications"><i class="fa fa-check"></i>Modifications</a></li>
+</ul></li>
+<li class="chapter" data-level="3.7" data-path="eigenvalues-and-eigenvectors.html"><a href="eigenvalues-and-eigenvectors.html#exercises-2"><i class="fa fa-check"></i><b>3.7</b> Exercises</a></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="orthogonality.html"><a href="orthogonality.html"><i class="fa fa-check"></i><b>4</b> Orthogonality</a>
+<ul>
+<li class="chapter" data-level="4.1" data-path="orthogonality.html"><a href="orthogonality.html#ILO"><i class="fa fa-check"></i><b>4.1</b> Inner Product, Length, and Orthogonality</a>
+<ul>
+<li class="chapter" data-level="" data-path="orthogonality.html"><a href="orthogonality.html#distance-in-mathbbrn"><i class="fa fa-check"></i>Distance in <span class="math inline">\(\mathbb{R}^n\)</span></a></li>
+</ul></li>
+<li class="chapter" data-level="4.2" data-path="orthogonality.html"><a href="orthogonality.html#orthogonal-subspaces"><i class="fa fa-check"></i><b>4.2</b> Orthogonal Subspaces</a>
+<ul>
+<li class="chapter" data-level="" data-path="orthogonality.html"><a href="orthogonality.html#the-row-space-and-nullspace-of-a-matrix"><i class="fa fa-check"></i>The row space and nullspace of a matrix</a></li>
+</ul></li>
+<li class="chapter" data-level="4.3" data-path="orthogonality.html"><a href="orthogonality.html#orthogonal-and-orthonormal-sets"><i class="fa fa-check"></i><b>4.3</b> Orthogonal and Orthonormal Sets</a>
+<ul>
+<li class="chapter" data-level="" data-path="orthogonality.html"><a href="orthogonality.html#orthogonal-projections"><i class="fa fa-check"></i>Orthogonal projections</a></li>
+<li class="chapter" data-level="" data-path="orthogonality.html"><a href="orthogonality.html#orthogonal-matrices"><i class="fa fa-check"></i>Orthogonal matrices</a></li>
+</ul></li>
+<li class="chapter" data-level="4.4" data-path="orthogonality.html"><a href="orthogonality.html#OProj"><i class="fa fa-check"></i><b>4.4</b> Orthogonal Projections</a></li>
+<li class="chapter" data-level="4.5" data-path="orthogonality.html"><a href="orthogonality.html#orthogonalization"><i class="fa fa-check"></i><b>4.5</b> Orthogonalization</a>
+<ul>
+<li class="chapter" data-level="" data-path="orthogonality.html"><a href="orthogonality.html#qr-factorization"><i class="fa fa-check"></i>QR-factorization</a></li>
+</ul></li>
+<li class="chapter" data-level="4.6" data-path="orthogonality.html"><a href="orthogonality.html#exercises-3"><i class="fa fa-check"></i><b>4.6</b> Exercises</a></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="regression.html"><a href="regression.html"><i class="fa fa-check"></i><b>5</b> Regression</a>
+<ul>
+<li class="chapter" data-level="5.1" data-path="regression.html"><a href="regression.html#LSQP"><i class="fa fa-check"></i><b>5.1</b> Least Squares Problems</a>
+<ul>
+<li class="chapter" data-level="" data-path="regression.html"><a href="regression.html#least-squares-error"><i class="fa fa-check"></i>Least squares error</a></li>
+<li class="chapter" data-level="" data-path="regression.html"><a href="regression.html#least-squares-and-the-qr-factorization"><i class="fa fa-check"></i>Least squares and the QR-factorization</a></li>
+</ul></li>
+<li class="chapter" data-level="5.2" data-path="regression.html"><a href="regression.html#application-the-massey-method"><i class="fa fa-check"></i><b>5.2</b> Application: The Massey Method</a>
+<ul>
+<li class="chapter" data-level="" data-path="regression.html"><a href="regression.html#adjustments"><i class="fa fa-check"></i>Adjustments</a></li>
+<li class="chapter" data-level="" data-path="regression.html"><a href="regression.html#offensive-and-defensive-ratings"><i class="fa fa-check"></i>Offensive and defensive ratings</a></li>
+</ul></li>
+<li class="chapter" data-level="5.3" data-path="regression.html"><a href="regression.html#LSRSec"><i class="fa fa-check"></i><b>5.3</b> Least Squares Regression</a>
+<ul>
+<li class="chapter" data-level="" data-path="regression.html"><a href="regression.html#multilinear-regression"><i class="fa fa-check"></i>Multilinear regression</a></li>
+</ul></li>
+<li class="chapter" data-level="5.4" data-path="regression.html"><a href="regression.html#CorSec"><i class="fa fa-check"></i><b>5.4</b> Correlation</a>
+<ul>
+<li class="chapter" data-level="" data-path="regression.html"><a href="regression.html#some-notation-and-a-formula"><i class="fa fa-check"></i>Some notation and a formula</a></li>
+<li class="chapter" data-level="" data-path="regression.html"><a href="regression.html#correlation-in-r"><i class="fa fa-check"></i>Correlation in R</a></li>
+</ul></li>
+<li class="chapter" data-level="5.5" data-path="regression.html"><a href="regression.html#formulas-for-least-squares-regression"><i class="fa fa-check"></i><b>5.5</b> Formulas for Least Squares Regression</a>
+<ul>
+<li class="chapter" data-level="" data-path="regression.html"><a href="regression.html#the-coefficient-of-determination"><i class="fa fa-check"></i>The coefficient of determination</a></li>
+</ul></li>
+<li class="chapter" data-level="5.6" data-path="regression.html"><a href="regression.html#uncertainty-in-least-squares"><i class="fa fa-check"></i><b>5.6</b> Uncertainty in Least Squares</a>
+<ul>
+<li class="chapter" data-level="" data-path="regression.html"><a href="regression.html#confidence-and-prediction-intervals-for-responses"><i class="fa fa-check"></i>Confidence and prediction intervals for responses</a></li>
+<li class="chapter" data-level="" data-path="regression.html"><a href="regression.html#checking-assumptions"><i class="fa fa-check"></i>Checking assumptions</a></li>
+</ul></li>
+<li class="chapter" data-level="5.7" data-path="regression.html"><a href="regression.html#multilinear-regression-1"><i class="fa fa-check"></i><b>5.7</b> Multilinear Regression</a>
+<ul>
+<li class="chapter" data-level="" data-path="regression.html"><a href="regression.html#r-and-multilinear-regression"><i class="fa fa-check"></i>R and multilinear regression</a></li>
+<li class="chapter" data-level="" data-path="regression.html"><a href="regression.html#indicator-variables"><i class="fa fa-check"></i>Indicator variables</a></li>
+<li class="chapter" data-level="" data-path="regression.html"><a href="regression.html#fitting-polynomials"><i class="fa fa-check"></i>Fitting polynomials</a></li>
+<li class="chapter" data-level="" data-path="regression.html"><a href="regression.html#interactions"><i class="fa fa-check"></i>Interactions</a></li>
+</ul></li>
+<li class="chapter" data-level="5.8" data-path="regression.html"><a href="regression.html#model-selection"><i class="fa fa-check"></i><b>5.8</b> Model Selection</a>
+<ul>
+<li class="chapter" data-level="" data-path="regression.html"><a href="regression.html#best-subsets-regression"><i class="fa fa-check"></i>Best subsets regression</a></li>
+<li class="chapter" data-level="" data-path="regression.html"><a href="regression.html#stepwise-regression"><i class="fa fa-check"></i>Stepwise regression</a></li>
+<li class="chapter" data-level="" data-path="regression.html"><a href="regression.html#some-warnings"><i class="fa fa-check"></i>Some warnings</a></li>
+</ul></li>
+<li class="chapter" data-level="5.9" data-path="regression.html"><a href="regression.html#Logistic"><i class="fa fa-check"></i><b>5.9</b> Logistic Regression</a>
+<ul>
+<li class="chapter" data-level="" data-path="regression.html"><a href="regression.html#logistic-regression-with-multiple-independent-variables"><i class="fa fa-check"></i>Logistic regression with multiple independent variables</a></li>
+<li class="chapter" data-level="" data-path="regression.html"><a href="regression.html#likelihood-and-deviance"><i class="fa fa-check"></i>Likelihood and deviance</a></li>
+</ul></li>
+<li class="chapter" data-level="5.10" data-path="regression.html"><a href="regression.html#GDA"><i class="fa fa-check"></i><b>5.10</b> Gradient Descent</a>
+<ul>
+<li class="chapter" data-level="" data-path="regression.html"><a href="regression.html#functions-of-several-variables"><i class="fa fa-check"></i>Functions of several variables</a></li>
+<li class="chapter" data-level="" data-path="regression.html"><a href="regression.html#optimizing-parameters"><i class="fa fa-check"></i>Optimizing parameters</a></li>
+</ul></li>
+<li class="chapter" data-level="5.11" data-path="regression.html"><a href="regression.html#exercises-4"><i class="fa fa-check"></i><b>5.11</b> Exercises</a></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="svd-and-pca.html"><a href="svd-and-pca.html"><i class="fa fa-check"></i><b>6</b> SVD and PCA</a>
+<ul>
+<li class="chapter" data-level="6.1" data-path="svd-and-pca.html"><a href="svd-and-pca.html#DSM"><i class="fa fa-check"></i><b>6.1</b> Diagonalizable and Symmetric Matrices</a>
+<ul>
+<li class="chapter" data-level="" data-path="svd-and-pca.html"><a href="svd-and-pca.html#diagonalizable-matrices"><i class="fa fa-check"></i>Diagonalizable matrices</a></li>
+<li class="chapter" data-level="" data-path="svd-and-pca.html"><a href="svd-and-pca.html#symmetric-matrices"><i class="fa fa-check"></i>Symmetric matrices</a></li>
+<li class="chapter" data-level="" data-path="svd-and-pca.html"><a href="svd-and-pca.html#eigenvalues-and-eigenvectors-of-symmetric-matrices"><i class="fa fa-check"></i>Eigenvalues and eigenvectors of symmetric matrices</a></li>
+<li class="chapter" data-level="" data-path="svd-and-pca.html"><a href="svd-and-pca.html#orthogonal-diagonalization"><i class="fa fa-check"></i>Orthogonal diagonalization</a></li>
+</ul></li>
+<li class="chapter" data-level="6.2" data-path="svd-and-pca.html"><a href="svd-and-pca.html#quadratic-forms-and-constrained-optimization"><i class="fa fa-check"></i><b>6.2</b> Quadratic Forms and Constrained Optimization</a>
+<ul>
+<li class="chapter" data-level="" data-path="svd-and-pca.html"><a href="svd-and-pca.html#change-of-variables"><i class="fa fa-check"></i>Change of variables</a></li>
+<li class="chapter" data-level="" data-path="svd-and-pca.html"><a href="svd-and-pca.html#classifying-quadratic-forms"><i class="fa fa-check"></i>Classifying quadratic forms</a></li>
+<li class="chapter" data-level="" data-path="svd-and-pca.html"><a href="svd-and-pca.html#constrained-optimization"><i class="fa fa-check"></i>Constrained optimization</a></li>
+</ul></li>
+<li class="chapter" data-level="6.3" data-path="svd-and-pca.html"><a href="svd-and-pca.html#SVD"><i class="fa fa-check"></i><b>6.3</b> The Singular Value Decomposition</a>
+<ul>
+<li class="chapter" data-level="" data-path="svd-and-pca.html"><a href="svd-and-pca.html#singular-values"><i class="fa fa-check"></i>Singular values</a></li>
+<li class="chapter" data-level="" data-path="svd-and-pca.html"><a href="svd-and-pca.html#svd-with-r"><i class="fa fa-check"></i>SVD with R</a></li>
+</ul></li>
+<li class="chapter" data-level="6.4" data-path="svd-and-pca.html"><a href="svd-and-pca.html#applications-of-the-svd"><i class="fa fa-check"></i><b>6.4</b> Applications of the SVD</a>
+<ul>
+<li class="chapter" data-level="" data-path="svd-and-pca.html"><a href="svd-and-pca.html#movie-reviews-and-latent-factors"><i class="fa fa-check"></i>Movie reviews and latent factors</a></li>
+</ul></li>
+<li class="chapter" data-level="6.5" data-path="svd-and-pca.html"><a href="svd-and-pca.html#principal-component-analysis"><i class="fa fa-check"></i><b>6.5</b> Principal Component Analysis</a>
+<ul>
+<li class="chapter" data-level="" data-path="svd-and-pca.html"><a href="svd-and-pca.html#pca-in-r"><i class="fa fa-check"></i>PCA in R</a></li>
+<li class="chapter" data-level="" data-path="svd-and-pca.html"><a href="svd-and-pca.html#biplots"><i class="fa fa-check"></i>Biplots</a></li>
+<li class="chapter" data-level="" data-path="svd-and-pca.html"><a href="svd-and-pca.html#scaling"><i class="fa fa-check"></i>Scaling</a></li>
+</ul></li>
+<li class="chapter" data-level="6.6" data-path="svd-and-pca.html"><a href="svd-and-pca.html#exercises-5"><i class="fa fa-check"></i><b>6.6</b> Exercises</a></li>
+</ul></li>
+<li class="chapter" data-level="7" data-path="additional-topics.html"><a href="additional-topics.html"><i class="fa fa-check"></i><b>7</b> Additional Topics</a>
+<ul>
+<li class="chapter" data-level="7.1" data-path="additional-topics.html"><a href="additional-topics.html#k-means-clustering"><i class="fa fa-check"></i><b>7.1</b> <span class="math inline">\(k\)</span>-means Clustering</a>
+<ul>
+<li class="chapter" data-level="" data-path="additional-topics.html"><a href="additional-topics.html#k-means-clustering-1"><i class="fa fa-check"></i><span class="math inline">\(k\)</span>-means clustering</a></li>
+<li class="chapter" data-level="" data-path="additional-topics.html"><a href="additional-topics.html#cluster-optimization"><i class="fa fa-check"></i>Cluster optimization</a></li>
+<li class="chapter" data-level="" data-path="additional-topics.html"><a href="additional-topics.html#clustering-for-classification"><i class="fa fa-check"></i>Clustering for classification</a></li>
+</ul></li>
+<li class="chapter" data-level="7.2" data-path="additional-topics.html"><a href="additional-topics.html#collaborative-filtering"><i class="fa fa-check"></i><b>7.2</b> Collaborative Filtering</a>
+<ul>
+<li class="chapter" data-level="" data-path="additional-topics.html"><a href="additional-topics.html#similarity-measures"><i class="fa fa-check"></i>Similarity measures</a></li>
+<li class="chapter" data-level="" data-path="additional-topics.html"><a href="additional-topics.html#collaborative-filtering-with-recommenderlab"><i class="fa fa-check"></i>Collaborative filtering with recommenderlab</a></li>
+</ul></li>
+<li class="chapter" data-level="7.3" data-path="additional-topics.html"><a href="additional-topics.html#decision-tree-classification"><i class="fa fa-check"></i><b>7.3</b> Decision Tree Classification</a>
+<ul>
+<li class="chapter" data-level="" data-path="additional-topics.html"><a href="additional-topics.html#decision-trees-with-r"><i class="fa fa-check"></i>Decision trees with R</a></li>
+<li class="chapter" data-level="" data-path="additional-topics.html"><a href="additional-topics.html#random-forests"><i class="fa fa-check"></i>Random Forests</a></li>
+</ul></li>
+<li class="chapter" data-level="7.4" data-path="additional-topics.html"><a href="additional-topics.html#support-vector-machines"><i class="fa fa-check"></i><b>7.4</b> Support Vector Machines</a>
+<ul>
+<li class="chapter" data-level="" data-path="additional-topics.html"><a href="additional-topics.html#support-vector-machines-in-r"><i class="fa fa-check"></i>Support vector machines in R</a></li>
+</ul></li>
+<li class="chapter" data-level="7.5" data-path="additional-topics.html"><a href="additional-topics.html#exercises-6"><i class="fa fa-check"></i><b>7.5</b> Exercises</a></li>
+</ul></li>
+<li class="appendix"><span><b>Appendices</b></span></li>
+<li class="chapter" data-level="A" data-path="MVCA.html"><a href="MVCA.html"><i class="fa fa-check"></i><b>A</b> An Introduction to Multivariable Calculus</a>
+<ul>
+<li class="chapter" data-level="A.1" data-path="MVCA.html"><a href="MVCA.html#functions-of-several-variables-1"><i class="fa fa-check"></i><b>A.1</b> Functions of several variables</a>
+<ul>
+<li class="chapter" data-level="" data-path="MVCA.html"><a href="MVCA.html#minima-and-maxima"><i class="fa fa-check"></i>Minima and maxima</a></li>
+<li class="chapter" data-level="" data-path="MVCA.html"><a href="MVCA.html#limits-and-continuity"><i class="fa fa-check"></i>Limits and continuity</a></li>
+</ul></li>
+<li class="chapter" data-level="A.2" data-path="MVCA.html"><a href="MVCA.html#partial-derivatives"><i class="fa fa-check"></i><b>A.2</b> Partial Derivatives</a>
+<ul>
+<li class="chapter" data-level="" data-path="MVCA.html"><a href="MVCA.html#higher-order-partial-derivatives"><i class="fa fa-check"></i>Higher order partial derivatives</a></li>
+</ul></li>
+<li class="chapter" data-level="A.3" data-path="MVCA.html"><a href="MVCA.html#directional-derivatives"><i class="fa fa-check"></i><b>A.3</b> Directional Derivatives</a>
+<ul>
+<li class="chapter" data-level="" data-path="MVCA.html"><a href="MVCA.html#the-gradient-vector"><i class="fa fa-check"></i>The gradient vector</a></li>
+</ul></li>
+<li class="chapter" data-level="A.4" data-path="MVCA.html"><a href="MVCA.html#optimization"><i class="fa fa-check"></i><b>A.4</b> Optimization</a>
+<ul>
+<li class="chapter" data-level="" data-path="MVCA.html"><a href="MVCA.html#classifying-critical-points"><i class="fa fa-check"></i>Classifying critical points</a></li>
+</ul></li>
+<li class="chapter" data-level="A.5" data-path="MVCA.html"><a href="MVCA.html#exercises-7"><i class="fa fa-check"></i><b>A.5</b> Exercises</a></li>
+</ul></li>
+<li class="chapter" data-level="B" data-path="the-igraph-and-ggally-packages.html"><a href="the-igraph-and-ggally-packages.html"><i class="fa fa-check"></i><b>B</b> The iGraph and GGally Packages</a>
+<ul>
+<li class="chapter" data-level="" data-path="the-igraph-and-ggally-packages.html"><a href="the-igraph-and-ggally-packages.html#ggally"><i class="fa fa-check"></i>GGally</a></li>
+</ul></li>
+<li class="chapter" data-level="C" data-path="packages.html"><a href="packages.html"><i class="fa fa-check"></i><b>C</b> Packages</a></li>
+<li class="chapter" data-level="" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i>References</a></li>
+<li class="divider"></li>
+<li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Linear Algebra for Data Science</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="eigenvalues-and-eigenvectors" class="section level1 hasAnchor" number="3">
+<h1><span class="header-section-number">Chapter 3</span> Eigenvalues and Eigenvectors<a href="eigenvalues-and-eigenvectors.html#eigenvalues-and-eigenvectors" class="anchor-section" aria-label="Anchor link to header"></a></h1>
+<p>Eigenvalues and eigenvectors play a critical role in many matrix applications. In this chapter, we will introduce the paired concepts and see some applications of them.</p>
+<div id="eigenvalues-and-eigenvectors-1" class="section level2 hasAnchor" number="3.1">
+<h2><span class="header-section-number">3.1</span> Eigenvalues and Eigenvectors<a href="eigenvalues-and-eigenvectors.html#eigenvalues-and-eigenvectors-1" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>When a vector is multiplied (on the left) by an appropriately sized matrix, you get another vector. This is sometimes referred to as a <em>linear transformation</em>.</p>
+<p>For instance if</p>
+<p><span class="math display">\[\mathbf{A}=\begin{bmatrix} 1 &amp; 2 \\-1 &amp; 3\end{bmatrix}\]</span></p>
+<p>and</p>
+<p><span class="math display">\[\mathbf{x}=\begin{bmatrix} 2\\1\end{bmatrix},\]</span></p>
+<p>then</p>
+<p><span class="math display">\[\mathbf{A}\mathbf{x}=\begin{bmatrix} 1 &amp; 2 \\-1 &amp; 3 \end{bmatrix}\begin{bmatrix} 2\\1\end{bmatrix}=\begin{bmatrix}4\\1\end{bmatrix}\]</span></p>
+<p>Multiplication by <span class="math inline">\(\mathbf{A}\)</span> transforms the vector <span class="math inline">\(\mathbf{x}=(2,1)\)</span> into the vector <span class="math inline">\((4,1)\)</span> (Fig. <a href="eigenvalues-and-eigenvectors.html#fig:lt1">3.1</a>).</p>
+<div class="figure" style="text-align: center"><span style="display:block;" id="fig:lt1"></span>
+<img src="images/lt.png" alt="A linear transformation" width="50%" />
+<p class="caption">
+Figure 3.1: A linear transformation
+</p>
+</div>
+<p>Note that</p>
+<p><span class="math display">\[\mathbf{A}\mathbf{e}_1=\begin{bmatrix} 1 &amp; 2 \\-1 &amp; 3\end{bmatrix}\begin{bmatrix}1\\0\end{bmatrix}=\begin{bmatrix}1\\-1\end{bmatrix},\]</span></p>
+<p>which is the first column of <span class="math inline">\(\mathbf{A},\)</span> while</p>
+<p><span class="math display">\[\mathbf{A}\mathbf{e}_2=\begin{bmatrix} 1 &amp; 2 \\-1 &amp; 3\end{bmatrix}\begin{bmatrix}0\\1\end{bmatrix}=\begin{bmatrix}2\\3\end{bmatrix},\]</span></p>
+<p>which is the second column of <span class="math inline">\(\mathbf{A}.\)</span></p>
+<p>In general, if <span class="math inline">\(\mathbf{A}\)</span> is any matrix and <span class="math inline">\(\mathbf{e}_i\)</span> is the standard basis vector of appropriate length, then <span class="math inline">\(\mathbf{A}\mathbf{e}_i=\mathbf{a}_i,\)</span> the <span class="math inline">\(i\)</span>th column of <span class="math inline">\(\mathbf{A}\)</span>!</p>
+<p>Now consider the product</p>
+<p><span class="math display">\[\mathbf{A}\mathbf{x}=\begin{bmatrix}1&amp; -1\\2&amp;4\end{bmatrix}\begin{bmatrix}-1\\2\end{bmatrix}=\begin{bmatrix}-3\\6\end{bmatrix}.\]</span></p>
+<p>For this matrix/vector pair, we have <span class="math inline">\(\mathbf{A}\mathbf{x}=3\mathbf{x}.\)</span> Multiplication by <span class="math inline">\(\mathbf{A}\)</span> stretches this particular vector by a factor of <span class="math inline">\(3\)</span>. This doesn’t happen with every vector. Indeed,</p>
+<p><span class="math display">\[\mathbf{A}\mathbf{e}_1=\begin{bmatrix}1\\2\end{bmatrix}.\]</span></p>
+<p>The vector <span class="math inline">\(\mathbf{x}=\begin{bmatrix}-1\\2\end{bmatrix}\)</span> is what we call an <em>eigenvector</em> for the matrix <span class="math inline">\(\mathbf{A},\)</span> and the scaling factor 3 is called an <em>eigenvalue</em> of <span class="math inline">\(\mathbf{A}.\)</span></p>
+<div class="defbox">
+<div class="definition">
+<p><span id="def:unlabeled-div-45" class="definition"><strong>Definition 3.1  </strong></span>Let <span class="math inline">\(\mathbf{A}\)</span> be an <span class="math inline">\(n\times n\)</span> (square) matrix, and let <span class="math inline">\(\mathbf{x}\)</span> be a nonzero vector such that <span class="math inline">\(\mathbf{A}\mathbf{x}=\lambda \mathbf{x}\)</span> for some scalar <span class="math inline">\(\lambda\)</span>. Then <span class="math inline">\(\mathbf{x}\)</span> is an <strong>eigenvector</strong> of <span class="math inline">\(\mathbf{A}\)</span> with corresponding <strong>eigenvalue</strong> <span class="math inline">\(\lambda\)</span>.</p>
+</div>
+</div>
+<p>Some notes:</p>
+<ol style="list-style-type: decimal">
+<li><p>While the zero vector satisfies <span class="math inline">\(\mathbf{A0}=\mathbf{0}\)</span> for matrices <span class="math inline">\(\mathbf{A},\)</span> we never call it an eigenvector.</p></li>
+<li><p>Eigenvectors aren’t unique. For instance, if <span class="math inline">\(\mathbf{A}\mathbf{x}=\lambda \mathbf{x}\)</span>, and <span class="math inline">\(r\)</span> is any nonzero constant, then
+<span class="math display">\[\mathbf{A}(r\mathbf{x})=r\mathbf{A}\mathbf{x}=r\lambda \mathbf{x}=\lambda(r\mathbf{x}),\]</span>
+so any nonzero multiple of an eigenvector is also an eigenvector for the same eigenvalue. Some applications use eigenvectors of magnitude 1, while others use eigenvalues whose entries add up to 1.</p></li>
+</ol>
+<p>Now that we’ve defined eigenvectors and eigenvalues, we need to figure out how to find them.</p>
+<p>Eigenvectors and eigenvalues satisfy the equation</p>
+<p><span class="math display">\[\mathbf{A}\mathbf{x}=\lambda\mathbf{x}.\]</span></p>
+<p>With a little rearrangement, and using the trick <span class="math inline">\(\mathbf{I}\mathbf{x}=\mathbf{x}\)</span>, we get the following:</p>
+<p><span class="math display">\[\begin{align*}
+    \mathbf{A}\mathbf{x}&amp;=\lambda \mathbf{x}\\
+    \mathbf{A}\mathbf{x}-\lambda\mathbf{x}&amp;=\mathbf{0}\\
+    \mathbf{A}\mathbf{x}-\lambda \mathbf{I}\mathbf{x}&amp;=\mathbf{0}\\
+    (\mathbf{A}-\lambda \mathbf{I})\mathbf{x}&amp;=\mathbf{0}.
+\end{align*}\]</span></p>
+<p>If <span class="math inline">\(\mathbf{A}\)</span> is a square <span class="math inline">\(n\times n\)</span> matrix, then <span class="math inline">\(\mathbf{B}=\mathbf{A}-\lambda\mathbf{I}\)</span> is also an <span class="math inline">\(n\times n\)</span> matrix. Remember that for a square matrix <span class="math inline">\(\mathbf{B},\)</span></p>
+<p><span class="math display">\[\mathbf{B}\mathbf{x}=\mathbf{0}\]</span></p>
+<p>has a nontrivial solution if and only if <span class="math inline">\(\det \mathbf{B}=0.\)</span> The matrix <span class="math inline">\(\mathbf{A}\)</span> will have the eigenvalue <span class="math inline">\(\lambda\)</span> if and only if</p>
+<p><span class="math display" id="eq:chareq">\[
+\det(\mathbf{A}-\lambda\mathbf{I})=0. \tag{3.1}
+\]</span></p>
+<p>This is the <em>characteristic equation</em> for the matrix <span class="math inline">\(\mathbf{A}.\)</span> Any nontrivial solution to the characteristic equation will be an eigenvector corresponding to the eigenvalue <span class="math inline">\(\lambda.\)</span></p>
+<p>To sum up, we have the following.</p>
+<div class="theorembox">
+<div class="theorem">
+<p><span id="thm:unlabeled-div-46" class="theorem"><strong>Theorem 3.1  </strong></span>The value <span class="math inline">\(\lambda\)</span> is an eigenvalue for the <span class="math inline">\(n\times n\)</span> matrix <span class="math inline">\(\mathbf{A}\)</span> if and only if</p>
+<p><span class="math display">\[\det(\mathbf{A}-\lambda\mathbf{I})=0.\]</span></p>
+<p>Corresponding eigenvectors are nonzero solutions to</p>
+<p><span class="math display">\[(\mathbf{A}-\lambda \mathbf{I})\mathbf{x}=\mathbf{0}.\]</span></p>
+</div>
+</div>
+<p>For a given matrix <span class="math inline">\(\mathbf{A},\)</span> <span class="math inline">\(\det(\mathbf{A}-\lambda\mathbf{I})\)</span> is a polynomial in <span class="math inline">\(\lambda\)</span>, called the <em>characteristic polynomial</em> of <span class="math inline">\(\mathbf{A}.\)</span></p>
+<div class="examplebox">
+<div class="example">
+<p><span id="exm:fstev" class="example"><strong>Example 3.1  </strong></span>Let’s find eigenvalues and eigenvectors for the matrix</p>
+<p><span class="math display">\[\mathbf{A}=\begin{bmatrix}1 &amp; -1\\2 &amp; 4\end{bmatrix}.\]</span></p>
+<p>We have</p>
+<p><span class="math display">\[\mathbf{A}-\lambda \mathbf{I}=\begin{bmatrix}1 &amp; -1\\2 &amp; 4\end{bmatrix}-\begin{bmatrix}\lambda &amp; 0\\0 &amp; \lambda\end{bmatrix}=\begin{bmatrix}1-\lambda &amp; -1\\2 &amp; 4-\lambda\end{bmatrix}.\]</span></p>
+<p>Then</p>
+<p><span class="math display">\[\begin{align*}
+\det(\mathbf{A}-\lambda \mathbf{I})&amp;=(1-\lambda)(4-\lambda)-(-1)(2) \\
+&amp;=4-\lambda-4\lambda+\lambda^2+2\\
+&amp;=\lambda^2-5\lambda+6=(\lambda-2)(\lambda-3).
+\end{align*}\]</span></p>
+<p>The characteristic equation <span class="math inline">\(\det(\mathbf{A}-\lambda \mathbf{I})=0\)</span> for this matrix is</p>
+<p><span class="math display">\[(\lambda-2)(\lambda-3)=0.\]</span></p>
+<p>The eigenvalues are <span class="math inline">\(\lambda_1=3\)</span> and <span class="math inline">\(\lambda_2=2\)</span>. (Let’s write them in decreasing order.) Now that we know the eigenvalues, we can solve for the corresponding eigenvectors. We will start with <span class="math inline">\(\lambda_1=3\)</span>. A corresponding eigenvector must satisfy</p>
+<p><span class="math display">\[(\mathbf{A}-3\mathbf{I})\mathbf{x}=\mathbf{0}.\]</span></p>
+<p>With</p>
+<p><span class="math display">\[\mathbf{A}=\begin{bmatrix}1 &amp; -1\\2 &amp; 4\end{bmatrix},\]</span></p>
+<p><span class="math display">\[\mathbf{A}-3\mathbf{I}=\begin{bmatrix}1-3 &amp; -1 \\2 &amp; 4-3\end{bmatrix}=\begin{bmatrix}-2 &amp; -1 \\2 &amp; 1\end{bmatrix}.\]</span></p>
+<p>To solve <span class="math inline">\((\mathbf{A}-3\mathbf{I})\mathbf{x}=\mathbf{0}\)</span>, we reduce:</p>
+<p><span class="math display">\[\left[\begin{array}{rr|r}-2 &amp; -1 &amp; 0\\2 &amp; 1 &amp; 0\end{array}\right] \leadsto \left[\begin{array}{rr|r} 1 &amp; 1/2 &amp; 0\\0 &amp; 0 &amp; 0\end{array}\right].\]</span></p>
+<p>Any vector <span class="math inline">\(\mathbf{x}=(x_1,x_2)\)</span> that satisfies <span class="math inline">\(x_1=-\frac{1}{2}x_2\)</span> will be an eigenvector. For instance, <span class="math inline">\(\mathbf{x}=(-1,2)\)</span> is the one we saw in the example. We’ll let <span class="math inline">\(\mathbf{x}=\mathbf{x}_1=(-1,2)\)</span> be our eigenvector corresponding to <span class="math inline">\(\lambda_1=3.\)</span></p>
+<p>Note that in</p>
+<p><span class="math display">\[\mathbf{A}-3\mathbf{I}=\begin{bmatrix}-2 &amp; -1 \\2 &amp; 1\end{bmatrix},\]</span></p>
+<p>the rows are multiples of each other. We can actually use either row to find a relationship between the coordinates, without having to row reduce. (This only works for <span class="math inline">\(2\times 2\)</span> matrices.) The second row tells us that <span class="math inline">\(2x_1+x_2=0\)</span>, or <span class="math inline">\(x_2=-2x_1\)</span>. If we let <span class="math inline">\(x_1=1\)</span>, we get <span class="math inline">\(x_2=-2\)</span>, for an eigenvector of <span class="math inline">\(\mathbf{x}_1=(1,-2)\)</span>, which is a multiple of the one we observed earlier.</p>
+<p>To sum up, for <span class="math inline">\(2\times 2\)</span> matrices, once we’ve found <span class="math inline">\(\mathbf{A}-\lambda \mathbf{I}\)</span>, we can jump straight to the eigenvector.</p>
+<p>Now let’s find an eigenvector corresponding to <span class="math inline">\(\lambda_2=2\)</span>. We have</p>
+<p><span class="math display">\[\mathbf{A}-2\mathbf{I}=\begin{bmatrix}1-2 &amp; -1 \\2 &amp; 4-2\end{bmatrix}=\begin{bmatrix}-1 &amp; -1 \\2 &amp; 2\end{bmatrix}.\]</span></p>
+<p>The first row tells us that <span class="math inline">\(-x_1-x_2=0,\)</span> or <span class="math inline">\(x_2=-x_1\)</span>. The vector <span class="math inline">\(\mathbf{x}_2=(1,-1)\)</span> works. Let’s check:</p>
+<p><span class="math display">\[\mathbf{A}\mathbf{x}_2=\begin{bmatrix}1 &amp; -1\\2 &amp; 4\end{bmatrix}\begin{bmatrix}1\\-1\end{bmatrix}=\begin{bmatrix}2\\-2\end{bmatrix}=2\mathbf{x}_2\checkmark.\]</span></p>
+</div>
+</div>
+<div id="eigenvalues-and-eigenvectors-in-r" class="section level3 unnumbered hasAnchor">
+<h3>Eigenvalues and Eigenvectors in R<a href="eigenvalues-and-eigenvectors.html#eigenvalues-and-eigenvectors-in-r" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>We can use R to find eigenvalues and eigenvectors via the <code>eigen</code> function from the base package. If they are all real numbers, the eigenvalues will be listed in descending order. The corresponding eigenvectors are listed in the same order. The eigenvectors are scaled so that the have magnitude 1.</p>
+<div class="sourceCode" id="cb41"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb41-1"><a href="eigenvalues-and-eigenvectors.html#cb41-1" tabindex="-1"></a>A <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">2</span>,<span class="sc">-</span><span class="dv">1</span>,<span class="dv">4</span>), <span class="at">nrow =</span> <span class="dv">2</span>)</span>
+<span id="cb41-2"><a href="eigenvalues-and-eigenvectors.html#cb41-2" tabindex="-1"></a>A</span></code></pre></div>
+<pre><code>##      [,1] [,2]
+## [1,]    1   -1
+## [2,]    2    4</code></pre>
+<div class="sourceCode" id="cb43"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb43-1"><a href="eigenvalues-and-eigenvectors.html#cb43-1" tabindex="-1"></a><span class="fu">eigen</span>(A)</span></code></pre></div>
+<pre><code>## eigen() decomposition
+## $values
+## [1] 3 2
+## 
+## $vectors
+##            [,1]       [,2]
+## [1,]  0.4472136 -0.7071068
+## [2,] -0.8944272  0.7071068</code></pre>
+<p>If you give a name to the <code>eigen</code> output, it makes it a little easier to extract the eigenvectors.</p>
+<div class="sourceCode" id="cb45"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb45-1"><a href="eigenvalues-and-eigenvectors.html#cb45-1" tabindex="-1"></a>A.ev <span class="ot">&lt;-</span> <span class="fu">eigen</span>(A)</span>
+<span id="cb45-2"><a href="eigenvalues-and-eigenvectors.html#cb45-2" tabindex="-1"></a>evectors <span class="ot">&lt;-</span> A.ev<span class="sc">$</span>vectors</span>
+<span id="cb45-3"><a href="eigenvalues-and-eigenvectors.html#cb45-3" tabindex="-1"></a>evectors</span></code></pre></div>
+<pre><code>##            [,1]       [,2]
+## [1,]  0.4472136 -0.7071068
+## [2,] -0.8944272  0.7071068</code></pre>
+<div class="sourceCode" id="cb47"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb47-1"><a href="eigenvalues-and-eigenvectors.html#cb47-1" tabindex="-1"></a>evectors[,<span class="dv">1</span>]</span></code></pre></div>
+<pre><code>## [1]  0.4472136 -0.8944272</code></pre>
+<div class="sourceCode" id="cb49"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb49-1"><a href="eigenvalues-and-eigenvectors.html#cb49-1" tabindex="-1"></a>evectors[,<span class="dv">2</span>]</span></code></pre></div>
+<pre><code>## [1] -0.7071068  0.7071068</code></pre>
+<p>Another option for finding eigenvalues and eigenvectors for small matrices is <a href="https://www.wolframalpha.com/">WolframAlpha.com</a>. After you enter a matrix, the engine will spit out several of its properties. As of this writing, the Desmos.com matrix calculator does not do eigenvalue/eigenvector computations.</p>
+</div>
+<div id="higher-dimensional-matrices" class="section level3 unnumbered hasAnchor">
+<h3>Higher dimensional matrices<a href="eigenvalues-and-eigenvectors.html#higher-dimensional-matrices" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>The characteristic polynomial for a <span class="math inline">\(2\times 2\)</span> matrix is a quadratic polynomial. The characteristic polynomial for an <span class="math inline">\(n\times n\)</span> matrix will be an <span class="math inline">\(n\)</span>th degree polynomial, which makes it harder or impossible to do by hand.</p>
+<div class="examplebox">
+<div class="example">
+<p><span id="exm:unlabeled-div-47" class="example"><strong>Example 3.2  </strong></span>Find the eigenvalues and eigenvectors for</p>
+<p><span class="math display">\[\mathbf{A}=\begin{bmatrix}-1 &amp; 2 &amp; 0\\2 &amp; 0 &amp; 2\\0 &amp; 2 &amp; 1\end{bmatrix}.\]</span></p>
+<p>We have</p>
+<p><span class="math display">\[\begin{align*}\det(\mathbf{A}-\lambda\mathbf{I})&amp;=\begin{vmatrix}-1-\lambda &amp; 2 &amp; 0\\2 &amp; -\lambda &amp; 2\\0 &amp; 2 &amp; 1-\lambda\end{vmatrix}\\
+&amp;=-\lambda^3+9\lambda\\
+&amp;=-\lambda(\lambda^2-9)\\
+&amp;=-\lambda(\lambda+3)(\lambda-3)
+\end{align*}\]</span></p>
+<p>The eigenvalues are <span class="math inline">\(\lambda_1=3,\lambda_2=0,\)</span> and <span class="math inline">\(\lambda_3=-3.\)</span></p>
+<p>For <span class="math inline">\(\lambda_1=3,\)</span> we reduce.</p>
+<p><span class="math display">\[\begin{align*}
+\left[\begin{array}{ccc|c}-1-3 &amp; 2 &amp; 0&amp;0\\2 &amp; 0-3 &amp; 2&amp;0\\0 &amp; 2 &amp; 1-3&amp;0\end{array}\right]&amp;=\left[\begin{array}{ccc|c} -4 &amp; 2 &amp; 0&amp;0\\2 &amp; -3 &amp; 2&amp;0\\0 &amp; 2 &amp; -2&amp;0\end{array}\right] \\
+&amp;\leadsto \left[\begin{array}{ccc|c} 1 &amp; 0 &amp; -1/2 &amp;0\\0 &amp; 1 &amp; -1&amp;0\\0 &amp; 0 &amp; 0&amp;0\end{array}\right]
+\end{align*}\]</span></p>
+<p>We get that <span class="math inline">\(x_3\)</span> is free, <span class="math inline">\(x_1=\frac{1}{2}x_3\)</span> and <span class="math inline">\(x_2=x_3\)</span>. Setting <span class="math inline">\(x_3=2\)</span> gives us <span class="math inline">\(\mathbf{x}_1=(1,2,2).\)</span></p>
+<p>For <span class="math inline">\(\lambda_2=0,\)</span> we get the following.</p>
+<p><span class="math display">\[
+\left[\begin{array}{ccc|c}-1 &amp; 2 &amp; 0&amp;0\\2 &amp; 0 &amp; 2&amp;0\\0 &amp; 2 &amp; 1&amp;0\end{array}\right]\leadsto \left[\begin{array}{ccc|c} 1 &amp; 0 &amp; 1 &amp;0\\0 &amp; 1 &amp; 1/2&amp;0\\0 &amp; 0 &amp; 0&amp;0\end{array}\right]
+\]</span></p>
+<p>Again, with <span class="math inline">\(x_3\)</span> free, we get <span class="math inline">\(x_1=-x_3\)</span> and <span class="math inline">\(x_2=-\frac{1}{2}x_3.\)</span> Setting <span class="math inline">\(x_3=2\)</span> gives us an eigenvector of <span class="math inline">\(\mathbf{x}_2=(-2,1,2)\)</span>.</p>
+<p>For <span class="math inline">\(\lambda_3=-3,\)</span> we have this.</p>
+<p><span class="math display">\[\begin{align*}
+\left[\begin{array}{ccc|c}-1+3 &amp; 2 &amp; 0&amp;0\\2 &amp; 0+3 &amp; 2&amp;0\\0 &amp; 2 &amp; 1+3&amp;0\end{array}\right]&amp;=\left[\begin{array}{ccc|c} 2 &amp; 2 &amp; 0&amp;0\\2 &amp; 3 &amp; 2&amp;0\\0 &amp; 2 &amp; 4&amp;0\end{array}\right] \\
+&amp;\leadsto \left[\begin{array}{ccc|c} 1 &amp; 0 &amp; -2 &amp;0\\0 &amp; 1 &amp; 2&amp;0\\0 &amp; 0 &amp; 0&amp;0\end{array}\right]
+\end{align*}\]</span></p>
+<p>The relationships are <span class="math inline">\(x_1=2x_3\)</span> and <span class="math inline">\(x_2=-2x_3\)</span>, so letting <span class="math inline">\(x_3=2\)</span> gives us our final eigenvector of <span class="math inline">\(\mathbf{x}_3=(2,-2,1).\)</span></p>
+</div>
+</div>
+</div>
+</div>
+<div id="special-cases-and-complications" class="section level2 hasAnchor" number="3.2">
+<h2><span class="header-section-number">3.2</span> Special Cases and Complications<a href="eigenvalues-and-eigenvectors.html#special-cases-and-complications" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>There are some matrices for which it is easy to find eigenvalues.</p>
+<div id="diagonal-and-triangular-matrices" class="section level3 unnumbered hasAnchor">
+<h3>Diagonal and triangular matrices<a href="eigenvalues-and-eigenvectors.html#diagonal-and-triangular-matrices" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>We talked about diagonal and triangular matrices in Section <a href="matrices-and-systems-of-equations.html#dets">1.6</a>. It is easy to find their eigenvalues.</p>
+<div class="examplebox">
+<div class="example">
+<p><span id="exm:tmev" class="example"><strong>Example 3.3  </strong></span>Find the eigenvalues and eigenvectors for <span class="math inline">\(\mathbf{A},\)</span> where</p>
+<p><span class="math display">\[\mathbf{A}=\begin{bmatrix}2 &amp; 3\\0 &amp; 5\end{bmatrix}.\]</span></p>
+<p>Note that</p>
+<p><span class="math display">\[\det(\mathbf{A}-\lambda \mathbf{I})=\begin{vmatrix}2-\lambda &amp; 3\\0 &amp; 5-\lambda\end{vmatrix}=(2-\lambda)(5-\lambda),\]</span></p>
+<p>so the eigenvalues are 2 and 5, the entries on the diagonal.</p>
+</div>
+</div>
+<p>When we subtract <span class="math inline">\(\lambda\)</span> from the diagonal, a triangular or diagonal matrix stays triangular or diagonal, and the determinant is the product of the diagonal entries. This gives us the following theorem.</p>
+<div class="theorembox">
+<div class="theorem">
+<p><span id="thm:unlabeled-div-48" class="theorem"><strong>Theorem 3.2  </strong></span>Let <span class="math inline">\(\mathbf{A}\)</span> be an <span class="math inline">\(n\times n\)</span> diagonal, upper triangular, or lower triangular matrix. The eigenvalues of <span class="math inline">\(\mathbf{A}\)</span> are the entries on the diagonal of <span class="math inline">\(\mathbf{A}.\)</span></p>
+</div>
+</div>
+<p>This means that we can immediately read off the eigenvalues for these special matrices.</p>
+<p>Returning to Example <a href="eigenvalues-and-eigenvectors.html#exm:tmev">3.3</a>, we should find the eigenvectors. We’ll start with <span class="math inline">\(\lambda_2=2.\)</span> First, remember that the columns of a matrix tell us what happen to the standard basis vectors. Note that</p>
+<p><span class="math display">\[\mathbf{A}\begin{bmatrix}1 \\0\end{bmatrix}=\begin{bmatrix}2\\0\end{bmatrix},\]</span></p>
+<p>so <span class="math inline">\(\mathbf{x}_2=\begin{bmatrix}1\\0\end{bmatrix}\)</span> is an eigenvector corresponding to <span class="math inline">\(\lambda_2=2.\)</span></p>
+<p>We still need to find the eigenvector corresponding to <span class="math inline">\(\lambda_1=5.\)</span> This one takes a little more work.</p>
+<p><span class="math display">\[\left[\begin{array}{cc|c} 2-5 &amp; 3 &amp; 0\\0 &amp; 5-5 &amp; 0\end{array}\right]=\left[\begin{array}{rr|r}-3 &amp; 3&amp; 0\\0 &amp; 0 &amp; 0\end{array}\right].\]</span></p>
+<p>The first row tells us that <span class="math inline">\(3x_2=3x_1\)</span> or <span class="math inline">\(x_2=x_1\)</span>. Thus <span class="math inline">\(\mathbf{x}_1=\begin{bmatrix}1\\1\end{bmatrix}\)</span> is an eigenvector corresponding to <span class="math inline">\(\lambda_1=5.\)</span></p>
+<p>Note that the standard basis vectors are all eigenvectors for diagonal matrices. For example,</p>
+<p><span class="math display">\[\begin{bmatrix} 2 &amp; 0 &amp; 0\\ 0 &amp; 3 &amp; 0\\0 &amp; 0 &amp; 5\end{bmatrix}\begin{bmatrix}0\\1\\0\end{bmatrix}=\begin{bmatrix}0 \\3\\0\end{bmatrix}.\]</span></p>
+</div>
+<div id="the-trace" class="section level3 unnumbered hasAnchor">
+<h3>The trace<a href="eigenvalues-and-eigenvectors.html#the-trace" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>For a generic <span class="math inline">\(2\times 2\)</span> matrix <span class="math inline">\(\mathbf{A},\)</span> the characteristic polynomial is:</p>
+<p><span class="math display">\[\begin{align*}
+\begin{vmatrix} a-\lambda &amp; b\\c &amp; d-\lambda\end{vmatrix}&amp;=(a-\lambda)(d-\lambda)-bc\\
+&amp;=ad-a\lambda-d\lambda+\lambda^2-bc\\
+&amp;=\lambda^2-(a+d)\lambda+(ad-bc).
+\end{align*}\]</span></p>
+<p>Suppose the eigenvalues are <span class="math inline">\(\lambda_1\)</span> and <span class="math inline">\(\lambda_2\)</span>. Then the characteristic polynomial is</p>
+<p><span class="math display">\[(\lambda-\lambda_1)(\lambda-\lambda_2)=\lambda^2-(\lambda_1+\lambda_2)\lambda+\lambda_1\lambda_2.\]</span></p>
+<p>Matching coefficients gives us the following:</p>
+<p><span class="math display">\[\lambda_1+\lambda_2=a+d\text{ and }\lambda_1\lambda_2=ad-bc.\]</span></p>
+<p>First note that <span class="math inline">\(\lambda_1\lambda_2=ad-bc=\det \mathbf{A}\)</span>. The determinant of a <span class="math inline">\(2\times 2\)</span> matrix is the product of the eigenvalues.</p>
+<p>The <span class="math inline">\(\lambda\)</span>-coefficient is <span class="math inline">\(-(\lambda_1+\lambda_2)=-(a+d)\)</span>, and <span class="math inline">\(a+d\)</span> is the sum of the diagonal entries. This is called the <em>trace</em> of a matrix.</p>
+<div class="defbox">
+<div class="definition">
+<p><span id="def:unlabeled-div-49" class="definition"><strong>Definition 3.2  </strong></span>Let <span class="math inline">\(\mathbf{A}\)</span> be an <span class="math inline">\(n\times n\)</span> matrix. The <strong>trace</strong> of <span class="math inline">\(\mathbf{A},\)</span> denoted <span class="math inline">\(\text{tr }\mathbf{A}\)</span>, is the sum of the diagonal entries of <span class="math inline">\(\mathbf{A}.\)</span></p>
+</div>
+</div>
+<p>For a <span class="math inline">\(2\times 2\)</span> matrix, the trace is the sum of the eigenvalues. This relationship – and the relationship between the eigenvalues and the determinant – also hold for larger matrices</p>
+<div class="theorembox">
+<div class="theorem">
+<p><span id="thm:unlabeled-div-50" class="theorem"><strong>Theorem 3.3  </strong></span>Let <span class="math inline">\(\mathbf{A}\)</span> be an <span class="math inline">\(n\times n\)</span> matrix with eigenvalues <span class="math inline">\(\lambda_1,\lambda_2,\dots,\lambda_n\)</span>, including repetitions. Then</p>
+<p><span class="math display">\[\det \mathbf{A}= \lambda_1\lambda_2\cdots \lambda_n,\]</span></p>
+<p>and</p>
+<p><span class="math display">\[\text{tr } \mathbf{A}= \lambda_1+\lambda_2+\cdots+\lambda_n.\]</span></p>
+</div>
+</div>
+<p>Note that these are somewhat obvious for diagonal and triangular matrices, but are also true for all square matrices.</p>
+<div class="examplebox">
+<div class="example">
+<p><span id="exm:ndnt" class="example"><strong>Example 3.4  </strong></span>Find a nondiagonal/nontriangular <span class="math inline">\(2\times 2\)</span> matrix with eigenvalues <span class="math inline">\(\lambda_1=5\)</span> and <span class="math inline">\(\lambda_2=-1\)</span>.</p>
+<p>Let <span class="math inline">\(\mathbf{A}=\begin{bmatrix}a &amp; b\\c&amp; d\end{bmatrix}.\)</span> We know that <span class="math inline">\(\text{tr }\mathbf{A}=\lambda_1+\lambda_2=5+-1=4.\)</span> We can pick any pair of diagonal entries that add up to 4 (other than 5 and <span class="math inline">\(-1\)</span>). Let’s choose <span class="math inline">\(a=2\)</span> and <span class="math inline">\(d=2\)</span>. The determinant is <span class="math inline">\(\lambda_1\lambda_2=5(-1)=-5.\)</span> With <span class="math inline">\(a=d=2, \det\mathbf{A}=4-bc=-5,\)</span> so <span class="math inline">\(bc=9.\)</span> We can choose any pair of numbers whose product is 9. Let’s let <span class="math inline">\(b=c=3.\)</span> Then our matrix is</p>
+<p><span class="math display">\[\mathbf{A}=\begin{bmatrix}2&amp; 3\\3 &amp; 2\end{bmatrix}.\]</span></p>
+</div>
+</div>
+</div>
+<div id="complications" class="section level3 unnumbered hasAnchor">
+<h3>Complications<a href="eigenvalues-and-eigenvectors.html#complications" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>So far, all of our examples have involved matrices with real, distinct eigenvalues. Because we are dealing with solutions to polynomial equations, things can become messier.</p>
+<p>As an example, note that <span class="math inline">\(\mathbf{A}=\begin{bmatrix}2 &amp; 0\\0 &amp; 2\end{bmatrix}\)</span> and <span class="math inline">\(\mathbf{B}=\begin{bmatrix}2 &amp; 3\\0 &amp; 2\end{bmatrix}\)</span> both have the repeated eigenvalue 2. Since <span class="math inline">\(\mathbf{A}\)</span> is diagonal, <span class="math inline">\(\mathbf{e}_1\)</span> and <span class="math inline">\(\mathbf{e}_2\)</span> are two linearly independent eigenvectors for it. (In fact, any nonzero vector in <span class="math inline">\(\mathbb{R}^2\)</span> is an eigenvector, since <span class="math inline">\(\mathbf{A}=2\mathbf{I}\)</span>.)</p>
+<p>For <span class="math inline">\(\mathbf{B},\)</span> <span class="math inline">\(\mathbf{e}_1\)</span> is also an eigenvector, but <span class="math inline">\(\mathbf{e}_2\)</span> isn’t. If we try to solve for one in the normal way,</p>
+<p><span class="math display">\[\left[\begin{array}{cc|c}2-2 &amp; 3 &amp; 0\\0 &amp; 2-2 &amp; 0\end{array}\right]=\left[\begin{array}{cc|c}0 &amp; 3&amp; 0\\0 &amp; 0 &amp; 0\end{array}\right],\]</span></p>
+<p>we get that <span class="math inline">\(x_2=0\)</span>, so we only have a single linearly independent eigenvector <span class="math inline">\(\mathbf{e}_1=(1,0)\)</span>. In this case, <span class="math inline">\(\lambda=2\)</span> is what we call a <em>deficient</em> eigenvalue.</p>
+<p>It’s also possible for a matrix to have complex-valued eigenvalues. For example, with <span class="math inline">\(\text{tr }\mathbf{A}=-3,\det \mathbf{A}=5,\)</span></p>
+<p><span class="math display">\[\mathbf{A}=\begin{bmatrix} -1 &amp; -3\\1 &amp; -2\end{bmatrix}\]</span>
+has characteristic equation</p>
+<p><span class="math display">\[\lambda^2+3\lambda+5=0,\]</span></p>
+<p>so the eigenvalues are</p>
+<p><span class="math display">\[\lambda=\frac{-3\pm \sqrt{3^2-4\cdot 1\cdot 5}}{2}=\frac{-3\pm \sqrt{-11}}{2}=-\frac{3}{2}\pm i\frac{\sqrt{11}}{2}.\]</span></p>
+<p>Fortunately, for our applications, the matrices will either only have all real eigenvalues or we’ll only need the real eigenvalues.</p>
+</div>
+<div id="eigenvalues-of-a-transpose" class="section level3 unnumbered hasAnchor">
+<h3>Eigenvalues of a transpose<a href="eigenvalues-and-eigenvectors.html#eigenvalues-of-a-transpose" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>How do the eigenvalues of a matrix and its transpose compare? Note that, since <span class="math inline">\(\mathbf{I}^T=\mathbf{I},\)</span></p>
+<p><span class="math display">\[\begin{align*}
+\det (\mathbf{A}^T-\lambda \mathbf{I})&amp;=\det (\mathbf{A}^T-\lambda \mathbf{I}^T)\\
+&amp;=\det (\mathbf{A}-\lambda \mathbf{I})^T\\
+&amp;=\det (\mathbf{A}-\lambda \mathbf{I}),
+\end{align*}\]</span></p>
+<p>so <span class="math inline">\(\mathbf{A}\)</span> and <span class="math inline">\(\mathbf{A}^T\)</span> have the same characteristic polynomial. Since they have the same characteristic polynomial, they have the same eigenvalues. They don’t necessarily have the same eigenvectors, however.</p>
+<div class="theorembox">
+<div class="theorem">
+<p><span id="thm:unlabeled-div-51" class="theorem"><strong>Theorem 3.4  </strong></span>Let <span class="math inline">\(\mathbf{A}\)</span> be a square matrix. Then <span class="math inline">\(\mathbf{A}\)</span> and <span class="math inline">\(\mathbf{A}^T\)</span> have the same eigenvalues.</p>
+</div>
+</div>
+</div>
+<div id="matrix-powers" class="section level3 unnumbered hasAnchor">
+<h3>Matrix powers<a href="eigenvalues-and-eigenvectors.html#matrix-powers" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Suppose that <span class="math inline">\(\mathbf{A}\)</span> is an <span class="math inline">\(n\times n\)</span> matrix, with eigenvalue <span class="math inline">\(\lambda\)</span> and corresponding eigenvector <span class="math inline">\(\mathbf{x}\)</span>. Then</p>
+<p><span class="math display">\[\begin{align*}
+    \mathbf{A}\mathbf{x}&amp;=\lambda \mathbf{x}\\
+\mathbf{A}^2\mathbf{x}&amp;=\mathbf{A}(\mathbf{A}\mathbf{x})=\mathbf{A}(\lambda \mathbf{x})=\lambda(\mathbf{A}\mathbf{x})=\lambda(\lambda \mathbf{x})=\lambda^2\mathbf{x}\\
+\vdots &amp; \\
+\mathbf{A}^n\mathbf{x}&amp;=\lambda^n \mathbf{x}.
+\end{align*}\]</span></p>
+<p>So:</p>
+<ol style="list-style-type: decimal">
+<li><p>Eigenvectors of <span class="math inline">\(\mathbf{A}\)</span> are eigenvectors of <span class="math inline">\(\mathbf{A}^n\)</span> with eigenvalues <span class="math inline">\(\lambda^n, n=2,3,\dots\)</span></p></li>
+<li><p>This makes it easy to calculate <span class="math inline">\(\mathbf{A}^n\mathbf{x}\)</span> for eigenvectors. We’ll take advantage of this in upcoming sections.</p></li>
+</ol>
+<div class="examplebox">
+<div class="example">
+<p><span id="exm:unlabeled-div-52" class="example"><strong>Example 3.5  </strong></span>Let</p>
+<p><span class="math display">\[\mathbf{A}=\begin{bmatrix} 1 &amp; -1\\2 &amp; 4\end{bmatrix}.\]</span>
+We know from Example <a href="eigenvalues-and-eigenvectors.html#exm:fstev">3.1</a> that <span class="math inline">\(\mathbf{x}=\begin{bmatrix}-1 \\2\end{bmatrix}\)</span> is an eigenvector of <span class="math inline">\(\mathbf{A}\)</span> with corresponding eigenvalue <span class="math inline">\(\lambda=3\)</span>. Then</p>
+<p><span class="math display">\[\mathbf{A}^4\mathbf{x}=3^4\mathbf{x}=81\begin{bmatrix}-1\\2\end{bmatrix}=\begin{bmatrix}-81\\162\end{bmatrix}.\]</span></p>
+</div>
+</div>
+</div>
+</div>
+<div id="application-the-leslie-matrix" class="section level2 hasAnchor" number="3.3">
+<h2><span class="header-section-number">3.3</span> Application: The Leslie Matrix<a href="eigenvalues-and-eigenvectors.html#application-the-leslie-matrix" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>In this section, we will be studying an application of eigenvalues and eigenvectors to population modeling.</p>
+<p>Patrick Leslie described his matrix method for studying discrete time, age-structured population models in 1945 <span class="citation">[<a href="#ref-Leslie">10</a>]</span>. The model includes year-to-year survival rates as well as reproduction rates. We will start with an example.</p>
+<div class="examplebox">
+<div class="example">
+<p><span id="exm:Leslie1" class="example"><strong>Example 3.6  </strong></span>Suppose a species lives at most two years, reproduces each year, and dies. We will consider the zero-year-olds, one-year-olds, and two-year-olds separately.</p>
+<ul>
+<li><p>Each age 0 individual has a probability of surviving to age 1 of 0.2, and produces on average 2 offspring.</p></li>
+<li><p>Each age 1 individual has a probability of surviving to age 2 of 0.5, and produces an average of 4 offspring.</p></li>
+<li><p>Each age 2 individual has a survival probability of 0, but produces an average of 3 offspring.</p></li>
+</ul>
+<p>The Leslie matrix for this population looks like this:</p>
+<p><span class="math display">\[\mathbf{L}=\begin{bmatrix} 2 &amp; 4 &amp; 3\\
+0.2 &amp; 0 &amp; 0\\ 0 &amp; 0.5 &amp; 0\end{bmatrix}.\]</span></p>
+</div>
+</div>
+<p>Before we explain what we do with the matrix, we need to talk about population vectors.</p>
+<p>Let <span class="math inline">\(N_0(t)\)</span> represent the number of age 0 individuals at year <span class="math inline">\(t\)</span>, <span class="math inline">\(N_1(t)\)</span> represent the number of one-year-olds, and <span class="math inline">\(N_2(t)\)</span> is the number of two-year-olds. We can combine these populations into a single vector:</p>
+<p><span class="math display">\[\mathbf{N}(t)=\begin{bmatrix}N_0(t)\\N_1(t)\\N_2(t)\end{bmatrix}.\]</span></p>
+<p>For example, if we start with 10 age-zero, 20 age-1 and 20 age-2 individuals, then</p>
+<p><span class="math display">\[\mathbf{N}(0)=\begin{bmatrix}10\\20\\20\end{bmatrix}.\]</span></p>
+<p>To find the population distribution for the next year, we multiply <span class="math inline">\(\mathbf{N}(t)\)</span> by <span class="math inline">\(\mathbf{L}\)</span>:</p>
+<p><span class="math display">\[\mathbf{N}(1)=\mathbf{L}\,\mathbf{N}(0),\]</span></p>
+<p><span class="math display">\[\mathbf{N}(2)=\mathbf{L}\,\mathbf{N}(1),\]</span></p>
+<p>and so on. In general,</p>
+<p><span class="math display">\[\mathbf{N}(t+1)=\mathbf{L}\,\mathbf{N}(t).\]</span></p>
+<p>With our initial distribution of <span class="math inline">\(\mathbf{N}(0)=(10,20,20)\)</span>, the distribution one year later will be</p>
+<p><span class="math display">\[\mathbf{N}(1)=\begin{bmatrix}2 &amp; 4 &amp; 3\\
+0.2 &amp; 0 &amp; 0\\0 &amp; 0.5 &amp; 0\end{bmatrix}\begin{bmatrix}10\\20\\20\end{bmatrix}=\begin{bmatrix}160\\2\\10\end{bmatrix}.\]</span></p>
+<p>Is this right? We have 20% of the age-0 individuals surviving to age 1. Fifty percent of the 20 age-one population (10) survive to age 2. The new age-zero population is</p>
+<p><span class="math display">\[2\cdot 10+4\cdot 20+3\cdot 20=20+80+60=160.\]</span></p>
+<p><em>How it works</em>:</p>
+<p>Remember that the columns of a matrix tell you what happens to the standard basis vector under multiplication. For instance,</p>
+<p><span class="math display">\[\mathbf{L}\,\mathbf{e}_1=\begin{bmatrix}2&amp;4&amp;3\\0.2&amp;0 &amp; 0\\0 &amp; 0.5 &amp; 0\end{bmatrix}\begin{bmatrix}1\\0\\0\end{bmatrix}=\begin{bmatrix}2\\0.2\\0\end{bmatrix}.\]</span></p>
+<p>A single age-0 individual will produce (on average) 2 offspring, has a probability of 0.2 of surviving to age 1, and does not contribute to the age-2 population. We can analyze the other columns in a similar manner.</p>
+<p>We can keep going.</p>
+<p><span class="math display">\[\mathbf{N}(2)=\mathbf{L}\mathbf{N}(1)=\begin{bmatrix}2&amp;4&amp;3\\0.2&amp;0&amp;0\\0&amp;0.5&amp;0\end{bmatrix}\begin{bmatrix}160\\2\\10\end{bmatrix}=\begin{bmatrix}358\\32\\1\end{bmatrix}.\]</span></p>
+<p>Note that</p>
+<p><span class="math display">\[\mathbf{N}(2)=\mathbf{L}\,\mathbf{N}(1)=\mathbf{L}(\mathbf{L}\,\mathbf{N}(0))=\mathbf{L}^2\,\mathbf{N}(0).\]</span></p>
+<p>In general, <span class="math inline">\(\mathbf{N}(t)=\mathbf{L}^t\,\mathbf{N}(0)\)</span>.</p>
+<p>Figure <a href="eigenvalues-and-eigenvectors.html#fig:leslie1">3.2</a> shows a plot of the age group populations over time.</p>
+<div class="figure" style="text-align: center"><span style="display:block;" id="fig:leslie1"></span>
+<img src="images/leslie1.png" alt="Population growth" width="75%" />
+<p class="caption">
+Figure 3.2: Population growth
+</p>
+</div>
+<p>If we plot the age groups’ share of the total population over time, something interesting happens (Fig. <a href="eigenvalues-and-eigenvectors.html#fig:leslie2">3.3</a>).</p>
+<div class="figure" style="text-align: center"><span style="display:block;" id="fig:leslie2"></span>
+<img src="images/leslie2.png" alt="Proportion of total population" width="75%" />
+<p class="caption">
+Figure 3.3: Proportion of total population
+</p>
+</div>
+<p>Note that after 1 year, the age-1 population is roughly 1.16% of the total population. Also note that the proportions seem to level off. We’ll investigate this more later.</p>
+<p>Let’s talk about the general form of the Leslie matrix. Suppose a population can live to age <span class="math inline">\(m\)</span>. Then its Leslie matrix will be an <span class="math inline">\((m+1)\times(m+1)\)</span> matrix of the form</p>
+<p><span class="math display">\[\mathbf{L}=\begin{bmatrix} F_0 &amp; F_1 &amp; F_2 &amp; \cdots  &amp; F_{m-1} &amp; F_m\\P_0 &amp; 0 &amp; \cdots &amp; \cdots &amp; \cdots  &amp; 0\\ 0 &amp; P_1 &amp; 0 &amp;\cdots &amp; \cdots  &amp; 0\\ \vdots &amp; \cdots &amp; \cdots &amp; \cdots &amp; \cdots &amp; \vdots\\ 0 &amp; \cdots &amp; \cdots &amp; 0 &amp; P_{m-1} &amp; 0\end{bmatrix},\]</span></p>
+<p>where <span class="math inline">\(F_i\)</span> is the average number of offspring that an age-<span class="math inline">\(i\)</span> individual produces. (<span class="math inline">\(F\)</span> is for <em>fecundity</em>), and <span class="math inline">\(P_i\)</span> is the probability that an age-<span class="math inline">\(i\)</span> individual survives to age <span class="math inline">\(i+1\)</span>.</p>
+<p>Suppose a Leslie matrix <span class="math inline">\(L\)</span> has a positive eigenvalue <span class="math inline">\(\lambda\)</span>, with a corresponding eigenvector <span class="math inline">\(\mathbf{v}\)</span> that has nonnegative entries. Then</p>
+<p><span class="math display">\[\mathbf{L}\mathbf{v}=\lambda \mathbf{v}.\]</span></p>
+<p>If <span class="math inline">\(\mathbf{v}\)</span> represents a population distribution, then in the next year, each age group’s population is multiplied by the same constant, <span class="math inline">\(\lambda\)</span>. That is, the proportions will stay constant, and <span class="math inline">\(\lambda\)</span> represents the growth rate. We’ll illustrate this with a <span class="math inline">\(2\times 2\)</span> example.</p>
+<div class="examplebox">
+<div class="example">
+<p><span id="exm:unlabeled-div-53" class="example"><strong>Example 3.7  </strong></span>Let</p>
+<p><span class="math display">\[\mathbf{L}=\begin{bmatrix}1.4 &amp; 3\\0.05 &amp; 0\end{bmatrix}.\]</span></p>
+<p>With <span class="math inline">\(\text{tr }\mathbf{L}=1.4\)</span> and <span class="math inline">\(\det \mathbf{L}=-0.15\)</span>, the characteristic equation is</p>
+<p><span class="math display">\[\lambda^2-1.4\lambda-0.15=0,\]</span></p>
+<p>and the eigenvalues are <span class="math inline">\(\lambda_1=1.5\)</span> and <span class="math inline">\(\lambda_2=-0.1\)</span>. Let’s find an eigenvector corresponding to <span class="math inline">\(\lambda_1=1.6\)</span>:</p>
+<p><span class="math display">\[\mathbf{L}-1.5\mathbf{I}=\begin{bmatrix} 1.4-1.5 &amp; 3\\0.05 &amp; 0-1.5\end{bmatrix}=\begin{bmatrix}-0.1 &amp; 3\\0.05 &amp; -1.5\end{bmatrix}.\]</span></p>
+<p>The first row tells us that <span class="math inline">\(-0.1v_1+3v_2=0\)</span> or <span class="math inline">\(v_1=30v_2\)</span>. With <span class="math inline">\(v_2=1, v_1=30\)</span>. Our eigenvector is <span class="math inline">\(\mathbf{v}=(30,1)\)</span>. Let’s check:</p>
+<p><span class="math display">\[\mathbf{L}\mathbf{v}=\begin{bmatrix}1.4 &amp; 3\\0.05 &amp; 0\end{bmatrix}\begin{bmatrix}20\\1\end{bmatrix}=\begin{bmatrix}45\\1.5\end{bmatrix}=1.5\begin{bmatrix}30\\1\end{bmatrix}.\]</span></p>
+<p>We didn’t find the other eigenvector, and we don’t really need to know what it is. Let’s just call it <span class="math inline">\(\mathbf{v}_2\)</span>. We do know that it and <span class="math inline">\(\mathbf{v}_1\)</span> are linearly independent (why?), so they form a basis for <span class="math inline">\(\mathbb{R}^2\)</span>. Let <span class="math inline">\(\mathbf{N}(0)\)</span> be any initial population distribution. Then for some constants <span class="math inline">\(c_1\)</span> and <span class="math inline">\(c_2\)</span>,</p>
+<p><span class="math display">\[\mathbf{N}(0)=c_1\mathbf{v}_1+c_2\mathbf{v}_2.\]</span></p>
+<p>Now let’s iterate:</p>
+<p><span class="math display">\[\mathbf{N}(t)=\mathbf{L}^t \mathbf{N}(0)=\mathbf{L}^t(c_1 \mathbf{v}_1+c_2\mathbf{v}_2)=c_1\mathbf{L}^t\mathbf{v}_1+c_2\mathbf{L}^t\mathbf{v}_2=c_1(1.6)^t\mathbf{v}_1+c_2(-0.1)^t\mathbf{v}_2.\]</span></p>
+<p>As <span class="math inline">\(t\to\infty\)</span>, the <span class="math inline">\(\mathbf{v}_2\)</span> term will vanish, and <span class="math inline">\(\mathbf{N}(t)\approx c_1\lambda^t \mathbf{v}_1\)</span>. The populations will approach a 30:1 ratio in the long run. (We’re glossing over some details here.)</p>
+</div>
+</div>
+<p>Will we always have this situation? For <span class="math inline">\(2\times 2\)</span> Leslie matrices, provided a positive fraction of zero-year-olds survive, and that some group produces offspring, there will always be a real, positive eigenvalue. For <span class="math inline">\(2\times 2\)</span> Leslie matrices, we have the following theorem.<span class="citation">[<a href="#ref-Neuhauser">4</a>]</span></p>
+<div class="theorembox">
+<div class="theorem">
+<p><span id="thm:unlabeled-div-54" class="theorem"><strong>Theorem 3.5  </strong></span>Let <span class="math inline">\(\mathbf{L}\)</span> be a <span class="math inline">\(2\times 2\)</span> Leslie matrix with eigenvalues <span class="math inline">\(\lambda_1\)</span> and <span class="math inline">\(\lambda_2\)</span>.</p>
+<ul>
+<li>The larger eigenvalue determines the growth rate.</li>
+<li>The eigenvector corresponding to the larger eigenvalue is a stable age distribution.</li>
+</ul>
+</div>
+</div>
+<p>With some added conditions that we won’t get into here, the analogous result holds for larger Leslie matrices. Let’s return to Example <a href="eigenvalues-and-eigenvectors.html#exm:Leslie1">3.6</a> with</p>
+<p><span class="math display">\[\mathbf{L}=\begin{bmatrix} 2 &amp; 4 &amp; 3\\
+0.2 &amp; 0 &amp; 0\\ 0 &amp; 0.5 &amp; 0\end{bmatrix}.\]</span></p>
+<div class="sourceCode" id="cb51"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb51-1"><a href="eigenvalues-and-eigenvectors.html#cb51-1" tabindex="-1"></a>L <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="fu">c</span>(<span class="dv">2</span>,<span class="fl">0.2</span>,<span class="dv">0</span>,<span class="dv">4</span>,<span class="dv">0</span>,<span class="fl">0.5</span>,<span class="dv">3</span>,<span class="dv">0</span>,<span class="dv">0</span>), <span class="at">nrow =</span> <span class="dv">3</span>)</span>
+<span id="cb51-2"><a href="eigenvalues-and-eigenvectors.html#cb51-2" tabindex="-1"></a>L</span></code></pre></div>
+<pre><code>##      [,1] [,2] [,3]
+## [1,]  2.0  4.0    3
+## [2,]  0.2  0.0    0
+## [3,]  0.0  0.5    0</code></pre>
+<div class="sourceCode" id="cb53"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb53-1"><a href="eigenvalues-and-eigenvectors.html#cb53-1" tabindex="-1"></a>ev <span class="ot">&lt;-</span> <span class="fu">eigen</span>(L)</span>
+<span id="cb53-2"><a href="eigenvalues-and-eigenvectors.html#cb53-2" tabindex="-1"></a>ev</span></code></pre></div>
+<pre><code>## eigen() decomposition
+## $values
+## [1]  2.3876762+0.0000000i -0.1938381+0.2967692i -0.1938381-0.2967692i
+## 
+## $vectors
+##               [,1]                  [,2]                  [,3]
+## [1,] 0.99635800+0i  0.7157844+0.0000000i  0.7157844+0.0000000i
+## [2,] 0.08345839+0i -0.2208541-0.3381312i -0.2208541+0.3381312i
+## [3,] 0.01747691+0i -0.2289662+0.5216492i -0.2289662-0.5216492i</code></pre>
+<p>Note the complex eigenvalues and eigenvectors. The first eigenvalue is purely real, as are the components of the first eigenvector. We can use the <code>Re</code> function to strip off the <code>0I</code> terms from that eigenvector. We will also rescale it so that the terms sum to 1. Then the components will represent the long term population proportions for each age group.</p>
+<div class="sourceCode" id="cb55"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb55-1"><a href="eigenvalues-and-eigenvectors.html#cb55-1" tabindex="-1"></a>ev1 <span class="ot">&lt;-</span> <span class="fu">Re</span>(ev<span class="sc">$</span>vectors[,<span class="dv">1</span>])</span>
+<span id="cb55-2"><a href="eigenvalues-and-eigenvectors.html#cb55-2" tabindex="-1"></a>ev1 <span class="ot">&lt;-</span> ev1<span class="sc">/</span><span class="fu">sum</span>(ev1)</span>
+<span id="cb55-3"><a href="eigenvalues-and-eigenvectors.html#cb55-3" tabindex="-1"></a>ev1</span></code></pre></div>
+<pre><code>## [1] 0.90801430 0.07605841 0.01592729</code></pre>
+<p>In the long run, the percentages of 0-, 1-, and 2-year-olds approach 90.8%, 7.6%, and 1.6%, respectively.</p>
+</div>
+<div id="graphs-and-adjacency-matrices" class="section level2 hasAnchor" number="3.4">
+<h2><span class="header-section-number">3.4</span> Graphs and Adjacency Matrices<a href="eigenvalues-and-eigenvectors.html#graphs-and-adjacency-matrices" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>We’re going to see a few more applications of eigenvalues and eigenvectors, but before we get to them, we need to talk about graphs.</p>
+<p>A graph involves a collection of points, called <em>vertices</em>, and lines connecting them, called <em>edges</em>. Note that it can be hard to draw a graph in two dimensions without the edges intersecting. These intersections are not part of the graph, in the sense that one can’t switch from one edge to another without going through a vertex.</p>
+<div class="figure" style="text-align: center"><span style="display:block;" id="fig:graph1"></span>
+<img src="_main_files/figure-html/graph1-1.png" alt="A graph" width="75%" />
+<p class="caption">
+Figure 3.4: A graph
+</p>
+</div>
+<p>The following code produces the graph in <a href="eigenvalues-and-eigenvectors.html#fig:graph1">3.4</a>. It uses the <code>igraph</code> package. One note: there is a bit of randomness involved in the plot, so if you want a reproducible graph, you might want to set the seed first. See Appendix B for more sample graph code.</p>
+<div class="sourceCode" id="cb57"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb57-1"><a href="eigenvalues-and-eigenvectors.html#cb57-1" tabindex="-1"></a><span class="fu">library</span>(igraph)</span>
+<span id="cb57-2"><a href="eigenvalues-and-eigenvectors.html#cb57-2" tabindex="-1"></a>edges <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">1</span>,<span class="dv">3</span>,<span class="dv">1</span>,<span class="dv">5</span>,<span class="dv">2</span>,<span class="dv">3</span>,<span class="dv">2</span>,<span class="dv">4</span>,<span class="dv">4</span>,<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">5</span>) </span>
+<span id="cb57-3"><a href="eigenvalues-and-eigenvectors.html#cb57-3" tabindex="-1"></a>g <span class="sc">&lt;</span> <span class="sc">-</span><span class="fu">graph</span>(edges, <span class="at">directed =</span> F)</span>
+<span id="cb57-4"><a href="eigenvalues-and-eigenvectors.html#cb57-4" tabindex="-1"></a><span class="fu">plot</span>(g, <span class="at">vertex.size =</span> <span class="dv">30</span>, <span class="at">vertex.color =</span> <span class="st">&quot;lightblue&quot;</span>)</span></code></pre></div>
+<p>Graphs can be used to describe road and other types of networks, and even the results of tournaments (Figs. <a href="eigenvalues-and-eigenvectors.html#fig:graph2">3.5</a>,<a href="eigenvalues-and-eigenvectors.html#fig:graph3">3.6</a>).</p>
+<div class="figure" style="text-align: center"><span style="display:block;" id="fig:graph2"></span>
+<img src="_main_files/figure-html/graph2-1.png" alt="A fictional bus network" width="75%" />
+<p class="caption">
+Figure 3.5: A fictional bus network
+</p>
+</div>
+<div class="figure"><span style="display:block;" id="fig:graph3"></span>
+<img src="_main_files/figure-html/graph3-1.png" alt="A tournament graph" width="75%" />
+<p class="caption">
+Figure 3.6: A tournament graph
+</p>
+</div>
+<p>Sometimes there is an edge from a vertex to itself, called a <em>loop</em>. Sometimes pairs of vertices are connected by more than one edge (Fig. <a href="eigenvalues-and-eigenvectors.html#fig:loopsandedges">3.7</a>).</p>
+<div class="figure" style="text-align: center"><span style="display:block;" id="fig:loopsandedges"></span>
+<img src="_main_files/figure-html/loopsandedges-1.png" alt="Loops and multiple edges" width="45%" /><img src="_main_files/figure-html/loopsandedges-2.png" alt="Loops and multiple edges" width="45%" />
+<p class="caption">
+Figure 3.7: Loops and multiple edges
+</p>
+</div>
+<p>Sometimes the connection only goes one way. For example, if the vertices represent websites, there might be a link from one to another. In these cases, we use a <em>directed edge</em>, with the direction indicated by an arrow.</p>
+<div class="figure" style="text-align: center"><span style="display:block;" id="fig:directed"></span>
+<img src="_main_files/figure-html/directed-1.png" alt="A directed graph" width="75%" />
+<p class="caption">
+Figure 3.8: A directed graph
+</p>
+</div>
+<div id="adjacency-matrices" class="section level3 unnumbered hasAnchor">
+<h3>Adjacency matrices<a href="eigenvalues-and-eigenvectors.html#adjacency-matrices" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>An <em>adjacency matrix</em> is a matrix that contains information about the edges and vertices of a graph.</p>
+<div class="defbox">
+<div class="definition">
+<p><span id="def:unlabeled-div-55" class="definition"><strong>Definition 3.3  </strong></span>For an (undirected) graph with <span class="math inline">\(n\)</span> vertices, the corresponding <strong>adjacency matrix</strong> is an <span class="math inline">\(n\times n\)</span> matrix <span class="math inline">\(\mathbf{A}=[a_{ij}]\)</span>, whose <span class="math inline">\(ij\)</span>-th entry is the number of edges connecting vertex <span class="math inline">\(i\)</span> and vertex <span class="math inline">\(j\)</span>.</p>
+</div>
+</div>
+<p>Here is the adjacency matrix for the graph in Figure <a href="eigenvalues-and-eigenvectors.html#fig:graph1">3.4</a>.</p>
+<p><span class="math display">\[\mathbf{A}=\begin{bmatrix}
+0 &amp; 1 &amp; 1 &amp; 1 &amp;  1\\
+1 &amp; 0 &amp; 1 &amp; 1 &amp; 1\\
+1 &amp; 1 &amp; 0 &amp; 0 &amp; 0 \\
+1 &amp; 1 &amp; 0 &amp; 0 &amp; 0 \\
+1 &amp; 1 &amp; 0 &amp; 0 &amp; 0
+\end{bmatrix}\]</span></p>
+<p>The graph in Figure <a href="eigenvalues-and-eigenvectors.html#fig:loopsandedges">3.7</a> has the following adjacency matrix. There are two edges between vertex 1 and vertex 2, so <span class="math inline">\(a_{12}=a_{21}=2\)</span>, and the loop from vertex 5 to itself gives us <span class="math inline">\(a_{55}=1.\)</span></p>
+<p><span class="math display">\[\begin{bmatrix}
+0 &amp; 2 &amp; 1 &amp; 1 &amp;  1\\
+2 &amp; 0 &amp; 1 &amp; 1 &amp; 1 \\
+1 &amp; 1 &amp; 0 &amp; 0 &amp; 0 \\
+1 &amp; 1 &amp; 0 &amp; 0 &amp; 0\\
+1 &amp; 1 &amp; 0 &amp; 0 &amp; 1
+\end{bmatrix}\]</span></p>
+<div class="examplebox">
+<div class="example">
+<p><span id="exm:unlabeled-div-57" class="example"><strong>Example 3.8  (Bus Routes) </strong></span>We saw this bus network graph before.</p>
+<p><img src="_main_files/figure-html/unnamed-chunk-17-1.png" width="672" /></p>
+<p>The two edges connecting Austin and San Antonio indicate two different routes. The adjacency matrix for this bus network looks like this. The vertices are numbered in alphabetical order (1 = Austin, 2 = Dallas, 3 = Houston, 4 = San Antonio).</p>
+<p><span class="math display">\[\begin{bmatrix}
+0 &amp; 0 &amp; 0 &amp; 2\\
+0 &amp; 0 &amp; 1 &amp; 1\\
+0 &amp; 1 &amp; 0 &amp; 1\\
+2 &amp; 1 &amp; 1 &amp; 0
+\end{bmatrix}\]</span></p>
+<p>Positive integer powers of the adjacency matrix have a very nice property.</p>
+<div class="theorembox">
+<div class="theorem">
+<p><span id="thm:unlabeled-div-56" class="theorem"><strong>Theorem 3.6  </strong></span>Let <span class="math inline">\(\mathbf{A}\)</span> be an adjacency matrix for a graph. If <span class="math inline">\(r\)</span> is a positive integer, then the <span class="math inline">\(ij\)</span>-th entry of <span class="math inline">\(\mathbf{A}^r\)</span> is the number of routes from vertex <span class="math inline">\(i\)</span> to vertex <span class="math inline">\(j\)</span> that take exactly <span class="math inline">\(r\)</span> steps.</p>
+</div>
+</div>
+<p>For the bus network, we have</p>
+<p><span class="math display">\[\mathbf{A}^2=\begin{bmatrix}
+4 &amp; 2 &amp; 2 &amp; 0\\
+2 &amp; 2 &amp; 1 &amp; 1\\
+2 &amp; 1 &amp; 2 &amp; 1\\
+0 &amp; 1 &amp; 1 &amp; 6
+\end{bmatrix}\]</span></p>
+<p>There are two 2-step routes between Austin and Dallas, and none between Austin and San Antonio. What about three steps?</p>
+<p><span class="math display">\[ \mathbf{A}^3=\begin{bmatrix}
+0 &amp; 2 &amp; 2 &amp; 12\\
+2 &amp; 2 &amp; 3 &amp; 7\\
+2 &amp; 3 &amp; 2 &amp; 7\\
+12 &amp; 7 &amp; 7 &amp; 2
+\end{bmatrix}\]</span></p>
+</div>
+</div>
+<p>Why does this work? Consider the <span class="math inline">\(ij\)</span>-th entry of <span class="math inline">\(\mathbf{A}^2\)</span>.</p>
+<p><span class="math display">\[\mathbf{A}^2=\begin{bmatrix}&amp;&amp;&amp;\\&amp;&amp;&amp;\\a_{i1} &amp; a_{i2} &amp;\cdots &amp; a_{in}\\
+&amp;&amp;&amp;\end{bmatrix}\begin{bmatrix}&amp;&amp;a_{1j}&amp;&amp;\\&amp;&amp;a_{2j}&amp;&amp;\\&amp;&amp;&amp;&amp;\\&amp;&amp;a_{nj}&amp;&amp;\end{bmatrix},\]</span></p>
+<p>so</p>
+<p><span class="math display">\[\mathbf{A}^2_{ij}=a_{i1}a_{1j}+a_{i2}a_{2j}+\cdots+\underbrace{a_{ik}a_{kj}}_{\text{ number of two-step routes through vertex } k}+\cdots+a_{in}a_{nj}.\]</span></p>
+<p>This sum represents the total number of 2-step routes from vertex <span class="math inline">\(i\)</span> to vertex <span class="math inline">\(j\)</span>.</p>
+</div>
+<div id="directed-adjacency-matrices" class="section level3 unnumbered hasAnchor">
+<h3>Directed adjacency matrices<a href="eigenvalues-and-eigenvectors.html#directed-adjacency-matrices" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>The adjacency matrix for a directed graph is a little different.</p>
+<div class="defbox">
+<div class="definition">
+<p><span id="def:unlabeled-div-58" class="definition"><strong>Definition 3.4  </strong></span>For a directed graph with <span class="math inline">\(n\)</span> vertices, the corresponding <strong>directed adjacency matrix</strong> is an <span class="math inline">\(n\times n\)</span> matrix <span class="math inline">\(\mathbf{A}=[a_{ij}]\)</span>, whose <span class="math inline">\(ij\)</span>-th entry is the number of directed edges from vertex <span class="math inline">\(i\)</span> to vertex <span class="math inline">\(j\)</span>.</p>
+</div>
+</div>
+<p>Unlike the adjacency matrix for an undirected matrix, the adjacency matrix for a directed matrix is not necessarily symmetric.</p>
+<p>Here is an example of a directed adjacency matrix. This goes with the graph in Figure <a href="eigenvalues-and-eigenvectors.html#fig:directed">3.8</a>.</p>
+<p><span class="math display">\[\mathbf{A}=\begin{bmatrix}
+0 &amp; 1 &amp; 1 &amp; 0 &amp;  1\\
+0 &amp; 0 &amp; 1 &amp; 1 &amp; 1\\
+0 &amp; 0 &amp; 0 &amp; 0 &amp; 0\\
+1 &amp; 0 &amp; 0 &amp; 0 &amp; 0\\
+0 &amp; 0 &amp; 0 &amp; 0 &amp; 0
+\end{bmatrix}\]</span></p>
+<p>As was the case with undirected adjacency matrices, positive integer powers of directed adjacency matrices display the number of multi-step paths between vertices. For our directed graph,</p>
+<p><span class="math display">\[\mathbf{A}^2=\begin{bmatrix}0 &amp; 0 &amp; 1 &amp; 1 &amp; 1\\1 &amp; 0 &amp; 0 &amp; 0 &amp; 0\\0 &amp; 0 &amp; 0 &amp; 0 &amp; 0\\0 &amp; 1 &amp; 1 &amp; 0 &amp; 1\\0 &amp; 0 &amp; 0 &amp; 0 &amp; 0\end{bmatrix}.\]</span></p>
+</div>
+<div id="the-directed-graph-of-a-tournament" class="section level3 unnumbered hasAnchor">
+<h3>The directed graph of a tournament<a href="eigenvalues-and-eigenvectors.html#the-directed-graph-of-a-tournament" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>For a tournament, there is an edge from Team <span class="math inline">\(i\)</span> to Team <span class="math inline">\(j\)</span> if Team <span class="math inline">\(j\)</span> beats Team <span class="math inline">\(i\)</span>. For our toy 5-team example (<a href="matrices-and-systems-of-equations.html#exm:toy">1.23</a>), the directed adjacency matrix (see the graph in Figure <a href="eigenvalues-and-eigenvectors.html#fig:graph3">3.6</a>) looks like this.</p>
+<p><span class="math display">\[\mathbf{A}=\begin{bmatrix}
+0 &amp; 1 &amp; 1 &amp; 0 &amp; 0\\
+    0 &amp; 0 &amp; 1 &amp; 1 &amp; 0 \\
+    0 &amp; 0 &amp; 0 &amp; 0 &amp; 0\\
+    0 &amp; 0 &amp; 1 &amp; 0 &amp; 0\\
+    1 &amp; 0 &amp; 1 &amp; 1 &amp; 0
+\end{bmatrix}\]</span></p>
+<p>For example, the 1 in row 1, column 2 indicates that Team 1 (the Aardvarks) lost to Team 2 (the Beagles). A team’s wins are indicated by the sum of the entries in its column, while its losses are indicated by the sum of the entries in its row.</p>
+<p>The column sums:</p>
+<table>
+<thead>
+<tr class="header">
+<th align="left">Team</th>
+<th align="left">Aardvarks</th>
+<th align="left">Beagles</th>
+<th align="left">Crocs</th>
+<th align="left">Donkeys</th>
+<th align="left">Egrets</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">Wins</td>
+<td align="left">1</td>
+<td align="left">1</td>
+<td align="left">4</td>
+<td align="left">2</td>
+<td align="left">0</td>
+</tr>
+</tbody>
+</table>
+<p>And the row sums:</p>
+<table>
+<thead>
+<tr class="header">
+<th align="left">Team</th>
+<th align="left">Aardvarks</th>
+<th align="left">Beagles</th>
+<th align="left">Crocs</th>
+<th align="left">Donkeys</th>
+<th align="left">Egrets</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">Losses</td>
+<td align="left">2</td>
+<td align="left">2</td>
+<td align="left">0</td>
+<td align="left">1</td>
+<td align="left">3</td>
+</tr>
+</tbody>
+</table>
+<p>We can use the adjacency matrix find the Colley ratings.</p>
+<div class="sourceCode" id="cb58"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb58-1"><a href="eigenvalues-and-eigenvectors.html#cb58-1" tabindex="-1"></a><span class="fu">library</span>(igraph)</span>
+<span id="cb58-2"><a href="eigenvalues-and-eigenvectors.html#cb58-2" tabindex="-1"></a>Teams <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;Aardvarks&quot;</span>, <span class="st">&quot;Beagles&quot;</span>, <span class="st">&quot;Crocs&quot;</span>,  </span>
+<span id="cb58-3"><a href="eigenvalues-and-eigenvectors.html#cb58-3" tabindex="-1"></a>            <span class="st">&quot;Donkeys&quot;</span>, <span class="st">&quot;Egrets&quot;</span>)</span>
+<span id="cb58-4"><a href="eigenvalues-and-eigenvectors.html#cb58-4" tabindex="-1"></a>edges <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">1</span>,<span class="dv">3</span>,<span class="dv">5</span>,<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">3</span>,<span class="dv">2</span>,<span class="dv">4</span>,<span class="dv">4</span>,<span class="dv">3</span>,<span class="dv">5</span>,<span class="dv">3</span>,<span class="dv">5</span>,<span class="dv">4</span>)</span>
+<span id="cb58-5"><a href="eigenvalues-and-eigenvectors.html#cb58-5" tabindex="-1"></a>dg <span class="ot">&lt;-</span> <span class="fu">graph</span>(edges, <span class="at">directed =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb58-6"><a href="eigenvalues-and-eigenvectors.html#cb58-6" tabindex="-1"></a>DM<span class="ot">&lt;-</span><span class="fu">as.matrix</span>(<span class="fu">as_adjacency_matrix</span>(dg)) <span class="co">#Directed adjacency matrix</span></span>
+<span id="cb58-7"><a href="eigenvalues-and-eigenvectors.html#cb58-7" tabindex="-1"></a>DM</span></code></pre></div>
+<pre><code>##      [,1] [,2] [,3] [,4] [,5]
+## [1,]    0    1    1    0    0
+## [2,]    0    0    1    1    0
+## [3,]    0    0    0    0    0
+## [4,]    0    0    1    0    0
+## [5,]    1    0    1    1    0</code></pre>
+<p>This is the directed adjacency matrix. We can get the undirected adjacency matrix, which just matches up teams that have played, if we add the directed matrix and its transpose.</p>
+<div class="sourceCode" id="cb60"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb60-1"><a href="eigenvalues-and-eigenvectors.html#cb60-1" tabindex="-1"></a>UM <span class="ot">&lt;-</span> DM <span class="sc">+</span> <span class="fu">t</span>(DM)</span>
+<span id="cb60-2"><a href="eigenvalues-and-eigenvectors.html#cb60-2" tabindex="-1"></a>UM</span></code></pre></div>
+<pre><code>##      [,1] [,2] [,3] [,4] [,5]
+## [1,]    0    1    1    0    1
+## [2,]    1    0    1    1    0
+## [3,]    1    1    0    1    1
+## [4,]    0    1    1    0    1
+## [5,]    1    0    1    1    0</code></pre>
+<p>If we compare this to the Colley matrix from Example <a href="matrices-and-systems-of-equations.html#exm:ColleyExample">1.24</a>, we see some similarities and differences.</p>
+<ol style="list-style-type: decimal">
+<li><p>The diagonal entries are missing from this matrix, but note that the rows (and columns) tell us the number of games each team has played. We can add two to these numbers and put them on the diagonal.</p></li>
+<li><p>We can fix the off-diagonal entries just by changing their signs.</p></li>
+</ol>
+<div class="sourceCode" id="cb62"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb62-1"><a href="eigenvalues-and-eigenvectors.html#cb62-1" tabindex="-1"></a>d <span class="ot">&lt;-</span> <span class="fu">rowSums</span>(UM) <span class="co">#creates a vector with each team&#39;s total games</span></span>
+<span id="cb62-2"><a href="eigenvalues-and-eigenvectors.html#cb62-2" tabindex="-1"></a></span>
+<span id="cb62-3"><a href="eigenvalues-and-eigenvectors.html#cb62-3" tabindex="-1"></a><span class="co"># This next line does two things: creates a diagonal matrix by</span></span>
+<span id="cb62-4"><a href="eigenvalues-and-eigenvectors.html#cb62-4" tabindex="-1"></a><span class="co"># adding 2 to each of the values in d and applying the diag</span></span>
+<span id="cb62-5"><a href="eigenvalues-and-eigenvectors.html#cb62-5" tabindex="-1"></a><span class="co"># function. Then it subtracts the undirected matrix from it. This </span></span>
+<span id="cb62-6"><a href="eigenvalues-and-eigenvectors.html#cb62-6" tabindex="-1"></a><span class="co"># will make the off-diagonal signs negative (when not 0).</span></span>
+<span id="cb62-7"><a href="eigenvalues-and-eigenvectors.html#cb62-7" tabindex="-1"></a></span>
+<span id="cb62-8"><a href="eigenvalues-and-eigenvectors.html#cb62-8" tabindex="-1"></a>CM <span class="ot">&lt;-</span> <span class="fu">diag</span>(d<span class="sc">+</span><span class="dv">2</span>)<span class="sc">-</span>UM </span>
+<span id="cb62-9"><a href="eigenvalues-and-eigenvectors.html#cb62-9" tabindex="-1"></a>CM</span></code></pre></div>
+<pre><code>##      [,1] [,2] [,3] [,4] [,5]
+## [1,]    5   -1   -1    0   -1
+## [2,]   -1    5   -1   -1    0
+## [3,]   -1   -1    6   -1   -1
+## [4,]    0   -1   -1    5   -1
+## [5,]   -1    0   -1   -1    5</code></pre>
+<p>Now we just need to create the <span class="math inline">\(\mathbf{b}\)</span> vector and solve the system of equations to get our ratings.</p>
+<div class="sourceCode" id="cb64"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb64-1"><a href="eigenvalues-and-eigenvectors.html#cb64-1" tabindex="-1"></a>Wins <span class="ot">&lt;-</span> <span class="fu">colSums</span>(DM)</span>
+<span id="cb64-2"><a href="eigenvalues-and-eigenvectors.html#cb64-2" tabindex="-1"></a>Losses<span class="ot">&lt;-</span> <span class="fu">rowSums</span>(DM)</span>
+<span id="cb64-3"><a href="eigenvalues-and-eigenvectors.html#cb64-3" tabindex="-1"></a>b <span class="ot">&lt;-</span> <span class="dv">1</span> <span class="sc">+</span> (Wins <span class="sc">-</span> Losses)<span class="sc">/</span><span class="dv">2</span></span>
+<span id="cb64-4"><a href="eigenvalues-and-eigenvectors.html#cb64-4" tabindex="-1"></a>r <span class="ot">&lt;-</span> <span class="fu">solve</span>(CM, b)  <span class="co">#solves CM*r=b to give ratings vector</span></span>
+<span id="cb64-5"><a href="eigenvalues-and-eigenvectors.html#cb64-5" tabindex="-1"></a></span>
+<span id="cb64-6"><a href="eigenvalues-and-eigenvectors.html#cb64-6" tabindex="-1"></a><span class="co"># This is for creating and printing the standings.</span></span>
+<span id="cb64-7"><a href="eigenvalues-and-eigenvectors.html#cb64-7" tabindex="-1"></a>standings <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">Team=</span>Teams,Wins,Losses, <span class="at">Rating=</span>r)</span>
+<span id="cb64-8"><a href="eigenvalues-and-eigenvectors.html#cb64-8" tabindex="-1"></a><span class="fu">kable</span>(standings,<span class="at">digits=</span><span class="fu">c</span>(<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">3</span>), <span class="at">booktabs =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb64-9"><a href="eigenvalues-and-eigenvectors.html#cb64-9" tabindex="-1"></a>       <span class="at">longtable =</span> <span class="cn">TRUE</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb64-10"><a href="eigenvalues-and-eigenvectors.html#cb64-10" tabindex="-1"></a>    <span class="fu">kable_styling</span>(<span class="at">position =</span> <span class="st">&quot;center&quot;</span>)</span></code></pre></div>
+<table class="table" style="margin-left: auto; margin-right: auto;">
+<thead>
+<tr>
+<th style="text-align:left;">
+Team
+</th>
+<th style="text-align:right;">
+Wins
+</th>
+<th style="text-align:right;">
+Losses
+</th>
+<th style="text-align:right;">
+Rating
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+Aardvarks
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+2
+</td>
+<td style="text-align:right;">
+0.400
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Beagles
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+2
+</td>
+<td style="text-align:right;">
+0.457
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Crocs
+</td>
+<td style="text-align:right;">
+4
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+0.786
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Donkeys
+</td>
+<td style="text-align:right;">
+2
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+0.600
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Egrets
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+3
+</td>
+<td style="text-align:right;">
+0.257
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div id="random-surfers-and-stochastic-matrices" class="section level2 hasAnchor" number="3.5">
+<h2><span class="header-section-number">3.5</span> Random surfers and Stochastic Matrices<a href="eigenvalues-and-eigenvectors.html#random-surfers-and-stochastic-matrices" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Random surfer methods use the behavior of random web surfers to rank websites by “importance.” Let’s consider the following small-scale example with five sites (Fig. <a href="eigenvalues-and-eigenvectors.html#fig:network">3.9</a>).</p>
+<div class="figure" style="text-align: center"><span style="display:block;" id="fig:network"></span>
+<img src="_main_files/figure-html/network-1.png" alt="A small network" width="75%" />
+<p class="caption">
+Figure 3.9: A small network
+</p>
+</div>
+<p>A random surfer on Site 1 has two links to choose, Site 2 or Site 3. Suppose they choose randomly; that is, they choose each site with probability 1/2 (Fig. <a href="eigenvalues-and-eigenvectors.html#fig:surfer">3.10</a>).</p>
+<div class="figure" style="text-align: center"><span style="display:block;" id="fig:surfer"></span>
+<img src="_main_files/figure-html/surfer-1.png" alt="A random surfer on the network" width="75%" />
+<p class="caption">
+Figure 3.10: A random surfer on the network
+</p>
+</div>
+<p>A random surfer at Site 2 can go to any of the other four sites, each with probability 1/4 (Fig. <a href="eigenvalues-and-eigenvectors.html#fig:surfer2">3.11</a>).</p>
+<div class="figure" style="text-align: center"><span style="display:block;" id="fig:surfer2"></span>
+<img src="_main_files/figure-html/surfer2-1.png" alt="The choices from Site 2" width="75%" />
+<p class="caption">
+Figure 3.11: The choices from Site 2
+</p>
+</div>
+<p>We can put these probabilities into the columns of a matrix called a <em>transition matrix</em>. Sites that aren’t linked to get the probability 0 assigned.</p>
+<p><span class="math display">\[\mathbf{S}=\begin{bmatrix}0 &amp; 0.25 &amp; 0 &amp; 0 &amp; 0.5\\
+0.5 &amp; 0 &amp; 0 &amp; 0 &amp; 0\\
+0.5 &amp; 0.25 &amp; 0 &amp; 0 &amp; 0\\
+0 &amp; 0.25 &amp; 0.5 &amp; 0 &amp; 0.5\\
+0 &amp; 0.25 &amp; 0.5 &amp; 1 &amp; 0\end{bmatrix}
+\]</span></p>
+<p>The <span class="math inline">\(s_{ij}\)</span> entry is the probability of going <em>to</em> vertex <span class="math inline">\(i\)</span> <em>from</em> vertex <span class="math inline">\(j\)</span>. For example <span class="math inline">\(s_{42}=0.25=P(2\to 4)\)</span>.</p>
+<div class="notebox">
+<p><strong>Important note:</strong> The row and columns in this transition matrix have the opposite roles from what they had in a directed adjacency matrix. There is a reason for doing it this way that we will get to soon.</p>
+</div>
+<div id="stochastic-matrices" class="section level3 unnumbered hasAnchor">
+<h3>Stochastic matrices<a href="eigenvalues-and-eigenvectors.html#stochastic-matrices" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>The matrix <span class="math inline">\(\mathbf{S}\)</span> is what we call a (column) stochastic matrix:</p>
+<ul>
+<li><p>all the entries are between 0 and 1.</p></li>
+<li><p>all the columns add up to 1.</p></li>
+</ul>
+<div class="notebox">
+<p><strong>Another important note:</strong> It is somewhat traditional to have the <em>rows</em> of a stochastic matrix adding up to 1 (i.e., <em>row stochastic</em>). We will soon be using eigenvalues and eigenvectors, and to be consistent with how we use them, we want the columns to add to 1 (<em>column stochastic</em>).</p>
+</div>
+<p>Powers of stochastic matrices have a property that is similar to a property of adjacency matrices.</p>
+<p><span class="math display">\[\mathbf{S}^2=\begin{bmatrix}
+   0 &amp; 0.25 &amp; 0 &amp; 0 &amp; 0.5\\
+0.5 &amp; 0 &amp; 0 &amp; 0 &amp; 0\\
+0.5 &amp; 0.25 &amp; 0 &amp; 0 &amp; 0\\
+\mathbf{0} &amp; \mathbf{0.25} &amp; \mathbf{0.5} &amp; \mathbf{0} &amp; \mathbf{0.5}\\
+0 &amp; 0.25 &amp; 0.5 &amp; 1 &amp; 0 \end{bmatrix}
+\begin{bmatrix}
+   0 &amp; \mathbf{0.25} &amp; 0 &amp; 0 &amp; 0.5\\
+0.5 &amp; \mathbf{0} &amp; 0 &amp; 0 &amp; 0\\
+0.5 &amp; \mathbf{0.25} &amp; 0 &amp; 0 &amp; 0\\
+0 &amp; \mathbf{0.25} &amp; 0.5 &amp; 0 &amp; 0.5\\
+0 &amp; \mathbf{0.25} &amp; 0.5 &amp; 1 &amp; 0
+\end{bmatrix}\]</span></p>
+<p>The product of the fourth row of <span class="math inline">\(\mathbf{S}\)</span> and the second column of <span class="math inline">\(\mathbf{S}\)</span> is</p>
+<p><span class="math display">\[0\cdot 0.25+0.25\cdot 0+\underbrace{0.5\cdot 0.25}_{P(3\to 4)P(2\to 3)}+0\cdot 0.25+0.5\cdot0.25= 0.25\]</span></p>
+<p>The highlighted product is the probability of going from Site 2 to Site 3 and then from Site 3 to Site 4. The sum is the probability of going from Site 2 to Site 4 in two clicks, the <span class="math inline">\(\mathbf{S}^2_{42}\)</span> entry.</p>
+<p>The columns of <span class="math inline">\(\mathbf{S}^2\)</span> give the probabilities of going from one site to another in exactly two clicks. The columns of <span class="math inline">\(\mathbf{S}^r\)</span> will give the probabilities of going from one site to another in exactly <span class="math inline">\(r\)</span> clicks. In our example,</p>
+<p><span class="math display">\[\mathbf{S}^2=\begin{bmatrix}0.125 &amp; 0.125 &amp; 0.25 &amp; 0.5 &amp; 0\\
+0 &amp; 0.125 &amp; 0 &amp; 0 &amp; 0.25\\
+0.125 &amp; 0.125 &amp; 0 &amp; 0 &amp; 0.25\\
+0.375 &amp; 0.25 &amp; 0.25 &amp; 0.5 &amp; 0\\
+0.375 &amp; 0.375 &amp; 0.5 &amp; 0 &amp; 0.5\end{bmatrix}.\]</span></p>
+<p>As an example, the probability of going from Site 2 to Site 5 in two clicks is 0.375. You can’t go from Site 3 to Site 2 in two clicks. You can only get to Sites 1, 4, or 5 (Column 3). Note that <span class="math inline">\(\mathbf{S}^2\)</span> is also column stochastic, as every positive integer power of <span class="math inline">\(\mathbf{S}\)</span> will be. That is a consequence of the following theorem.</p>
+<div class="theorembox">
+<div class="theorem">
+<p><span id="thm:unlabeled-div-59" class="theorem"><strong>Theorem 3.7  </strong></span>Let <span class="math inline">\(\mathbf{S}\)</span> and <span class="math inline">\(\mathbf{T}\)</span> be two <span class="math inline">\(n\times n\)</span> column stochastic matrices. Then the product <span class="math inline">\(\mathbf{ST}\)</span> is also column stochastic.</p>
+</div>
+</div>
+<div class="proof">
+<p><span id="unlabeled-div-60" class="proof"><em>Proof</em>. </span>First note that, since all the entries in <span class="math inline">\(\mathbf{S}\)</span> and <span class="math inline">\(\mathbf{T}\)</span> are nonnegative, the entries in <span class="math inline">\(\mathbf{ST}\)</span> will also be nonnegative.</p>
+<p>Let <span class="math inline">\(\mathbf{v}\)</span> be the <span class="math inline">\(n\)</span>-dimensional row vector <span class="math inline">\(\begin{bmatrix} 1 &amp; 1 &amp; \cdots &amp; 1\end{bmatrix}\)</span> and let <span class="math inline">\(\mathbf{a}=\begin{bmatrix} a_1\\a_2\\ \vdots \\ a_n\end{bmatrix}\)</span> be an <span class="math inline">\(n\)</span>-dimensional column vector. Then <span class="math inline">\(\mathbf{v}\mathbf{a}=1\cdot a_1+1\cdot a_2+\cdots+1\cdot a_n=a_1+a_2+\cdots a_n\)</span>. That is, multiplication on the left by <span class="math inline">\(\mathbf{v}\)</span> sums the entries in that vector. Now note that the product</p>
+<p><span class="math display">\[\begin{align*}
+\mathbf{v}\mathbf{S}&amp;=\mathbf{v}\begin{bmatrix}\mathbf{s}_1 &amp; \mathbf{s}_2 &amp; \cdots &amp; \mathbf{s}_n\end{bmatrix}\\
+&amp;=\begin{bmatrix}\mathbf{v}\mathbf{s}_1 &amp; \mathbf{v}\mathbf{s}_2 &amp; \cdots &amp; \mathbf{v}\mathbf{s}_n\end{bmatrix}\\
+&amp;=\begin{bmatrix} 1 &amp; 1 &amp; \cdots &amp; 1\end{bmatrix},
+\end{align*}\]</span></p>
+<p>since all of the <span class="math inline">\(\mathbf{s}_i\)</span> have entries that sum to 1. The product <span class="math inline">\(\mathbf{v}(\mathbf{ST})\)</span> will be a row vector consisting of the column sums of <span class="math inline">\(\mathbf{ST}\)</span>. And</p>
+<p><span class="math display">\[\mathbf{v}(\mathbf{ST})=(\mathbf{v}\mathbf{S})\mathbf{T}=\begin{bmatrix} 1 &amp; 1 &amp; \cdots &amp; 1\end{bmatrix}\mathbf{T}=\begin{bmatrix} 1 &amp; 1 &amp; \cdots &amp; 1\end{bmatrix},\]</span></p>
+<p>because the columns of <span class="math inline">\(\mathbf{T}\)</span> also sum to 1. Since <span class="math inline">\(\mathbf{ST}\)</span> is a matrix with nonnegative entries whose columns sum to 1, it is column stochastic.</p>
+</div>
+<p>Now let’s consider what happens when we unleash an army of surfers on the network. Let’s start with them evenly spread out among the sites. They can be represented by the vector</p>
+<p><span class="math display">\[\mathbf{v}=\begin{bmatrix}0.2\\0.2\\0.2\\0.2\\0.2\end{bmatrix}.\]</span></p>
+<p>If the surfers all click at the same time, their distribution after that click is given by</p>
+<p><span class="math display">\[\mathbf{S}\mathbf{v}=\begin{bmatrix}0 &amp; 0.25 &amp; 0 &amp; 0 &amp; 0.5\\
+0.5 &amp; 0 &amp; 0 &amp; 0 &amp; 0\\
+0.5 &amp; 0.25 &amp; 0 &amp; 0 &amp; 0\\
+0 &amp; 0.25 &amp; 0.5 &amp; 0 &amp; 0.5\\
+0 &amp; 0.25 &amp; 0.5 &amp; 1 &amp; 0\end{bmatrix}\begin{bmatrix}0.2\\0.2\\0.2\\0.2\\0.2\end{bmatrix}=\begin{bmatrix} 0.15 \\ 0.10 \\ 0.15 \\ 0.25 \\ 0.35\end{bmatrix}.\]</span></p>
+<p>After two and three clicks, the distributions are</p>
+<p><span class="math display">\[\mathbf{S}(\mathbf{S}\mathbf{v})=\mathbf{S}^2\mathbf{v}=\begin{bmatrix}0.2\\0.075\\0.1\\0.275\\0.35\end{bmatrix} \text{ and } \mathbf{S}^3\mathbf{v}=\begin{bmatrix}0.19375\\0.1\\0.11875\\0.24375\\0.34375\end{bmatrix}.\]</span></p>
+<p>What happens in the long run? After a few more clicks, the distribution appears to stabilize (Fig. <a href="eigenvalues-and-eigenvectors.html#fig:rwalker">3.12</a>).</p>
+<div class="figure" style="text-align: center"><span style="display:block;" id="fig:rwalker"></span>
+<img src="images/rw4.png" alt="Distribution of random surfers as a function of the number of steps" width="75%" />
+<p class="caption">
+Figure 3.12: Distribution of random surfers as a function of the number of steps
+</p>
+</div>
+<p>After a lot of clicks, we have</p>
+<p><span class="math display">\[\mathbf{S}^{57}\mathbf{v}=(0.19277,0.09638,0.12048,0.25301,0.33735)\]</span></p>
+<p>and</p>
+<p><span class="math display">\[\mathbf{S}^{58}\mathbf{v}=\mathbf{S}(\mathbf{S}^{57}\mathbf{v})=(0.19277,0.09638,0.12048,0.25301,0.33735)\]</span></p>
+<p>Some notes:</p>
+<ul>
+<li><p>We can use these values to rank our websites. Site 5 seems to be the most popular, followed by Sites 4,1,3, and 2.</p></li>
+<li><p>This stable distribution is going to be an eigenvector for <span class="math inline">\(\mathbf{S}\)</span>, with a corresponding eigenvalue of 1!</p></li>
+</ul>
+<p>It turns out that a stochastic matrix will always have the value 1 as an eigenvalue. It is actually the dominant (largest in absolute value) eigenvalue. And when we scale the corresponding eigenvector so that the terms add up to 1, we get our stable distribution! (Remember a similar phenomenon with the Leslie matrix?)</p>
+<p>So, this seems to be a good method for ranking websites based on links in and out. But there are a few problems that can come up.</p>
+<p><strong>Issue 1: dangling nodes</strong></p>
+<p>A <em>dangling node</em> on a graph is a vertex that has no edges leaving it. In this graph (Fig. <a href="eigenvalues-and-eigenvectors.html#fig:dangling">3.13</a>), vertex 5 is dangling, and the corresponding column in the transition matrix has all 0s. It is <em>substochastic</em>. The surfers have nowhere to go.</p>
+<div class="figure" style="text-align: center"><span style="display:block;" id="fig:dangling"></span>
+<img src="_main_files/figure-html/dangling-1.png" alt="A dangling node" width="75%" />
+<p class="caption">
+Figure 3.13: A dangling node
+</p>
+</div>
+<p>Here is the transition matrix for the graph.</p>
+<p><span class="math display">\[\mathbf{S}=\begin{bmatrix} 0 &amp; 0.25 &amp; 0 &amp; 0 &amp; 0\\
+0.5 &amp; 0 &amp; 0 &amp; 0 &amp; 0\\
+0.5 &amp; 0.25 &amp; 0 &amp; 0 &amp; 0\\
+0 &amp; 0.25 &amp; 0.5 &amp; 0 &amp; 0\\0 &amp; 0.25 &amp; 0.5 &amp; 1 &amp; 0\end{bmatrix}\]</span></p>
+<p>Adding a loop at vertex 5 would cause all the traffic to get stuck there, leading to a stable distribution of <span class="math inline">\((0,0,0,0,1)\)</span>, which is not particularly useful for ratings.</p>
+<p><strong>Issue 2: Disconnected graphs</strong></p>
+<p>It is also possible that the graph consists of two or more distinct groups that have no connections between them, as in Figure <a href="eigenvalues-and-eigenvectors.html#fig:disconnected">3.14</a>.</p>
+<div class="figure" style="text-align: center"><span style="display:block;" id="fig:disconnected"></span>
+<img src="_main_files/figure-html/disconnected-1.png" alt="A disconnected graph" width="75%" />
+<p class="caption">
+Figure 3.14: A disconnected graph
+</p>
+</div>
+<p>In this case, <span class="math inline">\(\lambda=1\)</span> will actually be a double eigenvalue, and there won’t be a unique stable solution.</p>
+<p><strong>Issue 3: Cycling</strong></p>
+<p>A third problem that comes up is the rock/paper/scissors issue. If a graph contains a cycle that can’t be exited, as in Figure <a href="eigenvalues-and-eigenvectors.html#fig:cycle">3.15</a>, there can be a stable solution, but it might not be achieved in any iteration process. Note: the cycle could be of any length greater than 1.</p>
+<div class="figure" style="text-align: center"><span style="display:block;" id="fig:cycle"></span>
+<img src="_main_files/figure-html/cycle-1.png" alt="a cycle" width="75%" />
+<p class="caption">
+Figure 3.15: a cycle
+</p>
+</div>
+<p>There are some conditions on the stochastic matrix and underlying graph that will lead to a unique stable solution. For that, we need some definitions.</p>
+<div class="defbox">
+<div class="definition">
+<p><span id="def:unlabeled-div-61" class="definition"><strong>Definition 3.5  </strong></span>Let <span class="math inline">\(\mathbf{A}\)</span> be an <span class="math inline">\(n\times n\)</span> matrix.</p>
+<ul>
+<li><p><span class="math inline">\(\mathbf{A}\)</span> is <strong>nonnegative</strong> (<span class="math inline">\(\mathbf{A}\geq 0\)</span>) if all entries in <span class="math inline">\(\mathbf{A}\)</span> are nonnegative.</p></li>
+<li><p><span class="math inline">\(\mathbf{A}\)</span> is <strong>positive</strong> (<span class="math inline">\(\mathbf{A}&gt;0\)</span>) if all entries in <span class="math inline">\(\mathbf{A}\)</span> are positive.</p></li>
+<li><p><span class="math inline">\(\mathbf{A}\)</span> is <strong>regular</strong> if <span class="math inline">\(\mathbf{A}\geq 0\)</span> and there exists a positive integer <span class="math inline">\(k\)</span> such that <span class="math inline">\(\mathbf{A}^k\)</span> is a positive matrix.</p></li>
+</ul>
+</div>
+</div>
+<p>Note that stochastic matrices are nonnegative. For a graph and its transition matrix, <em>regular</em> means that for some <span class="math inline">\(k\)</span> it is possible to get from every vertex to every other vertex in exactly <span class="math inline">\(k\)</span> steps.</p>
+<p>The Perron-Frobenius Theorem is key for graph-based ranking methods<span class="citation">[<a href="#ref-No1">11</a>]</span>.</p>
+<div class="theorembox">
+<div class="theorem">
+<p><span id="thm:unlabeled-div-62" class="theorem"><strong>Theorem 3.8  (The Perron-Frobenius Theorem for Stochastic Matrices) </strong></span>Let <span class="math inline">\(\mathbf{A}\)</span> be a regular stochastic matrix. Then</p>
+<ol style="list-style-type: decimal">
+<li><p>The matrix <span class="math inline">\(\mathbf{A}\)</span> has <span class="math inline">\(\lambda_1=1\)</span> as an eigenvalue of multiplicty <span class="math inline">\(1.\)</span> The eigenvector <span class="math inline">\(\mathbf{v}_1\)</span> corresponding to <span class="math inline">\(\lambda_1\)</span> can be chosen so that it has all positive entries that sum to <span class="math inline">\(1\)</span> (a positive <strong>probability vector</strong>).</p></li>
+<li><p>All other eigenvalues <span class="math inline">\(\lambda_j\)</span> have <span class="math inline">\(|\lambda_j|&lt;1\)</span>. The corresponding eigenvectors have entries that sum to <span class="math inline">\(0.\)</span></p></li>
+<li><p>If <span class="math inline">\(\mathbf{p}\)</span> is any probability vector, then <span class="math inline">\(\mathbf{A}^n\mathbf{p}\to\mathbf{v}_1\)</span> as <span class="math inline">\(n\to\infty\)</span>. In particular, the columns of <span class="math inline">\(\mathbf{A}^n\)</span> are all approaching <span class="math inline">\(\mathbf{v}_1\)</span>.</p></li>
+</ol>
+</div>
+</div>
+<p>The stochastic version of the Perron-Frobenius Theorem is a special case of a more general theorem <span class="citation">[<a href="#ref-Meyer">12</a>]</span>.</p>
+</div>
+<div id="markov-chains" class="section level3 unnumbered hasAnchor">
+<h3>Markov Chains<a href="eigenvalues-and-eigenvectors.html#markov-chains" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>The graph/transition matrix pair is an example of a <em>Markov chain</em>. A Markov chain is a collection of <em>states</em> (for us, the vertices in a graph) with associated probabilities of moving from one state to another. The probabilities for moving from one state to another only depend on the current state and not on any past state or sequence of states.</p>
+<p>In addition to the application we’ve already seen, Markov chains can be used to simulate things such as baseball games or to create simple weather models. Here is an example of one of them.</p>
+<p>Suppose there are three kinds of days: sunny, cloudy, and rainy. The transition matrix from one type of day to another might look like this.</p>
+<div class="examplebox">
+<div class="example">
+<p><span id="exm:unlabeled-div-63" class="example"><strong>Example 3.9  </strong></span></p>
+<table>
+<thead>
+<tr class="header">
+<th align="left"></th>
+<th align="left"></th>
+<th align="left"></th>
+<th align="left"><strong>Today</strong></th>
+<th align="left"></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left"></td>
+<td align="left"></td>
+<td align="left">Sunny</td>
+<td align="left">Cloudy</td>
+<td align="left">Rainy</td>
+</tr>
+<tr class="even">
+<td align="left"></td>
+<td align="left">Sunny</td>
+<td align="left">0.7</td>
+<td align="left">0.5</td>
+<td align="left">0.4</td>
+</tr>
+<tr class="odd">
+<td align="left"><strong>Tomorrow</strong></td>
+<td align="left">Cloudy</td>
+<td align="left">0.2</td>
+<td align="left">0.3</td>
+<td align="left">0.5</td>
+</tr>
+<tr class="even">
+<td align="left"></td>
+<td align="left">Rainy</td>
+<td align="left">0.1</td>
+<td align="left">0.2</td>
+<td align="left">0.1</td>
+</tr>
+</tbody>
+</table>
+<p>If we square the transition matrix, we get the probabilities for two days out.</p>
+<p><span class="math display">\[
+\mathbf{S}^2=\begin{bmatrix}
+    0.63 &amp; 0.58 &amp; 0.57 \\
+    0.25 &amp; 0.29 &amp; 0.28\\
+    0.12 &amp; 0.13 &amp; 0.15
+    \end{bmatrix}
+\]</span></p>
+<p>If it’s sunny today, there’s a 63% chance that it will be sunny in two days. If it’s cloudy today, there’s a 13% chance that it will be rainy in two days. What will happen in the long run? Since this weather forecaster is a positive stochastic matrix, when we raise it to higher and higher powers, all three columns will approach the stable distribution.</p>
+<p><span class="math display">\[
+\textbf{S}^{100}=\begin{bmatrix}
+    0.6091954 &amp; 0.6091954 &amp; 0.6091954 \\
+    0.2643678 &amp; 0.2643678  &amp; 0.2643678\\
+    0.1264368 &amp; 0.1264368 &amp; 0.1264368
+    \end{bmatrix}
+\]</span></p>
+<p>If you think about it, what this is saying is that the weather today won’t tell us much about the weather 100 days from today (ignoring seasons and all that). About 61% of the days will be sunny, 26% will be cloudy, and 13% will be rainy.</p>
+</div>
+</div>
+</div>
+<div id="why-is-1-always-an-eigenvalue" class="section level3 unnumbered hasAnchor">
+<h3>Why is 1 always an eigenvalue?<a href="eigenvalues-and-eigenvectors.html#why-is-1-always-an-eigenvalue" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>We close this section by taking care of some unfinished business. The Perron-Frobenius Theorem guarantees us that a stochastic matrix will have an eigenvalue of 1, but there is an easier way to see that.</p>
+<p>We’ve already observed that</p>
+<p><span class="math display">\[\begin{bmatrix} 1 &amp; 1 &amp; \cdots &amp; 1\end{bmatrix}\mathbf{S}=\begin{bmatrix} 1 &amp; 1 &amp; \cdots &amp; 1\end{bmatrix}\]</span></p>
+<p>for a stochastic matrix <span class="math inline">\(\mathbf{S}\)</span> and the appropriately sized row vector of ones. That means that</p>
+<p><span class="math display">\[(\begin{bmatrix} 1 &amp; 1 &amp; \cdots &amp; 1\end{bmatrix}\mathbf{S})^T=\begin{bmatrix}1\\1\\ \vdots \\ 1\end{bmatrix}\]</span></p>
+<p>or</p>
+<p><span class="math display">\[\mathbf{S}^T\begin{bmatrix}1\\1\\ \vdots \\ 1\end{bmatrix}=\begin{bmatrix}1\\1\\ \vdots \\ 1\end{bmatrix}.\]</span></p>
+<p>In other words, the column vector of ones is an eigenvector for <span class="math inline">\(\mathbf{S}^T\)</span> with corresponding eigenvalue 1. Since matrices and their transposes share the same eigenvalues, 1 is also an eigenvalue for <span class="math inline">\(S\)</span>.</p>
+</div>
+</div>
+<div id="the-markov-and-oracle-ranking-methods" class="section level2 hasAnchor" number="3.6">
+<h2><span class="header-section-number">3.6</span> The Markov and Oracle Ranking Methods<a href="eigenvalues-and-eigenvectors.html#the-markov-and-oracle-ranking-methods" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>There are several Markov chain-based ranking methods. We will see two in this section. The <em>Markov method</em>, which is modeled on the PageRank algorithm <span class="citation">[<a href="#ref-PageRank">13</a>]</span>, was developed by Amy N. Langville and Carl D. Meyer <span class="citation">[<a href="#ref-No1">11</a>]</span>. The Oracle method was developed by E. Cabral Balreira, Brian Miceli, and T. Tegtmeyer <span class="citation">[<a href="#ref-Oracle">14</a>]</span>.</p>
+<div id="the-markov-method" class="section level3 unnumbered hasAnchor">
+<h3>The Markov method<a href="eigenvalues-and-eigenvectors.html#the-markov-method" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>The key step in any Markov chain-based method is to create a regular matrix, so that we can take advantage of the Perron-Frobenious theorem. Recall the graph we saw in Figure <a href="eigenvalues-and-eigenvectors.html#fig:dangling">3.13</a>. The corresponding transition matrix is here</p>
+<p><span class="math display">\[\mathbf{T}=\begin{bmatrix} 0 &amp; 0.25 &amp; 0 &amp; 0 &amp; 0\\
+0.5 &amp; 0 &amp; 0 &amp; 0 &amp; 0\\
+0.5 &amp; 0.25 &amp; 0 &amp; 0 &amp; 0\\
+0 &amp; 0.25 &amp; 0.5 &amp; 0 &amp; 0\\0 &amp; 0.25 &amp; 0.5 &amp; 1 &amp; 0\end{bmatrix}.\]</span></p>
+<p>The first step is to replace the column of all zeros with a column whose entries are all <span class="math inline">\(1/n\)</span>, where <span class="math inline">\(n\)</span> is the number of vertices or teams.</p>
+<p><span class="math display">\[\mathbf{T}=\begin{bmatrix} 0 &amp; 0.25 &amp; 0 &amp; 0 &amp; 0\\
+0.5 &amp; 0 &amp; 0 &amp; 0 &amp; 0\\
+0.5 &amp; 0.25 &amp; 0 &amp; 0 &amp; 0\\
+0 &amp; 0.25 &amp; 0.5 &amp; 0 &amp; 0\\0 &amp; 0.25 &amp; 0.5 &amp; 1 &amp; 0\end{bmatrix}\to \mathbf{S}=\begin{bmatrix} 0 &amp; 0.25 &amp; 0 &amp; 0 &amp; 0.2\\
+0.5 &amp; 0 &amp; 0 &amp; 0 &amp; 0.2\\
+0.5 &amp; 0.25 &amp; 0 &amp; 0 &amp; 0.2\\
+0 &amp; 0.25 &amp; 0.5 &amp; 0 &amp; 0.2\\0 &amp; 0.25 &amp; 0.5 &amp; 1 &amp; 0.2\end{bmatrix}\]</span></p>
+<p>This is like replacing a site with no outgoing links with one that links to all of the other sites, including itself. We still need to do something to ensure regularity of the transition matrix. The Langville-Meyer/PageRank solution is brutally simple. It introduces a <em>teleportation matrix</em>. A certain fraction of the time, say <span class="math inline">\(\alpha\)</span>, the random surfers will follow the original network. The remainder of the time, the surfers will magically teleport to any other site in the network, with equal probability. The <span class="math inline">\(n\times n\)</span> teleportation matrix looks like this:</p>
+<p><span class="math display">\[\mathbf{E}=\begin{bmatrix} 1/n &amp; 1/n &amp; \cdots &amp; 1/n\\
+1/n &amp; 1/n &amp; \cdots &amp; 1/n\\
+\vdots &amp; \vdots &amp; \ddots &amp; \vdots \\
+1/n &amp; 1/n &amp; \cdots &amp; 1/n \end{bmatrix}.\]</span></p>
+<p>When we combine the transition matrix and the teleportation matrix, we get a new stochastic matrix</p>
+<p><span class="math display">\[\textbf{G}=\alpha \textbf{S}\textbf{}+(1-\alpha)\textbf{E}\]</span></p>
+<p>that is regular (indeed, positive) by design. The probability eigenvector corresponding to the eigenvalue 1 will be our ratings vector. We can experiment with the value of <span class="math inline">\(\alpha\)</span>, but <span class="math inline">\(\alpha = 0.85\)</span> is a common value. For our dangling node example,</p>
+<p><span class="math display">\[\begin{align*}
+\mathbf{G}&amp;=0.85\begin{bmatrix} 0 &amp; 0.25 &amp; 0 &amp; 0 &amp; 0.2\\
+0.5 &amp; 0 &amp; 0 &amp; 0 &amp; 0.2\\
+0.5 &amp; 0.25 &amp; 0 &amp; 0 &amp; 0.2\\
+0 &amp; 0.25 &amp; 0.5 &amp; 0 &amp; 0.2\\0 &amp; 0.25 &amp; 0.5 &amp; 1 &amp; 0.2\end{bmatrix}+0.15\begin{bmatrix} 0.2 &amp; 0.2 &amp; 0.2 &amp; 0.2 &amp; 0.2\\
+0.2 &amp; 0.2 &amp; 0.2 &amp; 0.2 &amp; 0.2\\
+0.2 &amp; 0.2 &amp; 0.2 &amp; 0.2 &amp; 0.2\\
+0.2 &amp; 0.2 &amp; 0.2 &amp; 0.2 &amp; 0.2\\
+0.2 &amp; 0.2 &amp; 0.2 &amp; 0.2 &amp; 0.2 \end{bmatrix}\\
+&amp;=\begin{bmatrix}
+0.03 &amp; 0.2425 &amp; 0.03 &amp; 0.03 &amp; 0.2\\
+0.455 &amp; 0.03 &amp; 0.03 &amp; 0.03 &amp; 0.2\\
+0.455 &amp; 0.2425 &amp; 0.03 &amp; 0.03 &amp; 0.2\\
+0.03 &amp; 0.2425 &amp; 0.455 &amp; 0.03 &amp; 0.2\\
+0.03 &amp; 0.2425 &amp; 0.455 &amp; 0.88 &amp; 0.2
+\end{bmatrix}.
+\end{align*}\]</span></p>
+<p>The ratings eigenvector is</p>
+<p><span class="math display">\[\mathbf{v}=(0.1223049, 0.1437397, 0.1742844, 0.1963758, 0.3632952).\]</span></p>
+<div class="examplebox">
+<div class="example">
+<p><span id="exm:unlabeled-div-64" class="example"><strong>Example 3.10  </strong></span>Here is one way to implement the Markov method in R, demonstrated on our toy example.</p>
+<div class="sourceCode" id="cb65"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb65-1"><a href="eigenvalues-and-eigenvectors.html#cb65-1" tabindex="-1"></a><span class="fu">library</span>(igraph)</span>
+<span id="cb65-2"><a href="eigenvalues-and-eigenvectors.html#cb65-2" tabindex="-1"></a><span class="fu">library</span>(expm)</span>
+<span id="cb65-3"><a href="eigenvalues-and-eigenvectors.html#cb65-3" tabindex="-1"></a>teams <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;Aardvarks&quot;</span>, <span class="st">&quot;Beagles&quot;</span>, <span class="st">&quot;Crocs&quot;</span>,  </span>
+<span id="cb65-4"><a href="eigenvalues-and-eigenvectors.html#cb65-4" tabindex="-1"></a>          <span class="st">&quot;Donkeys&quot;</span>, <span class="st">&quot;Egrets&quot;</span>)</span>
+<span id="cb65-5"><a href="eigenvalues-and-eigenvectors.html#cb65-5" tabindex="-1"></a>results <span class="ot">&lt;-</span><span class="fu">c</span> (<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">1</span>,<span class="dv">3</span>,<span class="dv">5</span>,<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">3</span>,<span class="dv">2</span>,<span class="dv">4</span>,<span class="dv">4</span>,<span class="dv">3</span>,<span class="dv">5</span>,<span class="dv">3</span>,<span class="dv">5</span>,<span class="dv">4</span>)</span>
+<span id="cb65-6"><a href="eigenvalues-and-eigenvectors.html#cb65-6" tabindex="-1"></a>gtoy <span class="ot">&lt;-</span> <span class="fu">graph</span>(results)</span>
+<span id="cb65-7"><a href="eigenvalues-and-eigenvectors.html#cb65-7" tabindex="-1"></a>coords <span class="ot">&lt;-</span> <span class="fu">layout_in_circle</span>(gtoy)</span>
+<span id="cb65-8"><a href="eigenvalues-and-eigenvectors.html#cb65-8" tabindex="-1"></a><span class="fu">plot</span>(gtoy, <span class="at">vertex.label =</span> teams, <span class="at">vertex.size =</span> <span class="dv">50</span>,  </span>
+<span id="cb65-9"><a href="eigenvalues-and-eigenvectors.html#cb65-9" tabindex="-1"></a>     <span class="at">vertex.color =</span> <span class="st">&quot;lightblue&quot;</span>, <span class="at">layout =</span> coords)</span></code></pre></div>
+<p><img src="_main_files/figure-html/markov-1.png" width="672" /></p>
+<div class="sourceCode" id="cb66"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb66-1"><a href="eigenvalues-and-eigenvectors.html#cb66-1" tabindex="-1"></a><span class="co"># We take the transpose of the adjacency matrix</span></span>
+<span id="cb66-2"><a href="eigenvalues-and-eigenvectors.html#cb66-2" tabindex="-1"></a>T <span class="ot">&lt;-</span> <span class="fu">t</span>(<span class="fu">as.matrix</span>(<span class="fu">as_adjacency_matrix</span>(gtoy))) </span>
+<span id="cb66-3"><a href="eigenvalues-and-eigenvectors.html#cb66-3" tabindex="-1"></a>T</span></code></pre></div>
+<pre><code>##      [,1] [,2] [,3] [,4] [,5]
+## [1,]    0    0    0    0    1
+## [2,]    1    0    0    0    0
+## [3,]    1    1    0    1    1
+## [4,]    0    1    0    0    1
+## [5,]    0    0    0    0    0</code></pre>
+<div class="sourceCode" id="cb68"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb68-1"><a href="eigenvalues-and-eigenvectors.html#cb68-1" tabindex="-1"></a>s <span class="ot">&lt;-</span> <span class="fu">nrow</span>(T)</span>
+<span id="cb68-2"><a href="eigenvalues-and-eigenvectors.html#cb68-2" tabindex="-1"></a><span class="co"># Next, we identify the dangling nodes, replace their</span></span>
+<span id="cb68-3"><a href="eigenvalues-and-eigenvectors.html#cb68-3" tabindex="-1"></a><span class="co"># columns with ones, and then make the transition </span></span>
+<span id="cb68-4"><a href="eigenvalues-and-eigenvectors.html#cb68-4" tabindex="-1"></a><span class="co"># matrix by scaling the column sums.</span></span>
+<span id="cb68-5"><a href="eigenvalues-and-eigenvectors.html#cb68-5" tabindex="-1"></a></span>
+<span id="cb68-6"><a href="eigenvalues-and-eigenvectors.html#cb68-6" tabindex="-1"></a>D <span class="ot">&lt;-</span> <span class="fu">colSums</span>(T)</span>
+<span id="cb68-7"><a href="eigenvalues-and-eigenvectors.html#cb68-7" tabindex="-1"></a>dangling <span class="ot">&lt;-</span> <span class="fu">which</span>(D <span class="sc">==</span> <span class="dv">0</span>)</span>
+<span id="cb68-8"><a href="eigenvalues-and-eigenvectors.html#cb68-8" tabindex="-1"></a>T[, dangling] <span class="ot">&lt;-</span> <span class="dv">1</span></span>
+<span id="cb68-9"><a href="eigenvalues-and-eigenvectors.html#cb68-9" tabindex="-1"></a>T</span></code></pre></div>
+<pre><code>##      [,1] [,2] [,3] [,4] [,5]
+## [1,]    0    0    1    0    1
+## [2,]    1    0    1    0    0
+## [3,]    1    1    1    1    1
+## [4,]    0    1    1    0    1
+## [5,]    0    0    1    0    0</code></pre>
+<div class="sourceCode" id="cb70"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb70-1"><a href="eigenvalues-and-eigenvectors.html#cb70-1" tabindex="-1"></a>scale <span class="ot">&lt;-</span> <span class="fu">diag</span>(<span class="dv">1</span><span class="sc">/</span><span class="fu">colSums</span>(T))</span>
+<span id="cb70-2"><a href="eigenvalues-and-eigenvectors.html#cb70-2" tabindex="-1"></a>S <span class="ot">&lt;-</span> T<span class="sc">%*%</span>scale <span class="co">#multiplication on right acts on the columns</span></span>
+<span id="cb70-3"><a href="eigenvalues-and-eigenvectors.html#cb70-3" tabindex="-1"></a>S</span></code></pre></div>
+<pre><code>##      [,1] [,2] [,3] [,4]      [,5]
+## [1,]  0.0  0.0  0.2    0 0.3333333
+## [2,]  0.5  0.0  0.2    0 0.0000000
+## [3,]  0.5  0.5  0.2    1 0.3333333
+## [4,]  0.0  0.5  0.2    0 0.3333333
+## [5,]  0.0  0.0  0.2    0 0.0000000</code></pre>
+<div class="sourceCode" id="cb72"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb72-1"><a href="eigenvalues-and-eigenvectors.html#cb72-1" tabindex="-1"></a><span class="co"># Now we add the teleportation matrix to get the G matrix</span></span>
+<span id="cb72-2"><a href="eigenvalues-and-eigenvectors.html#cb72-2" tabindex="-1"></a>G <span class="ot">&lt;-</span> <span class="fl">0.85</span><span class="sc">*</span>S <span class="sc">+</span> <span class="fl">0.15</span><span class="sc">*</span><span class="fu">matrix</span>(<span class="dv">1</span><span class="sc">/</span>s, <span class="at">nrow =</span> s, <span class="at">ncol =</span> s) </span>
+<span id="cb72-3"><a href="eigenvalues-and-eigenvectors.html#cb72-3" tabindex="-1"></a>G</span></code></pre></div>
+<pre><code>##       [,1]  [,2] [,3] [,4]      [,5]
+## [1,] 0.030 0.030  0.2 0.03 0.3133333
+## [2,] 0.455 0.030  0.2 0.03 0.0300000
+## [3,] 0.455 0.455  0.2 0.88 0.3133333
+## [4,] 0.030 0.455  0.2 0.03 0.3133333
+## [5,] 0.030 0.030  0.2 0.03 0.0300000</code></pre>
+<div class="sourceCode" id="cb74"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb74-1"><a href="eigenvalues-and-eigenvectors.html#cb74-1" tabindex="-1"></a><span class="co"># Now we raise G to a high power and extract our ratings</span></span>
+<span id="cb74-2"><a href="eigenvalues-and-eigenvectors.html#cb74-2" tabindex="-1"></a><span class="co"># vector</span></span>
+<span id="cb74-3"><a href="eigenvalues-and-eigenvectors.html#cb74-3" tabindex="-1"></a>(G<span class="sc">%^%</span><span class="dv">50</span>)[, <span class="dv">1</span>]</span></code></pre></div>
+<pre><code>## [1] 0.1295831 0.1560467 0.4174933 0.1959030 0.1009739</code></pre>
+<p>Here are the ratings. They are presented with the Colley ratings for comparison. Recall that the Colley ratings are not designed to add up to 1. The rankings are the same.</p>
+<table>
+<thead>
+<tr class="header">
+<th align="left"><strong>Team</strong></th>
+<th align="left">W-L</th>
+<th align="left">PCT</th>
+<th align="left">Colley Rating</th>
+<th align="left">Markov Rating</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left"><strong>Crocs</strong></td>
+<td align="left">4-0</td>
+<td align="left">1.000</td>
+<td align="left">0.786</td>
+<td align="left">0.4175</td>
+</tr>
+<tr class="even">
+<td align="left"><strong>Donkeys</strong></td>
+<td align="left">2-1</td>
+<td align="left">0.667</td>
+<td align="left">0.600</td>
+<td align="left">0.1959</td>
+</tr>
+<tr class="odd">
+<td align="left"><strong>Beagles</strong></td>
+<td align="left">1-2</td>
+<td align="left">0.333</td>
+<td align="left">0.457</td>
+<td align="left">0.1560</td>
+</tr>
+<tr class="even">
+<td align="left"><strong>Aardvarks</strong></td>
+<td align="left">1-2</td>
+<td align="left">0.333</td>
+<td align="left">0.400</td>
+<td align="left">0.1296</td>
+</tr>
+<tr class="odd">
+<td align="left"><strong>Egrets</strong></td>
+<td align="left">0-3</td>
+<td align="left">0.000</td>
+<td align="left">0.257</td>
+<td align="left">0.1010</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+<div id="the-oracle-method" class="section level3 unnumbered hasAnchor">
+<h3>The Oracle method<a href="eigenvalues-and-eigenvectors.html#the-oracle-method" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>The Oracle method takes a different approach to induce regularity in the transition matrix.</p>
+<div class="figure"><span style="display:block;" id="fig:danglingoracle"></span>
+<img src="_main_files/figure-html/danglingoracle-1.png" alt="The Oracle" width="672" />
+<p class="caption">
+Figure 3.16: The Oracle
+</p>
+</div>
+<p>By adjusting the number of edges up to and down from the Oracle, we can fine tune the ratings. The simplest case just has 1 edge in both directions. The original transposed adjacency matrix and Oracle adjacency matrix will look like this.</p>
+<p><span class="math display">\[\mathbf{A}=\begin{bmatrix} 0 &amp; 0 &amp; 0 &amp; 0 &amp; 1 \\
+   1 &amp; 0 &amp; 0 &amp; 0 &amp; 0 \\
+   1 &amp; 1 &amp; 0 &amp; 1 &amp; 1 \\
+   0 &amp; 1 &amp; 0 &amp; 0 &amp; 1 \\
+   0 &amp; 0 &amp; 0 &amp; 0 &amp; 0 \end{bmatrix},\mathbf{A}_{Oracle}=\begin{bmatrix} 0 &amp; 0 &amp; 0 &amp; 0 &amp; 1 &amp; \mathbf{1} \\
+   1 &amp; 0 &amp; 0 &amp; 0 &amp; 0 &amp; \mathbf{1} \\
+   1 &amp; 1 &amp; 0 &amp; 1 &amp; 1 &amp; \mathbf{1} \\
+   0 &amp; 1 &amp; 0 &amp; 0 &amp; 1 &amp; \mathbf{1} \\
+   0 &amp; 0 &amp; 0 &amp; 0 &amp; 0 &amp; \mathbf{1} \\
+   \mathbf{1} &amp; \mathbf{1} &amp; \mathbf{1} &amp; \mathbf{1} &amp; \mathbf{1} &amp; \mathbf{0}\end{bmatrix}\]</span></p>
+<p>When we divide by the column sums, we get the transition matrix with the Oracle:</p>
+<p><span class="math display">\[\mathbf{S=}\begin{bmatrix} 0 &amp; 0 &amp; 0 &amp; 0 &amp; 1/4 &amp; 1/5 \\ 1/3 &amp; 0 &amp; 0 &amp; 0 &amp; 0 &amp; 1/5\\
+  1/3 &amp; 1/3 &amp; 0 &amp; 1/2 &amp; 1/4 &amp; 1/5 \\
+   0 &amp; 1/3 &amp; 0 &amp; 0 &amp; 1/4 &amp; 1/5 \\
+   0 &amp; 0 &amp; 0 &amp; 0 &amp; 0 &amp; 1/5 \\
+  1/3 &amp; 1/3 &amp; 1 &amp; 1/2 &amp; 1/4 &amp; 0\end{bmatrix}\]</span></p>
+<p>When we exponentiate <span class="math inline">\(\mathbf{S}\)</span>, all of the columns look like this, where the last entry belongs to the Oracle.</p>
+<p><span class="math display">\[(0.0933610, 0.1058091, 0.2240664, 0.1286307, 0.0746888, 0.3734440)\]</span></p>
+<p>If we remove the Oracle and rescale the remaining ratings to add to 1 (not necessary, but otherwise the numbers can be quite small), we get the following ranking:</p>
+<table>
+<thead>
+<tr class="header">
+<th align="left"><strong>Team</strong></th>
+<th align="left">W</th>
+<th align="left">L</th>
+<th align="left">Rating</th>
+<th align="left">Rank</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left"><strong>Crocs</strong></td>
+<td align="left">4</td>
+<td align="left">0</td>
+<td align="left">0.358</td>
+<td align="left">1</td>
+</tr>
+<tr class="even">
+<td align="left"><strong>Donkeys</strong></td>
+<td align="left">2</td>
+<td align="left">1</td>
+<td align="left">0.205</td>
+<td align="left">2</td>
+</tr>
+<tr class="odd">
+<td align="left"><strong>Beagles</strong></td>
+<td align="left">1</td>
+<td align="left">2</td>
+<td align="left">0.169</td>
+<td align="left">3</td>
+</tr>
+<tr class="even">
+<td align="left"><strong>Aardvarks</strong></td>
+<td align="left">1</td>
+<td align="left">2</td>
+<td align="left">0.149</td>
+<td align="left">4</td>
+</tr>
+<tr class="odd">
+<td align="left"><strong>Egrets</strong></td>
+<td align="left">0</td>
+<td align="left">3</td>
+<td align="left">0.119</td>
+<td align="left">5</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div id="modifications" class="section level3 unnumbered hasAnchor">
+<h3>Modifications<a href="eigenvalues-and-eigenvectors.html#modifications" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>The nice thing about the Oracle method is that the number of edges up to and down from the Oracle can be adjusted. Suppose the Oracle likes winners. The number of edges down to a team can be based on the number of wins they have. Because we need at least one edge down to every team, we add 1 to the win total. Here are the respective transposed adjacency matrix and transition matrix.</p>
+<p><span class="math display">\[\textbf{A}_{Oracle}=\begin{bmatrix} 0 &amp; 0 &amp; 0 &amp; 0 &amp; 1 &amp; 2 \\
+   1 &amp; 0 &amp; 0 &amp; 0 &amp; 0 &amp; 2 \\
+   1 &amp; 1 &amp; 0 &amp; 1 &amp; 1 &amp; 5 \\
+   0 &amp; 1 &amp; 0 &amp; 0 &amp; 1 &amp; 3 \\
+   0 &amp; 0 &amp; 0 &amp; 0 &amp; 0 &amp; 1 \\
+1 &amp; 1 &amp; 1 &amp; 1 &amp; 1 &amp; 0\end{bmatrix},\textbf{S}=\begin{bmatrix} 0 &amp; 0 &amp; 0 &amp; 0 &amp; 1/4 &amp; 2/13 \\ 1/3 &amp; 0 &amp; 0 &amp; 0 &amp; 0 &amp; 2/13\\
+  1/3 &amp; 1/3 &amp; 0 &amp; 1/2 &amp; 1/4 &amp; 5/13 \\
+   0 &amp; 1/3 &amp; 0 &amp; 0 &amp; 1/4 &amp; 3/13 \\
+   0 &amp; 0 &amp; 0 &amp; 0 &amp; 0 &amp; 1/13 \\
+  1/3 &amp; 1/3 &amp; 1 &amp; 1/2 &amp; 1/4 &amp; 0\end{bmatrix}\]</span></p>
+<p>Here are the resulting ratings. Note that the Crocs’ rating has increased from 0.358 to 0.470, while the winless Egrets’ rating has gone down significantly.</p>
+<table>
+<thead>
+<tr class="header">
+<th align="left"><strong>Team</strong></th>
+<th align="left">W</th>
+<th align="left">L</th>
+<th align="left">Rating</th>
+<th align="left">Rank</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left"><strong>Crocs</strong></td>
+<td align="left">4</td>
+<td align="left">0</td>
+<td align="left">0.470</td>
+<td align="left">1</td>
+</tr>
+<tr class="even">
+<td align="left"><strong>Donkeys</strong></td>
+<td align="left">2</td>
+<td align="left">1</td>
+<td align="left">0.217</td>
+<td align="left">2</td>
+</tr>
+<tr class="odd">
+<td align="left"><strong>Beagles</strong></td>
+<td align="left">1</td>
+<td align="left">2</td>
+<td align="left">0.143</td>
+<td align="left">3</td>
+</tr>
+<tr class="even">
+<td align="left"><strong>Aardvarks</strong></td>
+<td align="left">1</td>
+<td align="left">2</td>
+<td align="left">0.117</td>
+<td align="left">4</td>
+</tr>
+<tr class="odd">
+<td align="left"><strong>Egrets</strong></td>
+<td align="left">0</td>
+<td align="left">3</td>
+<td align="left">0.052</td>
+<td align="left">5</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div id="exercises-2" class="section level2 hasAnchor" number="3.7">
+<h2><span class="header-section-number">3.7</span> Exercises<a href="eigenvalues-and-eigenvectors.html#exercises-2" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<ol style="list-style-type: decimal">
+<li><p>Let
+<span class="math display">\[\mathbf{A}=\begin{bmatrix} 1 &amp; 2\\5 &amp; 4\end{bmatrix}.\]</span>
+Find the eigenvalues and eigenvectors of <span class="math inline">\(\mathbf{A}\)</span> by hand.</p></li>
+<li><p>Let
+<span class="math display">\[\mathbf{A}=\begin{bmatrix} 3 &amp; 2\\5 &amp; 0\end{bmatrix}.\]</span>
+Find the eigenvalues and eigenvectors of <span class="math inline">\(\mathbf{A}\)</span> by hand.</p></li>
+<li><p>Let
+<span class="math display">\[\mathbf{A}=\begin{bmatrix} 2 &amp; -2\\2 &amp; 6\end{bmatrix}.\]</span>
+Find the eigenvalues and eigenvectors of <span class="math inline">\(\mathbf{A}\)</span> by hand.</p></li>
+<li><p>Let
+<span class="math display">\[\mathbf{A}=\begin{bmatrix} 1 &amp; 4\\-1 &amp; 5\end{bmatrix}.\]</span>
+Find the eigenvalues and eigenvectors of <span class="math inline">\(\mathbf{A}\)</span> by hand.</p></li>
+<li><p>The matrix
+<span class="math display">\[\mathbf{A}=\begin{bmatrix} -2 &amp; -3 &amp; -1\\1 &amp; 2 &amp; 1\\3 &amp; 3 &amp; 2\end{bmatrix}\]</span>
+has eigenvalues <span class="math inline">\(\lambda_1=2, \lambda_2=1,\)</span> and <span class="math inline">\(\lambda_3=-1.\)</span> Find the corresponding eigenvectors by hand.</p></li>
+<li><p>The matrix
+<span class="math display">\[\mathbf{A}=\begin{bmatrix} 2 &amp; -1 &amp; 1\\-1 &amp; 2 &amp; -1\\1 &amp; 1 &amp; 2\end{bmatrix}\]</span>
+has eigenvalues <span class="math inline">\(\lambda_1=3, \lambda_2=2,\)</span> and <span class="math inline">\(\lambda_3=-1.\)</span> Find the corresponding eigenvectors by hand.</p></li>
+<li><p>Find a nondiagonal, nontriangular <span class="math inline">\(2\times 2\)</span> matrix that has eigenvalues <span class="math inline">\(\lambda_1=5\)</span> and <span class="math inline">\(\lambda_2=-2.\)</span></p></li>
+<li><p>Find a nondiagonal, nontriangular <span class="math inline">\(2\times 2\)</span> matrix that has eigenvalues <span class="math inline">\(\lambda_1=4\)</span> and <span class="math inline">\(\lambda_2=3.\)</span></p></li>
+<li><p>For the matrix in Problem 1, show that the nonzero columns of <span class="math inline">\(\mathbf{A}-\lambda_1\mathbf{I}\)</span> are eigenvectors corresponding to <span class="math inline">\(\lambda_2\)</span> and that the nonzero columns of <span class="math inline">\(\mathbf{A}-\lambda_2\mathbf{I}\)</span> are eigenvectors corresponding to <span class="math inline">\(\lambda_1.\)</span> (This is a general result for <span class="math inline">\(2\times 2\)</span> matrices with non-repeating real eigenvalues.)</p></li>
+<li><p>For the matrix in Problem 2, show that the nonzero columns of <span class="math inline">\(\mathbf{A}-\lambda_1\mathbf{I}\)</span> are eigenvectors corresponding to <span class="math inline">\(\lambda_2\)</span> and that the nonzero columns of <span class="math inline">\(\mathbf{A}-\lambda_2\mathbf{I}\)</span> are eigenvectors corresponding to <span class="math inline">\(\lambda_1.\)</span></p></li>
+<li><p>The matrix <span class="math inline">\(\mathbf{A}=\begin{bmatrix}2 &amp; 3\\3&amp;2\end{bmatrix}\)</span> found in Example <a href="eigenvalues-and-eigenvectors.html#exm:ndnt">3.4</a> has the eigenvector <span class="math inline">\(\mathbf{x}_1=\begin{bmatrix}1\\1\end{bmatrix}\)</span> corresponding to the eigenvalue <span class="math inline">\(\lambda_1=5.\)</span> Find <span class="math inline">\(\mathbf{A}^{3}\mathbf{x}_1.\)</span></p></li>
+<li><p>The matrix <span class="math inline">\(\mathbf{A}=\begin{bmatrix}2 &amp; 3\\3&amp;2\end{bmatrix}\)</span> found in Example <a href="eigenvalues-and-eigenvectors.html#exm:ndnt">3.4</a> has the eigenvector <span class="math inline">\(\mathbf{x}_2=\begin{bmatrix}-1\\1\end{bmatrix}\)</span> corresponding to the eigenvalue <span class="math inline">\(\lambda_2=-1.\)</span> Find <span class="math inline">\(\mathbf{A}^{101}\mathbf{x}_2.\)</span></p></li>
+<li><p>Let <span class="math inline">\(\mathbf{L}=\begin{bmatrix} 2.9 &amp; 3\\0.1 &amp; 0\end{bmatrix}\)</span> be a Leslie matrix. Suppose an initial population distribution of <span class="math inline">\(\mathbf{N}(0)=\begin{bmatrix}10 \\0\end{bmatrix}.\)</span></p>
+<ol style="list-style-type: lower-alpha">
+<li>Find <span class="math inline">\(\mathbf{N}(1)\)</span> and <span class="math inline">\(\mathbf{N}(2).\)</span> Do not round.</li>
+<li>Find the eigenvalues of <span class="math inline">\(\mathbf{L}.\)</span></li>
+<li>What is the long-run growth rate?</li>
+<li>What is the long-run ratio of age-zero to age-one individuals?</li>
+</ol></li>
+<li><p>Let <span class="math inline">\(\mathbf{L}=\begin{bmatrix} 4.9 &amp; 10\\0.05 &amp; 0\end{bmatrix}\)</span> be a Leslie matrix. Suppose an initial population distribution of <span class="math inline">\(\mathbf{N}(0)=\begin{bmatrix}100 \\0\end{bmatrix}.\)</span></p>
+<ol style="list-style-type: lower-alpha">
+<li>Find <span class="math inline">\(\mathbf{N}(1)\)</span> and <span class="math inline">\(\mathbf{N}(2).\)</span> Do not round.</li>
+<li>Find the eigenvalues of <span class="math inline">\(\mathbf{L}.\)</span></li>
+<li>What is the long-run growth rate?</li>
+<li>What is the long-run ratio of age-zero to age-one individuals?</li>
+</ol></li>
+<li><p>Let <span class="math inline">\(\mathbf{L}=\begin{bmatrix} 2 &amp; 4 &amp; 1\\0.05 &amp; 0 &amp; 0\\0 &amp; 0.4 &amp; 0\end{bmatrix}\)</span> be a Leslie matrix. Suppose an initial population distribution of <span class="math inline">\(\mathbf{N}(0)=\begin{bmatrix}10 \\10\\10\end{bmatrix}.\)</span></p>
+<ol style="list-style-type: lower-alpha">
+<li>Find <span class="math inline">\(\mathbf{N}(1)\)</span> and <span class="math inline">\(\mathbf{N}(2).\)</span> Do not round.</li>
+<li>Find the eigenvalues of <span class="math inline">\(\mathbf{L}.\)</span></li>
+<li>What is the long-run growth rate?</li>
+<li>In the long run, what will the percentages for each age group be?</li>
+</ol></li>
+<li><p>Let <span class="math inline">\(\mathbf{L}=\begin{bmatrix} 5 &amp; 6 &amp; 2\\0.01 &amp; 0 &amp; 0\\0 &amp; 0.2 &amp; 0\end{bmatrix}\)</span> be a Leslie matrix. Suppose an initial population distribution of <span class="math inline">\(\mathbf{N}(0)=\begin{bmatrix}10 \\10\\10\end{bmatrix}.\)</span></p>
+<ol style="list-style-type: lower-alpha">
+<li>Find <span class="math inline">\(\mathbf{N}(1)\)</span> and <span class="math inline">\(\mathbf{N}(2).\)</span> Do not round.</li>
+<li>Find the eigenvalues of <span class="math inline">\(\mathbf{L}.\)</span></li>
+<li>What is the long-run growth rate?</li>
+<li>In the long run, what will the percentages for each age group be?</li>
+</ol></li>
+<li><p>Let <span class="math inline">\(\mathbf{L}=\begin{bmatrix} 0 &amp; 4\\ 0.5 &amp; 0\end{bmatrix}\)</span> be a Leslie matrix. Suppose an initial population distribution of <span class="math inline">\(\mathbf{N}(0)=\begin{bmatrix}2\\0\end{bmatrix}.\)</span></p>
+<ol style="list-style-type: lower-alpha">
+<li>Find <span class="math inline">\(\mathbf{N}(1), \mathbf{N}(2), \mathbf{N}(3),\)</span> and <span class="math inline">\(\mathbf{N}(4).\)</span></li>
+<li>Will there be a stable population distribution?</li>
+</ol></li>
+<li><p>Let <span class="math inline">\(\mathbf{L}=\begin{bmatrix} 0 &amp; 8\\ 0.25 &amp; 0\end{bmatrix}\)</span> be a Leslie matrix. Suppose an initial population distribution of <span class="math inline">\(\mathbf{N}(0)=\begin{bmatrix}0\\2\end{bmatrix}.\)</span></p>
+<ol style="list-style-type: lower-alpha">
+<li>Find <span class="math inline">\(\mathbf{N}(1), \mathbf{N}(2), \mathbf{N}(3),\)</span> and <span class="math inline">\(\mathbf{N}(4).\)</span></li>
+<li>Will there be a stable population distribution?</li>
+</ol></li>
+<li><p>Sketch an undirected graph with adjacency matrix
+<span class="math display">\[\mathbf{A}=\begin{bmatrix} 1 &amp; 1 &amp; 2 &amp; 0\\1 &amp; 0 &amp; 1 &amp; 1\\2 &amp; 1 &amp; 0 &amp; 0\\0 &amp; 1 &amp; 0 &amp; 0\end{bmatrix}.\]</span></p></li>
+<li><p>Sketch an undirected graph with adjacency matrix
+<span class="math display">\[\mathbf{A}=\begin{bmatrix} 0 &amp; 0 &amp; 1 &amp; 1\\0 &amp; 1 &amp; 2 &amp; 0\\1 &amp; 2 &amp; 0 &amp; 2\\1 &amp; 0 &amp; 2 &amp; 0\end{bmatrix}.\]</span></p></li>
+<li><p>For the graph in Problem 19, how many ways are there to get from vertex 1 to vertex 2 in exactly four steps?</p></li>
+<li><p>For the graph in Problem 20, how many ways are there to get from vertex 1 to vertex 3 in exactly five steps?</p></li>
+<li><p>Find the adjacency matrix for the directed graph in Figure <a href="eigenvalues-and-eigenvectors.html#fig:p23">3.17</a>.</p></li>
+</ol>
+<div class="figure" style="text-align: center"><span style="display:block;" id="fig:p23"></span>
+<img src="_main_files/figure-html/p23-1.png" alt="Graph for Problem 23" width="60%" />
+<p class="caption">
+Figure 3.17: Graph for Problem 23
+</p>
+</div>
+<ol start="24" style="list-style-type: decimal">
+<li>Find the adjacency matrix for the directed graph in Figure <a href="eigenvalues-and-eigenvectors.html#fig:p24">3.18</a>.</li>
+</ol>
+<div class="figure" style="text-align: center"><span style="display:block;" id="fig:p24"></span>
+<img src="_main_files/figure-html/p24-1.png" alt="Graph for Problem 24" width="60%" />
+<p class="caption">
+Figure 3.18: Graph for Problem 24
+</p>
+</div>
+<ol start="25" style="list-style-type: decimal">
+<li>Find the column stochastic transition matrix for the graph in Figure <a href="eigenvalues-and-eigenvectors.html#fig:p25">3.19</a>.</li>
+</ol>
+<div class="figure" style="text-align: center"><span style="display:block;" id="fig:p25"></span>
+<img src="_main_files/figure-html/p25-1.png" alt="Graph for Problem 25" width="60%" />
+<p class="caption">
+Figure 3.19: Graph for Problem 25
+</p>
+</div>
+<ol start="26" style="list-style-type: decimal">
+<li>Find the column stochastic transition matrix for the graph in Figure <a href="eigenvalues-and-eigenvectors.html#fig:p26">3.20</a>.</li>
+</ol>
+<div class="figure" style="text-align: center"><span style="display:block;" id="fig:p26"></span>
+<img src="_main_files/figure-html/p26-1.png" alt="Graph for Problem 26" width="60%" />
+<p class="caption">
+Figure 3.20: Graph for Problem 26
+</p>
+</div>
+<ol start="27" style="list-style-type: decimal">
+<li>A switch has two positions: on and off. Every second, the position might change. If it is in the on position, it changes to off with probability 2/3, and stays on with probability 1/3. If it is in the off position, it switches to on with probability 1/2 and stays off with probability 1/2.
+<ol style="list-style-type: lower-alpha">
+<li>Write out the column stochastic transition matrix for this switch.</li>
+<li>If the switch is on now, what is the probability that it is on two seconds from now? (That is, after two switching opportunities.)</li>
+<li>What percentage of the time is the switch in the on position?</li>
+</ol></li>
+<li>Professor X holds random office hours. If he holds office hours one day, the probability he holds them the next day is 1/10. If he does not hold them one day, the probability he holds them the next day is 1/2.
+<ol style="list-style-type: lower-alpha">
+<li>Write out the column stochastic transition matrix for Professor X’s office hours.</li>
+<li>If Professor X holds office hours today, what is the probability he holds office hours two days from now?</li>
+<li>In the long run, what fraction of days does Professor X hold office hours?</li>
+</ol></li>
+<li>In the Chapter 1 Exercises, we found the Colley ratings based on some football results. We are now going to apply the Markov method to those same results. Based on the results below (Problem 39 from Chapter 1), perform the following.
+<ul>
+<li>Write out the column stochastic transition matrix <span class="math inline">\(\mathbf{T}.\)</span></li>
+<li>The Argos didn’t lose. Adjust for this <em>dangling node</em> to get a new matrix <span class="math inline">\(\mathbf{S}.\)</span></li>
+<li>Find <span class="math inline">\(\mathbf{G}=0.85\mathbf{S}+0.15\mathbf{E},\)</span> where <span class="math inline">\(\mathbf{E}\)</span> is the teleportation matrix.</li>
+<li>Find the ratings by finding the probability vector guaranteed by the Perron-Frobenius Theorem.</li>
+</ul></li>
+</ol>
+<table>
+<thead>
+<tr class="header">
+<th align="left">Winner</th>
+<th align="right">Score</th>
+<th align="left">Loser</th>
+<th align="right">Score</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">Argos</td>
+<td align="right">20</td>
+<td align="left">Brahmas</td>
+<td align="right">13</td>
+</tr>
+<tr class="even">
+<td align="left">Cobbers</td>
+<td align="right">31</td>
+<td align="left">Brahmas</td>
+<td align="right">10</td>
+</tr>
+<tr class="odd">
+<td align="left">Argos</td>
+<td align="right">24</td>
+<td align="left">Cobbers</td>
+<td align="right">21</td>
+</tr>
+<tr class="even">
+<td align="left">Dukes</td>
+<td align="right">10</td>
+<td align="left">Brahmas</td>
+<td align="right">7</td>
+</tr>
+<tr class="odd">
+<td align="left">Brahmas</td>
+<td align="right">35</td>
+<td align="left">Dukes</td>
+<td align="right">3</td>
+</tr>
+</tbody>
+</table>
+<ol start="30" style="list-style-type: decimal">
+<li>Let’s find the Markov ratings for the results in Problem 40 from Chapter 1. Perform the following.
+<ul>
+<li>Write out the column stochastic transition matrix <span class="math inline">\(\mathbf{T}.\)</span></li>
+<li>Adjust for any dangling nodes to get the matrix <span class="math inline">\(\mathbf{S}.\)</span> (If there are no dangling nodes, then <span class="math inline">\(\mathbf{S}=\mathbf{T}\)</span>.)</li>
+<li>Find <span class="math inline">\(\mathbf{G}=0.85\mathbf{S}+0.15\mathbf{E},\)</span> where <span class="math inline">\(\mathbf{E}\)</span> is the teleportation matrix.</li>
+<li>Find the ratings by finding the probability vector guaranteed by the Perron-Frobenius Theorem.</li>
+</ul></li>
+</ol>
+<table>
+<thead>
+<tr class="header">
+<th align="left">Winner</th>
+<th align="right">Score</th>
+<th align="left">Loser</th>
+<th align="right">Score</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">Argos</td>
+<td align="right">28</td>
+<td align="left">Cobbers</td>
+<td align="right">14</td>
+</tr>
+<tr class="even">
+<td align="left">Brahmas</td>
+<td align="right">21</td>
+<td align="left">Argos</td>
+<td align="right">13</td>
+</tr>
+<tr class="odd">
+<td align="left">Brahmas</td>
+<td align="right">17</td>
+<td align="left">Dukes</td>
+<td align="right">10</td>
+</tr>
+<tr class="even">
+<td align="left">Dukes</td>
+<td align="right">31</td>
+<td align="left">Brahmas</td>
+<td align="right">28</td>
+</tr>
+</tbody>
+</table>
+<ol start="31" style="list-style-type: decimal">
+<li>Now, let’s apply the Oracle method to the results in Problem 29.
+<ul>
+<li>Find the transposed adjacency matrix <span class="math inline">\(\mathbf{A}.\)</span></li>
+<li>Add a column for the Oracle by summing each row and adding 1. This will represent the number of wins for each team, increased by 1.</li>
+<li>Add a row for the Oracle at the bottom. This row will consist of four ones and a zero at the end.</li>
+<li>Make this new matrix column stochastic by dividing each column by its sum.</li>
+<li>Find the Oracle ratings by finding the probability eigenvector.</li>
+</ul></li>
+<li>Find the Oracle ratings for the results in Problem 30. Use the instructions in Problem 31.</li>
+</ol>
+
+</div>
+</div>
+<h3>References<a href="references.html#references" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<div id="refs" class="references csl-bib-body" entry-spacing="0">
+<div id="ref-Neuhauser" class="csl-entry">
+<div class="csl-left-margin">4. </div><div class="csl-right-inline">Neuhauser C (2004) Calculus for biology and medicine, 2nd ed., Pearson/Prentice Hall.</div>
+</div>
+<div id="ref-Leslie" class="csl-entry">
+<div class="csl-left-margin">10. </div><div class="csl-right-inline">Leslie PH (1945) The use of matrices in certain population mathematics. <em>Biometrika</em> 33: 183–212.</div>
+</div>
+<div id="ref-No1" class="csl-entry">
+<div class="csl-left-margin">11. </div><div class="csl-right-inline">Langville AN, Meyer CD (2012) Who’s #1? The science of rating and ranking, Princeton University Press.</div>
+</div>
+<div id="ref-Meyer" class="csl-entry">
+<div class="csl-left-margin">12. </div><div class="csl-right-inline">Meyer CD (2023) Matrix analysis and applied linear algebra, 2nd ed., Society for Industrial <span>and</span> Applied Mathematics (SIAM), Philadelphia, PA.</div>
+</div>
+<div id="ref-PageRank" class="csl-entry">
+<div class="csl-left-margin">13. </div><div class="csl-right-inline">Brin S, Page L (1998) The anatomy of a large-scale hypertextual web search engine. <em>Computer Networks and ISDN Systems</em> 33: 107–117.</div>
+</div>
+<div id="ref-Oracle" class="csl-entry">
+<div class="csl-left-margin">14. </div><div class="csl-right-inline">Balreira EC, Miceli BK, Tegtmeyer T (2014) An oracle method to predict <span>NFL</span> games. <em>Journal of Quantitative Analysis in Sports</em> 10: 183–196.</div>
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="vector-spaces.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="orthogonality.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"whatsapp": false,
+"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": "https://github.com/USERNAME/REPO/edit/BRANCH/03-Eigen.Rmd",
+"text": "Edit"
+},
+"history": {
+"link": null,
+"text": null
+},
+"view": {
+"link": null,
+"text": null
+},
+"download": ["_main.pdf", "_main.epub"],
+"search": {
+"engine": "fuse",
+"options": null
+},
+"toc": {
+"collapse": "subsection"
+},
+"split_bib": false
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.9/latest.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>

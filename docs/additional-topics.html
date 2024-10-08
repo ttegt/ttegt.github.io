@@ -1326,7 +1326,7 @@ Figure 7.6: <span class="math inline">\(k\)</span>-means clustering with four ce
 <span id="cb199-3"><a href="additional-topics.html#cb199-3" tabindex="-1"></a><span class="fu">fviz_nbclust</span>(<span class="fu">scale</span>(MovieDF[, <span class="dv">2</span><span class="sc">:</span><span class="dv">3</span>]), kmeans, <span class="at">k.max =</span> <span class="dv">7</span>,  </span>
 <span id="cb199-4"><a href="additional-topics.html#cb199-4" tabindex="-1"></a>                <span class="at">method =</span> <span class="st">&quot;wss&quot;</span>)</span></code></pre></div>
 <div class="figure" style="text-align: center"><span style="display:block;" id="fig:elbow"></span>
-<img src="_main_files/figure-html/elbow-1.png" alt="The elbow method on the movie data" width="75%" />
+<img src="_main_files/figure-html/elbow-1.png" alt=" on the movie data" width="75%" />
 <p class="caption">
 Figure 7.7: The elbow method on the movie data
 </p>
@@ -1339,7 +1339,7 @@ Figure 7.7: The elbow method on the movie data
 <div class="figure" style="text-align: center"><span style="display:block;" id="fig:gap"></span>
 <img src="_main_files/figure-html/gap-1.png" alt="The elbow method on the movie data" width="75%" />
 <p class="caption">
-Figure 7.8: The elbow method on the movie data
+Figure 7.8: The gap statistic method on the movie data
 </p>
 </div>
 <p>The <em>silhouette</em> of an observation compares how close it is to the other observations in its cluster to how close it is to the observations in the nearest neighboring cluster. It’s a number in the interval <span class="math inline">\([-1,1]\)</span>. If the value is close to 1, it’s well inside its cluster. If it’s close to 0, it’s near the decision boundary. If it’s negative, it might be in the wrong cluster.
@@ -1350,7 +1350,7 @@ Generally speaking, the better the clustering, the higher the average silhouette
 <div class="figure" style="text-align: center"><span style="display:block;" id="fig:asm"></span>
 <img src="_main_files/figure-html/asm-1.png" alt="The elbow method on the movie data" width="75%" />
 <p class="caption">
-Figure 7.9: The elbow method on the movie data
+Figure 7.9: The average silhouette method on the movie data
 </p>
 </div>
 <p>To summarize, different methods can lead to different answers. We need to ask ourselves what we are trying to do with our clustering, because the answer might affect the choices we make.</p>

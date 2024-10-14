@@ -593,7 +593,7 @@ but there are two issues:</p>
 </div>
 <div id="least-squares-and-the-qr-factorization" class="section level3 unnumbered hasAnchor">
 <h3>Least squares and the QR-factorization<a href="regression.html#least-squares-and-the-qr-factorization" class="anchor-section" aria-label="Anchor link to header"></a></h3>
-<p>If the columns of <span class="math inline">\(\mathbf{A}\)</span> are linearly independent, then we can write <span class="math inline">\(\mathbf{A}=\mathbf{Q}\mathbf{R}\)</span>, where <span class="math inline">\(\mathbf{Q}\)</span> is orthogonal and <span class="math inline">\(\mathbf{R}\)</span> is invertible. In this case, the least squares solution is given by</p>
+<p>If the columns of <span class="math inline">\(\mathbf{A}\)</span> are linearly independent, then we can write <span class="math inline">\(\mathbf{A}=\mathbf{Q}\mathbf{R}\)</span>, where <span class="math inline">\(\mathbf{Q}\)</span> has orthonormal columns and <span class="math inline">\(\mathbf{R}\)</span> is invertible. In this case, the least squares solution is given by</p>
 <p><span class="math display">\[\hat{\mathbf{x}}=\mathbf{R}^{-1}\mathbf{Q}^T\mathbf{b}.\]</span></p>
 <p>Why does this work? If <span class="math inline">\(\hat{\mathbf{x}}=\mathbf{R}^{-1}\mathbf{Q}^T\mathbf{b}\)</span>, then</p>
 <p><span class="math display">\[\mathbf{A}\hat{\mathbf{x}}=\mathbf{Q}\mathbf{R}\hat{\mathbf{x}}=\mathbf{Q}\mathbf{R}\mathbf{R}^{-1}\mathbf{Q}^T\mathbf{b}=\mathbf{Q}\mathbf{Q}^T\mathbf{b},\]</span></p>
